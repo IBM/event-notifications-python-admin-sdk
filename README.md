@@ -1,4 +1,4 @@
-# IBM Cloud Event Notifications Python Admin SDK
+# IBM Cloud Event Notifications Python Admin SDK 0.0.1
 
 Python client library to interact with various [IBM Cloud Event Notifications APIs](https://cloud.ibm.com/apidocs?category=event-notifications).
 
@@ -41,10 +41,14 @@ Service Name | Module Name | Imported Class Name
 
 ## Installation
 
-To install, use `pip`:
 
+To install, use pip or easy_install:
 ```bash
-pip install --upgrade ibm-eventnotifications
+pip install --upgrade "ibm_eventnotifications>=0.0.1"
+```
+or
+```bash
+easy_install --upgrade "ibm_eventnotifications>=0.0.1"
 ```
 
 ## Initialize SDK
