@@ -347,7 +347,7 @@ class TestEventNotificationsV1Examples():
 
             # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
             destination_config_params_model = {
-                'url': 'https://cloud.ibm.com/nhwebhook/sendwebhook',
+                'url': 'https://cloud.ibm.com/webhook/send_message',
                 'verb': 'post',
                 'sensitive_headers': ['authorization'],
             }

@@ -22,7 +22,6 @@ install:
 script:
 - make ci
 
-
 before_deploy:
 - nvm install 14
 - npm install npm@latest -g
