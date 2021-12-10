@@ -34,8 +34,10 @@ topic_id = ''
 topic_id2 = ''
 destination_id = ''
 destination_id2 = ''
+destination_idsms = ''
 subscription_id = ''
 subscription_id2 = ''
+subscription_idsms = ''
 
 
 class TestEventNotificationsV1():
@@ -348,7 +350,7 @@ class TestEventNotificationsV1():
 
     @needscredentials
     def test_list_destinations(self):
-        global destination_id2
+        global destination_id2, destination_idsms
         more_results = True
         limit = 1
         offset = 0
@@ -372,7 +374,8 @@ class TestEventNotificationsV1():
                 destination = destinations.destinations[i]
                 if destination.id != destination_id and destination.type == 'smtp_ibm':
                     destination_id2 = destination.id
-                    break
+                elif destination.id != destination_id and destination.type == "sms_ibm":
+                    destination_idsms = destination.id
             if destinations.total_count <= offset:
                 more_results = False
             offset += 1
@@ -457,7 +460,7 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id2
+        global subscription_id, subscription_id2, subscription_idsms
         subscription_create_attributes_model = {
             'signing_enabled': False,
         }
@@ -512,6 +515,34 @@ class TestEventNotificationsV1():
 
         assert subscription_name == name
         assert subscription_description == description
+
+        # SMS
+        subscription_create_attributes_model = {
+            'to': ["+12048089972", "+12014222730"]
+        }
+        name = "subscription_sms"
+        description = "Subscription for sms"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_idsms,
+            topic_id=topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_idsms = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
 
         #
         # The following status codes aren't covered by tests.
@@ -604,6 +635,69 @@ class TestEventNotificationsV1():
         assert subscription_name == name
         assert subscription_new_id == subscription_id
         assert subscription_description == description
+
+        # Email update
+        subscription_update_attributes_model = {
+            'to': {
+                'add': ['testereq1@gmail.com', 'tester553@ibm.com'],
+                'remove': ['tester1@gmail.com']
+            },
+            'add_notification_payload': True,
+            "reply_to_mail": "reply_to_mail@us.com",
+            "reply_to_name": "US News",
+            "from_name": "IBM",
+            'unsubscribed': {
+                'remove': ['tester3@ibm.com']
+            }
+        }
+
+        name = 'subscription_email_3'
+        description = 'Update email subscription'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id2,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_new_id = subscription_response.get('id')
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        assert subscription_name == name
+        assert subscription_new_id == subscription_id2
+        assert subscription_description == description
+
+        # SMS update
+        subscription_update_attributes_model = {
+            'to': ['+120480009972', '+1201499990']
+        }
+
+        name = 'subscription_sms+1'
+        description = 'update Subscription for sms'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_idsms,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_new_id = subscription_response.get('id')
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        assert subscription_name == name
+        assert subscription_new_id == subscription_idsms
+        assert subscription_description == description
+
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.

@@ -1611,7 +1611,7 @@ class TestCreateSubscription():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": ["to"]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1668,7 +1668,7 @@ class TestCreateSubscription():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": ["to"]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -1869,7 +1869,7 @@ class TestGetSubscription():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": ["to"]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1907,7 +1907,7 @@ class TestGetSubscription():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": ["to"]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2047,7 +2047,7 @@ class TestUpdateSubscription():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": ["to"]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -2100,7 +2100,7 @@ class TestUpdateSubscription():
         """
         # Set up mock
         url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": ["to"]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
@@ -2355,6 +2355,65 @@ class TestModel_DestinationResponse():
         destination_response_model_json2 = destination_response_model.to_dict()
         assert destination_response_model_json2 == destination_response_model_json
 
+class TestModel_EmailUpdateAttributesTo():
+    """
+    Test Class for EmailUpdateAttributesTo
+    """
+
+    def test_email_update_attributes_to_serialization(self):
+        """
+        Test serialization/deserialization for EmailUpdateAttributesTo
+        """
+
+        # Construct a json representation of a EmailUpdateAttributesTo model
+        email_update_attributes_to_model_json = {}
+        email_update_attributes_to_model_json['add'] = ['testString']
+        email_update_attributes_to_model_json['remove'] = ['testString']
+
+        # Construct a model instance of EmailUpdateAttributesTo by calling from_dict on the json representation
+        email_update_attributes_to_model = EmailUpdateAttributesTo.from_dict(email_update_attributes_to_model_json)
+        assert email_update_attributes_to_model != False
+
+        # Construct a model instance of EmailUpdateAttributesTo by calling from_dict on the json representation
+        email_update_attributes_to_model_dict = EmailUpdateAttributesTo.from_dict(email_update_attributes_to_model_json).__dict__
+        email_update_attributes_to_model2 = EmailUpdateAttributesTo(**email_update_attributes_to_model_dict)
+
+        # Verify the model instances are equivalent
+        assert email_update_attributes_to_model == email_update_attributes_to_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        email_update_attributes_to_model_json2 = email_update_attributes_to_model.to_dict()
+        assert email_update_attributes_to_model_json2 == email_update_attributes_to_model_json
+
+class TestModel_EmailUpdateAttributesUnsubscribed():
+    """
+    Test Class for EmailUpdateAttributesUnsubscribed
+    """
+
+    def test_email_update_attributes_unsubscribed_serialization(self):
+        """
+        Test serialization/deserialization for EmailUpdateAttributesUnsubscribed
+        """
+
+        # Construct a json representation of a EmailUpdateAttributesUnsubscribed model
+        email_update_attributes_unsubscribed_model_json = {}
+        email_update_attributes_unsubscribed_model_json['remove'] = ['testString']
+
+        # Construct a model instance of EmailUpdateAttributesUnsubscribed by calling from_dict on the json representation
+        email_update_attributes_unsubscribed_model = EmailUpdateAttributesUnsubscribed.from_dict(email_update_attributes_unsubscribed_model_json)
+        assert email_update_attributes_unsubscribed_model != False
+
+        # Construct a model instance of EmailUpdateAttributesUnsubscribed by calling from_dict on the json representation
+        email_update_attributes_unsubscribed_model_dict = EmailUpdateAttributesUnsubscribed.from_dict(email_update_attributes_unsubscribed_model_json).__dict__
+        email_update_attributes_unsubscribed_model2 = EmailUpdateAttributesUnsubscribed(**email_update_attributes_unsubscribed_model_dict)
+
+        # Verify the model instances are equivalent
+        assert email_update_attributes_unsubscribed_model == email_update_attributes_unsubscribed_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        email_update_attributes_unsubscribed_model_json2 = email_update_attributes_unsubscribed_model.to_dict()
+        assert email_update_attributes_unsubscribed_model_json2 == email_update_attributes_unsubscribed_model_json
+
 class TestModel_Rules():
     """
     Test Class for Rules
@@ -2545,12 +2604,15 @@ class TestModel_Subscription():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_attributes_model = {} # SubscriptionAttributesEmailAttributesResponse
-        subscription_attributes_model['to'] = ['example1@gmail.com', 'example2@gmail.com.com']
+        subscription_attributes_model = {} # SubscriptionAttributesWebhookAttributesResponse
+        subscription_attributes_model['signing_enabled'] = True
         subscription_attributes_model['add_notification_payload'] = True
         subscription_attributes_model['reply_to_mail'] = 'example@ibm.com'
         subscription_attributes_model['reply_to_name'] = 'USA news'
         subscription_attributes_model['from_name'] = 'IBM'
+        subscription_attributes_model['to'] = '[{"email":"example1@gmail.com","time":"2021-11-26T12:36:27.693544+05:30"}]'
+        subscription_attributes_model['unsubscribed'] = '[]'
+        subscription_attributes_model['invited'] = '[]'
 
         # Construct a json representation of a Subscription model
         subscription_model_json = {}
@@ -2964,11 +3026,7 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse():
 
         # Construct a json representation of a SubscriptionAttributesEmailAttributesResponse model
         subscription_attributes_email_attributes_response_model_json = {}
-        subscription_attributes_email_attributes_response_model_json['to'] = ['testString']
-        subscription_attributes_email_attributes_response_model_json['add_notification_payload'] = False
-        subscription_attributes_email_attributes_response_model_json['reply_to_mail'] = 'testString'
-        subscription_attributes_email_attributes_response_model_json['reply_to_name'] = 'testString'
-        subscription_attributes_email_attributes_response_model_json['from_name'] = 'testString'
+        subscription_attributes_email_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesEmailAttributesResponse by calling from_dict on the json representation
         subscription_attributes_email_attributes_response_model = SubscriptionAttributesEmailAttributesResponse.from_dict(subscription_attributes_email_attributes_response_model_json)
@@ -2985,6 +3043,16 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse():
         subscription_attributes_email_attributes_response_model_json2 = subscription_attributes_email_attributes_response_model.to_dict()
         assert subscription_attributes_email_attributes_response_model_json2 == subscription_attributes_email_attributes_response_model_json
 
+        # Test get_properties and set_properties methods.
+        subscription_attributes_email_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_email_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_email_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_email_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
 class TestModel_SubscriptionAttributesSMSAttributesResponse():
     """
     Test Class for SubscriptionAttributesSMSAttributesResponse
@@ -2997,7 +3065,7 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
 
         # Construct a json representation of a SubscriptionAttributesSMSAttributesResponse model
         subscription_attributes_sms_attributes_response_model_json = {}
-        subscription_attributes_sms_attributes_response_model_json['to'] = ['testString']
+        subscription_attributes_sms_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesSMSAttributesResponse by calling from_dict on the json representation
         subscription_attributes_sms_attributes_response_model = SubscriptionAttributesSMSAttributesResponse.from_dict(subscription_attributes_sms_attributes_response_model_json)
@@ -3014,6 +3082,16 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
         subscription_attributes_sms_attributes_response_model_json2 = subscription_attributes_sms_attributes_response_model.to_dict()
         assert subscription_attributes_sms_attributes_response_model_json2 == subscription_attributes_sms_attributes_response_model_json
 
+        # Test get_properties and set_properties methods.
+        subscription_attributes_sms_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_sms_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_sms_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_sms_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
 class TestModel_SubscriptionAttributesWebhookAttributesResponse():
     """
     Test Class for SubscriptionAttributesWebhookAttributesResponse
@@ -3028,6 +3106,7 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse():
         subscription_attributes_webhook_attributes_response_model_json = {}
         subscription_attributes_webhook_attributes_response_model_json['signing_enabled'] = True
         subscription_attributes_webhook_attributes_response_model_json['add_notification_payload'] = True
+        subscription_attributes_webhook_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesWebhookAttributesResponse by calling from_dict on the json representation
         subscription_attributes_webhook_attributes_response_model = SubscriptionAttributesWebhookAttributesResponse.from_dict(subscription_attributes_webhook_attributes_response_model_json)
@@ -3043,6 +3122,16 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse():
         # Convert model instance back to dict and verify no loss of data
         subscription_attributes_webhook_attributes_response_model_json2 = subscription_attributes_webhook_attributes_response_model.to_dict()
         assert subscription_attributes_webhook_attributes_response_model_json2 == subscription_attributes_webhook_attributes_response_model_json
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_webhook_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_webhook_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_webhook_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_webhook_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
 
 class TestModel_SubscriptionCreateAttributesEmailAttributes():
     """
@@ -3135,38 +3224,49 @@ class TestModel_SubscriptionCreateAttributesWebhookAttributes():
         subscription_create_attributes_webhook_attributes_model_json2 = subscription_create_attributes_webhook_attributes_model.to_dict()
         assert subscription_create_attributes_webhook_attributes_model_json2 == subscription_create_attributes_webhook_attributes_model_json
 
-class TestModel_SubscriptionUpdateAttributesEmailAttributes():
+class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes():
     """
-    Test Class for SubscriptionUpdateAttributesEmailAttributes
+    Test Class for SubscriptionUpdateAttributesEmailUpdateAttributes
     """
 
-    def test_subscription_update_attributes_email_attributes_serialization(self):
+    def test_subscription_update_attributes_email_update_attributes_serialization(self):
         """
-        Test serialization/deserialization for SubscriptionUpdateAttributesEmailAttributes
+        Test serialization/deserialization for SubscriptionUpdateAttributesEmailUpdateAttributes
         """
 
-        # Construct a json representation of a SubscriptionUpdateAttributesEmailAttributes model
-        subscription_update_attributes_email_attributes_model_json = {}
-        subscription_update_attributes_email_attributes_model_json['to'] = ['testString']
-        subscription_update_attributes_email_attributes_model_json['add_notification_payload'] = False
-        subscription_update_attributes_email_attributes_model_json['reply_to_mail'] = 'testString'
-        subscription_update_attributes_email_attributes_model_json['reply_to_name'] = 'testString'
-        subscription_update_attributes_email_attributes_model_json['from_name'] = 'testString'
+        # Construct dict forms of any model objects needed in order to build this model.
 
-        # Construct a model instance of SubscriptionUpdateAttributesEmailAttributes by calling from_dict on the json representation
-        subscription_update_attributes_email_attributes_model = SubscriptionUpdateAttributesEmailAttributes.from_dict(subscription_update_attributes_email_attributes_model_json)
-        assert subscription_update_attributes_email_attributes_model != False
+        email_update_attributes_to_model = {} # EmailUpdateAttributesTo
+        email_update_attributes_to_model['add'] = ['testString']
+        email_update_attributes_to_model['remove'] = ['testString']
 
-        # Construct a model instance of SubscriptionUpdateAttributesEmailAttributes by calling from_dict on the json representation
-        subscription_update_attributes_email_attributes_model_dict = SubscriptionUpdateAttributesEmailAttributes.from_dict(subscription_update_attributes_email_attributes_model_json).__dict__
-        subscription_update_attributes_email_attributes_model2 = SubscriptionUpdateAttributesEmailAttributes(**subscription_update_attributes_email_attributes_model_dict)
+        email_update_attributes_unsubscribed_model = {} # EmailUpdateAttributesUnsubscribed
+        email_update_attributes_unsubscribed_model['remove'] = ['testString']
+
+        # Construct a json representation of a SubscriptionUpdateAttributesEmailUpdateAttributes model
+        subscription_update_attributes_email_update_attributes_model_json = {}
+        subscription_update_attributes_email_update_attributes_model_json['to'] = email_update_attributes_to_model
+        subscription_update_attributes_email_update_attributes_model_json['add_notification_payload'] = False
+        subscription_update_attributes_email_update_attributes_model_json['reply_to_mail'] = 'testString'
+        subscription_update_attributes_email_update_attributes_model_json['reply_to_name'] = 'testString'
+        subscription_update_attributes_email_update_attributes_model_json['from_name'] = 'testString'
+        subscription_update_attributes_email_update_attributes_model_json['invited'] = ['testString']
+        subscription_update_attributes_email_update_attributes_model_json['unsubscribed'] = email_update_attributes_unsubscribed_model
+
+        # Construct a model instance of SubscriptionUpdateAttributesEmailUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_email_update_attributes_model = SubscriptionUpdateAttributesEmailUpdateAttributes.from_dict(subscription_update_attributes_email_update_attributes_model_json)
+        assert subscription_update_attributes_email_update_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesEmailUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_email_update_attributes_model_dict = SubscriptionUpdateAttributesEmailUpdateAttributes.from_dict(subscription_update_attributes_email_update_attributes_model_json).__dict__
+        subscription_update_attributes_email_update_attributes_model2 = SubscriptionUpdateAttributesEmailUpdateAttributes(**subscription_update_attributes_email_update_attributes_model_dict)
 
         # Verify the model instances are equivalent
-        assert subscription_update_attributes_email_attributes_model == subscription_update_attributes_email_attributes_model2
+        assert subscription_update_attributes_email_update_attributes_model == subscription_update_attributes_email_update_attributes_model2
 
         # Convert model instance back to dict and verify no loss of data
-        subscription_update_attributes_email_attributes_model_json2 = subscription_update_attributes_email_attributes_model.to_dict()
-        assert subscription_update_attributes_email_attributes_model_json2 == subscription_update_attributes_email_attributes_model_json
+        subscription_update_attributes_email_update_attributes_model_json2 = subscription_update_attributes_email_update_attributes_model.to_dict()
+        assert subscription_update_attributes_email_update_attributes_model_json2 == subscription_update_attributes_email_update_attributes_model_json
 
 class TestModel_SubscriptionUpdateAttributesSMSAttributes():
     """
