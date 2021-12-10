@@ -1,3 +1,10 @@
+## [0.0.3](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.2...v0.0.3) (2021-12-10)
+
+
+### Bug Fixes
+
+* add email schema changes, update travis, example tests ([#7](https://github.com/IBM/event-notifications-python-admin-sdk/issues/7)) ([bfe92af](https://github.com/IBM/event-notifications-python-admin-sdk/commit/bfe92af3440346f74931a04caa2dcdd804106026))
+
 ## [0.0.2](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.1...v0.0.2) (2021-11-24)
 
 
