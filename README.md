@@ -55,7 +55,7 @@ easy_install --upgrade "ibm_eventnotifications>=0.0.3"
 Initialize the sdk to connect with your Event Notifications service instance.
 
 ```py
-from ibm_eventnotifications import EventNotificationsV1
+from ibm_eventnotifications.event_notifications_v1 import EventNotificationsV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
  # Create an IAM authenticator.
