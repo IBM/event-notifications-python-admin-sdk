@@ -1,4 +1,4 @@
-# IBM Cloud Event Notifications Python Admin SDK 0.0.4
+# IBM Cloud Event Notifications Python Admin SDK 0.0.3
 
 Python client library to interact with various [IBM Cloud Event Notifications APIs](https://cloud.ibm.com/apidocs?category=event-notifications).
 
@@ -44,11 +44,11 @@ Service Name | Module Name | Imported Class Name
 
 To install, use pip or easy_install:
 ```bash
-pip install --upgrade "ibm_eventnotifications>=0.0.4"
+pip install --upgrade "ibm_eventnotifications>=0.0.3"
 ```
 or
 ```bash
-easy_install --upgrade "ibm_eventnotifications>=0.0.4"
+easy_install --upgrade "ibm_eventnotifications>=0.0.3"
 ```
 
 ## Initialize SDK
@@ -95,6 +95,7 @@ SDK Methods to consume
 	- [Get Subscription](#get-subscription)
 	- [Update Subscription](#update-subscription)
 	- [Delete Subscription](#delete-subscription)
+- [Send Notifications](#send-notifications)
 
 ## Source 
 
@@ -365,10 +366,94 @@ response = event_notifications_service.delete_subscription(
      id=<subscription-id>,	# Event notifications service instance Subscriptions ID
  )
 ```
+### Send Notifications
+
+
+```py
+notification_devices_model = {
+            'fcm_devices': ['<fcm-device-ids>'],
+            'apns_devices': ['<apns-device-ids>'],
+            'user_ids': ['<user-ids>'],
+            'tags': ['<tag-names>'],
+            'platforms': ['<device-platforms>'],
+          }
+
+notification_apns_body_model = {
+                "aps": {
+                    "alert": "<notification-message>",
+                    "badge": 5,
+                },
+            }
+notification_fcm_body_model = {
+                "notification": {
+                    "title": "<notification-title>",
+                    "body": "<notification-message>",
+                },
+            }
+
+message_apns_headers = {
+                "apns-collapse-id": "<apns-apns-collapse-id-value>",
+            }
+
+notification_id := "<notification-id>"
+notification_subject := "<notification-subject>"
+notification_severity := "<notification-severity>"
+type_value := "<notification-type>"
+notifications_source := "<notification-source>"
+
+
+notification_response = event_notifications_service.send_notifications(
+                instance_id,
+                subject=notification_subject,
+                severity=notification_severity,
+                id=notification_id,
+                source=notifications_source,
+                en_source_id=source_id,
+                type=type_value,
+                time='<notification-time>',
+                data={},
+                push_to=notification_devices_model,
+                message_fcm_body=notification_fcm_body_model,
+                message_apns_body=notification_apns_body_model,
+                message_apns_headers=message_apns_headers,
+            ).get_result()
+
+```
+
+<details open>
+<summary>Send Notifications Variables</summary>
+<br>
+
+- **FCM Target NotificationFcmDevices** - Set up the push notifications targets.
+  - *UserIds* (Array of **String**) - Send notification to the specified userIds.
+  - *FcmDevices* (Array of **String**) - Send notification to the list of specified devices.
+  - *Tags* (Array of **String**) - Send notification to the devices that have subscribed to any of these tags.
+  - *Platforms* (Array of **String**) - Send notification to the devices of the specified platforms. Pass 'G' for google (Android) devices. Pass 'A' for iOS  devices.
+- **FCM MessageFcmBody** - Set payload specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. We support `notification` and `data` keys in FCM.
+- **iOS MessageApnsBody** - Set payload specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+- **APNs MessageApnsHeaders** - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)].
+- **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method. 
+  - *InstanceID* (**String**) - Event Notifications instance AppGUID. 
+  - *Subject* (**String**) - Subject for the notifications. 
+  - *Severity* (**String**) - Severity for the notifications. 
+  - *ID* (**ID**) - ID for the notifications. 
+  - *Source* (**String**) - Source of the notifications. 
+  - *EnSourceID* (**String**) - Event Notifications instance Source ID. 
+  - *Type* (**String**) - Type for the notifications. 
+  - *Time* (**String**) - Time of the notifications. 
+  - *Data* (**map[string]interface{}**) - Data for the notifications. Supported only for `Webhook` destination. 
+  - *PushTo* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
+  - *MessageFcmBody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
+  - *MessageApnsBody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
+  - *MessageApnsHeaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
+  - *Datacontenttype* (**String**) - Data content type of the notifications. 
+  - *Specversion* (**String**) - Spec version of the Event Notifications. Default value is `1.0`. 
+
+</details>
 
 ## Set Environment
 
-Find `event_notifications.env.hide` in the repo and rename it to `event_notifications.env`. After that add the values for,
+Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notifications_v1.env`. After that add the values for,
 
 - `EVENT_NOTIFICATIONS_URL` - Add the Event Notifications service instance Url.
 - `EVENT_NOTIFICATIONS_APIKEY` - Add the Event Notifications service instance apikey.
@@ -376,6 +461,8 @@ Find `event_notifications.env.hide` in the repo and rename it to `event_notifica
 
 Optional 
 - `EVENT_NOTIFICATIONS_AUTH_URL` - Add the IAM url if you are using IBM test cloud.
+- `EVENT_NOTIFICATIONS_FCM_KEY` - Add firebase server key for Android FCM destination.
+- `EVENT_NOTIFICATIONS_FCM_ID` - Add firebase sender Id for Android FCM destination.
 
 ## Questions
 
