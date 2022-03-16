@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,12 +21,14 @@ from datetime import datetime, timezone
 from ibm_cloud_sdk_core.authenticators.no_auth_authenticator import NoAuthAuthenticator
 from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import inspect
+import io
 import json
 import os
 import pytest
 import re
 import requests
 import responses
+import tempfile
 import urllib
 from ibm_eventnotifications.event_notifications_v1 import *
 
@@ -37,6 +39,384 @@ _service = EventNotificationsV1(
 
 _base_url = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications'
 _service.set_service_url(_base_url)
+
+
+def preprocess_url(operation_path: str):
+    """
+    Returns the request url associated with the specified operation path.
+    This will be base_url concatenated with a quoted version of operation_path.
+    The returned request URL is used to register the mock response so it needs
+    to match the request URL that is formed by the requests library.
+    """
+    # First, unquote the path since it might have some quoted/escaped characters in it
+    # due to how the generator inserts the operation paths into the unit test code.
+    operation_path = urllib.parse.unquote(operation_path)
+
+    # Next, quote the path using urllib so that we approximate what will
+    # happen during request processing.
+    operation_path = urllib.parse.quote(operation_path, safe='/')
+
+    # Finally, form the request URL from the base URL and operation path.
+    request_url = _base_url + operation_path
+
+    # If the request url does NOT end with a /, then just return it as-is.
+    # Otherwise, return a regular expression that matches one or more trailing /.
+    if re.fullmatch('.*/+', request_url) is None:
+        return request_url
+    else:
+        return re.compile(request_url.rstrip('/') + '/+')
+
+
+##############################################################################
+# Start of Service: SendNotifications
+##############################################################################
+# region
+
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+class TestSendNotifications():
+    """
+    Test Class for send_notifications
+    """
+
+    @responses.activate
+    def test_send_notifications_all_params(self):
+        """
+        send_notifications()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications')
+        mock_response = '{"notification_id": "notification_id"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Construct a dict representation of a NotificationDevices model
+        notification_devices_model = {}
+        notification_devices_model['fcm_devices'] = ['testString']
+        notification_devices_model['apns_devices'] = ['testString']
+        notification_devices_model['user_ids'] = ['testString']
+        notification_devices_model['tags'] = ['testString']
+        notification_devices_model['platforms'] = ['testString']
+
+        # Construct a dict representation of a Lights model
+        lights_model = {}
+        lights_model['led_argb'] = 'testString'
+        lights_model['led_on_ms'] = 0
+        lights_model['led_off_ms'] = 'testString'
+
+        # Construct a dict representation of a Style model
+        style_model = {}
+        style_model['type'] = 'testString'
+        style_model['title'] = 'testString'
+        style_model['url'] = 'testString'
+        style_model['text'] = 'testString'
+        style_model['lines'] = ['testString']
+        style_model['foo'] = 'testString'
+
+        # Construct a dict representation of a NotificationFCMBodyMessageData model
+        notification_fcm_body_message_data_model = {}
+        notification_fcm_body_message_data_model['alert'] = 'testString'
+        notification_fcm_body_message_data_model['collapse_key'] = 'testString'
+        notification_fcm_body_message_data_model['interactive_category'] = 'testString'
+        notification_fcm_body_message_data_model['icon'] = 'testString'
+        notification_fcm_body_message_data_model['delay_while_idle'] = True
+        notification_fcm_body_message_data_model['sync'] = True
+        notification_fcm_body_message_data_model['visibility'] = 'testString'
+        notification_fcm_body_message_data_model['redact'] = 'testString'
+        notification_fcm_body_message_data_model['payload'] = {}
+        notification_fcm_body_message_data_model['priority'] = 'testString'
+        notification_fcm_body_message_data_model['sound'] = 'testString'
+        notification_fcm_body_message_data_model['time_to_live'] = 0
+        notification_fcm_body_message_data_model['lights'] = lights_model
+        notification_fcm_body_message_data_model['android_title'] = 'testString'
+        notification_fcm_body_message_data_model['group_id'] = 'testString'
+        notification_fcm_body_message_data_model['style'] = style_model
+        notification_fcm_body_message_data_model['type'] = 'DEFAULT'
+
+        # Construct a dict representation of a NotificationFCMBodyMessageENData model
+        notification_fcm_body_model = {}
+        notification_fcm_body_model['en_data'] = notification_fcm_body_message_data_model
+        notification_fcm_body_model['foo'] = 'testString'
+
+        # Construct a dict representation of a NotificationAPNSBodyMessageData model
+        notification_apns_body_message_data_model = {}
+        notification_apns_body_message_data_model['alert'] = 'testString'
+        notification_apns_body_message_data_model['badge'] = 38
+        notification_apns_body_message_data_model['interactiveCategory'] = 'testString'
+        notification_apns_body_message_data_model['iosActionKey'] = 'testString'
+        notification_apns_body_message_data_model['payload'] = { 'foo': 'bar' }
+        notification_apns_body_message_data_model['sound'] = 'testString'
+        notification_apns_body_message_data_model['titleLocKey'] = 'testString'
+        notification_apns_body_message_data_model['locKey'] = 'testString'
+        notification_apns_body_message_data_model['launchImage'] = 'testString'
+        notification_apns_body_message_data_model['titleLocArgs'] = ['testString']
+        notification_apns_body_message_data_model['locArgs'] = ['testString']
+        notification_apns_body_message_data_model['title'] = 'testString'
+        notification_apns_body_message_data_model['subtitle'] = 'testString'
+        notification_apns_body_message_data_model['attachmentUrl'] = 'testString'
+        notification_apns_body_message_data_model['type'] = 'DEFAULT'
+        notification_apns_body_message_data_model['apnsCollapseId'] = 'testString'
+        notification_apns_body_message_data_model['apnsThreadId'] = 'testString'
+        notification_apns_body_message_data_model['apnsGroupSummaryArg'] = 'testString'
+        notification_apns_body_message_data_model['apnsGroupSummaryArgCount'] = 38
+
+        # Construct a dict representation of a NotificationAPNSBodyMessageENData model
+        notification_apns_body_model = {}
+        notification_apns_body_model['en_data'] = notification_apns_body_message_data_model
+        notification_apns_body_model['foo'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        subject = 'testString'
+        id = 'testString'
+        source = 'testString'
+        type = 'testString'
+        time = string_to_datetime('2019-01-01T12:00:00.000Z')
+        data = {}
+        push_to = notification_devices_model
+        ibmenseverity = 'testString'
+        ibmenfcmbody = notification_fcm_body_model
+        ibmenapnsbody = notification_apns_body_model
+        ibmenpushto = notification_devices_model
+        ibmenapnsheaders = {}
+        ibmensourceid = 'testString'
+        message_fcm_body = notification_fcm_body_model
+        message_apns_headers = {}
+        message_apns_body = notification_apns_body_model
+        datacontenttype = 'application/json'
+        severity = 'testString'
+        en_source_id = 'testString'
+        specversion = '1.0'
+
+        # Invoke method
+        response = _service.send_notifications(
+            instance_id,
+            subject,
+            id,
+            source,
+            type,
+            time,
+            data=data,
+            push_to=push_to,
+            ibmenseverity=ibmenseverity,
+            ibmenfcmbody=ibmenfcmbody,
+            ibmenapnsbody=ibmenapnsbody,
+            ibmenpushto=ibmenpushto,
+            ibmenapnsheaders=ibmenapnsheaders,
+            ibmensourceid=ibmensourceid,
+            message_fcm_body=message_fcm_body,
+            message_apns_headers=message_apns_headers,
+            message_apns_body=message_apns_body,
+            datacontenttype=datacontenttype,
+            severity=severity,
+            en_source_id=en_source_id,
+            specversion=specversion,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['subject'] == 'testString'
+        assert req_body['id'] == 'testString'
+        assert req_body['source'] == 'testString'
+        assert req_body['type'] == 'testString'
+        assert req_body['time'] == '2019-01-01T12:00:00Z'
+        assert req_body['data'] == {}
+        # assert req_body['push_to'] == notification_devices_model
+        # assert req_body['ibmenseverity'] == 'testString'
+        # assert req_body['ibmenfcmbody'] == notification_fcm_body_model
+        # assert req_body['ibmenapnsbody'] == notification_apns_body_model
+        # assert req_body['ibmenpushto'] == notification_devices_model
+        # assert req_body['ibmenapnsheaders'] == {}
+        # assert req_body['ibmensourceid'] == 'testString'
+        # assert req_body['message_fcm_body'] == notification_fcm_body_model
+        # assert req_body['message_apns_headers'] == {}
+        # assert req_body['message_apns_body'] == notification_apns_body_model
+        assert req_body['datacontenttype'] == 'application/json'
+        assert req_body['severity'] == 'testString'
+        assert req_body['en_source_id'] == 'testString'
+        assert req_body['specversion'] == '1.0'
+
+    def test_send_notifications_all_params_with_retries(self):
+        # Enable retries and run test_send_notifications_all_params.
+        _service.enable_retries()
+        self.test_send_notifications_all_params()
+
+        # Disable retries and run test_send_notifications_all_params.
+        _service.disable_retries()
+        self.test_send_notifications_all_params()
+
+    @responses.activate
+    def test_send_notifications_value_error(self):
+        """
+        test_send_notifications_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications')
+        mock_response = '{"notification_id": "notification_id"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Construct a dict representation of a NotificationDevices model
+        notification_devices_model = {}
+        notification_devices_model['fcm_devices'] = ['testString']
+        notification_devices_model['apns_devices'] = ['testString']
+        notification_devices_model['user_ids'] = ['testString']
+        notification_devices_model['tags'] = ['testString']
+        notification_devices_model['platforms'] = ['testString']
+
+        # Construct a dict representation of a Lights model
+        lights_model = {}
+        lights_model['led_argb'] = 'testString'
+        lights_model['led_on_ms'] = 0
+        lights_model['led_off_ms'] = 'testString'
+
+        # Construct a dict representation of a Style model
+        style_model = {}
+        style_model['type'] = 'testString'
+        style_model['title'] = 'testString'
+        style_model['url'] = 'testString'
+        style_model['text'] = 'testString'
+        style_model['lines'] = ['testString']
+        style_model['foo'] = 'testString'
+
+        # Construct a dict representation of a NotificationFCMBodyMessageData model
+        notification_fcm_body_message_data_model = {}
+        notification_fcm_body_message_data_model['alert'] = 'testString'
+        notification_fcm_body_message_data_model['collapse_key'] = 'testString'
+        notification_fcm_body_message_data_model['interactive_category'] = 'testString'
+        notification_fcm_body_message_data_model['icon'] = 'testString'
+        notification_fcm_body_message_data_model['delay_while_idle'] = True
+        notification_fcm_body_message_data_model['sync'] = True
+        notification_fcm_body_message_data_model['visibility'] = 'testString'
+        notification_fcm_body_message_data_model['redact'] = 'testString'
+        notification_fcm_body_message_data_model['payload'] = {}
+        notification_fcm_body_message_data_model['priority'] = 'testString'
+        notification_fcm_body_message_data_model['sound'] = 'testString'
+        notification_fcm_body_message_data_model['time_to_live'] = 0
+        notification_fcm_body_message_data_model['lights'] = lights_model
+        notification_fcm_body_message_data_model['android_title'] = 'testString'
+        notification_fcm_body_message_data_model['group_id'] = 'testString'
+        notification_fcm_body_message_data_model['style'] = style_model
+        notification_fcm_body_message_data_model['type'] = 'DEFAULT'
+
+        # Construct a dict representation of a NotificationFCMBodyMessageENData model
+        notification_fcm_body_model = {}
+        notification_fcm_body_model['en_data'] = notification_fcm_body_message_data_model
+        notification_fcm_body_model['foo'] = 'testString'
+
+        # Construct a dict representation of a NotificationAPNSBodyMessageData model
+        notification_apns_body_message_data_model = {}
+        notification_apns_body_message_data_model['alert'] = 'testString'
+        notification_apns_body_message_data_model['badge'] = 38
+        notification_apns_body_message_data_model['interactiveCategory'] = 'testString'
+        notification_apns_body_message_data_model['iosActionKey'] = 'testString'
+        notification_apns_body_message_data_model['payload'] = { 'foo': 'bar' }
+        notification_apns_body_message_data_model['sound'] = 'testString'
+        notification_apns_body_message_data_model['titleLocKey'] = 'testString'
+        notification_apns_body_message_data_model['locKey'] = 'testString'
+        notification_apns_body_message_data_model['launchImage'] = 'testString'
+        notification_apns_body_message_data_model['titleLocArgs'] = ['testString']
+        notification_apns_body_message_data_model['locArgs'] = ['testString']
+        notification_apns_body_message_data_model['title'] = 'testString'
+        notification_apns_body_message_data_model['subtitle'] = 'testString'
+        notification_apns_body_message_data_model['attachmentUrl'] = 'testString'
+        notification_apns_body_message_data_model['type'] = 'DEFAULT'
+        notification_apns_body_message_data_model['apnsCollapseId'] = 'testString'
+        notification_apns_body_message_data_model['apnsThreadId'] = 'testString'
+        notification_apns_body_message_data_model['apnsGroupSummaryArg'] = 'testString'
+        notification_apns_body_message_data_model['apnsGroupSummaryArgCount'] = 38
+
+        # Construct a dict representation of a NotificationAPNSBodyMessageENData model
+        notification_apns_body_model = {}
+        notification_apns_body_model['en_data'] = notification_apns_body_message_data_model
+        notification_apns_body_model['foo'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        subject = 'testString'
+        id = 'testString'
+        source = 'testString'
+        type = 'testString'
+        time = string_to_datetime('2019-01-01T12:00:00.000Z')
+        data = {}
+        push_to = notification_devices_model
+        ibmenseverity = 'testString'
+        ibmenfcmbody = notification_fcm_body_model
+        ibmenapnsbody = notification_apns_body_model
+        ibmenpushto = notification_devices_model
+        ibmenapnsheaders = {}
+        ibmensourceid = 'testString'
+        message_fcm_body = notification_fcm_body_model
+        message_apns_headers = {}
+        message_apns_body = notification_apns_body_model
+        datacontenttype = 'application/json'
+        severity = 'testString'
+        en_source_id = 'testString'
+        specversion = '1.0'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "subject": subject,
+            "id": id,
+            "source": source,
+            "type": type,
+            "time": time,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.send_notifications(**req_copy)
+
+
+    def test_send_notifications_value_error_with_retries(self):
+        # Enable retries and run test_send_notifications_value_error.
+        _service.enable_retries()
+        self.test_send_notifications_value_error()
+
+        # Disable retries and run test_send_notifications_value_error.
+        _service.disable_retries()
+        self.test_send_notifications_value_error()
+
+# endregion
+##############################################################################
+# End of Service: SendNotifications
+##############################################################################
 
 ##############################################################################
 # Start of Service: Sources
@@ -67,6 +447,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestListSources():
@@ -74,24 +455,13 @@ class TestListSources():
     Test Class for list_sources
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_list_sources_all_params(self):
         """
         list_sources()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/sources')
+        url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}'
         responses.add(responses.GET,
                       url,
@@ -139,7 +509,7 @@ class TestListSources():
         test_list_sources_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/sources')
+        url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}'
         responses.add(responses.GET,
                       url,
@@ -175,7 +545,7 @@ class TestListSources():
         test_list_sources_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/sources')
+        url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}'
         responses.add(responses.GET,
                       url,
@@ -210,24 +580,13 @@ class TestGetSource():
     Test Class for get_source
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_get_source_all_params(self):
         """
         get_source()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/sources/testString')
+        url = preprocess_url('/v1/instances/testString/sources/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
         responses.add(responses.GET,
                       url,
@@ -265,7 +624,7 @@ class TestGetSource():
         test_get_source_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/sources/testString')
+        url = preprocess_url('/v1/instances/testString/sources/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
         responses.add(responses.GET,
                       url,
@@ -331,6 +690,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestCreateTopic():
@@ -338,24 +698,13 @@ class TestCreateTopic():
     Test Class for create_topic
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_create_topic_all_params(self):
         """
         create_topic()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics')
+        url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"id": "id", "name": "name", "description": "description", "created_at": "created_at"}'
         responses.add(responses.POST,
                       url,
@@ -413,7 +762,7 @@ class TestCreateTopic():
         test_create_topic_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics')
+        url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"id": "id", "name": "name", "description": "description", "created_at": "created_at"}'
         responses.add(responses.POST,
                       url,
@@ -463,24 +812,13 @@ class TestListTopics():
     Test Class for list_topics
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_list_topics_all_params(self):
         """
         list_topics()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics')
+        url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}]}'
         responses.add(responses.GET,
                       url,
@@ -528,7 +866,7 @@ class TestListTopics():
         test_list_topics_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics')
+        url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}]}'
         responses.add(responses.GET,
                       url,
@@ -564,7 +902,7 @@ class TestListTopics():
         test_list_topics_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics')
+        url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}]}'
         responses.add(responses.GET,
                       url,
@@ -599,24 +937,13 @@ class TestGetTopic():
     Test Class for get_topic
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_get_topic_all_params(self):
         """
         get_topic()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics/testString')
+        url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -660,7 +987,7 @@ class TestGetTopic():
         test_get_topic_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics/testString')
+        url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -698,7 +1025,7 @@ class TestGetTopic():
         test_get_topic_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics/testString')
+        url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -735,24 +1062,13 @@ class TestReplaceTopic():
     Test Class for replace_topic
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_replace_topic_all_params(self):
         """
         replace_topic()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics/testString')
+        url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.PUT,
                       url,
@@ -812,7 +1128,7 @@ class TestReplaceTopic():
         test_replace_topic_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics/testString')
+        url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.PUT,
                       url,
@@ -863,24 +1179,13 @@ class TestDeleteTopic():
     Test Class for delete_topic
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_delete_topic_all_params(self):
         """
         delete_topic()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics/testString')
+        url = preprocess_url('/v1/instances/testString/topics/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -915,7 +1220,7 @@ class TestDeleteTopic():
         test_delete_topic_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/topics/testString')
+        url = preprocess_url('/v1/instances/testString/topics/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -978,6 +1283,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestCreateDestination():
@@ -985,24 +1291,13 @@ class TestCreateDestination():
     Test Class for create_destination
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_create_destination_all_params(self):
         """
         create_destination()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations')
+        url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(responses.POST,
                       url,
@@ -1027,6 +1322,8 @@ class TestCreateDestination():
         type = 'webhook'
         description = 'testString'
         config = destination_config_model
+        certificate = io.BytesIO(b'This is a mock file.').getvalue()
+        certificate_content_type = 'testString'
 
         # Invoke method
         response = _service.create_destination(
@@ -1035,18 +1332,14 @@ class TestCreateDestination():
             type,
             description=description,
             config=config,
+            certificate=certificate,
+            certificate_content_type=certificate_content_type,
             headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['type'] == 'webhook'
-        assert req_body['description'] == 'testString'
-        assert req_body['config'] == destination_config_model
 
     def test_create_destination_all_params_with_retries(self):
         # Enable retries and run test_create_destination_all_params.
@@ -1058,12 +1351,12 @@ class TestCreateDestination():
         self.test_create_destination_all_params()
 
     @responses.activate
-    def test_create_destination_value_error(self):
+    def test_create_destination_required_params(self):
         """
-        test_create_destination_value_error()
+        test_create_destination_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations')
+        url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(responses.POST,
                       url,
@@ -1071,23 +1364,50 @@ class TestCreateDestination():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        destination_config_params_model = {}
-        destination_config_params_model['url'] = 'testString'
-        destination_config_params_model['verb'] = 'get'
-        destination_config_params_model['custom_headers'] = {}
-        destination_config_params_model['sensitive_headers'] = ['testString']
+        # Set up parameter values
+        instance_id = 'testString'
+        name = 'testString'
+        type = 'webhook'
 
-        # Construct a dict representation of a DestinationConfig model
-        destination_config_model = {}
-        destination_config_model['params'] = destination_config_params_model
+        # Invoke method
+        response = _service.create_destination(
+            instance_id,
+            name,
+            type,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+
+    def test_create_destination_required_params_with_retries(self):
+        # Enable retries and run test_create_destination_required_params.
+        _service.enable_retries()
+        self.test_create_destination_required_params()
+
+        # Disable retries and run test_create_destination_required_params.
+        _service.disable_retries()
+        self.test_create_destination_required_params()
+
+    @responses.activate
+    def test_create_destination_value_error(self):
+        """
+        test_create_destination_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
 
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
         type = 'webhook'
-        description = 'testString'
-        config = destination_config_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1115,24 +1435,13 @@ class TestListDestinations():
     Test Class for list_destinations
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_list_destinations_all_params(self):
         """
         list_destinations()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations')
+        url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -1180,7 +1489,7 @@ class TestListDestinations():
         test_list_destinations_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations')
+        url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -1216,7 +1525,7 @@ class TestListDestinations():
         test_list_destinations_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations')
+        url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -1251,24 +1560,13 @@ class TestGetDestination():
     Test Class for get_destination
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_get_destination_all_params(self):
         """
         get_destination()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations/testString')
+        url = preprocess_url('/v1/instances/testString/destinations/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
         responses.add(responses.GET,
                       url,
@@ -1306,7 +1604,7 @@ class TestGetDestination():
         test_get_destination_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations/testString')
+        url = preprocess_url('/v1/instances/testString/destinations/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
         responses.add(responses.GET,
                       url,
@@ -1343,24 +1641,13 @@ class TestUpdateDestination():
     Test Class for update_destination
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_update_destination_all_params(self):
         """
         update_destination()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations/testString')
+        url = preprocess_url('/v1/instances/testString/destinations/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
         responses.add(responses.PATCH,
                       url,
@@ -1385,6 +1672,8 @@ class TestUpdateDestination():
         name = 'testString'
         description = 'testString'
         config = destination_config_model
+        certificate = io.BytesIO(b'This is a mock file.').getvalue()
+        certificate_content_type = 'testString'
 
         # Invoke method
         response = _service.update_destination(
@@ -1393,17 +1682,14 @@ class TestUpdateDestination():
             name=name,
             description=description,
             config=config,
+            certificate=certificate,
+            certificate_content_type=certificate_content_type,
             headers={}
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
-        assert req_body['config'] == destination_config_model
 
     def test_update_destination_all_params_with_retries(self):
         # Enable retries and run test_update_destination_all_params.
@@ -1415,12 +1701,12 @@ class TestUpdateDestination():
         self.test_update_destination_all_params()
 
     @responses.activate
-    def test_update_destination_value_error(self):
+    def test_update_destination_required_params(self):
         """
-        test_update_destination_value_error()
+        test_update_destination_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations/testString')
+        url = preprocess_url('/v1/instances/testString/destinations/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
         responses.add(responses.PATCH,
                       url,
@@ -1428,23 +1714,47 @@ class TestUpdateDestination():
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        destination_config_params_model = {}
-        destination_config_params_model['url'] = 'testString'
-        destination_config_params_model['verb'] = 'get'
-        destination_config_params_model['custom_headers'] = {}
-        destination_config_params_model['sensitive_headers'] = ['testString']
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
 
-        # Construct a dict representation of a DestinationConfig model
-        destination_config_model = {}
-        destination_config_model['params'] = destination_config_params_model
+        # Invoke method
+        response = _service.update_destination(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_update_destination_required_params_with_retries(self):
+        # Enable retries and run test_update_destination_required_params.
+        _service.enable_retries()
+        self.test_update_destination_required_params()
+
+        # Disable retries and run test_update_destination_required_params.
+        _service.disable_retries()
+        self.test_update_destination_required_params()
+
+    @responses.activate
+    def test_update_destination_value_error(self):
+        """
+        test_update_destination_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
 
         # Set up parameter values
         instance_id = 'testString'
         id = 'testString'
-        name = 'testString'
-        description = 'testString'
-        config = destination_config_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1471,24 +1781,13 @@ class TestDeleteDestination():
     Test Class for delete_destination
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_delete_destination_all_params(self):
         """
         delete_destination()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations/testString')
+        url = preprocess_url('/v1/instances/testString/destinations/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1523,7 +1822,7 @@ class TestDeleteDestination():
         test_delete_destination_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/destinations/testString')
+        url = preprocess_url('/v1/instances/testString/destinations/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1558,6 +1857,825 @@ class TestDeleteDestination():
 ##############################################################################
 
 ##############################################################################
+# Start of Service: DestinationsPushDevices
+##############################################################################
+# region
+
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+class TestListDestinationDevices():
+    """
+    Test Class for list_destination_devices
+    """
+
+    @responses.activate
+    def test_list_destination_devices_all_params(self):
+        """
+        list_destination_devices()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "devices": [{"id": "id", "user_id": "user_id", "platform": "platform", "token": "token", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        limit = 1
+        offset = 0
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_destination_devices(
+            instance_id,
+            id,
+            limit=limit,
+            offset=offset,
+            search=search,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_destination_devices_all_params_with_retries(self):
+        # Enable retries and run test_list_destination_devices_all_params.
+        _service.enable_retries()
+        self.test_list_destination_devices_all_params()
+
+        # Disable retries and run test_list_destination_devices_all_params.
+        _service.disable_retries()
+        self.test_list_destination_devices_all_params()
+
+    @responses.activate
+    def test_list_destination_devices_required_params(self):
+        """
+        test_list_destination_devices_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "devices": [{"id": "id", "user_id": "user_id", "platform": "platform", "token": "token", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.list_destination_devices(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_destination_devices_required_params_with_retries(self):
+        # Enable retries and run test_list_destination_devices_required_params.
+        _service.enable_retries()
+        self.test_list_destination_devices_required_params()
+
+        # Disable retries and run test_list_destination_devices_required_params.
+        _service.disable_retries()
+        self.test_list_destination_devices_required_params()
+
+    @responses.activate
+    def test_list_destination_devices_value_error(self):
+        """
+        test_list_destination_devices_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "devices": [{"id": "id", "user_id": "user_id", "platform": "platform", "token": "token", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_destination_devices(**req_copy)
+
+
+    def test_list_destination_devices_value_error_with_retries(self):
+        # Enable retries and run test_list_destination_devices_value_error.
+        _service.enable_retries()
+        self.test_list_destination_devices_value_error()
+
+        # Disable retries and run test_list_destination_devices_value_error.
+        _service.disable_retries()
+        self.test_list_destination_devices_value_error()
+
+class TestGetDestinationDevicesReport():
+    """
+    Test Class for get_destination_devices_report
+    """
+
+    @responses.activate
+    def test_get_destination_devices_report_all_params(self):
+        """
+        get_destination_devices_report()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/report')
+        mock_response = '{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 14, "all": 3}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        days = 1
+
+        # Invoke method
+        response = _service.get_destination_devices_report(
+            instance_id,
+            id,
+            days=days,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'days={}'.format(days) in query_string
+
+    def test_get_destination_devices_report_all_params_with_retries(self):
+        # Enable retries and run test_get_destination_devices_report_all_params.
+        _service.enable_retries()
+        self.test_get_destination_devices_report_all_params()
+
+        # Disable retries and run test_get_destination_devices_report_all_params.
+        _service.disable_retries()
+        self.test_get_destination_devices_report_all_params()
+
+    @responses.activate
+    def test_get_destination_devices_report_required_params(self):
+        """
+        test_get_destination_devices_report_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/report')
+        mock_response = '{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 14, "all": 3}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_destination_devices_report(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_destination_devices_report_required_params_with_retries(self):
+        # Enable retries and run test_get_destination_devices_report_required_params.
+        _service.enable_retries()
+        self.test_get_destination_devices_report_required_params()
+
+        # Disable retries and run test_get_destination_devices_report_required_params.
+        _service.disable_retries()
+        self.test_get_destination_devices_report_required_params()
+
+    @responses.activate
+    def test_get_destination_devices_report_value_error(self):
+        """
+        test_get_destination_devices_report_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/report')
+        mock_response = '{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 14, "all": 3}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_destination_devices_report(**req_copy)
+
+
+    def test_get_destination_devices_report_value_error_with_retries(self):
+        # Enable retries and run test_get_destination_devices_report_value_error.
+        _service.enable_retries()
+        self.test_get_destination_devices_report_value_error()
+
+        # Disable retries and run test_get_destination_devices_report_value_error.
+        _service.disable_retries()
+        self.test_get_destination_devices_report_value_error()
+
+# endregion
+##############################################################################
+# End of Service: DestinationsPushDevices
+##############################################################################
+
+##############################################################################
+# Start of Service: DestinationTagsSubscriptions
+##############################################################################
+# region
+
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+class TestListTagsSubscriptionsDevice():
+    """
+    Test Class for list_tags_subscriptions_device
+    """
+
+    @responses.activate
+    def test_list_tags_subscriptions_device_all_params(self):
+        """
+        list_tags_subscriptions_device()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+        tag_name = 'testString'
+        limit = 1
+        offset = 0
+
+        # Invoke method
+        response = _service.list_tags_subscriptions_device(
+            instance_id,
+            id,
+            device_id,
+            tag_name=tag_name,
+            limit=limit,
+            offset=offset,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'tag_name={}'.format(tag_name) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+
+    def test_list_tags_subscriptions_device_all_params_with_retries(self):
+        # Enable retries and run test_list_tags_subscriptions_device_all_params.
+        _service.enable_retries()
+        self.test_list_tags_subscriptions_device_all_params()
+
+        # Disable retries and run test_list_tags_subscriptions_device_all_params.
+        _service.disable_retries()
+        self.test_list_tags_subscriptions_device_all_params()
+
+    @responses.activate
+    def test_list_tags_subscriptions_device_required_params(self):
+        """
+        test_list_tags_subscriptions_device_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+
+        # Invoke method
+        response = _service.list_tags_subscriptions_device(
+            instance_id,
+            id,
+            device_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_tags_subscriptions_device_required_params_with_retries(self):
+        # Enable retries and run test_list_tags_subscriptions_device_required_params.
+        _service.enable_retries()
+        self.test_list_tags_subscriptions_device_required_params()
+
+        # Disable retries and run test_list_tags_subscriptions_device_required_params.
+        _service.disable_retries()
+        self.test_list_tags_subscriptions_device_required_params()
+
+    @responses.activate
+    def test_list_tags_subscriptions_device_value_error(self):
+        """
+        test_list_tags_subscriptions_device_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "device_id": device_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_tags_subscriptions_device(**req_copy)
+
+
+    def test_list_tags_subscriptions_device_value_error_with_retries(self):
+        # Enable retries and run test_list_tags_subscriptions_device_value_error.
+        _service.enable_retries()
+        self.test_list_tags_subscriptions_device_value_error()
+
+        # Disable retries and run test_list_tags_subscriptions_device_value_error.
+        _service.disable_retries()
+        self.test_list_tags_subscriptions_device_value_error()
+
+class TestListTagsSubscription():
+    """
+    Test Class for list_tags_subscription
+    """
+
+    @responses.activate
+    def test_list_tags_subscription_all_params(self):
+        """
+        list_tags_subscription()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+        user_id = 'testString'
+        tag_name = 'testString'
+        limit = 1
+        offset = 0
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_tags_subscription(
+            instance_id,
+            id,
+            device_id=device_id,
+            user_id=user_id,
+            tag_name=tag_name,
+            limit=limit,
+            offset=offset,
+            search=search,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'device_id={}'.format(device_id) in query_string
+        assert 'user_id={}'.format(user_id) in query_string
+        assert 'tag_name={}'.format(tag_name) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_tags_subscription_all_params_with_retries(self):
+        # Enable retries and run test_list_tags_subscription_all_params.
+        _service.enable_retries()
+        self.test_list_tags_subscription_all_params()
+
+        # Disable retries and run test_list_tags_subscription_all_params.
+        _service.disable_retries()
+        self.test_list_tags_subscription_all_params()
+
+    @responses.activate
+    def test_list_tags_subscription_required_params(self):
+        """
+        test_list_tags_subscription_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.list_tags_subscription(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_tags_subscription_required_params_with_retries(self):
+        # Enable retries and run test_list_tags_subscription_required_params.
+        _service.enable_retries()
+        self.test_list_tags_subscription_required_params()
+
+        # Disable retries and run test_list_tags_subscription_required_params.
+        _service.disable_retries()
+        self.test_list_tags_subscription_required_params()
+
+    @responses.activate
+    def test_list_tags_subscription_value_error(self):
+        """
+        test_list_tags_subscription_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_tags_subscription(**req_copy)
+
+
+    def test_list_tags_subscription_value_error_with_retries(self):
+        # Enable retries and run test_list_tags_subscription_value_error.
+        _service.enable_retries()
+        self.test_list_tags_subscription_value_error()
+
+        # Disable retries and run test_list_tags_subscription_value_error.
+        _service.disable_retries()
+        self.test_list_tags_subscription_value_error()
+
+class TestCreateTagsSubscription():
+    """
+    Test Class for create_tags_subscription
+    """
+
+    @responses.activate
+    def test_create_tags_subscription_all_params(self):
+        """
+        create_tags_subscription()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+        tag_name = 'testString'
+
+        # Invoke method
+        response = _service.create_tags_subscription(
+            instance_id,
+            id,
+            device_id,
+            tag_name,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['device_id'] == 'testString'
+        assert req_body['tag_name'] == 'testString'
+
+    def test_create_tags_subscription_all_params_with_retries(self):
+        # Enable retries and run test_create_tags_subscription_all_params.
+        _service.enable_retries()
+        self.test_create_tags_subscription_all_params()
+
+        # Disable retries and run test_create_tags_subscription_all_params.
+        _service.disable_retries()
+        self.test_create_tags_subscription_all_params()
+
+    @responses.activate
+    def test_create_tags_subscription_value_error(self):
+        """
+        test_create_tags_subscription_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+        tag_name = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "device_id": device_id,
+            "tag_name": tag_name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_tags_subscription(**req_copy)
+
+
+    def test_create_tags_subscription_value_error_with_retries(self):
+        # Enable retries and run test_create_tags_subscription_value_error.
+        _service.enable_retries()
+        self.test_create_tags_subscription_value_error()
+
+        # Disable retries and run test_create_tags_subscription_value_error.
+        _service.disable_retries()
+        self.test_create_tags_subscription_value_error()
+
+class TestDeleteTagsSubscription():
+    """
+    Test Class for delete_tags_subscription
+    """
+
+    @responses.activate
+    def test_delete_tags_subscription_all_params(self):
+        """
+        delete_tags_subscription()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+        tag_name = 'testString'
+
+        # Invoke method
+        response = _service.delete_tags_subscription(
+            instance_id,
+            id,
+            device_id=device_id,
+            tag_name=tag_name,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'device_id={}'.format(device_id) in query_string
+        assert 'tag_name={}'.format(tag_name) in query_string
+
+    def test_delete_tags_subscription_all_params_with_retries(self):
+        # Enable retries and run test_delete_tags_subscription_all_params.
+        _service.enable_retries()
+        self.test_delete_tags_subscription_all_params()
+
+        # Disable retries and run test_delete_tags_subscription_all_params.
+        _service.disable_retries()
+        self.test_delete_tags_subscription_all_params()
+
+    @responses.activate
+    def test_delete_tags_subscription_required_params(self):
+        """
+        test_delete_tags_subscription_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.delete_tags_subscription(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_tags_subscription_required_params_with_retries(self):
+        # Enable retries and run test_delete_tags_subscription_required_params.
+        _service.enable_retries()
+        self.test_delete_tags_subscription_required_params()
+
+        # Disable retries and run test_delete_tags_subscription_required_params.
+        _service.disable_retries()
+        self.test_delete_tags_subscription_required_params()
+
+    @responses.activate
+    def test_delete_tags_subscription_value_error(self):
+        """
+        test_delete_tags_subscription_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_tags_subscription(**req_copy)
+
+
+    def test_delete_tags_subscription_value_error_with_retries(self):
+        # Enable retries and run test_delete_tags_subscription_value_error.
+        _service.enable_retries()
+        self.test_delete_tags_subscription_value_error()
+
+        # Disable retries and run test_delete_tags_subscription_value_error.
+        _service.disable_retries()
+        self.test_delete_tags_subscription_value_error()
+
+# endregion
+##############################################################################
+# End of Service: DestinationTagsSubscriptions
+##############################################################################
+
+##############################################################################
 # Start of Service: Subscriptions
 ##############################################################################
 # region
@@ -1586,6 +2704,7 @@ class TestNewInstance():
         """
         with pytest.raises(ValueError, match='authenticator must be provided'):
             service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
             )
 
 class TestCreateSubscription():
@@ -1593,24 +2712,13 @@ class TestCreateSubscription():
     Test Class for create_subscription
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_create_subscription_all_params(self):
         """
         create_subscription()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions')
+        url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.POST,
                       url,
@@ -1627,8 +2735,8 @@ class TestCreateSubscription():
         name = 'testString'
         destination_id = 'testString'
         topic_id = 'testString'
-        attributes = subscription_create_attributes_model
         description = 'testString'
+        attributes = subscription_create_attributes_model
 
         # Invoke method
         response = _service.create_subscription(
@@ -1636,8 +2744,8 @@ class TestCreateSubscription():
             name,
             destination_id,
             topic_id,
-            attributes,
             description=description,
+            attributes=attributes,
             headers={}
         )
 
@@ -1649,8 +2757,8 @@ class TestCreateSubscription():
         assert req_body['name'] == 'testString'
         assert req_body['destination_id'] == 'testString'
         assert req_body['topic_id'] == 'testString'
-        assert req_body['attributes'] == subscription_create_attributes_model
         assert req_body['description'] == 'testString'
+        assert req_body['attributes'] == subscription_create_attributes_model
 
     def test_create_subscription_all_params_with_retries(self):
         # Enable retries and run test_create_subscription_all_params.
@@ -1667,7 +2775,7 @@ class TestCreateSubscription():
         test_create_subscription_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions')
+        url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.POST,
                       url,
@@ -1684,8 +2792,8 @@ class TestCreateSubscription():
         name = 'testString'
         destination_id = 'testString'
         topic_id = 'testString'
-        attributes = subscription_create_attributes_model
         description = 'testString'
+        attributes = subscription_create_attributes_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1693,7 +2801,6 @@ class TestCreateSubscription():
             "name": name,
             "destination_id": destination_id,
             "topic_id": topic_id,
-            "attributes": attributes,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
@@ -1715,24 +2822,13 @@ class TestListSubscriptions():
     Test Class for list_subscriptions
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_list_subscriptions_all_params(self):
         """
         list_subscriptions()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions')
+        url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -1780,7 +2876,7 @@ class TestListSubscriptions():
         test_list_subscriptions_required_params()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions')
+        url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -1816,7 +2912,7 @@ class TestListSubscriptions():
         test_list_subscriptions_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions')
+        url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(responses.GET,
                       url,
@@ -1851,24 +2947,13 @@ class TestGetSubscription():
     Test Class for get_subscription
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_get_subscription_all_params(self):
         """
         get_subscription()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
+        url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.GET,
                       url,
@@ -1906,7 +2991,7 @@ class TestGetSubscription():
         test_get_subscription_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
+        url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.GET,
                       url,
@@ -1943,24 +3028,13 @@ class TestDeleteSubscription():
     Test Class for delete_subscription
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_delete_subscription_all_params(self):
         """
         delete_subscription()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
+        url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -1995,7 +3069,7 @@ class TestDeleteSubscription():
         test_delete_subscription_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
+        url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         responses.add(responses.DELETE,
                       url,
                       status=204)
@@ -2029,24 +3103,13 @@ class TestUpdateSubscription():
     Test Class for update_subscription
     """
 
-    def preprocess_url(self, request_url: str):
-        """
-        Preprocess the request URL to ensure the mock response will be found.
-        """
-        request_url = urllib.parse.unquote(request_url) # don't double-encode if already encoded
-        request_url = urllib.parse.quote(request_url, safe=':/')
-        if re.fullmatch('.*/+', request_url) is None:
-            return request_url
-        else:
-            return re.compile(request_url.rstrip('/') + '/+')
-
     @responses.activate
     def test_update_subscription_all_params(self):
         """
         update_subscription()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
+        url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.PATCH,
                       url,
@@ -2099,7 +3162,7 @@ class TestUpdateSubscription():
         test_update_subscription_value_error()
         """
         # Set up mock
-        url = self.preprocess_url(_base_url + '/v1/instances/testString/subscriptions/testString')
+        url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {}}'
         responses.add(responses.PATCH,
                       url,
@@ -2176,7 +3239,7 @@ class TestModel_Destination():
         destination_model_json['description'] = 'testString'
         destination_model_json['type'] = 'webhook'
         destination_model_json['config'] = destination_config_model
-        destination_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        destination_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         destination_model_json['subscription_count'] = 0
         destination_model_json['subscription_names'] = ['testString']
 
@@ -2232,40 +3295,114 @@ class TestModel_DestinationConfig():
         destination_config_model_json2 = destination_config_model.to_dict()
         assert destination_config_model_json2 == destination_config_model_json
 
-class TestModel_DestinationLisItem():
+class TestModel_DestinationDevicesList():
     """
-    Test Class for DestinationLisItem
+    Test Class for DestinationDevicesList
     """
 
-    def test_destination_lis_item_serialization(self):
+    def test_destination_devices_list_serialization(self):
         """
-        Test serialization/deserialization for DestinationLisItem
+        Test serialization/deserialization for DestinationDevicesList
         """
 
-        # Construct a json representation of a DestinationLisItem model
-        destination_lis_item_model_json = {}
-        destination_lis_item_model_json['id'] = 'testString'
-        destination_lis_item_model_json['name'] = 'testString'
-        destination_lis_item_model_json['description'] = 'testString'
-        destination_lis_item_model_json['type'] = 'webhook'
-        destination_lis_item_model_json['subscription_count'] = 38
-        destination_lis_item_model_json['subscription_names'] = ['testString']
-        destination_lis_item_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        # Construct dict forms of any model objects needed in order to build this model.
 
-        # Construct a model instance of DestinationLisItem by calling from_dict on the json representation
-        destination_lis_item_model = DestinationLisItem.from_dict(destination_lis_item_model_json)
-        assert destination_lis_item_model != False
+        destination_devices_list_item_model = {} # DestinationDevicesListItem
+        destination_devices_list_item_model['id'] = '11fe18ba-d0c8-4108-9f07-adsa'
+        destination_devices_list_item_model['user_id'] = 'TestUserId'
+        destination_devices_list_item_model['platform'] = 'A'
+        destination_devices_list_item_model['token'] = '************'
+        destination_devices_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
-        # Construct a model instance of DestinationLisItem by calling from_dict on the json representation
-        destination_lis_item_model_dict = DestinationLisItem.from_dict(destination_lis_item_model_json).__dict__
-        destination_lis_item_model2 = DestinationLisItem(**destination_lis_item_model_dict)
+        # Construct a json representation of a DestinationDevicesList model
+        destination_devices_list_model_json = {}
+        destination_devices_list_model_json['total_count'] = 38
+        destination_devices_list_model_json['offset'] = 38
+        destination_devices_list_model_json['limit'] = 38
+        destination_devices_list_model_json['devices'] = [destination_devices_list_item_model]
+
+        # Construct a model instance of DestinationDevicesList by calling from_dict on the json representation
+        destination_devices_list_model = DestinationDevicesList.from_dict(destination_devices_list_model_json)
+        assert destination_devices_list_model != False
+
+        # Construct a model instance of DestinationDevicesList by calling from_dict on the json representation
+        destination_devices_list_model_dict = DestinationDevicesList.from_dict(destination_devices_list_model_json).__dict__
+        destination_devices_list_model2 = DestinationDevicesList(**destination_devices_list_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_lis_item_model == destination_lis_item_model2
+        assert destination_devices_list_model == destination_devices_list_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_lis_item_model_json2 = destination_lis_item_model.to_dict()
-        assert destination_lis_item_model_json2 == destination_lis_item_model_json
+        destination_devices_list_model_json2 = destination_devices_list_model.to_dict()
+        assert destination_devices_list_model_json2 == destination_devices_list_model_json
+
+class TestModel_DestinationDevicesListItem():
+    """
+    Test Class for DestinationDevicesListItem
+    """
+
+    def test_destination_devices_list_item_serialization(self):
+        """
+        Test serialization/deserialization for DestinationDevicesListItem
+        """
+
+        # Construct a json representation of a DestinationDevicesListItem model
+        destination_devices_list_item_model_json = {}
+        destination_devices_list_item_model_json['id'] = 'testString'
+        destination_devices_list_item_model_json['user_id'] = 'testString'
+        destination_devices_list_item_model_json['platform'] = 'testString'
+        destination_devices_list_item_model_json['token'] = 'testString'
+        destination_devices_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of DestinationDevicesListItem by calling from_dict on the json representation
+        destination_devices_list_item_model = DestinationDevicesListItem.from_dict(destination_devices_list_item_model_json)
+        assert destination_devices_list_item_model != False
+
+        # Construct a model instance of DestinationDevicesListItem by calling from_dict on the json representation
+        destination_devices_list_item_model_dict = DestinationDevicesListItem.from_dict(destination_devices_list_item_model_json).__dict__
+        destination_devices_list_item_model2 = DestinationDevicesListItem(**destination_devices_list_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_devices_list_item_model == destination_devices_list_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_devices_list_item_model_json2 = destination_devices_list_item_model.to_dict()
+        assert destination_devices_list_item_model_json2 == destination_devices_list_item_model_json
+
+class TestModel_DestinationDevicesReport():
+    """
+    Test Class for DestinationDevicesReport
+    """
+
+    def test_destination_devices_report_serialization(self):
+        """
+        Test serialization/deserialization for DestinationDevicesReport
+        """
+
+        # Construct a json representation of a DestinationDevicesReport model
+        destination_devices_report_model_json = {}
+        destination_devices_report_model_json['android'] = 26
+        destination_devices_report_model_json['ios'] = 26
+        destination_devices_report_model_json['chrome'] = 26
+        destination_devices_report_model_json['firefox'] = 26
+        destination_devices_report_model_json['safari'] = 26
+        destination_devices_report_model_json['chromeAppExt'] = 26
+        destination_devices_report_model_json['all'] = 26
+
+        # Construct a model instance of DestinationDevicesReport by calling from_dict on the json representation
+        destination_devices_report_model = DestinationDevicesReport.from_dict(destination_devices_report_model_json)
+        assert destination_devices_report_model != False
+
+        # Construct a model instance of DestinationDevicesReport by calling from_dict on the json representation
+        destination_devices_report_model_dict = DestinationDevicesReport.from_dict(destination_devices_report_model_json).__dict__
+        destination_devices_report_model2 = DestinationDevicesReport(**destination_devices_report_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_devices_report_model == destination_devices_report_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_devices_report_model_json2 = destination_devices_report_model.to_dict()
+        assert destination_devices_report_model_json2 == destination_devices_report_model_json
 
 class TestModel_DestinationList():
     """
@@ -2279,21 +3416,21 @@ class TestModel_DestinationList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_lis_item_model = {} # DestinationLisItem
-        destination_lis_item_model['id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
-        destination_lis_item_model['name'] = 'Slack Webhook'
-        destination_lis_item_model['description'] = 'This destination is for webhook purpose new'
-        destination_lis_item_model['type'] = 'webhook'
-        destination_lis_item_model['subscription_count'] = 2
-        destination_lis_item_model['subscription_names'] = ['Webhook Sub for new change']
-        destination_lis_item_model['updated_at'] = "2021-09-05T00:25:19.599000Z"
+        destination_list_item_model = {} # DestinationListItem
+        destination_list_item_model['id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
+        destination_list_item_model['name'] = 'Slack Webhook'
+        destination_list_item_model['description'] = 'This destination is for webhook purpose new'
+        destination_list_item_model['type'] = 'webhook'
+        destination_list_item_model['subscription_count'] = 2
+        destination_list_item_model['subscription_names'] = ['Webhook Sub for new change']
+        destination_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         # Construct a json representation of a DestinationList model
         destination_list_model_json = {}
         destination_list_model_json['total_count'] = 38
         destination_list_model_json['offset'] = 38
         destination_list_model_json['limit'] = 38
-        destination_list_model_json['destinations'] = [destination_lis_item_model]
+        destination_list_model_json['destinations'] = [destination_list_item_model]
 
         # Construct a model instance of DestinationList by calling from_dict on the json representation
         destination_list_model = DestinationList.from_dict(destination_list_model_json)
@@ -2309,6 +3446,41 @@ class TestModel_DestinationList():
         # Convert model instance back to dict and verify no loss of data
         destination_list_model_json2 = destination_list_model.to_dict()
         assert destination_list_model_json2 == destination_list_model_json
+
+class TestModel_DestinationListItem():
+    """
+    Test Class for DestinationListItem
+    """
+
+    def test_destination_list_item_serialization(self):
+        """
+        Test serialization/deserialization for DestinationListItem
+        """
+
+        # Construct a json representation of a DestinationListItem model
+        destination_list_item_model_json = {}
+        destination_list_item_model_json['id'] = 'testString'
+        destination_list_item_model_json['name'] = 'testString'
+        destination_list_item_model_json['description'] = 'testString'
+        destination_list_item_model_json['type'] = 'webhook'
+        destination_list_item_model_json['subscription_count'] = 38
+        destination_list_item_model_json['subscription_names'] = ['testString']
+        destination_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of DestinationListItem by calling from_dict on the json representation
+        destination_list_item_model = DestinationListItem.from_dict(destination_list_item_model_json)
+        assert destination_list_item_model != False
+
+        # Construct a model instance of DestinationListItem by calling from_dict on the json representation
+        destination_list_item_model_dict = DestinationListItem.from_dict(destination_list_item_model_json).__dict__
+        destination_list_item_model2 = DestinationListItem(**destination_list_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_list_item_model == destination_list_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_list_item_model_json2 = destination_list_item_model.to_dict()
+        assert destination_list_item_model_json2 == destination_list_item_model_json
 
 class TestModel_DestinationResponse():
     """
@@ -2338,7 +3510,7 @@ class TestModel_DestinationResponse():
         destination_response_model_json['description'] = 'testString'
         destination_response_model_json['type'] = 'webhook'
         destination_response_model_json['config'] = destination_config_model
-        destination_response_model_json['created_at'] = "2019-01-01T12:00:00Z"
+        destination_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
 
         # Construct a model instance of DestinationResponse by calling from_dict on the json representation
         destination_response_model = DestinationResponse.from_dict(destination_response_model_json)
@@ -2354,6 +3526,39 @@ class TestModel_DestinationResponse():
         # Convert model instance back to dict and verify no loss of data
         destination_response_model_json2 = destination_response_model.to_dict()
         assert destination_response_model_json2 == destination_response_model_json
+
+class TestModel_DestinationTagsSubscriptionResponse():
+    """
+    Test Class for DestinationTagsSubscriptionResponse
+    """
+
+    def test_destination_tags_subscription_response_serialization(self):
+        """
+        Test serialization/deserialization for DestinationTagsSubscriptionResponse
+        """
+
+        # Construct a json representation of a DestinationTagsSubscriptionResponse model
+        destination_tags_subscription_response_model_json = {}
+        destination_tags_subscription_response_model_json['id'] = 'testString'
+        destination_tags_subscription_response_model_json['device_id'] = 'testString'
+        destination_tags_subscription_response_model_json['tag_name'] = 'testString'
+        destination_tags_subscription_response_model_json['user_id'] = 'testString'
+        destination_tags_subscription_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of DestinationTagsSubscriptionResponse by calling from_dict on the json representation
+        destination_tags_subscription_response_model = DestinationTagsSubscriptionResponse.from_dict(destination_tags_subscription_response_model_json)
+        assert destination_tags_subscription_response_model != False
+
+        # Construct a model instance of DestinationTagsSubscriptionResponse by calling from_dict on the json representation
+        destination_tags_subscription_response_model_dict = DestinationTagsSubscriptionResponse.from_dict(destination_tags_subscription_response_model_json).__dict__
+        destination_tags_subscription_response_model2 = DestinationTagsSubscriptionResponse(**destination_tags_subscription_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_tags_subscription_response_model == destination_tags_subscription_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_tags_subscription_response_model_json2 = destination_tags_subscription_response_model.to_dict()
+        assert destination_tags_subscription_response_model_json2 == destination_tags_subscription_response_model_json
 
 class TestModel_EmailUpdateAttributesTo():
     """
@@ -2413,6 +3618,217 @@ class TestModel_EmailUpdateAttributesUnsubscribed():
         # Convert model instance back to dict and verify no loss of data
         email_update_attributes_unsubscribed_model_json2 = email_update_attributes_unsubscribed_model.to_dict()
         assert email_update_attributes_unsubscribed_model_json2 == email_update_attributes_unsubscribed_model_json
+
+class TestModel_Lights():
+    """
+    Test Class for Lights
+    """
+
+    def test_lights_serialization(self):
+        """
+        Test serialization/deserialization for Lights
+        """
+
+        # Construct a json representation of a Lights model
+        lights_model_json = {}
+        lights_model_json['led_argb'] = 'testString'
+        lights_model_json['led_on_ms'] = 0
+        lights_model_json['led_off_ms'] = 'testString'
+
+        # Construct a model instance of Lights by calling from_dict on the json representation
+        lights_model = Lights.from_dict(lights_model_json)
+        assert lights_model != False
+
+        # Construct a model instance of Lights by calling from_dict on the json representation
+        lights_model_dict = Lights.from_dict(lights_model_json).__dict__
+        lights_model2 = Lights(**lights_model_dict)
+
+        # Verify the model instances are equivalent
+        assert lights_model == lights_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        lights_model_json2 = lights_model.to_dict()
+        assert lights_model_json2 == lights_model_json
+
+class TestModel_NotificationAPNSBodyMessageData():
+    """
+    Test Class for NotificationAPNSBodyMessageData
+    """
+
+    def test_notification_apns_body_message_data_serialization(self):
+        """
+        Test serialization/deserialization for NotificationAPNSBodyMessageData
+        """
+
+        # Construct a json representation of a NotificationAPNSBodyMessageData model
+        notification_apns_body_message_data_model_json = {}
+        notification_apns_body_message_data_model_json['alert'] = 'testString'
+        notification_apns_body_message_data_model_json['badge'] = 38
+        notification_apns_body_message_data_model_json['interactiveCategory'] = 'testString'
+        notification_apns_body_message_data_model_json['iosActionKey'] = 'testString'
+        notification_apns_body_message_data_model_json['payload'] = { 'foo': 'bar' }
+        notification_apns_body_message_data_model_json['sound'] = 'testString'
+        notification_apns_body_message_data_model_json['titleLocKey'] = 'testString'
+        notification_apns_body_message_data_model_json['locKey'] = 'testString'
+        notification_apns_body_message_data_model_json['launchImage'] = 'testString'
+        notification_apns_body_message_data_model_json['titleLocArgs'] = ['testString']
+        notification_apns_body_message_data_model_json['locArgs'] = ['testString']
+        notification_apns_body_message_data_model_json['title'] = 'testString'
+        notification_apns_body_message_data_model_json['subtitle'] = 'testString'
+        notification_apns_body_message_data_model_json['attachmentUrl'] = 'testString'
+        notification_apns_body_message_data_model_json['type'] = 'DEFAULT'
+        notification_apns_body_message_data_model_json['apnsCollapseId'] = 'testString'
+        notification_apns_body_message_data_model_json['apnsThreadId'] = 'testString'
+        notification_apns_body_message_data_model_json['apnsGroupSummaryArg'] = 'testString'
+        notification_apns_body_message_data_model_json['apnsGroupSummaryArgCount'] = 38
+
+        # Construct a model instance of NotificationAPNSBodyMessageData by calling from_dict on the json representation
+        notification_apns_body_message_data_model = NotificationAPNSBodyMessageData.from_dict(notification_apns_body_message_data_model_json)
+        assert notification_apns_body_message_data_model != False
+
+        # Construct a model instance of NotificationAPNSBodyMessageData by calling from_dict on the json representation
+        notification_apns_body_message_data_model_dict = NotificationAPNSBodyMessageData.from_dict(notification_apns_body_message_data_model_json).__dict__
+        notification_apns_body_message_data_model2 = NotificationAPNSBodyMessageData(**notification_apns_body_message_data_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_apns_body_message_data_model == notification_apns_body_message_data_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_apns_body_message_data_model_json2 = notification_apns_body_message_data_model.to_dict()
+        assert notification_apns_body_message_data_model_json2 == notification_apns_body_message_data_model_json
+
+class TestModel_NotificationDevices():
+    """
+    Test Class for NotificationDevices
+    """
+
+    def test_notification_devices_serialization(self):
+        """
+        Test serialization/deserialization for NotificationDevices
+        """
+
+        # Construct a json representation of a NotificationDevices model
+        notification_devices_model_json = {}
+        notification_devices_model_json['fcm_devices'] = ['testString']
+        notification_devices_model_json['apns_devices'] = ['testString']
+        notification_devices_model_json['user_ids'] = ['testString']
+        notification_devices_model_json['tags'] = ['testString']
+        notification_devices_model_json['platforms'] = ['testString']
+
+        # Construct a model instance of NotificationDevices by calling from_dict on the json representation
+        notification_devices_model = NotificationDevices.from_dict(notification_devices_model_json)
+        assert notification_devices_model != False
+
+        # Construct a model instance of NotificationDevices by calling from_dict on the json representation
+        notification_devices_model_dict = NotificationDevices.from_dict(notification_devices_model_json).__dict__
+        notification_devices_model2 = NotificationDevices(**notification_devices_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_devices_model == notification_devices_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_devices_model_json2 = notification_devices_model.to_dict()
+        assert notification_devices_model_json2 == notification_devices_model_json
+
+class TestModel_NotificationFCMBodyMessageData():
+    """
+    Test Class for NotificationFCMBodyMessageData
+    """
+
+    def test_notification_fcm_body_message_data_serialization(self):
+        """
+        Test serialization/deserialization for NotificationFCMBodyMessageData
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        lights_model = {} # Lights
+        lights_model['led_argb'] = 'testString'
+        lights_model['led_on_ms'] = 0
+        lights_model['led_off_ms'] = 'testString'
+
+        style_model = {} # Style
+        style_model['type'] = 'testString'
+        style_model['title'] = 'testString'
+        style_model['url'] = 'testString'
+        style_model['text'] = 'testString'
+        style_model['lines'] = ['testString']
+        style_model['foo'] = 'testString'
+
+        # Construct a json representation of a NotificationFCMBodyMessageData model
+        notification_fcm_body_message_data_model_json = {}
+        notification_fcm_body_message_data_model_json['alert'] = 'testString'
+        notification_fcm_body_message_data_model_json['collapse_key'] = 'testString'
+        notification_fcm_body_message_data_model_json['interactive_category'] = 'testString'
+        notification_fcm_body_message_data_model_json['icon'] = 'testString'
+        notification_fcm_body_message_data_model_json['delay_while_idle'] = True
+        notification_fcm_body_message_data_model_json['sync'] = True
+        notification_fcm_body_message_data_model_json['visibility'] = 'testString'
+        notification_fcm_body_message_data_model_json['redact'] = 'testString'
+        notification_fcm_body_message_data_model_json['payload'] = {}
+        notification_fcm_body_message_data_model_json['priority'] = 'testString'
+        notification_fcm_body_message_data_model_json['sound'] = 'testString'
+        notification_fcm_body_message_data_model_json['time_to_live'] = 0
+        notification_fcm_body_message_data_model_json['lights'] = lights_model
+        notification_fcm_body_message_data_model_json['android_title'] = 'testString'
+        notification_fcm_body_message_data_model_json['group_id'] = 'testString'
+        notification_fcm_body_message_data_model_json['style'] = style_model
+        notification_fcm_body_message_data_model_json['type'] = 'DEFAULT'
+
+        # Construct a model instance of NotificationFCMBodyMessageData by calling from_dict on the json representation
+        notification_fcm_body_message_data_model = NotificationFCMBodyMessageData.from_dict(notification_fcm_body_message_data_model_json)
+        assert notification_fcm_body_message_data_model != False
+
+        # Construct a model instance of NotificationFCMBodyMessageData by calling from_dict on the json representation
+        notification_fcm_body_message_data_model_dict = NotificationFCMBodyMessageData.from_dict(notification_fcm_body_message_data_model_json).__dict__
+        notification_fcm_body_message_data_model2 = NotificationFCMBodyMessageData(**notification_fcm_body_message_data_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_fcm_body_message_data_model == notification_fcm_body_message_data_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_fcm_body_message_data_model_json2 = notification_fcm_body_message_data_model.to_dict()
+        assert notification_fcm_body_message_data_model_json2 == notification_fcm_body_message_data_model_json
+
+class TestModel_NotificationResponse():
+    """
+    Test Class for NotificationResponse
+    """
+
+    def test_notification_response_serialization(self):
+        """
+        Test serialization/deserialization for NotificationResponse
+        """
+
+        # Construct a json representation of a NotificationResponse model
+        notification_response_model_json = {}
+        notification_response_model_json['notification_id'] = 'testString'
+        notification_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of NotificationResponse by calling from_dict on the json representation
+        notification_response_model = NotificationResponse.from_dict(notification_response_model_json)
+        assert notification_response_model != False
+
+        # Construct a model instance of NotificationResponse by calling from_dict on the json representation
+        notification_response_model_dict = NotificationResponse.from_dict(notification_response_model_json).__dict__
+        notification_response_model2 = NotificationResponse(**notification_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_response_model == notification_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_response_model_json2 = notification_response_model.to_dict()
+        assert notification_response_model_json2 == notification_response_model_json
+
+        # Test get_properties and set_properties methods.
+        notification_response_model.set_properties({})
+        actual_dict = notification_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        notification_response_model.set_properties(expected_dict)
+        actual_dict = notification_response_model.get_properties()
+        assert actual_dict == expected_dict
 
 class TestModel_Rules():
     """
@@ -2495,7 +3911,7 @@ class TestModel_Source():
         source_model_json['description'] = 'testString'
         source_model_json['enabled'] = True
         source_model_json['type'] = 'testString'
-        source_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        source_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         source_model_json['topic_count'] = 38
         source_model_json['topic_names'] = ['testString']
 
@@ -2526,21 +3942,21 @@ class TestModel_SourceList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        sources_list_item_model = {} # SourcesListItem
-        sources_list_item_model['id'] = '00bb34e5-b8c1-4159-af15-8bc6980c3ab2:api'
-        sources_list_item_model['name'] = 'CloudEvents Source'
-        sources_list_item_model['description'] = 'This source is related cloud events'
-        sources_list_item_model['type'] = 'api'
-        sources_list_item_model['enabled'] = True
-        sources_list_item_model['updated_at'] = "2021-08-19T05:30:03.696000Z"
-        sources_list_item_model['topic_count'] = 0
+        source_list_item_model = {} # SourceListItem
+        source_list_item_model['id'] = '00bb34e5-b8c1-4159-af15-8bc6980c3ab2:api'
+        source_list_item_model['name'] = 'CloudEvents Source'
+        source_list_item_model['description'] = 'This source is related cloud events'
+        source_list_item_model['type'] = 'api'
+        source_list_item_model['enabled'] = True
+        source_list_item_model['updated_at'] = '2021-08-19T05:30:03.696000Z'
+        source_list_item_model['topic_count'] = 0
 
         # Construct a json representation of a SourceList model
         source_list_model_json = {}
         source_list_model_json['total_count'] = 0
         source_list_model_json['offset'] = 38
         source_list_model_json['limit'] = 38
-        source_list_model_json['sources'] = [sources_list_item_model]
+        source_list_model_json['sources'] = [source_list_item_model]
 
         # Construct a model instance of SourceList by calling from_dict on the json representation
         source_list_model = SourceList.from_dict(source_list_model_json)
@@ -2557,6 +3973,41 @@ class TestModel_SourceList():
         source_list_model_json2 = source_list_model.to_dict()
         assert source_list_model_json2 == source_list_model_json
 
+class TestModel_SourceListItem():
+    """
+    Test Class for SourceListItem
+    """
+
+    def test_source_list_item_serialization(self):
+        """
+        Test serialization/deserialization for SourceListItem
+        """
+
+        # Construct a json representation of a SourceListItem model
+        source_list_item_model_json = {}
+        source_list_item_model_json['id'] = 'testString'
+        source_list_item_model_json['name'] = 'testString'
+        source_list_item_model_json['description'] = 'testString'
+        source_list_item_model_json['type'] = 'testString'
+        source_list_item_model_json['enabled'] = True
+        source_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        source_list_item_model_json['topic_count'] = 0
+
+        # Construct a model instance of SourceListItem by calling from_dict on the json representation
+        source_list_item_model = SourceListItem.from_dict(source_list_item_model_json)
+        assert source_list_item_model != False
+
+        # Construct a model instance of SourceListItem by calling from_dict on the json representation
+        source_list_item_model_dict = SourceListItem.from_dict(source_list_item_model_json).__dict__
+        source_list_item_model2 = SourceListItem(**source_list_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert source_list_item_model == source_list_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        source_list_item_model_json2 = source_list_item_model.to_dict()
+        assert source_list_item_model_json2 == source_list_item_model_json
+
 class TestModel_SourcesListItem():
     """
     Test Class for SourcesListItem
@@ -2567,15 +4018,20 @@ class TestModel_SourcesListItem():
         Test serialization/deserialization for SourcesListItem
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        rules_get_model = {} # RulesGet
+        rules_get_model['enabled'] = True
+        rules_get_model['event_type_filter'] = '$.*'
+        rules_get_model['notification_filter'] = 'testString'
+        rules_get_model['updated_at'] = 'testString'
+        rules_get_model['id'] = 'testString'
+
         # Construct a json representation of a SourcesListItem model
         sources_list_item_model_json = {}
         sources_list_item_model_json['id'] = 'testString'
         sources_list_item_model_json['name'] = 'testString'
-        sources_list_item_model_json['description'] = 'testString'
-        sources_list_item_model_json['type'] = 'testString'
-        sources_list_item_model_json['enabled'] = True
-        sources_list_item_model_json['updated_at'] = "2019-01-01T12:00:00Z"
-        sources_list_item_model_json['topic_count'] = 0
+        sources_list_item_model_json['rules'] = [rules_get_model]
 
         # Construct a model instance of SourcesListItem by calling from_dict on the json representation
         sources_list_item_model = SourcesListItem.from_dict(sources_list_item_model_json)
@@ -2591,6 +4047,50 @@ class TestModel_SourcesListItem():
         # Convert model instance back to dict and verify no loss of data
         sources_list_item_model_json2 = sources_list_item_model.to_dict()
         assert sources_list_item_model_json2 == sources_list_item_model_json
+
+class TestModel_Style():
+    """
+    Test Class for Style
+    """
+
+    def test_style_serialization(self):
+        """
+        Test serialization/deserialization for Style
+        """
+
+        # Construct a json representation of a Style model
+        style_model_json = {}
+        style_model_json['type'] = 'testString'
+        style_model_json['title'] = 'testString'
+        style_model_json['url'] = 'testString'
+        style_model_json['text'] = 'testString'
+        style_model_json['lines'] = ['testString']
+        style_model_json['foo'] = 'testString'
+
+        # Construct a model instance of Style by calling from_dict on the json representation
+        style_model = Style.from_dict(style_model_json)
+        assert style_model != False
+
+        # Construct a model instance of Style by calling from_dict on the json representation
+        style_model_dict = Style.from_dict(style_model_json).__dict__
+        style_model2 = Style(**style_model_dict)
+
+        # Verify the model instances are equivalent
+        assert style_model == style_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        style_model_json2 = style_model.to_dict()
+        assert style_model_json2 == style_model_json
+
+        # Test get_properties and set_properties methods.
+        style_model.set_properties({})
+        actual_dict = style_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        style_model.set_properties(expected_dict)
+        actual_dict = style_model.get_properties()
+        assert actual_dict == expected_dict
 
 class TestModel_Subscription():
     """
@@ -2675,7 +4175,7 @@ class TestModel_SubscriptionList():
         subscription_list_item_model['destination_type'] = 'smtp_ibm'
         subscription_list_item_model['topic_id'] = '33d2b8d5-8ab8-46c7-97b9-c508afbf0701'
         subscription_list_item_model['topic_name'] = 'Developers topic'
-        subscription_list_item_model['updated_at'] = "2021-08-18T09:50:32.133000Z"
+        subscription_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         # Construct a json representation of a SubscriptionList model
         subscription_list_model_json = {}
@@ -2719,7 +4219,7 @@ class TestModel_SubscriptionListItem():
         subscription_list_item_model_json['destination_type'] = 'sms_ibm'
         subscription_list_item_model_json['topic_id'] = 'testString'
         subscription_list_item_model_json['topic_name'] = 'testString'
-        subscription_list_item_model_json['updated_at'] = "2019-01-01T12:00:00Z"
+        subscription_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
 
         # Construct a model instance of SubscriptionListItem by calling from_dict on the json representation
         subscription_list_item_model = SubscriptionListItem.from_dict(subscription_list_item_model_json)
@@ -2735,6 +4235,80 @@ class TestModel_SubscriptionListItem():
         # Convert model instance back to dict and verify no loss of data
         subscription_list_item_model_json2 = subscription_list_item_model.to_dict()
         assert subscription_list_item_model_json2 == subscription_list_item_model_json
+
+class TestModel_TagsSubscriptionList():
+    """
+    Test Class for TagsSubscriptionList
+    """
+
+    def test_tags_subscription_list_serialization(self):
+        """
+        Test serialization/deserialization for TagsSubscriptionList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        tags_subscription_list_item_model = {} # TagsSubscriptionListItem
+        tags_subscription_list_item_model['id'] = 'nkjl-d0c8-4108-9f07-890'
+        tags_subscription_list_item_model['device_id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
+        tags_subscription_list_item_model['tag_name'] = 'Slack_Webhook'
+        tags_subscription_list_item_model['user_id'] = 'fcm_id_123'
+        tags_subscription_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
+
+        # Construct a json representation of a TagsSubscriptionList model
+        tags_subscription_list_model_json = {}
+        tags_subscription_list_model_json['total_count'] = 38
+        tags_subscription_list_model_json['offset'] = 38
+        tags_subscription_list_model_json['limit'] = 38
+        tags_subscription_list_model_json['tag_subscriptions'] = [tags_subscription_list_item_model]
+
+        # Construct a model instance of TagsSubscriptionList by calling from_dict on the json representation
+        tags_subscription_list_model = TagsSubscriptionList.from_dict(tags_subscription_list_model_json)
+        assert tags_subscription_list_model != False
+
+        # Construct a model instance of TagsSubscriptionList by calling from_dict on the json representation
+        tags_subscription_list_model_dict = TagsSubscriptionList.from_dict(tags_subscription_list_model_json).__dict__
+        tags_subscription_list_model2 = TagsSubscriptionList(**tags_subscription_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert tags_subscription_list_model == tags_subscription_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        tags_subscription_list_model_json2 = tags_subscription_list_model.to_dict()
+        assert tags_subscription_list_model_json2 == tags_subscription_list_model_json
+
+class TestModel_TagsSubscriptionListItem():
+    """
+    Test Class for TagsSubscriptionListItem
+    """
+
+    def test_tags_subscription_list_item_serialization(self):
+        """
+        Test serialization/deserialization for TagsSubscriptionListItem
+        """
+
+        # Construct a json representation of a TagsSubscriptionListItem model
+        tags_subscription_list_item_model_json = {}
+        tags_subscription_list_item_model_json['id'] = 'testString'
+        tags_subscription_list_item_model_json['device_id'] = 'testString'
+        tags_subscription_list_item_model_json['tag_name'] = 'testString'
+        tags_subscription_list_item_model_json['user_id'] = 'testString'
+        tags_subscription_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of TagsSubscriptionListItem by calling from_dict on the json representation
+        tags_subscription_list_item_model = TagsSubscriptionListItem.from_dict(tags_subscription_list_item_model_json)
+        assert tags_subscription_list_item_model != False
+
+        # Construct a model instance of TagsSubscriptionListItem by calling from_dict on the json representation
+        tags_subscription_list_item_model_dict = TagsSubscriptionListItem.from_dict(tags_subscription_list_item_model_json).__dict__
+        tags_subscription_list_item_model2 = TagsSubscriptionListItem(**tags_subscription_list_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert tags_subscription_list_item_model == tags_subscription_list_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        tags_subscription_list_item_model_json2 = tags_subscription_list_item_model.to_dict()
+        assert tags_subscription_list_item_model_json2 == tags_subscription_list_item_model_json
 
 class TestModel_Topic():
     """
@@ -2755,10 +4329,10 @@ class TestModel_Topic():
         rules_get_model['updated_at'] = '2021-09-08T13:25:20.523533Z'
         rules_get_model['id'] = '218f4e30-9af2-4f70-b38b-738f923b0c4b'
 
-        topic_sources_item_model = {} # TopicSourcesItem
-        topic_sources_item_model['id'] = '96dbf538-9fa7-4745-b9e4-32bb6f1dc47a:api'
-        topic_sources_item_model['name'] = 'Compliance source'
-        topic_sources_item_model['rules'] = [rules_get_model]
+        sources_list_item_model = {} # SourcesListItem
+        sources_list_item_model['id'] = '96dbf538-9fa7-4745-b9e4-32bb6f1dc47a:api'
+        sources_list_item_model['name'] = 'Compliance source'
+        sources_list_item_model['rules'] = [rules_get_model]
 
         subscription_list_item_model = {} # SubscriptionListItem
         subscription_list_item_model['id'] = '87bef75e-f826-4aa9-b64d-91af9be5e12b'
@@ -2769,7 +4343,7 @@ class TestModel_Topic():
         subscription_list_item_model['destination_type'] = 'sms_ibm'
         subscription_list_item_model['topic_id'] = '7b23362d-6d48-47ef-847a-c8b291220306'
         subscription_list_item_model['topic_name'] = 'testString'
-        subscription_list_item_model['updated_at'] = "2021-08-20T10:08:46.060000Z"
+        subscription_list_item_model['updated_at'] = '2021-08-20T10:08:46.060000Z'
 
         # Construct a json representation of a Topic model
         topic_model_json = {}
@@ -2778,7 +4352,7 @@ class TestModel_Topic():
         topic_model_json['name'] = 'testString'
         topic_model_json['updated_at'] = 'testString'
         topic_model_json['source_count'] = 38
-        topic_model_json['sources'] = [topic_sources_item_model]
+        topic_model_json['sources'] = [sources_list_item_model]
         topic_model_json['subscription_count'] = 38
         topic_model_json['subscriptions'] = [subscription_list_item_model]
 
@@ -2871,46 +4445,6 @@ class TestModel_TopicResponse():
         topic_response_model_json2 = topic_response_model.to_dict()
         assert topic_response_model_json2 == topic_response_model_json
 
-class TestModel_TopicSourcesItem():
-    """
-    Test Class for TopicSourcesItem
-    """
-
-    def test_topic_sources_item_serialization(self):
-        """
-        Test serialization/deserialization for TopicSourcesItem
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        rules_get_model = {} # RulesGet
-        rules_get_model['enabled'] = True
-        rules_get_model['event_type_filter'] = '$.*'
-        rules_get_model['notification_filter'] = 'testString'
-        rules_get_model['updated_at'] = 'testString'
-        rules_get_model['id'] = 'testString'
-
-        # Construct a json representation of a TopicSourcesItem model
-        topic_sources_item_model_json = {}
-        topic_sources_item_model_json['id'] = 'testString'
-        topic_sources_item_model_json['name'] = 'testString'
-        topic_sources_item_model_json['rules'] = [rules_get_model]
-
-        # Construct a model instance of TopicSourcesItem by calling from_dict on the json representation
-        topic_sources_item_model = TopicSourcesItem.from_dict(topic_sources_item_model_json)
-        assert topic_sources_item_model != False
-
-        # Construct a model instance of TopicSourcesItem by calling from_dict on the json representation
-        topic_sources_item_model_dict = TopicSourcesItem.from_dict(topic_sources_item_model_json).__dict__
-        topic_sources_item_model2 = TopicSourcesItem(**topic_sources_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert topic_sources_item_model == topic_sources_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        topic_sources_item_model_json2 = topic_sources_item_model.to_dict()
-        assert topic_sources_item_model_json2 == topic_sources_item_model_json
-
 class TestModel_TopicUpdateSourcesItem():
     """
     Test Class for TopicUpdateSourcesItem
@@ -2982,6 +4516,70 @@ class TestModel_TopicsListItem():
         topics_list_item_model_json2 = topics_list_item_model.to_dict()
         assert topics_list_item_model_json2 == topics_list_item_model_json
 
+class TestModel_DestinationConfigParamsFCMDestinationConfig():
+    """
+    Test Class for DestinationConfigParamsFCMDestinationConfig
+    """
+
+    def test_destination_config_params_fcm_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigParamsFCMDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigParamsFCMDestinationConfig model
+        destination_config_params_fcm_destination_config_model_json = {}
+        destination_config_params_fcm_destination_config_model_json['server_key'] = 'testString'
+        destination_config_params_fcm_destination_config_model_json['sender_id'] = 'testString'
+
+        # Construct a model instance of DestinationConfigParamsFCMDestinationConfig by calling from_dict on the json representation
+        destination_config_params_fcm_destination_config_model = DestinationConfigParamsFCMDestinationConfig.from_dict(destination_config_params_fcm_destination_config_model_json)
+        assert destination_config_params_fcm_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigParamsFCMDestinationConfig by calling from_dict on the json representation
+        destination_config_params_fcm_destination_config_model_dict = DestinationConfigParamsFCMDestinationConfig.from_dict(destination_config_params_fcm_destination_config_model_json).__dict__
+        destination_config_params_fcm_destination_config_model2 = DestinationConfigParamsFCMDestinationConfig(**destination_config_params_fcm_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_params_fcm_destination_config_model == destination_config_params_fcm_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_params_fcm_destination_config_model_json2 = destination_config_params_fcm_destination_config_model.to_dict()
+        assert destination_config_params_fcm_destination_config_model_json2 == destination_config_params_fcm_destination_config_model_json
+
+class TestModel_DestinationConfigParamsIOSDestinationConfig():
+    """
+    Test Class for DestinationConfigParamsIOSDestinationConfig
+    """
+
+    def test_destination_config_params_ios_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigParamsIOSDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigParamsIOSDestinationConfig model
+        destination_config_params_ios_destination_config_model_json = {}
+        destination_config_params_ios_destination_config_model_json['cert_type'] = 'p8'
+        destination_config_params_ios_destination_config_model_json['is_sandbox'] = False
+        destination_config_params_ios_destination_config_model_json['password'] = 'testString'
+        destination_config_params_ios_destination_config_model_json['key_id'] = 'testString'
+        destination_config_params_ios_destination_config_model_json['team_id'] = 'testString'
+        destination_config_params_ios_destination_config_model_json['bundle_id'] = 'testString'
+
+        # Construct a model instance of DestinationConfigParamsIOSDestinationConfig by calling from_dict on the json representation
+        destination_config_params_ios_destination_config_model = DestinationConfigParamsIOSDestinationConfig.from_dict(destination_config_params_ios_destination_config_model_json)
+        assert destination_config_params_ios_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigParamsIOSDestinationConfig by calling from_dict on the json representation
+        destination_config_params_ios_destination_config_model_dict = DestinationConfigParamsIOSDestinationConfig.from_dict(destination_config_params_ios_destination_config_model_json).__dict__
+        destination_config_params_ios_destination_config_model2 = DestinationConfigParamsIOSDestinationConfig(**destination_config_params_ios_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_params_ios_destination_config_model == destination_config_params_ios_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_params_ios_destination_config_model_json2 = destination_config_params_ios_destination_config_model.to_dict()
+        assert destination_config_params_ios_destination_config_model_json2 == destination_config_params_ios_destination_config_model_json
+
 class TestModel_DestinationConfigParamsWebhookDestinationConfig():
     """
     Test Class for DestinationConfigParamsWebhookDestinationConfig
@@ -3013,6 +4611,221 @@ class TestModel_DestinationConfigParamsWebhookDestinationConfig():
         # Convert model instance back to dict and verify no loss of data
         destination_config_params_webhook_destination_config_model_json2 = destination_config_params_webhook_destination_config_model.to_dict()
         assert destination_config_params_webhook_destination_config_model_json2 == destination_config_params_webhook_destination_config_model_json
+
+class TestModel_NotificationAPNSBodyMessageENData():
+    """
+    Test Class for NotificationAPNSBodyMessageENData
+    """
+
+    def test_notification_apns_body_message_en_data_serialization(self):
+        """
+        Test serialization/deserialization for NotificationAPNSBodyMessageENData
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        notification_apns_body_message_data_model = {} # NotificationAPNSBodyMessageData
+        notification_apns_body_message_data_model['alert'] = 'Mario'
+        notification_apns_body_message_data_model['badge'] = 38
+        notification_apns_body_message_data_model['interactiveCategory'] = 'testString'
+        notification_apns_body_message_data_model['iosActionKey'] = 'testString'
+        notification_apns_body_message_data_model['payload'] = { 'foo': 'bar' }
+        notification_apns_body_message_data_model['sound'] = 'testString'
+        notification_apns_body_message_data_model['titleLocKey'] = 'testString'
+        notification_apns_body_message_data_model['locKey'] = 'testString'
+        notification_apns_body_message_data_model['launchImage'] = 'testString'
+        notification_apns_body_message_data_model['titleLocArgs'] = ['testString']
+        notification_apns_body_message_data_model['locArgs'] = ['testString']
+        notification_apns_body_message_data_model['title'] = 'testString'
+        notification_apns_body_message_data_model['subtitle'] = 'testString'
+        notification_apns_body_message_data_model['attachmentUrl'] = 'testString'
+        notification_apns_body_message_data_model['type'] = 'DEFAULT'
+        notification_apns_body_message_data_model['apnsCollapseId'] = 'testString'
+        notification_apns_body_message_data_model['apnsThreadId'] = 'testString'
+        notification_apns_body_message_data_model['apnsGroupSummaryArg'] = 'testString'
+        notification_apns_body_message_data_model['apnsGroupSummaryArgCount'] = 38
+
+        # Construct a json representation of a NotificationAPNSBodyMessageENData model
+        notification_apns_body_message_en_data_model_json = {}
+        notification_apns_body_message_en_data_model_json['en_data'] = notification_apns_body_message_data_model
+        notification_apns_body_message_en_data_model_json['foo'] = 'testString'
+
+        # Construct a model instance of NotificationAPNSBodyMessageENData by calling from_dict on the json representation
+        notification_apns_body_message_en_data_model = NotificationAPNSBodyMessageENData.from_dict(notification_apns_body_message_en_data_model_json)
+        assert notification_apns_body_message_en_data_model != False
+
+        # Construct a model instance of NotificationAPNSBodyMessageENData by calling from_dict on the json representation
+        notification_apns_body_message_en_data_model_dict = NotificationAPNSBodyMessageENData.from_dict(notification_apns_body_message_en_data_model_json).__dict__
+        notification_apns_body_message_en_data_model2 = NotificationAPNSBodyMessageENData(**notification_apns_body_message_en_data_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_apns_body_message_en_data_model == notification_apns_body_message_en_data_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_apns_body_message_en_data_model_json2 = notification_apns_body_message_en_data_model.to_dict()
+        assert notification_apns_body_message_en_data_model_json2 == notification_apns_body_message_en_data_model_json
+
+        # Test get_properties and set_properties methods.
+        notification_apns_body_message_en_data_model.set_properties({})
+        actual_dict = notification_apns_body_message_en_data_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        notification_apns_body_message_en_data_model.set_properties(expected_dict)
+        actual_dict = notification_apns_body_message_en_data_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_NotificationAPNSBodyNotificationPayload():
+    """
+    Test Class for NotificationAPNSBodyNotificationPayload
+    """
+
+    def test_notification_apns_body_notification_payload_serialization(self):
+        """
+        Test serialization/deserialization for NotificationAPNSBodyNotificationPayload
+        """
+
+        # Construct a json representation of a NotificationAPNSBodyNotificationPayload model
+        notification_apns_body_notification_payload_model_json = {}
+        notification_apns_body_notification_payload_model_json['foo'] = 'testString'
+
+        # Construct a model instance of NotificationAPNSBodyNotificationPayload by calling from_dict on the json representation
+        notification_apns_body_notification_payload_model = NotificationAPNSBodyNotificationPayload.from_dict(notification_apns_body_notification_payload_model_json)
+        assert notification_apns_body_notification_payload_model != False
+
+        # Construct a model instance of NotificationAPNSBodyNotificationPayload by calling from_dict on the json representation
+        notification_apns_body_notification_payload_model_dict = NotificationAPNSBodyNotificationPayload.from_dict(notification_apns_body_notification_payload_model_json).__dict__
+        notification_apns_body_notification_payload_model2 = NotificationAPNSBodyNotificationPayload(**notification_apns_body_notification_payload_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_apns_body_notification_payload_model == notification_apns_body_notification_payload_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_apns_body_notification_payload_model_json2 = notification_apns_body_notification_payload_model.to_dict()
+        assert notification_apns_body_notification_payload_model_json2 == notification_apns_body_notification_payload_model_json
+
+        # Test get_properties and set_properties methods.
+        notification_apns_body_notification_payload_model.set_properties({})
+        actual_dict = notification_apns_body_notification_payload_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        notification_apns_body_notification_payload_model.set_properties(expected_dict)
+        actual_dict = notification_apns_body_notification_payload_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_NotificationFCMBodyMessageENData():
+    """
+    Test Class for NotificationFCMBodyMessageENData
+    """
+
+    def test_notification_fcm_body_message_en_data_serialization(self):
+        """
+        Test serialization/deserialization for NotificationFCMBodyMessageENData
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        lights_model = {} # Lights
+        lights_model['led_argb'] = 'testString'
+        lights_model['led_on_ms'] = 0
+        lights_model['led_off_ms'] = 'testString'
+
+        style_model = {} # Style
+        style_model['type'] = 'testString'
+        style_model['title'] = 'testString'
+        style_model['url'] = 'testString'
+        style_model['text'] = 'testString'
+        style_model['lines'] = ['testString']
+        style_model['foo'] = 'testString'
+
+        notification_fcm_body_message_data_model = {} # NotificationFCMBodyMessageData
+        notification_fcm_body_message_data_model['alert'] = 'Mario'
+        notification_fcm_body_message_data_model['collapse_key'] = 'testString'
+        notification_fcm_body_message_data_model['interactive_category'] = 'testString'
+        notification_fcm_body_message_data_model['icon'] = 'testString'
+        notification_fcm_body_message_data_model['delay_while_idle'] = True
+        notification_fcm_body_message_data_model['sync'] = True
+        notification_fcm_body_message_data_model['visibility'] = 'testString'
+        notification_fcm_body_message_data_model['redact'] = 'testString'
+        notification_fcm_body_message_data_model['payload'] = {}
+        notification_fcm_body_message_data_model['priority'] = 'testString'
+        notification_fcm_body_message_data_model['sound'] = 'testString'
+        notification_fcm_body_message_data_model['time_to_live'] = 100
+        notification_fcm_body_message_data_model['lights'] = lights_model
+        notification_fcm_body_message_data_model['android_title'] = 'testString'
+        notification_fcm_body_message_data_model['group_id'] = 'testString'
+        notification_fcm_body_message_data_model['style'] = style_model
+        notification_fcm_body_message_data_model['type'] = 'DEFAULT'
+
+        # Construct a json representation of a NotificationFCMBodyMessageENData model
+        notification_fcm_body_message_en_data_model_json = {}
+        notification_fcm_body_message_en_data_model_json['en_data'] = notification_fcm_body_message_data_model
+        notification_fcm_body_message_en_data_model_json['foo'] = 'testString'
+
+        # Construct a model instance of NotificationFCMBodyMessageENData by calling from_dict on the json representation
+        notification_fcm_body_message_en_data_model = NotificationFCMBodyMessageENData.from_dict(notification_fcm_body_message_en_data_model_json)
+        assert notification_fcm_body_message_en_data_model != False
+
+        # Construct a model instance of NotificationFCMBodyMessageENData by calling from_dict on the json representation
+        notification_fcm_body_message_en_data_model_dict = NotificationFCMBodyMessageENData.from_dict(notification_fcm_body_message_en_data_model_json).__dict__
+        notification_fcm_body_message_en_data_model2 = NotificationFCMBodyMessageENData(**notification_fcm_body_message_en_data_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_fcm_body_message_en_data_model == notification_fcm_body_message_en_data_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_fcm_body_message_en_data_model_json2 = notification_fcm_body_message_en_data_model.to_dict()
+        assert notification_fcm_body_message_en_data_model_json2 == notification_fcm_body_message_en_data_model_json
+
+        # Test get_properties and set_properties methods.
+        notification_fcm_body_message_en_data_model.set_properties({})
+        actual_dict = notification_fcm_body_message_en_data_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        notification_fcm_body_message_en_data_model.set_properties(expected_dict)
+        actual_dict = notification_fcm_body_message_en_data_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_NotificationFCMBodyNotificationPayload():
+    """
+    Test Class for NotificationFCMBodyNotificationPayload
+    """
+
+    def test_notification_fcm_body_notification_payload_serialization(self):
+        """
+        Test serialization/deserialization for NotificationFCMBodyNotificationPayload
+        """
+
+        # Construct a json representation of a NotificationFCMBodyNotificationPayload model
+        notification_fcm_body_notification_payload_model_json = {}
+        notification_fcm_body_notification_payload_model_json['foo'] = 'testString'
+
+        # Construct a model instance of NotificationFCMBodyNotificationPayload by calling from_dict on the json representation
+        notification_fcm_body_notification_payload_model = NotificationFCMBodyNotificationPayload.from_dict(notification_fcm_body_notification_payload_model_json)
+        assert notification_fcm_body_notification_payload_model != False
+
+        # Construct a model instance of NotificationFCMBodyNotificationPayload by calling from_dict on the json representation
+        notification_fcm_body_notification_payload_model_dict = NotificationFCMBodyNotificationPayload.from_dict(notification_fcm_body_notification_payload_model_json).__dict__
+        notification_fcm_body_notification_payload_model2 = NotificationFCMBodyNotificationPayload(**notification_fcm_body_notification_payload_model_dict)
+
+        # Verify the model instances are equivalent
+        assert notification_fcm_body_notification_payload_model == notification_fcm_body_notification_payload_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        notification_fcm_body_notification_payload_model_json2 = notification_fcm_body_notification_payload_model.to_dict()
+        assert notification_fcm_body_notification_payload_model_json2 == notification_fcm_body_notification_payload_model_json
+
+        # Test get_properties and set_properties methods.
+        notification_fcm_body_notification_payload_model.set_properties({})
+        actual_dict = notification_fcm_body_notification_payload_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        notification_fcm_body_notification_payload_model.set_properties(expected_dict)
+        actual_dict = notification_fcm_body_notification_payload_model.get_properties()
+        assert actual_dict == expected_dict
 
 class TestModel_SubscriptionAttributesEmailAttributesResponse():
     """
@@ -3165,6 +4978,34 @@ class TestModel_SubscriptionCreateAttributesEmailAttributes():
         # Convert model instance back to dict and verify no loss of data
         subscription_create_attributes_email_attributes_model_json2 = subscription_create_attributes_email_attributes_model.to_dict()
         assert subscription_create_attributes_email_attributes_model_json2 == subscription_create_attributes_email_attributes_model_json
+
+class TestModel_SubscriptionCreateAttributesFCMAttributes():
+    """
+    Test Class for SubscriptionCreateAttributesFCMAttributes
+    """
+
+    def test_subscription_create_attributes_fcm_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesFCMAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesFCMAttributes model
+        subscription_create_attributes_fcm_attributes_model_json = {}
+
+        # Construct a model instance of SubscriptionCreateAttributesFCMAttributes by calling from_dict on the json representation
+        subscription_create_attributes_fcm_attributes_model = SubscriptionCreateAttributesFCMAttributes.from_dict(subscription_create_attributes_fcm_attributes_model_json)
+        assert subscription_create_attributes_fcm_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesFCMAttributes by calling from_dict on the json representation
+        subscription_create_attributes_fcm_attributes_model_dict = SubscriptionCreateAttributesFCMAttributes.from_dict(subscription_create_attributes_fcm_attributes_model_json).__dict__
+        subscription_create_attributes_fcm_attributes_model2 = SubscriptionCreateAttributesFCMAttributes(**subscription_create_attributes_fcm_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_create_attributes_fcm_attributes_model == subscription_create_attributes_fcm_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_fcm_attributes_model_json2 = subscription_create_attributes_fcm_attributes_model.to_dict()
+        assert subscription_create_attributes_fcm_attributes_model_json2 == subscription_create_attributes_fcm_attributes_model_json
 
 class TestModel_SubscriptionCreateAttributesSMSAttributes():
     """
