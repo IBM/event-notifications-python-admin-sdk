@@ -1,3 +1,10 @@
+## [0.0.5](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.4...v0.0.5) (2022-03-16)
+
+
+### Bug Fixes
+
+* update readme ([#10](https://github.com/IBM/event-notifications-python-admin-sdk/issues/10)) ([d98849a](https://github.com/IBM/event-notifications-python-admin-sdk/commit/d98849ae35660d3ccb9912bfaed4d84849ef4065))
+
 ## [0.0.4](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.3...v0.0.4) (2022-03-16)
 
 
