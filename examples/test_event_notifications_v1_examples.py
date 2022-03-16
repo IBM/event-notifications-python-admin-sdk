@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2021.
+# (C) Copyright IBM Corp. 2022.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ Examples for EventNotificationsV1
 """
 
 from ibm_cloud_sdk_core import ApiException, read_external_sources
+from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import os
 import pytest
 from ibm_eventnotifications.event_notifications_v1 import *
@@ -35,7 +36,7 @@ from ibm_eventnotifications.event_notifications_v1 import *
 # in a configuration file and then:
 # export IBM_CREDENTIALS_FILE=<name of configuration file>
 #
-config_file = '../event_notifications.env'
+config_file = '../event_notifications_v1.env'
 
 event_notifications_service = None
 
@@ -49,7 +50,8 @@ source_id = ''
 topic_id = ''
 destination_id = ''
 subscription_id = ''
-
+fcmServerKey = ''
+fcmSenderId = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -62,7 +64,7 @@ class TestEventNotificationsV1Examples():
 
     @classmethod
     def setup_class(cls):
-        global instance_id
+        global instance_id, fcmServerKey, fcmSenderId
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
@@ -78,13 +80,18 @@ class TestEventNotificationsV1Examples():
             # Load the configuration
             global config
             config = read_external_sources(EventNotificationsV1.DEFAULT_SERVICE_NAME)
+
             instance_id = config['GUID']
+            fcmServerKey = config['FCM_KEY']
+            fcmSenderId = config['FCM_ID']
             assert instance_id is not None
+            assert fcmServerKey is not None
+            assert fcmSenderId is not None
 
         print('Setup complete.')
 
     needscredentials = pytest.mark.skipif(
-        not os.path.exists(config_file), reason='External configuration not available, skipping...'
+        not os.path.exists(config_file), reason="External configuration not available, skipping..."
     )
 
     @needscredentials
@@ -104,7 +111,6 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(source_list, indent=2))
 
             # end-list_sources
-
             source_id = SourceList.from_dict(source_list).sources[0].id
 
         except ApiException as e:
@@ -136,7 +142,6 @@ class TestEventNotificationsV1Examples():
         """
         create_topic request example
         """
-
         global topic_id
         try:
             print('\ncreate_topic() result:')
@@ -256,26 +261,21 @@ class TestEventNotificationsV1Examples():
         create_destination request example
         """
         global destination_id
-
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
 
             destination_config_params_model = {
-                'url': 'https://gcm.com',
-                'verb': 'get',
-                'custom_headers': {'Authorization': 'aaa-r-t-fdsfs-55kfjsd-fsdfs', },
-                'sensitive_headers': ['gcm_apikey'],
+                "server_key": fcmServerKey,
+                "sender_id": fcmSenderId
             }
 
-            # Construct a dict representation of a DestinationConfig model
             destination_config_model = {
                 'params': destination_config_params_model,
             }
-
-            name = 'GCM_destination'
-            typeVal = 'webhook'
-            description = 'GCM Destination'
+            name = "FCM_destination"
+            typeVal = "push_android"
+            description = "FCM Destination"
 
             destination = event_notifications_service.create_destination(
                 instance_id,
@@ -345,20 +345,17 @@ class TestEventNotificationsV1Examples():
             print('\nupdate_destination() result:')
             # begin-update_destination
 
-            # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
             destination_config_params_model = {
-                'url': 'https://cloud.ibm.com/webhook/send_message',
-                'verb': 'post',
-                'sensitive_headers': ['authorization'],
+                "server_key": fcmServerKey,
+                "sender_id": fcmSenderId
             }
 
-            # Construct a dict representation of a DestinationConfig model
             destination_config_model = {
                 'params': destination_config_params_model,
             }
+            name = "Admin FCM Compliance"
+            description = "This destination is for creating admin FCM to receive compliance notifications"
 
-            name = 'Admin GCM Compliance'
-            description = 'This destination is for creating admin GCM webhook to receive compliance notifications'
             destination = event_notifications_service.update_destination(
                 instance_id,
                 id=destination_id,
@@ -375,6 +372,48 @@ class TestEventNotificationsV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
+    def test_list_destination_devices_example(self):
+        """
+        list_destination_devices request example
+        """
+        try:
+            print('\nlist_destination_devices() result:')
+            # begin-list_destination_devices
+
+            destination_devices_list = event_notifications_service.list_destination_devices(
+                instance_id,
+                id=destination_id
+            ).get_result()
+
+            print(json.dumps(destination_devices_list, indent=2))
+
+            # end-list_destination_devices
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_destination_devices_report_example(self):
+        """
+        get_destination_devices_report request example
+        """
+        try:
+            print('\nget_destination_devices_report() result:')
+            # begin-get_destination_devices_report
+
+            destination_devices_report = event_notifications_service.get_destination_devices_report(
+                instance_id,
+                id=destination_id
+            ).get_result()
+
+            print(json.dumps(destination_devices_report, indent=2))
+
+            # end-get_destination_devices_report
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_create_subscription_example(self):
         """
         create_subscription request example
@@ -384,18 +423,13 @@ class TestEventNotificationsV1Examples():
             print('\ncreate_subscription() result:')
             # begin-create_subscription
 
-            subscription_create_attributes_model = {
-                'signing_enabled': False,
-            }
-
-            name = 'subscription_web'
-            description = 'Subscription for web'
+            name = 'FCM subscription'
+            description = 'Subscription for the FCM'
             subscription = event_notifications_service.create_subscription(
                 instance_id,
                 name,
                 destination_id,
                 topic_id,
-                attributes=subscription_create_attributes_model,
                 description=description
             ).get_result()
 
@@ -458,24 +492,80 @@ class TestEventNotificationsV1Examples():
             print('\nupdate_subscription() result:')
             # begin-update_subscription
 
-            # Construct a dict representation of a SubscriptionUpdateAttributesSMSAttributes model
-            subscription_update_attributes_model = {
-                'signing_enabled': True,
-            }
-
-            name = 'GCM_sub_updated'
-            description = 'Update GCM subscription'
+            name = 'Update_FCM_subscription'
+            description = 'Update FCM subscription'
             subscription = event_notifications_service.update_subscription(
                 instance_id,
                 id=subscription_id,
                 name=name,
                 description=description,
-                attributes=subscription_update_attributes_model
             ).get_result()
 
             print(json.dumps(subscription, indent=2))
 
             # end-update_subscription
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_send_notifications_example(self):
+        """
+        send_notifications request example
+        """
+        try:
+            print('\nsend_notifications() result:')
+
+            notification_id = "1234-1234-sdfs-234"
+            notification_subject = "FCM_Subject"
+            notification_severity = "MEDIUM"
+            type_value = "com.acme.offer:new"
+            date = string_to_datetime('2019-01-01T12:00:00.000Z')
+            user_id = "userId"
+            notifications_source = "1234-1234-sdfs-234:test"
+            
+            # begin-send_notifications
+
+            notification_devices_model = {
+                'user_ids': ['userId'],
+            }
+
+            notification_apns_body_model = {
+                "aps": {
+                    "alert": "Game Request",
+                    "badge": 5,
+                },
+            }
+            notification_fcm_body_model = {
+                "notification": {
+                    "title": "Portugal vs. Denmark",
+                    "body": "great match!",
+                },
+            }
+
+            message_apns_headers = {
+                "apns-collapse-id": "123",
+            }
+
+            notification_response = event_notifications_service.send_notifications(
+                instance_id,
+                subject=notification_subject,
+                severity=notification_severity,
+                id=notification_id,
+                source=notifications_source,
+                en_source_id=source_id,
+                type=type_value,
+                time=date,
+                data={},
+                push_to=notification_devices_model,
+                message_fcm_body=notification_fcm_body_model,
+                message_apns_body=notification_apns_body_model,
+                message_apns_headers=message_apns_headers,
+            ).get_result()
+
+            print(json.dumps(notification_response, indent=2))
+
+            # end-send_notifications
 
         except ApiException as e:
             pytest.fail(str(e))
