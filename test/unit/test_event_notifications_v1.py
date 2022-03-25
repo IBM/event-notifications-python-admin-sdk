@@ -31,6 +31,7 @@ import responses
 import tempfile
 import urllib
 from ibm_eventnotifications.event_notifications_v1 import *
+from ibm_eventnotifications.send_notifications import *
 
 
 _service = EventNotificationsV1(
