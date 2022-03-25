@@ -21,6 +21,7 @@ import os
 import pytest
 from ibm_cloud_sdk_core import *
 from ibm_eventnotifications.event_notifications_v1 import *
+from ibm_eventnotifications.send_notifications import *
 
 # Config file name
 config_file = '../../event_notifications_v1.env'
@@ -77,9 +78,39 @@ class TestEventNotificationsV1():
     )
 
     @needscredentials
-    def test_list_sources(self):
+    def test_create_sources(self):
 
         global source_id
+        create_sources_response = self.event_notifications_service.create_sources(
+            instance_id,
+            name='Event Notification Create Source Acme',
+            description='This source is used for Acme Bank',
+            enabled=False
+        )
+
+        assert create_sources_response.get_status_code() == 201
+        source_response = create_sources_response.get_result()
+        assert source_response is not None
+
+        source = SourceResponse.from_dict(source_response)
+        source_id = source.id
+        assert source_id is not None
+
+        #
+        # The following status codes aren't covered by tests.
+        # Please provide integration tests for these too.
+        #
+        # 400
+        # 401
+        # 404
+        # 409
+        # 415
+        # 500
+        #
+
+    @needscredentials
+    def test_list_sources(self):
+
         more_results = True
         limit = 1
         offset = 0
@@ -95,8 +126,6 @@ class TestEventNotificationsV1():
             source_list = list_sources_response.get_result()
             assert source_list is not None
 
-            if offset == 0:
-                source_id = SourceList.from_dict(source_list).sources[0].id
             if source_list.get('total_count') <= offset:
                 more_results = False
             offset += 1
@@ -127,6 +156,33 @@ class TestEventNotificationsV1():
         #
         # 401
         # 404
+        # 500
+        #
+
+    @needscredentials
+    def test_update_source(self):
+
+        update_source_response = self.event_notifications_service.update_source(
+            instance_id,
+            id=source_id,
+            name='Event Notification update Source Acme',
+            description='This source is used for updated Acme Bank',
+            enabled=True
+        )
+
+        assert update_source_response.get_status_code() == 200
+        source = update_source_response.get_result()
+        assert source is not None
+
+        #
+        # The following status codes aren't covered by tests.
+        # Please provide integration tests for these too.
+        #
+        # 400
+        # 401
+        # 404
+        # 409
+        # 415
         # 500
         #
 
@@ -845,16 +901,16 @@ class TestEventNotificationsV1():
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
             subject=notification_subject,
-            severity=notification_severity,
+            ibmenseverity=notification_severity,
             id=notification_id,
             source=notifications_source,
-            en_source_id=source_id,
+            ibmensourceid=source_id,
             type=type_value,
             time=string_to_datetime('2019-01-01T12:00:00.000Z'),
             data={},
-            push_to=notification_devices_model,
-            message_fcm_body=notification_fcm_body_model,
-            message_apns_body=notification_apns_body_model,
+            ibmenpushto=notification_devices_model,
+            ibmenfcmbody=notification_fcm_body_model,
+            ibmenapnsheaders=notification_apns_body_model,
             datacontenttype='application/json',
             specversion='1.0'
         )
@@ -883,17 +939,17 @@ class TestEventNotificationsV1():
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
             subject=notification_subject,
-            severity=notification_severity,
+            ibmenseverity=notification_severity,
             id=notification_id,
             source=notifications_source,
-            en_source_id=source_id,
+            ibmensourceid=source_id,
             type=type_value,
             time=string_to_datetime('2019-01-01T12:00:00.000Z'),
             data={},
-            push_to=notification_devices_model,
-            message_fcm_body=notification_fcm_body_model,
-            message_apns_body=notification_apns_body_model,
-            message_apns_headers=message_apns_headers,
+            ibmenpushto=notification_devices_model,
+            ibmenfcmbody=notification_fcm_body_model,
+            ibmenapnsbody=notification_apns_body_model,
+            ibmenapnsheaders=message_apns_headers,
             datacontenttype='application/json',
             specversion='1.0'
         )
@@ -977,3 +1033,21 @@ class TestEventNotificationsV1():
         # 500
         #
 
+    @needscredentials
+    def test_delete_source(self):
+
+        delete_source_response = self.event_notifications_service.delete_source(
+            instance_id,
+            id=source_id
+        )
+
+        assert delete_source_response.get_status_code() == 204
+
+        #
+        # The following status codes aren't covered by tests.
+        # Please provide integration tests for these too.
+        #
+        # 401
+        # 404
+        # 500
+        #
