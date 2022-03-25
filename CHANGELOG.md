@@ -1,3 +1,10 @@
+## [0.0.6](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.5...v0.0.6) (2022-03-25)
+
+
+### Bug Fixes
+
+* add source creation apis and new send notification payload ([1d70904](https://github.com/IBM/event-notifications-python-admin-sdk/commit/1d70904e4d0a5f8e8c4105ee87cc2965cad4718a))
+
 ## [0.0.5](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.4...v0.0.5) (2022-03-16)
 
 
