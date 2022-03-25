@@ -22,6 +22,7 @@ from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import os
 import pytest
 from ibm_eventnotifications.event_notifications_v1 import *
+from ibm_eventnotifications.send_notifications import *
 
 #
 # This file provides an example of how to use the Event Notifications service.
@@ -95,11 +96,37 @@ class TestEventNotificationsV1Examples():
     )
 
     @needscredentials
+    def test_create_sources_example(self):
+        """
+        create_sources request example
+        """
+        global source_id
+        try:
+            print('\ncreate_sources() result:')
+            # begin-create_sources
+
+            source_response = event_notifications_service.create_sources(
+                instance_id,
+                name='Event Notification Create Source Acme',
+                description='This source is used for Acme Bank',
+                enabled=False
+            ).get_result()
+
+            print(json.dumps(source_response, indent=2))
+
+            # end-create_sources
+
+            source = SourceResponse.from_dict(source_response)
+            source_id = source.id
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_list_sources_example(self):
         """
         list_sources request example
         """
-        global source_id
         try:
             print('\nlist_sources() result:')
             # begin-list_sources
@@ -111,7 +138,6 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(source_list, indent=2))
 
             # end-list_sources
-            source_id = SourceList.from_dict(source_list).sources[0].id
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -133,6 +159,30 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(source, indent=2))
 
             # end-get_source
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_source_example(self):
+        """
+        update_source request example
+        """
+        try:
+            print('\nupdate_source() result:')
+            # begin-update_source
+
+            source = event_notifications_service.update_source(
+                instance_id,
+                id=source_id,
+                name='Event Notification update Source Acme',
+                description='This source is used for updated Acme Bank',
+                enabled=True
+            ).get_result()
+
+            print(json.dumps(source, indent=2))
+
+            # end-update_source
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -550,17 +600,17 @@ class TestEventNotificationsV1Examples():
             notification_response = event_notifications_service.send_notifications(
                 instance_id,
                 subject=notification_subject,
-                severity=notification_severity,
+                ibmenseverity=notification_severity,
                 id=notification_id,
                 source=notifications_source,
-                en_source_id=source_id,
+                ibmensourceid=source_id,
                 type=type_value,
                 time=date,
                 data={},
-                push_to=notification_devices_model,
-                message_fcm_body=notification_fcm_body_model,
-                message_apns_body=notification_apns_body_model,
-                message_apns_headers=message_apns_headers,
+                ibmenpushto=notification_devices_model,
+                ibmenfcmbody=notification_fcm_body_model,
+                ibmenapnsbody=notification_apns_body_model,
+                ibmenapnsheaders=message_apns_headers,
             ).get_result()
 
             print(json.dumps(notification_response, indent=2))
@@ -623,6 +673,25 @@ class TestEventNotificationsV1Examples():
 
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_source_example(self):
+        """
+        delete_source request example
+        """
+        try:
+            # begin-delete_source
+
+            response = event_notifications_service.delete_source(
+                instance_id,
+                id=source_id
+            )
+
+            # end-delete_source
+            print('\ndelete_source() response status code: ', response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))

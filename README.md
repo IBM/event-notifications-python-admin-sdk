@@ -56,6 +56,7 @@ Initialize the sdk to connect with your Event Notifications service instance.
 
 ```py
 from ibm_eventnotifications.event_notifications_v1 import EventNotificationsV1
+from ibm_eventnotifications.send_notifications import *
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 
  # Create an IAM authenticator.
@@ -75,11 +76,14 @@ event_notifications_service.set_service_url('https://' + region + '.event-notifi
 SDK Methods to consume
 
 - [Source](#source)
+    - [Create Source](#create-source)
 	- [List Sources](#list-sources)
-	- [Get Source](#get-sources)
+	- [Get Source](#get-source)
+    - [Update Source](#update-source)
+    - [Delete Source](#delete-source)
 - [Topics](#topics)
 	- [Create Topics](#create-topic)
-	- [List Topics](#list-topic)
+	- [List Topics](#list-topics)
 	- [Get Topic](#get-topic)
 	- [Update Topics](#update-topic)
 	- [Delete Topics](#delete-topic)
@@ -99,6 +103,19 @@ SDK Methods to consume
 
 ## Source 
 
+### Create Source
+
+```py
+source_response = event_notifications_service.create_sources(
+            <instance-id>, # Event notifications service instance GUID
+            name=<source-name>,
+            description=<source-description>,
+            enabled=False
+        ).get_result()
+
+print(json.dumps(source_response, indent=2))
+```
+
 ### List Sources
 
 ```py
@@ -109,7 +126,7 @@ source_list = event_notifications_service.list_sources(
 print(json.dumps(source_list, indent=2))
 ```
 
-### Get Sources
+### Get Source
 
 ```py
 
@@ -119,6 +136,31 @@ source = event_notifications_service.get_source(
   ).get_result()
 
 print(json.dumps(source, indent=2))
+
+```
+
+### Update Source
+
+```py
+source = event_notifications_service.update_source(
+            <instance-id>, # Event notifications service instance GUID
+            id=<source-id>,   # Event notifications service instance Source ID
+            name=<source-name>,
+            description=<source-description>,
+            enabled=True
+        ).get_result()
+
+print(json.dumps(source, indent=2))
+```
+
+### Delete Source
+
+```py
+
+response = event_notifications_service.delete_source(
+            <instance-id>, # Event notifications service instance GUID
+            id=<source-id>,   # Event notifications service instance Source ID
+        )
 
 ```
 
@@ -405,17 +447,17 @@ notifications_source := "<notification-source>"
 notification_response = event_notifications_service.send_notifications(
                 instance_id,
                 subject=notification_subject,
-                severity=notification_severity,
+                ibmenseverity=notification_severity,
                 id=notification_id,
                 source=notifications_source,
-                en_source_id=source_id,
+                ibmensourceid=source_id,
                 type=type_value,
                 time='<notification-time>',
                 data={},
-                push_to=notification_devices_model,
-                message_fcm_body=notification_fcm_body_model,
-                message_apns_body=notification_apns_body_model,
-                message_apns_headers=message_apns_headers,
+                ibmenpushto=notification_devices_model,
+                ibmenfcmbody=notification_fcm_body_model,
+                ibmenapnsbody=notification_apns_body_model,
+                ibmenapnsheaders=message_apns_headers,
             ).get_result()
 
 ```
@@ -435,17 +477,17 @@ notification_response = event_notifications_service.send_notifications(
 - **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method. 
   - *InstanceID* (**String**) - Event Notifications instance AppGUID. 
   - *Subject* (**String**) - Subject for the notifications. 
-  - *Severity* (**String**) - Severity for the notifications. 
+  - *ibmenseverity* (**String**) - Severity for the notifications. 
   - *ID* (**ID**) - ID for the notifications. 
   - *Source* (**String**) - Source of the notifications. 
-  - *EnSourceID* (**String**) - Event Notifications instance Source ID. 
+  - *ibmensourceid* (**String**) - Event Notifications instance Source ID. 
   - *Type* (**String**) - Type for the notifications. 
   - *Time* (**String**) - Time of the notifications. 
   - *Data* (**map[string]interface{}**) - Data for the notifications. Supported only for `Webhook` destination. 
-  - *PushTo* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
-  - *MessageFcmBody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
-  - *MessageApnsBody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
-  - *MessageApnsHeaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
+  - *ibmenpushto* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
+  - *ibmenfcmbody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
+  - *ibmenapnsbody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
+  - *ibmenapnsheaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
   - *Datacontenttype* (**String**) - Data content type of the notifications. 
   - *Specversion* (**String**) - Spec version of the Event Notifications. Default value is `1.0`. 
 

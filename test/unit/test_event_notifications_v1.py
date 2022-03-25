@@ -118,14 +118,6 @@ class TestSendNotifications():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a NotificationDevices model
-        notification_devices_model = {}
-        notification_devices_model['fcm_devices'] = ['testString']
-        notification_devices_model['apns_devices'] = ['testString']
-        notification_devices_model['user_ids'] = ['testString']
-        notification_devices_model['tags'] = ['testString']
-        notification_devices_model['platforms'] = ['testString']
-
         # Construct a dict representation of a Lights model
         lights_model = {}
         lights_model['led_argb'] = 'testString'
@@ -193,51 +185,47 @@ class TestSendNotifications():
         notification_apns_body_model['en_data'] = notification_apns_body_message_data_model
         notification_apns_body_model['foo'] = 'testString'
 
+        # Construct a dict representation of a NotificationDevices model
+        notification_devices_model = {}
+        notification_devices_model['fcm_devices'] = ['testString']
+        notification_devices_model['apns_devices'] = ['testString']
+        notification_devices_model['user_ids'] = ['testString']
+        notification_devices_model['tags'] = ['testString']
+        notification_devices_model['platforms'] = ['testString']
+
         # Set up parameter values
         instance_id = 'testString'
+        ibmenseverity = 'testString'
+        ibmensourceid = 'testString'
         subject = 'testString'
         id = 'testString'
         source = 'testString'
         type = 'testString'
         time = string_to_datetime('2019-01-01T12:00:00.000Z')
         data = {}
-        push_to = notification_devices_model
-        ibmenseverity = 'testString'
         ibmenfcmbody = notification_fcm_body_model
         ibmenapnsbody = notification_apns_body_model
         ibmenpushto = notification_devices_model
         ibmenapnsheaders = {}
-        ibmensourceid = 'testString'
-        message_fcm_body = notification_fcm_body_model
-        message_apns_headers = {}
-        message_apns_body = notification_apns_body_model
         datacontenttype = 'application/json'
-        severity = 'testString'
-        en_source_id = 'testString'
         specversion = '1.0'
 
         # Invoke method
         response = _service.send_notifications(
             instance_id,
+            ibmenseverity,
+            ibmensourceid,
             subject,
             id,
             source,
             type,
             time,
             data=data,
-            push_to=push_to,
-            ibmenseverity=ibmenseverity,
             ibmenfcmbody=ibmenfcmbody,
             ibmenapnsbody=ibmenapnsbody,
             ibmenpushto=ibmenpushto,
             ibmenapnsheaders=ibmenapnsheaders,
-            ibmensourceid=ibmensourceid,
-            message_fcm_body=message_fcm_body,
-            message_apns_headers=message_apns_headers,
-            message_apns_body=message_apns_body,
             datacontenttype=datacontenttype,
-            severity=severity,
-            en_source_id=en_source_id,
             specversion=specversion,
             headers={}
         )
@@ -247,25 +235,19 @@ class TestSendNotifications():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['ibmenseverity'] == 'testString'
+        assert req_body['ibmensourceid'] == 'testString'
         assert req_body['subject'] == 'testString'
         assert req_body['id'] == 'testString'
         assert req_body['source'] == 'testString'
         assert req_body['type'] == 'testString'
         assert req_body['time'] == '2019-01-01T12:00:00Z'
         assert req_body['data'] == {}
-        # assert req_body['push_to'] == notification_devices_model
-        # assert req_body['ibmenseverity'] == 'testString'
         # assert req_body['ibmenfcmbody'] == notification_fcm_body_model
         # assert req_body['ibmenapnsbody'] == notification_apns_body_model
         # assert req_body['ibmenpushto'] == notification_devices_model
         # assert req_body['ibmenapnsheaders'] == {}
-        # assert req_body['ibmensourceid'] == 'testString'
-        # assert req_body['message_fcm_body'] == notification_fcm_body_model
-        # assert req_body['message_apns_headers'] == {}
-        # assert req_body['message_apns_body'] == notification_apns_body_model
         assert req_body['datacontenttype'] == 'application/json'
-        assert req_body['severity'] == 'testString'
-        assert req_body['en_source_id'] == 'testString'
         assert req_body['specversion'] == '1.0'
 
     def test_send_notifications_all_params_with_retries(self):
@@ -291,14 +273,6 @@ class TestSendNotifications():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a NotificationDevices model
-        notification_devices_model = {}
-        notification_devices_model['fcm_devices'] = ['testString']
-        notification_devices_model['apns_devices'] = ['testString']
-        notification_devices_model['user_ids'] = ['testString']
-        notification_devices_model['tags'] = ['testString']
-        notification_devices_model['platforms'] = ['testString']
-
         # Construct a dict representation of a Lights model
         lights_model = {}
         lights_model['led_argb'] = 'testString'
@@ -366,32 +340,36 @@ class TestSendNotifications():
         notification_apns_body_model['en_data'] = notification_apns_body_message_data_model
         notification_apns_body_model['foo'] = 'testString'
 
+        # Construct a dict representation of a NotificationDevices model
+        notification_devices_model = {}
+        notification_devices_model['fcm_devices'] = ['testString']
+        notification_devices_model['apns_devices'] = ['testString']
+        notification_devices_model['user_ids'] = ['testString']
+        notification_devices_model['tags'] = ['testString']
+        notification_devices_model['platforms'] = ['testString']
+
         # Set up parameter values
         instance_id = 'testString'
+        ibmenseverity = 'testString'
+        ibmensourceid = 'testString'
         subject = 'testString'
         id = 'testString'
         source = 'testString'
         type = 'testString'
         time = string_to_datetime('2019-01-01T12:00:00.000Z')
         data = {}
-        push_to = notification_devices_model
-        ibmenseverity = 'testString'
         ibmenfcmbody = notification_fcm_body_model
         ibmenapnsbody = notification_apns_body_model
         ibmenpushto = notification_devices_model
         ibmenapnsheaders = {}
-        ibmensourceid = 'testString'
-        message_fcm_body = notification_fcm_body_model
-        message_apns_headers = {}
-        message_apns_body = notification_apns_body_model
         datacontenttype = 'application/json'
-        severity = 'testString'
-        en_source_id = 'testString'
         specversion = '1.0'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
+            "ibmenseverity": ibmenseverity,
+            "ibmensourceid": ibmensourceid,
             "subject": subject,
             "id": id,
             "source": source,
@@ -449,6 +427,99 @@ class TestNewInstance():
             service = EventNotificationsV1.new_instance(
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
+
+class TestCreateSources():
+    """
+    Test Class for create_sources
+    """
+
+    @responses.activate
+    def test_create_sources_all_params(self):
+        """
+        create_sources()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/sources')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        enabled = True
+
+        # Invoke method
+        response = _service.create_sources(
+            instance_id,
+            name,
+            description,
+            enabled=enabled,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['enabled'] == True
+
+    def test_create_sources_all_params_with_retries(self):
+        # Enable retries and run test_create_sources_all_params.
+        _service.enable_retries()
+        self.test_create_sources_all_params()
+
+        # Disable retries and run test_create_sources_all_params.
+        _service.disable_retries()
+        self.test_create_sources_all_params()
+
+    @responses.activate
+    def test_create_sources_value_error(self):
+        """
+        test_create_sources_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/sources')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        enabled = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "name": name,
+            "description": description,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_sources(**req_copy)
+
+
+    def test_create_sources_value_error_with_retries(self):
+        # Enable retries and run test_create_sources_value_error.
+        _service.enable_retries()
+        self.test_create_sources_value_error()
+
+        # Disable retries and run test_create_sources_value_error.
+        _service.disable_retries()
+        self.test_create_sources_value_error()
 
 class TestListSources():
     """
@@ -655,6 +726,176 @@ class TestGetSource():
         # Disable retries and run test_get_source_value_error.
         _service.disable_retries()
         self.test_get_source_value_error()
+
+class TestDeleteSource():
+    """
+    Test Class for delete_source
+    """
+
+    @responses.activate
+    def test_delete_source_all_params(self):
+        """
+        delete_source()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/sources/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.delete_source(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_source_all_params_with_retries(self):
+        # Enable retries and run test_delete_source_all_params.
+        _service.enable_retries()
+        self.test_delete_source_all_params()
+
+        # Disable retries and run test_delete_source_all_params.
+        _service.disable_retries()
+        self.test_delete_source_all_params()
+
+    @responses.activate
+    def test_delete_source_value_error(self):
+        """
+        test_delete_source_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/sources/testString')
+        responses.add(responses.DELETE,
+                      url,
+                      status=204)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_source(**req_copy)
+
+
+    def test_delete_source_value_error_with_retries(self):
+        # Enable retries and run test_delete_source_value_error.
+        _service.enable_retries()
+        self.test_delete_source_value_error()
+
+        # Disable retries and run test_delete_source_value_error.
+        _service.disable_retries()
+        self.test_delete_source_value_error()
+
+class TestUpdateSource():
+    """
+    Test Class for update_source
+    """
+
+    @responses.activate
+    def test_update_source_all_params(self):
+        """
+        update_source()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/sources/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        enabled = True
+
+        # Invoke method
+        response = _service.update_source(
+            instance_id,
+            id,
+            name=name,
+            description=description,
+            enabled=enabled,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['enabled'] == True
+
+    def test_update_source_all_params_with_retries(self):
+        # Enable retries and run test_update_source_all_params.
+        _service.enable_retries()
+        self.test_update_source_all_params()
+
+        # Disable retries and run test_update_source_all_params.
+        _service.disable_retries()
+        self.test_update_source_all_params()
+
+    @responses.activate
+    def test_update_source_value_error(self):
+        """
+        test_update_source_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/sources/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
+        responses.add(responses.PATCH,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        enabled = True
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_source(**req_copy)
+
+
+    def test_update_source_value_error_with_retries(self):
+        # Enable retries and run test_update_source_value_error.
+        _service.enable_retries()
+        self.test_update_source_value_error()
+
+        # Disable retries and run test_update_source_value_error.
+        _service.disable_retries()
+        self.test_update_source_value_error()
 
 # endregion
 ##############################################################################
@@ -4007,6 +4248,39 @@ class TestModel_SourceListItem():
         # Convert model instance back to dict and verify no loss of data
         source_list_item_model_json2 = source_list_item_model.to_dict()
         assert source_list_item_model_json2 == source_list_item_model_json
+
+class TestModel_SourceResponse():
+    """
+    Test Class for SourceResponse
+    """
+
+    def test_source_response_serialization(self):
+        """
+        Test serialization/deserialization for SourceResponse
+        """
+
+        # Construct a json representation of a SourceResponse model
+        source_response_model_json = {}
+        source_response_model_json['id'] = 'testString'
+        source_response_model_json['name'] = 'testString'
+        source_response_model_json['description'] = 'testString'
+        source_response_model_json['enabled'] = True
+        source_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of SourceResponse by calling from_dict on the json representation
+        source_response_model = SourceResponse.from_dict(source_response_model_json)
+        assert source_response_model != False
+
+        # Construct a model instance of SourceResponse by calling from_dict on the json representation
+        source_response_model_dict = SourceResponse.from_dict(source_response_model_json).__dict__
+        source_response_model2 = SourceResponse(**source_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert source_response_model == source_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        source_response_model_json2 = source_response_model.to_dict()
+        assert source_response_model_json2 == source_response_model_json
 
 class TestModel_SourcesListItem():
     """
