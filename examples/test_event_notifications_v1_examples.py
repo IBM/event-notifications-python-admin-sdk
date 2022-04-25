@@ -22,7 +22,6 @@ from ibm_cloud_sdk_core.utils import datetime_to_string, string_to_datetime
 import os
 import pytest
 from ibm_eventnotifications.event_notifications_v1 import *
-from ibm_eventnotifications.send_notifications import *
 
 #
 # This file provides an example of how to use the Event Notifications service.
@@ -567,11 +566,9 @@ class TestEventNotificationsV1Examples():
             print('\nsend_notifications() result:')
 
             notification_id = "1234-1234-sdfs-234"
-            notification_subject = "FCM_Subject"
             notification_severity = "MEDIUM"
             type_value = "com.acme.offer:new"
-            date = string_to_datetime('2019-01-01T12:00:00.000Z')
-            user_id = "userId"
+            date = '2019-01-01T12:00:00.000Z'
             notifications_source = "1234-1234-sdfs-234:test"
             
             # begin-send_notifications
@@ -599,18 +596,18 @@ class TestEventNotificationsV1Examples():
 
             notification_response = event_notifications_service.send_notifications(
                 instance_id,
-                subject=notification_subject,
-                ibmenseverity=notification_severity,
-                id=notification_id,
-                source=notifications_source,
-                ibmensourceid=source_id,
-                type=type_value,
-                time=date,
-                data={},
-                ibmenpushto=notification_devices_model,
-                ibmenfcmbody=notification_fcm_body_model,
-                ibmenapnsbody=notification_apns_body_model,
-                ibmenapnsheaders=message_apns_headers,
+                ce_ibmenseverity=notification_severity,
+                ce_id=notification_id,
+                ce_source=notifications_source,
+                ce_ibmensourceid=source_id,
+                ce_type=type_value,
+                ce_time=date,
+                body={},
+                ce_ibmenpushto=json.dumps(notification_devices_model),
+                ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
+                ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
+                ce_ibmenapnsheaders=json.dumps(message_apns_headers),
+                ce_specversion='1.0'
             ).get_result()
 
             print(json.dumps(notification_response, indent=2))

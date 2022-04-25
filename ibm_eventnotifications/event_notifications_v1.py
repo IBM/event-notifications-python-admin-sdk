@@ -75,6 +75,116 @@ class EventNotificationsV1(BaseService):
                              authenticator=authenticator)
 
 
+    #########################
+    # Send Notifications
+    #########################
+
+
+    def send_notifications(self,
+        instance_id: str,
+        *,
+        body: 'NotificationCreate' = None,
+        ce_ibmenseverity: str = None,
+        ce_ibmendefaultshort: str = None,
+        ce_ibmendefaultlong: str = None,
+        ce_ibmenfcmbody: str = None,
+        ce_ibmenapnsbody: str = None,
+        ce_ibmenpushto: str = None,
+        ce_ibmenapnsheaders: str = None,
+        ce_ibmenchromebody: str = None,
+        ce_ibmenfirefoxbody: str = None,
+        ce_ibmenchromeheaders: str = None,
+        ce_ibmenfirefoxheaders: str = None,
+        ce_ibmensourceid: str = None,
+        ce_id: str = None,
+        ce_source: str = None,
+        ce_type: str = None,
+        ce_specversion: str = None,
+        ce_time: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Send a notification.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param NotificationCreate body: (optional)
+        :param str ce_ibmenseverity: (optional) The Notification severity.
+        :param str ce_ibmendefaultshort: (optional) The Notification default short
+               text.
+        :param str ce_ibmendefaultlong: (optional) The Notification default long
+               text.
+        :param str ce_ibmenfcmbody: (optional) The FCM Notification body.
+        :param str ce_ibmenapnsbody: (optional) The APNS Notification body.
+        :param str ce_ibmenpushto: (optional) Push Notifications Targets.
+        :param str ce_ibmenapnsheaders: (optional) Push Notifications APNS Headers.
+        :param str ce_ibmenchromebody: (optional) Push Notifications Chrome body.
+        :param str ce_ibmenfirefoxbody: (optional) Push Notifications Firefox body.
+        :param str ce_ibmenchromeheaders: (optional) Push Notifications Chrome
+               Headers.
+        :param str ce_ibmenfirefoxheaders: (optional) Push Notifications Firefox
+               Headers.
+        :param str ce_ibmensourceid: (optional) Event Notifications Target source
+               ID.
+        :param str ce_id: (optional) custom ID to track notifications from client
+               side (Mandatory identifier for the binary mode).
+        :param str ce_source: (optional) custom source odentifier from the client
+               side.
+        :param str ce_type: (optional) Type identifier for source filters.
+        :param str ce_specversion: (optional) Version of the Cloud Event
+               specification (Mandatory header to make the request Binary Mode).
+        :param str ce_time: (optional) The time of the notification.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `NotificationResponse` object
+        """
+
+        if instance_id is None:
+            raise ValueError('instance_id must be provided')
+        if  body is not None and isinstance(body, NotificationCreate):
+            body = convert_model(body)
+        headers = {
+            'ce-ibmenseverity': ce_ibmenseverity,
+            'ce-ibmendefaultshort': ce_ibmendefaultshort,
+            'ce-ibmendefaultlong': ce_ibmendefaultlong,
+            'ce-ibmenfcmbody': ce_ibmenfcmbody,
+            'ce-ibmenapnsbody': ce_ibmenapnsbody,
+            'ce-ibmenpushto': ce_ibmenpushto,
+            'ce-ibmenapnsheaders': ce_ibmenapnsheaders,
+            'ce-ibmenchromebody': ce_ibmenchromebody,
+            'ce-ibmenfirefoxbody': ce_ibmenfirefoxbody,
+            'ce-ibmenchromeheaders': ce_ibmenchromeheaders,
+            'ce-ibmenfirefoxheaders': ce_ibmenfirefoxheaders,
+            'ce-ibmensourceid': ce_ibmensourceid,
+            'ce-id': ce_id,
+            'ce-source': ce_source,
+            'ce-type': ce_type,
+            'ce-specversion': ce_specversion,
+            'ce-time': ce_time
+        }
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='send_notifications')
+        headers.update(sdk_headers)
+
+        data = json.dumps(body)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/notifications'.format(**path_param_dict)
+        request = self.prepare_request(method='POST',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
 
     #########################
     # Sources
@@ -1561,6 +1671,8 @@ class CreateDestinationEnums:
         WEBHOOK = 'webhook'
         PUSH_ANDROID = 'push_android'
         PUSH_IOS = 'push_ios'
+        PUSH_CHROME = 'push_chrome'
+        PUSH_FIREFOX = 'push_firefox'
 
 
 ##############################################################################
@@ -1777,7 +1889,7 @@ class DestinationConfigParams():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig']))
+                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig']))
         raise Exception(msg)
 
 class DestinationDevicesList():
@@ -2616,6 +2728,301 @@ class EmailUpdateAttributesUnsubscribed():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'EmailUpdateAttributesUnsubscribed') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class NotificationCreate():
+    """
+    Payload describing a notification create request.
+
+    :attr dict data: (optional) The Notifications data for webhook.
+    :attr str ibmenseverity: (optional) The Notifications id.
+    :attr str ibmenfcmbody: (optional) The Notifications FCM body.
+    :attr str ibmenapnsbody: (optional) The Notifications APNS body.
+    :attr str ibmenpushto: (optional) Payload describing a FCM Notifications
+          targets.
+    :attr str ibmenapnsheaders: (optional) Headers for an APNs notification.
+    :attr str ibmendefaultshort: (optional) Default short text for the message.
+    :attr str ibmendefaultlong: (optional) Default long text for the message.
+    :attr str ibmenchromebody: (optional) The Notifications Chrome body.
+    :attr str ibmenfirefoxbody: (optional) The Notifications Firefox body.
+    :attr str ibmenchromeheaders: (optional) Headers for a Chrome notification.
+    :attr str ibmenfirefoxheaders: (optional) Headers for an FireFox notification.
+    :attr str ibmensourceid: (optional) The Event Notifications source id.
+    :attr str datacontenttype: (optional) The Notifications content type.
+    :attr str subject: (optional) The Notifications subject.
+    :attr str id: (optional) The Notifications id.
+    :attr str source: (optional) The source of Notifications.
+    :attr str type: (optional) The Notifications type.
+    :attr str specversion: (optional) The Notifications specversion.
+    :attr str time: (optional) The Notifications time.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['data', 'ibmenseverity', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmenpushto', 'ibmenapnsheaders', 'ibmendefaultshort', 'ibmendefaultlong', 'ibmenchromebody', 'ibmenfirefoxbody', 'ibmenchromeheaders', 'ibmenfirefoxheaders', 'ibmensourceid', 'datacontenttype', 'subject', 'id', 'source', 'type', 'specversion', 'time'])
+
+    def __init__(self,
+                 *,
+                 data: dict = None,
+                 ibmenseverity: str = None,
+                 ibmenfcmbody: str = None,
+                 ibmenapnsbody: str = None,
+                 ibmenpushto: str = None,
+                 ibmenapnsheaders: str = None,
+                 ibmendefaultshort: str = None,
+                 ibmendefaultlong: str = None,
+                 ibmenchromebody: str = None,
+                 ibmenfirefoxbody: str = None,
+                 ibmenchromeheaders: str = None,
+                 ibmenfirefoxheaders: str = None,
+                 ibmensourceid: str = None,
+                 datacontenttype: str = None,
+                 subject: str = None,
+                 id: str = None,
+                 source: str = None,
+                 type: str = None,
+                 specversion: str = None,
+                 time: str = None,
+                 **kwargs) -> None:
+        """
+        Initialize a NotificationCreate object.
+
+        :param dict data: (optional) The Notifications data for webhook.
+        :param str ibmenseverity: (optional) The Notifications id.
+        :param str ibmenfcmbody: (optional) The Notifications FCM body.
+        :param str ibmenapnsbody: (optional) The Notifications APNS body.
+        :param str ibmenpushto: (optional) Payload describing a FCM Notifications
+               targets.
+        :param str ibmenapnsheaders: (optional) Headers for an APNs notification.
+        :param str ibmendefaultshort: (optional) Default short text for the
+               message.
+        :param str ibmendefaultlong: (optional) Default long text for the message.
+        :param str ibmenchromebody: (optional) The Notifications Chrome body.
+        :param str ibmenfirefoxbody: (optional) The Notifications Firefox body.
+        :param str ibmenchromeheaders: (optional) Headers for a Chrome
+               notification.
+        :param str ibmenfirefoxheaders: (optional) Headers for an FireFox
+               notification.
+        :param str ibmensourceid: (optional) The Event Notifications source id.
+        :param str datacontenttype: (optional) The Notifications content type.
+        :param str subject: (optional) The Notifications subject.
+        :param str id: (optional) The Notifications id.
+        :param str source: (optional) The source of Notifications.
+        :param str type: (optional) The Notifications type.
+        :param str specversion: (optional) The Notifications specversion.
+        :param str time: (optional) The Notifications time.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        self.data = data
+        self.ibmenseverity = ibmenseverity
+        self.ibmenfcmbody = ibmenfcmbody
+        self.ibmenapnsbody = ibmenapnsbody
+        self.ibmenpushto = ibmenpushto
+        self.ibmenapnsheaders = ibmenapnsheaders
+        self.ibmendefaultshort = ibmendefaultshort
+        self.ibmendefaultlong = ibmendefaultlong
+        self.ibmenchromebody = ibmenchromebody
+        self.ibmenfirefoxbody = ibmenfirefoxbody
+        self.ibmenchromeheaders = ibmenchromeheaders
+        self.ibmenfirefoxheaders = ibmenfirefoxheaders
+        self.ibmensourceid = ibmensourceid
+        self.datacontenttype = datacontenttype
+        self.subject = subject
+        self.id = id
+        self.source = source
+        self.type = type
+        self.specversion = specversion
+        self.time = time
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'NotificationCreate':
+        """Initialize a NotificationCreate object from a json dictionary."""
+        args = {}
+        if 'data' in _dict:
+            args['data'] = _dict.get('data')
+        if 'ibmenseverity' in _dict:
+            args['ibmenseverity'] = _dict.get('ibmenseverity')
+        if 'ibmenfcmbody' in _dict:
+            args['ibmenfcmbody'] = _dict.get('ibmenfcmbody')
+        if 'ibmenapnsbody' in _dict:
+            args['ibmenapnsbody'] = _dict.get('ibmenapnsbody')
+        if 'ibmenpushto' in _dict:
+            args['ibmenpushto'] = _dict.get('ibmenpushto')
+        if 'ibmenapnsheaders' in _dict:
+            args['ibmenapnsheaders'] = _dict.get('ibmenapnsheaders')
+        if 'ibmendefaultshort' in _dict:
+            args['ibmendefaultshort'] = _dict.get('ibmendefaultshort')
+        if 'ibmendefaultlong' in _dict:
+            args['ibmendefaultlong'] = _dict.get('ibmendefaultlong')
+        if 'ibmenchromebody' in _dict:
+            args['ibmenchromebody'] = _dict.get('ibmenchromebody')
+        if 'ibmenfirefoxbody' in _dict:
+            args['ibmenfirefoxbody'] = _dict.get('ibmenfirefoxbody')
+        if 'ibmenchromeheaders' in _dict:
+            args['ibmenchromeheaders'] = _dict.get('ibmenchromeheaders')
+        if 'ibmenfirefoxheaders' in _dict:
+            args['ibmenfirefoxheaders'] = _dict.get('ibmenfirefoxheaders')
+        if 'ibmensourceid' in _dict:
+            args['ibmensourceid'] = _dict.get('ibmensourceid')
+        if 'datacontenttype' in _dict:
+            args['datacontenttype'] = _dict.get('datacontenttype')
+        if 'subject' in _dict:
+            args['subject'] = _dict.get('subject')
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        if 'source' in _dict:
+            args['source'] = _dict.get('source')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        if 'specversion' in _dict:
+            args['specversion'] = _dict.get('specversion')
+        if 'time' in _dict:
+            args['time'] = _dict.get('time')
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a NotificationCreate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'data') and self.data is not None:
+            _dict['data'] = self.data
+        if hasattr(self, 'ibmenseverity') and self.ibmenseverity is not None:
+            _dict['ibmenseverity'] = self.ibmenseverity
+        if hasattr(self, 'ibmenfcmbody') and self.ibmenfcmbody is not None:
+            _dict['ibmenfcmbody'] = self.ibmenfcmbody
+        if hasattr(self, 'ibmenapnsbody') and self.ibmenapnsbody is not None:
+            _dict['ibmenapnsbody'] = self.ibmenapnsbody
+        if hasattr(self, 'ibmenpushto') and self.ibmenpushto is not None:
+            _dict['ibmenpushto'] = self.ibmenpushto
+        if hasattr(self, 'ibmenapnsheaders') and self.ibmenapnsheaders is not None:
+            _dict['ibmenapnsheaders'] = self.ibmenapnsheaders
+        if hasattr(self, 'ibmendefaultshort') and self.ibmendefaultshort is not None:
+            _dict['ibmendefaultshort'] = self.ibmendefaultshort
+        if hasattr(self, 'ibmendefaultlong') and self.ibmendefaultlong is not None:
+            _dict['ibmendefaultlong'] = self.ibmendefaultlong
+        if hasattr(self, 'ibmenchromebody') and self.ibmenchromebody is not None:
+            _dict['ibmenchromebody'] = self.ibmenchromebody
+        if hasattr(self, 'ibmenfirefoxbody') and self.ibmenfirefoxbody is not None:
+            _dict['ibmenfirefoxbody'] = self.ibmenfirefoxbody
+        if hasattr(self, 'ibmenchromeheaders') and self.ibmenchromeheaders is not None:
+            _dict['ibmenchromeheaders'] = self.ibmenchromeheaders
+        if hasattr(self, 'ibmenfirefoxheaders') and self.ibmenfirefoxheaders is not None:
+            _dict['ibmenfirefoxheaders'] = self.ibmenfirefoxheaders
+        if hasattr(self, 'ibmensourceid') and self.ibmensourceid is not None:
+            _dict['ibmensourceid'] = self.ibmensourceid
+        if hasattr(self, 'datacontenttype') and self.datacontenttype is not None:
+            _dict['datacontenttype'] = self.datacontenttype
+        if hasattr(self, 'subject') and self.subject is not None:
+            _dict['subject'] = self.subject
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'source') and self.source is not None:
+            _dict['source'] = self.source
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'specversion') and self.specversion is not None:
+            _dict['specversion'] = self.specversion
+        if hasattr(self, 'time') and self.time is not None:
+            _dict['time'] = self.time
+        for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:
+            if getattr(self, _key, None) is not None:
+                _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of NotificationCreate"""
+        _dict = {}
+
+        for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of NotificationCreate"""
+        for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in NotificationCreate._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this NotificationCreate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'NotificationCreate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'NotificationCreate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class NotificationResponse():
+    """
+    Payload describing a notifications response.
+
+    :attr str notification_id: (optional) Notification ID.
+    """
+
+    def __init__(self,
+                 *,
+                 notification_id: str = None) -> None:
+        """
+        Initialize a NotificationResponse object.
+
+        :param str notification_id: (optional) Notification ID.
+        """
+        self.notification_id = notification_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'NotificationResponse':
+        """Initialize a NotificationResponse object from a json dictionary."""
+        args = {}
+        if 'notification_id' in _dict:
+            args['notification_id'] = _dict.get('notification_id')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a NotificationResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'notification_id') and self.notification_id is not None:
+            _dict['notification_id'] = self.notification_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this NotificationResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'NotificationResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'NotificationResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -4411,6 +4818,82 @@ class TopicsListItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class DestinationConfigParamsChromeDestinationConfig(DestinationConfigParams):
+    """
+    Payload describing a Chrome destination configuration.
+
+    :attr str api_key: FCM api_key.
+    :attr str website_url: Website url.
+    :attr str public_key: (optional) Chrome VAPID public key.
+    """
+
+    def __init__(self,
+                 api_key: str,
+                 website_url: str,
+                 *,
+                 public_key: str = None) -> None:
+        """
+        Initialize a DestinationConfigParamsChromeDestinationConfig object.
+
+        :param str api_key: FCM api_key.
+        :param str website_url: Website url.
+        :param str public_key: (optional) Chrome VAPID public key.
+        """
+        # pylint: disable=super-init-not-called
+        self.api_key = api_key
+        self.website_url = website_url
+        self.public_key = public_key
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsChromeDestinationConfig':
+        """Initialize a DestinationConfigParamsChromeDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'api_key' in _dict:
+            args['api_key'] = _dict.get('api_key')
+        else:
+            raise ValueError('Required property \'api_key\' not present in DestinationConfigParamsChromeDestinationConfig JSON')
+        if 'website_url' in _dict:
+            args['website_url'] = _dict.get('website_url')
+        else:
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigParamsChromeDestinationConfig JSON')
+        if 'public_key' in _dict:
+            args['public_key'] = _dict.get('public_key')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigParamsChromeDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'api_key') and self.api_key is not None:
+            _dict['api_key'] = self.api_key
+        if hasattr(self, 'website_url') and self.website_url is not None:
+            _dict['website_url'] = self.website_url
+        if hasattr(self, 'public_key') and self.public_key is not None:
+            _dict['public_key'] = self.public_key
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigParamsChromeDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigParamsChromeDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigParamsChromeDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class DestinationConfigParamsFCMDestinationConfig(DestinationConfigParams):
     """
     Payload describing a FCM destination configuration.
@@ -4475,6 +4958,72 @@ class DestinationConfigParamsFCMDestinationConfig(DestinationConfigParams):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigParamsFCMDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigParamsFirefoxDestinationConfig(DestinationConfigParams):
+    """
+    Payload describing a Firefox destination configuration.
+
+    :attr str website_url: Website url.
+    :attr str public_key: (optional) Chrome VAPID public key.
+    """
+
+    def __init__(self,
+                 website_url: str,
+                 *,
+                 public_key: str = None) -> None:
+        """
+        Initialize a DestinationConfigParamsFirefoxDestinationConfig object.
+
+        :param str website_url: Website url.
+        :param str public_key: (optional) Chrome VAPID public key.
+        """
+        # pylint: disable=super-init-not-called
+        self.website_url = website_url
+        self.public_key = public_key
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsFirefoxDestinationConfig':
+        """Initialize a DestinationConfigParamsFirefoxDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'website_url' in _dict:
+            args['website_url'] = _dict.get('website_url')
+        else:
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigParamsFirefoxDestinationConfig JSON')
+        if 'public_key' in _dict:
+            args['public_key'] = _dict.get('public_key')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigParamsFirefoxDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'website_url') and self.website_url is not None:
+            _dict['website_url'] = self.website_url
+        if hasattr(self, 'public_key') and self.public_key is not None:
+            _dict['public_key'] = self.public_key
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigParamsFirefoxDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigParamsFirefoxDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigParamsFirefoxDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -4678,6 +5227,7 @@ class DestinationConfigParamsWebhookDestinationConfig(DestinationConfigParams):
         """
         GET = 'get'
         POST = 'post'
+
 
 class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
     """
