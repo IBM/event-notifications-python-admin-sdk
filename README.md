@@ -477,12 +477,12 @@ notification_response = event_notifications_service.send_notifications(
 	- Pass 'A' for iOS devices.
 	- Pass 'WEB_FIREFOX' for Firefox browser.
 	- Pass 'WEB_CHROME' for Chrome browser.
-- **Event Notificaitons SendNotificationsOptions** - Event Notificaitons Send notificaitons method. 
-  - *InstanceID* (**String**) - Event Notificaitons instance AppGUID. 
+- **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method. 
+  - *InstanceID* (**String**) - Event Notifications instance AppGUID. 
   - *ce_ibmenseverity* (**String**) - Severity for the notifications. 
   - *ce_id* (**String**) - ID for the notifications. 
   - *ce_source* (**String**) - Source of the notifications. 
-  - *ce_ibmensourceid* (**String**) - Event Notificaitons instance Source ID. 
+  - *ce_ibmensourceid* (**String**) - Event Notifications instance Source ID. 
   - *ce_type* (**String**) - Type for the notifications. 
   - *ce_time* (**String**) - Time of the notifications. 
   - *ce_ibmenpushto* (**string**) - Targets for the FCM notifications. 
@@ -493,7 +493,7 @@ notification_response = event_notifications_service.send_notifications(
   - *ce_ibmenfirefoxbody* (**string**) - Message body for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - *ce_ibmenchromeheaders* (**string**) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - *ce_ibmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
-  - *ce_specversion* (**String**) - Spec version of the Event Notificaitons. Default value is `1.0`. 
+  - *ce_specversion* (**String**) - Spec version of the Event Notifications. Default value is `1.0`. 
 
 </details>
 
