@@ -31,7 +31,6 @@ import responses
 import tempfile
 import urllib
 from ibm_eventnotifications.event_notifications_v1 import *
-from ibm_eventnotifications.send_notifications import *
 
 
 _service = EventNotificationsV1(
@@ -119,115 +118,72 @@ class TestSendNotifications():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a Lights model
-        lights_model = {}
-        lights_model['led_argb'] = 'testString'
-        lights_model['led_on_ms'] = 0
-        lights_model['led_off_ms'] = 'testString'
-
-        # Construct a dict representation of a Style model
-        style_model = {}
-        style_model['type'] = 'testString'
-        style_model['title'] = 'testString'
-        style_model['url'] = 'testString'
-        style_model['text'] = 'testString'
-        style_model['lines'] = ['testString']
-        style_model['foo'] = 'testString'
-
-        # Construct a dict representation of a NotificationFCMBodyMessageData model
-        notification_fcm_body_message_data_model = {}
-        notification_fcm_body_message_data_model['alert'] = 'testString'
-        notification_fcm_body_message_data_model['collapse_key'] = 'testString'
-        notification_fcm_body_message_data_model['interactive_category'] = 'testString'
-        notification_fcm_body_message_data_model['icon'] = 'testString'
-        notification_fcm_body_message_data_model['delay_while_idle'] = True
-        notification_fcm_body_message_data_model['sync'] = True
-        notification_fcm_body_message_data_model['visibility'] = 'testString'
-        notification_fcm_body_message_data_model['redact'] = 'testString'
-        notification_fcm_body_message_data_model['payload'] = {}
-        notification_fcm_body_message_data_model['priority'] = 'testString'
-        notification_fcm_body_message_data_model['sound'] = 'testString'
-        notification_fcm_body_message_data_model['time_to_live'] = 0
-        notification_fcm_body_message_data_model['lights'] = lights_model
-        notification_fcm_body_message_data_model['android_title'] = 'testString'
-        notification_fcm_body_message_data_model['group_id'] = 'testString'
-        notification_fcm_body_message_data_model['style'] = style_model
-        notification_fcm_body_message_data_model['type'] = 'DEFAULT'
-
-        # Construct a dict representation of a NotificationFCMBodyMessageENData model
-        notification_fcm_body_model = {}
-        notification_fcm_body_model['en_data'] = notification_fcm_body_message_data_model
-        notification_fcm_body_model['foo'] = 'testString'
-
-        # Construct a dict representation of a NotificationAPNSBodyMessageData model
-        notification_apns_body_message_data_model = {}
-        notification_apns_body_message_data_model['alert'] = 'testString'
-        notification_apns_body_message_data_model['badge'] = 38
-        notification_apns_body_message_data_model['interactiveCategory'] = 'testString'
-        notification_apns_body_message_data_model['iosActionKey'] = 'testString'
-        notification_apns_body_message_data_model['payload'] = { 'foo': 'bar' }
-        notification_apns_body_message_data_model['sound'] = 'testString'
-        notification_apns_body_message_data_model['titleLocKey'] = 'testString'
-        notification_apns_body_message_data_model['locKey'] = 'testString'
-        notification_apns_body_message_data_model['launchImage'] = 'testString'
-        notification_apns_body_message_data_model['titleLocArgs'] = ['testString']
-        notification_apns_body_message_data_model['locArgs'] = ['testString']
-        notification_apns_body_message_data_model['title'] = 'testString'
-        notification_apns_body_message_data_model['subtitle'] = 'testString'
-        notification_apns_body_message_data_model['attachmentUrl'] = 'testString'
-        notification_apns_body_message_data_model['type'] = 'DEFAULT'
-        notification_apns_body_message_data_model['apnsCollapseId'] = 'testString'
-        notification_apns_body_message_data_model['apnsThreadId'] = 'testString'
-        notification_apns_body_message_data_model['apnsGroupSummaryArg'] = 'testString'
-        notification_apns_body_message_data_model['apnsGroupSummaryArgCount'] = 38
-
-        # Construct a dict representation of a NotificationAPNSBodyMessageENData model
-        notification_apns_body_model = {}
-        notification_apns_body_model['en_data'] = notification_apns_body_message_data_model
-        notification_apns_body_model['foo'] = 'testString'
-
-        # Construct a dict representation of a NotificationDevices model
-        notification_devices_model = {}
-        notification_devices_model['fcm_devices'] = ['testString']
-        notification_devices_model['apns_devices'] = ['testString']
-        notification_devices_model['user_ids'] = ['testString']
-        notification_devices_model['tags'] = ['testString']
-        notification_devices_model['platforms'] = ['testString']
+        # Construct a dict representation of a NotificationCreate model
+        notification_create_model = {}
+        notification_create_model['data'] = {}
+        notification_create_model['ibmenseverity'] = 'testString'
+        notification_create_model['ibmenfcmbody'] = 'testString'
+        notification_create_model['ibmenapnsbody'] = 'testString'
+        notification_create_model['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
+        notification_create_model['ibmenapnsheaders'] = 'testString'
+        notification_create_model['ibmendefaultshort'] = 'testString'
+        notification_create_model['ibmendefaultlong'] = 'testString'
+        notification_create_model['ibmenchromebody'] = 'testString'
+        notification_create_model['ibmenfirefoxbody'] = 'testString'
+        notification_create_model['ibmenchromeheaders'] = 'testString'
+        notification_create_model['ibmenfirefoxheaders'] = 'testString'
+        notification_create_model['ibmensourceid'] = 'testString'
+        notification_create_model['datacontenttype'] = 'application/json'
+        notification_create_model['subject'] = 'testString'
+        notification_create_model['id'] = 'testString'
+        notification_create_model['source'] = 'testString'
+        notification_create_model['type'] = 'testString'
+        notification_create_model['specversion'] = '1.0'
+        notification_create_model['time'] = 'testString'
+        notification_create_model['foo'] = 'testString'
 
         # Set up parameter values
         instance_id = 'testString'
-        ibmenseverity = 'testString'
-        ibmensourceid = 'testString'
-        subject = 'testString'
-        id = 'testString'
-        source = 'testString'
-        type = 'testString'
-        time = string_to_datetime('2019-01-01T12:00:00.000Z')
-        data = {}
-        ibmenfcmbody = notification_fcm_body_model
-        ibmenapnsbody = notification_apns_body_model
-        ibmenpushto = notification_devices_model
-        ibmenapnsheaders = {}
-        datacontenttype = 'application/json'
-        specversion = '1.0'
+        body = notification_create_model
+        ce_ibmenseverity = 'testString'
+        ce_ibmendefaultshort = 'testString'
+        ce_ibmendefaultlong = 'testString'
+        ce_ibmenfcmbody = 'testString'
+        ce_ibmenapnsbody = 'testString'
+        ce_ibmenpushto = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
+        ce_ibmenapnsheaders = 'testString'
+        ce_ibmenchromebody = 'testString'
+        ce_ibmenfirefoxbody = 'testString'
+        ce_ibmenchromeheaders = 'testString'
+        ce_ibmenfirefoxheaders = 'testString'
+        ce_ibmensourceid = 'testString'
+        ce_id = 'testString'
+        ce_source = 'testString'
+        ce_type = 'testString'
+        ce_specversion = '1.0'
+        ce_time = 'testString'
 
         # Invoke method
         response = _service.send_notifications(
             instance_id,
-            ibmenseverity,
-            ibmensourceid,
-            subject,
-            id,
-            source,
-            type,
-            time,
-            data=data,
-            ibmenfcmbody=ibmenfcmbody,
-            ibmenapnsbody=ibmenapnsbody,
-            ibmenpushto=ibmenpushto,
-            ibmenapnsheaders=ibmenapnsheaders,
-            datacontenttype=datacontenttype,
-            specversion=specversion,
+            body=body,
+            ce_ibmenseverity=ce_ibmenseverity,
+            ce_ibmendefaultshort=ce_ibmendefaultshort,
+            ce_ibmendefaultlong=ce_ibmendefaultlong,
+            ce_ibmenfcmbody=ce_ibmenfcmbody,
+            ce_ibmenapnsbody=ce_ibmenapnsbody,
+            ce_ibmenpushto=ce_ibmenpushto,
+            ce_ibmenapnsheaders=ce_ibmenapnsheaders,
+            ce_ibmenchromebody=ce_ibmenchromebody,
+            ce_ibmenfirefoxbody=ce_ibmenfirefoxbody,
+            ce_ibmenchromeheaders=ce_ibmenchromeheaders,
+            ce_ibmenfirefoxheaders=ce_ibmenfirefoxheaders,
+            ce_ibmensourceid=ce_ibmensourceid,
+            ce_id=ce_id,
+            ce_source=ce_source,
+            ce_type=ce_type,
+            ce_specversion=ce_specversion,
+            ce_time=ce_time,
             headers={}
         )
 
@@ -236,20 +192,7 @@ class TestSendNotifications():
         assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['ibmenseverity'] == 'testString'
-        assert req_body['ibmensourceid'] == 'testString'
-        assert req_body['subject'] == 'testString'
-        assert req_body['id'] == 'testString'
-        assert req_body['source'] == 'testString'
-        assert req_body['type'] == 'testString'
-        assert req_body['time'] == '2019-01-01T12:00:00Z'
-        assert req_body['data'] == {}
-        # assert req_body['ibmenfcmbody'] == notification_fcm_body_model
-        # assert req_body['ibmenapnsbody'] == notification_apns_body_model
-        # assert req_body['ibmenpushto'] == notification_devices_model
-        # assert req_body['ibmenapnsheaders'] == {}
-        assert req_body['datacontenttype'] == 'application/json'
-        assert req_body['specversion'] == '1.0'
+        assert req_body == body
 
     def test_send_notifications_all_params_with_retries(self):
         # Enable retries and run test_send_notifications_all_params.
@@ -259,6 +202,42 @@ class TestSendNotifications():
         # Disable retries and run test_send_notifications_all_params.
         _service.disable_retries()
         self.test_send_notifications_all_params()
+
+    @responses.activate
+    def test_send_notifications_required_params(self):
+        """
+        test_send_notifications_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications')
+        mock_response = '{"notification_id": "notification_id"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Invoke method
+        response = _service.send_notifications(
+            instance_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+
+    def test_send_notifications_required_params_with_retries(self):
+        # Enable retries and run test_send_notifications_required_params.
+        _service.enable_retries()
+        self.test_send_notifications_required_params()
+
+        # Disable retries and run test_send_notifications_required_params.
+        _service.disable_retries()
+        self.test_send_notifications_required_params()
 
     @responses.activate
     def test_send_notifications_value_error(self):
@@ -274,108 +253,12 @@ class TestSendNotifications():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a Lights model
-        lights_model = {}
-        lights_model['led_argb'] = 'testString'
-        lights_model['led_on_ms'] = 0
-        lights_model['led_off_ms'] = 'testString'
-
-        # Construct a dict representation of a Style model
-        style_model = {}
-        style_model['type'] = 'testString'
-        style_model['title'] = 'testString'
-        style_model['url'] = 'testString'
-        style_model['text'] = 'testString'
-        style_model['lines'] = ['testString']
-        style_model['foo'] = 'testString'
-
-        # Construct a dict representation of a NotificationFCMBodyMessageData model
-        notification_fcm_body_message_data_model = {}
-        notification_fcm_body_message_data_model['alert'] = 'testString'
-        notification_fcm_body_message_data_model['collapse_key'] = 'testString'
-        notification_fcm_body_message_data_model['interactive_category'] = 'testString'
-        notification_fcm_body_message_data_model['icon'] = 'testString'
-        notification_fcm_body_message_data_model['delay_while_idle'] = True
-        notification_fcm_body_message_data_model['sync'] = True
-        notification_fcm_body_message_data_model['visibility'] = 'testString'
-        notification_fcm_body_message_data_model['redact'] = 'testString'
-        notification_fcm_body_message_data_model['payload'] = {}
-        notification_fcm_body_message_data_model['priority'] = 'testString'
-        notification_fcm_body_message_data_model['sound'] = 'testString'
-        notification_fcm_body_message_data_model['time_to_live'] = 0
-        notification_fcm_body_message_data_model['lights'] = lights_model
-        notification_fcm_body_message_data_model['android_title'] = 'testString'
-        notification_fcm_body_message_data_model['group_id'] = 'testString'
-        notification_fcm_body_message_data_model['style'] = style_model
-        notification_fcm_body_message_data_model['type'] = 'DEFAULT'
-
-        # Construct a dict representation of a NotificationFCMBodyMessageENData model
-        notification_fcm_body_model = {}
-        notification_fcm_body_model['en_data'] = notification_fcm_body_message_data_model
-        notification_fcm_body_model['foo'] = 'testString'
-
-        # Construct a dict representation of a NotificationAPNSBodyMessageData model
-        notification_apns_body_message_data_model = {}
-        notification_apns_body_message_data_model['alert'] = 'testString'
-        notification_apns_body_message_data_model['badge'] = 38
-        notification_apns_body_message_data_model['interactiveCategory'] = 'testString'
-        notification_apns_body_message_data_model['iosActionKey'] = 'testString'
-        notification_apns_body_message_data_model['payload'] = { 'foo': 'bar' }
-        notification_apns_body_message_data_model['sound'] = 'testString'
-        notification_apns_body_message_data_model['titleLocKey'] = 'testString'
-        notification_apns_body_message_data_model['locKey'] = 'testString'
-        notification_apns_body_message_data_model['launchImage'] = 'testString'
-        notification_apns_body_message_data_model['titleLocArgs'] = ['testString']
-        notification_apns_body_message_data_model['locArgs'] = ['testString']
-        notification_apns_body_message_data_model['title'] = 'testString'
-        notification_apns_body_message_data_model['subtitle'] = 'testString'
-        notification_apns_body_message_data_model['attachmentUrl'] = 'testString'
-        notification_apns_body_message_data_model['type'] = 'DEFAULT'
-        notification_apns_body_message_data_model['apnsCollapseId'] = 'testString'
-        notification_apns_body_message_data_model['apnsThreadId'] = 'testString'
-        notification_apns_body_message_data_model['apnsGroupSummaryArg'] = 'testString'
-        notification_apns_body_message_data_model['apnsGroupSummaryArgCount'] = 38
-
-        # Construct a dict representation of a NotificationAPNSBodyMessageENData model
-        notification_apns_body_model = {}
-        notification_apns_body_model['en_data'] = notification_apns_body_message_data_model
-        notification_apns_body_model['foo'] = 'testString'
-
-        # Construct a dict representation of a NotificationDevices model
-        notification_devices_model = {}
-        notification_devices_model['fcm_devices'] = ['testString']
-        notification_devices_model['apns_devices'] = ['testString']
-        notification_devices_model['user_ids'] = ['testString']
-        notification_devices_model['tags'] = ['testString']
-        notification_devices_model['platforms'] = ['testString']
-
         # Set up parameter values
         instance_id = 'testString'
-        ibmenseverity = 'testString'
-        ibmensourceid = 'testString'
-        subject = 'testString'
-        id = 'testString'
-        source = 'testString'
-        type = 'testString'
-        time = string_to_datetime('2019-01-01T12:00:00.000Z')
-        data = {}
-        ibmenfcmbody = notification_fcm_body_model
-        ibmenapnsbody = notification_apns_body_model
-        ibmenpushto = notification_devices_model
-        ibmenapnsheaders = {}
-        datacontenttype = 'application/json'
-        specversion = '1.0'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
-            "ibmenseverity": ibmenseverity,
-            "ibmensourceid": ibmensourceid,
-            "subject": subject,
-            "id": id,
-            "source": source,
-            "type": type,
-            "time": time,
         }
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
@@ -3861,176 +3744,64 @@ class TestModel_EmailUpdateAttributesUnsubscribed():
         email_update_attributes_unsubscribed_model_json2 = email_update_attributes_unsubscribed_model.to_dict()
         assert email_update_attributes_unsubscribed_model_json2 == email_update_attributes_unsubscribed_model_json
 
-class TestModel_Lights():
+class TestModel_NotificationCreate():
     """
-    Test Class for Lights
+    Test Class for NotificationCreate
     """
 
-    def test_lights_serialization(self):
+    def test_notification_create_serialization(self):
         """
-        Test serialization/deserialization for Lights
+        Test serialization/deserialization for NotificationCreate
         """
 
-        # Construct a json representation of a Lights model
-        lights_model_json = {}
-        lights_model_json['led_argb'] = 'testString'
-        lights_model_json['led_on_ms'] = 0
-        lights_model_json['led_off_ms'] = 'testString'
+        # Construct a json representation of a NotificationCreate model
+        notification_create_model_json = {}
+        notification_create_model_json['data'] = {}
+        notification_create_model_json['ibmenseverity'] = 'testString'
+        notification_create_model_json['ibmenfcmbody'] = 'testString'
+        notification_create_model_json['ibmenapnsbody'] = 'testString'
+        notification_create_model_json['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
+        notification_create_model_json['ibmenapnsheaders'] = 'testString'
+        notification_create_model_json['ibmendefaultshort'] = 'testString'
+        notification_create_model_json['ibmendefaultlong'] = 'testString'
+        notification_create_model_json['ibmenchromebody'] = 'testString'
+        notification_create_model_json['ibmenfirefoxbody'] = 'testString'
+        notification_create_model_json['ibmenchromeheaders'] = 'testString'
+        notification_create_model_json['ibmenfirefoxheaders'] = 'testString'
+        notification_create_model_json['ibmensourceid'] = 'testString'
+        notification_create_model_json['datacontenttype'] = 'application/json'
+        notification_create_model_json['subject'] = 'testString'
+        notification_create_model_json['id'] = 'testString'
+        notification_create_model_json['source'] = 'testString'
+        notification_create_model_json['type'] = 'testString'
+        notification_create_model_json['specversion'] = '1.0'
+        notification_create_model_json['time'] = 'testString'
+        notification_create_model_json['foo'] = 'testString'
 
-        # Construct a model instance of Lights by calling from_dict on the json representation
-        lights_model = Lights.from_dict(lights_model_json)
-        assert lights_model != False
+        # Construct a model instance of NotificationCreate by calling from_dict on the json representation
+        notification_create_model = NotificationCreate.from_dict(notification_create_model_json)
+        assert notification_create_model != False
 
-        # Construct a model instance of Lights by calling from_dict on the json representation
-        lights_model_dict = Lights.from_dict(lights_model_json).__dict__
-        lights_model2 = Lights(**lights_model_dict)
+        # Construct a model instance of NotificationCreate by calling from_dict on the json representation
+        notification_create_model_dict = NotificationCreate.from_dict(notification_create_model_json).__dict__
+        notification_create_model2 = NotificationCreate(**notification_create_model_dict)
 
         # Verify the model instances are equivalent
-        assert lights_model == lights_model2
+        assert notification_create_model == notification_create_model2
 
         # Convert model instance back to dict and verify no loss of data
-        lights_model_json2 = lights_model.to_dict()
-        assert lights_model_json2 == lights_model_json
+        notification_create_model_json2 = notification_create_model.to_dict()
+        assert notification_create_model_json2 == notification_create_model_json
 
-class TestModel_NotificationAPNSBodyMessageData():
-    """
-    Test Class for NotificationAPNSBodyMessageData
-    """
+        # Test get_properties and set_properties methods.
+        notification_create_model.set_properties({})
+        actual_dict = notification_create_model.get_properties()
+        assert actual_dict == {}
 
-    def test_notification_apns_body_message_data_serialization(self):
-        """
-        Test serialization/deserialization for NotificationAPNSBodyMessageData
-        """
-
-        # Construct a json representation of a NotificationAPNSBodyMessageData model
-        notification_apns_body_message_data_model_json = {}
-        notification_apns_body_message_data_model_json['alert'] = 'testString'
-        notification_apns_body_message_data_model_json['badge'] = 38
-        notification_apns_body_message_data_model_json['interactiveCategory'] = 'testString'
-        notification_apns_body_message_data_model_json['iosActionKey'] = 'testString'
-        notification_apns_body_message_data_model_json['payload'] = { 'foo': 'bar' }
-        notification_apns_body_message_data_model_json['sound'] = 'testString'
-        notification_apns_body_message_data_model_json['titleLocKey'] = 'testString'
-        notification_apns_body_message_data_model_json['locKey'] = 'testString'
-        notification_apns_body_message_data_model_json['launchImage'] = 'testString'
-        notification_apns_body_message_data_model_json['titleLocArgs'] = ['testString']
-        notification_apns_body_message_data_model_json['locArgs'] = ['testString']
-        notification_apns_body_message_data_model_json['title'] = 'testString'
-        notification_apns_body_message_data_model_json['subtitle'] = 'testString'
-        notification_apns_body_message_data_model_json['attachmentUrl'] = 'testString'
-        notification_apns_body_message_data_model_json['type'] = 'DEFAULT'
-        notification_apns_body_message_data_model_json['apnsCollapseId'] = 'testString'
-        notification_apns_body_message_data_model_json['apnsThreadId'] = 'testString'
-        notification_apns_body_message_data_model_json['apnsGroupSummaryArg'] = 'testString'
-        notification_apns_body_message_data_model_json['apnsGroupSummaryArgCount'] = 38
-
-        # Construct a model instance of NotificationAPNSBodyMessageData by calling from_dict on the json representation
-        notification_apns_body_message_data_model = NotificationAPNSBodyMessageData.from_dict(notification_apns_body_message_data_model_json)
-        assert notification_apns_body_message_data_model != False
-
-        # Construct a model instance of NotificationAPNSBodyMessageData by calling from_dict on the json representation
-        notification_apns_body_message_data_model_dict = NotificationAPNSBodyMessageData.from_dict(notification_apns_body_message_data_model_json).__dict__
-        notification_apns_body_message_data_model2 = NotificationAPNSBodyMessageData(**notification_apns_body_message_data_model_dict)
-
-        # Verify the model instances are equivalent
-        assert notification_apns_body_message_data_model == notification_apns_body_message_data_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        notification_apns_body_message_data_model_json2 = notification_apns_body_message_data_model.to_dict()
-        assert notification_apns_body_message_data_model_json2 == notification_apns_body_message_data_model_json
-
-class TestModel_NotificationDevices():
-    """
-    Test Class for NotificationDevices
-    """
-
-    def test_notification_devices_serialization(self):
-        """
-        Test serialization/deserialization for NotificationDevices
-        """
-
-        # Construct a json representation of a NotificationDevices model
-        notification_devices_model_json = {}
-        notification_devices_model_json['fcm_devices'] = ['testString']
-        notification_devices_model_json['apns_devices'] = ['testString']
-        notification_devices_model_json['user_ids'] = ['testString']
-        notification_devices_model_json['tags'] = ['testString']
-        notification_devices_model_json['platforms'] = ['testString']
-
-        # Construct a model instance of NotificationDevices by calling from_dict on the json representation
-        notification_devices_model = NotificationDevices.from_dict(notification_devices_model_json)
-        assert notification_devices_model != False
-
-        # Construct a model instance of NotificationDevices by calling from_dict on the json representation
-        notification_devices_model_dict = NotificationDevices.from_dict(notification_devices_model_json).__dict__
-        notification_devices_model2 = NotificationDevices(**notification_devices_model_dict)
-
-        # Verify the model instances are equivalent
-        assert notification_devices_model == notification_devices_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        notification_devices_model_json2 = notification_devices_model.to_dict()
-        assert notification_devices_model_json2 == notification_devices_model_json
-
-class TestModel_NotificationFCMBodyMessageData():
-    """
-    Test Class for NotificationFCMBodyMessageData
-    """
-
-    def test_notification_fcm_body_message_data_serialization(self):
-        """
-        Test serialization/deserialization for NotificationFCMBodyMessageData
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        lights_model = {} # Lights
-        lights_model['led_argb'] = 'testString'
-        lights_model['led_on_ms'] = 0
-        lights_model['led_off_ms'] = 'testString'
-
-        style_model = {} # Style
-        style_model['type'] = 'testString'
-        style_model['title'] = 'testString'
-        style_model['url'] = 'testString'
-        style_model['text'] = 'testString'
-        style_model['lines'] = ['testString']
-        style_model['foo'] = 'testString'
-
-        # Construct a json representation of a NotificationFCMBodyMessageData model
-        notification_fcm_body_message_data_model_json = {}
-        notification_fcm_body_message_data_model_json['alert'] = 'testString'
-        notification_fcm_body_message_data_model_json['collapse_key'] = 'testString'
-        notification_fcm_body_message_data_model_json['interactive_category'] = 'testString'
-        notification_fcm_body_message_data_model_json['icon'] = 'testString'
-        notification_fcm_body_message_data_model_json['delay_while_idle'] = True
-        notification_fcm_body_message_data_model_json['sync'] = True
-        notification_fcm_body_message_data_model_json['visibility'] = 'testString'
-        notification_fcm_body_message_data_model_json['redact'] = 'testString'
-        notification_fcm_body_message_data_model_json['payload'] = {}
-        notification_fcm_body_message_data_model_json['priority'] = 'testString'
-        notification_fcm_body_message_data_model_json['sound'] = 'testString'
-        notification_fcm_body_message_data_model_json['time_to_live'] = 0
-        notification_fcm_body_message_data_model_json['lights'] = lights_model
-        notification_fcm_body_message_data_model_json['android_title'] = 'testString'
-        notification_fcm_body_message_data_model_json['group_id'] = 'testString'
-        notification_fcm_body_message_data_model_json['style'] = style_model
-        notification_fcm_body_message_data_model_json['type'] = 'DEFAULT'
-
-        # Construct a model instance of NotificationFCMBodyMessageData by calling from_dict on the json representation
-        notification_fcm_body_message_data_model = NotificationFCMBodyMessageData.from_dict(notification_fcm_body_message_data_model_json)
-        assert notification_fcm_body_message_data_model != False
-
-        # Construct a model instance of NotificationFCMBodyMessageData by calling from_dict on the json representation
-        notification_fcm_body_message_data_model_dict = NotificationFCMBodyMessageData.from_dict(notification_fcm_body_message_data_model_json).__dict__
-        notification_fcm_body_message_data_model2 = NotificationFCMBodyMessageData(**notification_fcm_body_message_data_model_dict)
-
-        # Verify the model instances are equivalent
-        assert notification_fcm_body_message_data_model == notification_fcm_body_message_data_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        notification_fcm_body_message_data_model_json2 = notification_fcm_body_message_data_model.to_dict()
-        assert notification_fcm_body_message_data_model_json2 == notification_fcm_body_message_data_model_json
+        expected_dict = {'foo': 'testString'}
+        notification_create_model.set_properties(expected_dict)
+        actual_dict = notification_create_model.get_properties()
+        assert actual_dict == expected_dict
 
 class TestModel_NotificationResponse():
     """
@@ -4045,7 +3816,6 @@ class TestModel_NotificationResponse():
         # Construct a json representation of a NotificationResponse model
         notification_response_model_json = {}
         notification_response_model_json['notification_id'] = 'testString'
-        notification_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of NotificationResponse by calling from_dict on the json representation
         notification_response_model = NotificationResponse.from_dict(notification_response_model_json)
@@ -4061,16 +3831,6 @@ class TestModel_NotificationResponse():
         # Convert model instance back to dict and verify no loss of data
         notification_response_model_json2 = notification_response_model.to_dict()
         assert notification_response_model_json2 == notification_response_model_json
-
-        # Test get_properties and set_properties methods.
-        notification_response_model.set_properties({})
-        actual_dict = notification_response_model.get_properties()
-        assert actual_dict == {}
-
-        expected_dict = {'foo': 'testString'}
-        notification_response_model.set_properties(expected_dict)
-        actual_dict = notification_response_model.get_properties()
-        assert actual_dict == expected_dict
 
 class TestModel_Rules():
     """
@@ -4322,50 +4082,6 @@ class TestModel_SourcesListItem():
         # Convert model instance back to dict and verify no loss of data
         sources_list_item_model_json2 = sources_list_item_model.to_dict()
         assert sources_list_item_model_json2 == sources_list_item_model_json
-
-class TestModel_Style():
-    """
-    Test Class for Style
-    """
-
-    def test_style_serialization(self):
-        """
-        Test serialization/deserialization for Style
-        """
-
-        # Construct a json representation of a Style model
-        style_model_json = {}
-        style_model_json['type'] = 'testString'
-        style_model_json['title'] = 'testString'
-        style_model_json['url'] = 'testString'
-        style_model_json['text'] = 'testString'
-        style_model_json['lines'] = ['testString']
-        style_model_json['foo'] = 'testString'
-
-        # Construct a model instance of Style by calling from_dict on the json representation
-        style_model = Style.from_dict(style_model_json)
-        assert style_model != False
-
-        # Construct a model instance of Style by calling from_dict on the json representation
-        style_model_dict = Style.from_dict(style_model_json).__dict__
-        style_model2 = Style(**style_model_dict)
-
-        # Verify the model instances are equivalent
-        assert style_model == style_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        style_model_json2 = style_model.to_dict()
-        assert style_model_json2 == style_model_json
-
-        # Test get_properties and set_properties methods.
-        style_model.set_properties({})
-        actual_dict = style_model.get_properties()
-        assert actual_dict == {}
-
-        expected_dict = {'foo': 'testString'}
-        style_model.set_properties(expected_dict)
-        actual_dict = style_model.get_properties()
-        assert actual_dict == expected_dict
 
 class TestModel_Subscription():
     """
@@ -4791,6 +4507,37 @@ class TestModel_TopicsListItem():
         topics_list_item_model_json2 = topics_list_item_model.to_dict()
         assert topics_list_item_model_json2 == topics_list_item_model_json
 
+class TestModel_DestinationConfigParamsChromeDestinationConfig():
+    """
+    Test Class for DestinationConfigParamsChromeDestinationConfig
+    """
+
+    def test_destination_config_params_chrome_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigParamsChromeDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigParamsChromeDestinationConfig model
+        destination_config_params_chrome_destination_config_model_json = {}
+        destination_config_params_chrome_destination_config_model_json['api_key'] = 'testString'
+        destination_config_params_chrome_destination_config_model_json['website_url'] = 'testString'
+        destination_config_params_chrome_destination_config_model_json['public_key'] = 'testString'
+
+        # Construct a model instance of DestinationConfigParamsChromeDestinationConfig by calling from_dict on the json representation
+        destination_config_params_chrome_destination_config_model = DestinationConfigParamsChromeDestinationConfig.from_dict(destination_config_params_chrome_destination_config_model_json)
+        assert destination_config_params_chrome_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigParamsChromeDestinationConfig by calling from_dict on the json representation
+        destination_config_params_chrome_destination_config_model_dict = DestinationConfigParamsChromeDestinationConfig.from_dict(destination_config_params_chrome_destination_config_model_json).__dict__
+        destination_config_params_chrome_destination_config_model2 = DestinationConfigParamsChromeDestinationConfig(**destination_config_params_chrome_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_params_chrome_destination_config_model == destination_config_params_chrome_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_params_chrome_destination_config_model_json2 = destination_config_params_chrome_destination_config_model.to_dict()
+        assert destination_config_params_chrome_destination_config_model_json2 == destination_config_params_chrome_destination_config_model_json
+
 class TestModel_DestinationConfigParamsFCMDestinationConfig():
     """
     Test Class for DestinationConfigParamsFCMDestinationConfig
@@ -4820,6 +4567,36 @@ class TestModel_DestinationConfigParamsFCMDestinationConfig():
         # Convert model instance back to dict and verify no loss of data
         destination_config_params_fcm_destination_config_model_json2 = destination_config_params_fcm_destination_config_model.to_dict()
         assert destination_config_params_fcm_destination_config_model_json2 == destination_config_params_fcm_destination_config_model_json
+
+class TestModel_DestinationConfigParamsFirefoxDestinationConfig():
+    """
+    Test Class for DestinationConfigParamsFirefoxDestinationConfig
+    """
+
+    def test_destination_config_params_firefox_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigParamsFirefoxDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigParamsFirefoxDestinationConfig model
+        destination_config_params_firefox_destination_config_model_json = {}
+        destination_config_params_firefox_destination_config_model_json['website_url'] = 'testString'
+        destination_config_params_firefox_destination_config_model_json['public_key'] = 'testString'
+
+        # Construct a model instance of DestinationConfigParamsFirefoxDestinationConfig by calling from_dict on the json representation
+        destination_config_params_firefox_destination_config_model = DestinationConfigParamsFirefoxDestinationConfig.from_dict(destination_config_params_firefox_destination_config_model_json)
+        assert destination_config_params_firefox_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigParamsFirefoxDestinationConfig by calling from_dict on the json representation
+        destination_config_params_firefox_destination_config_model_dict = DestinationConfigParamsFirefoxDestinationConfig.from_dict(destination_config_params_firefox_destination_config_model_json).__dict__
+        destination_config_params_firefox_destination_config_model2 = DestinationConfigParamsFirefoxDestinationConfig(**destination_config_params_firefox_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_params_firefox_destination_config_model == destination_config_params_firefox_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_params_firefox_destination_config_model_json2 = destination_config_params_firefox_destination_config_model.to_dict()
+        assert destination_config_params_firefox_destination_config_model_json2 == destination_config_params_firefox_destination_config_model_json
 
 class TestModel_DestinationConfigParamsIOSDestinationConfig():
     """
@@ -4886,221 +4663,6 @@ class TestModel_DestinationConfigParamsWebhookDestinationConfig():
         # Convert model instance back to dict and verify no loss of data
         destination_config_params_webhook_destination_config_model_json2 = destination_config_params_webhook_destination_config_model.to_dict()
         assert destination_config_params_webhook_destination_config_model_json2 == destination_config_params_webhook_destination_config_model_json
-
-class TestModel_NotificationAPNSBodyMessageENData():
-    """
-    Test Class for NotificationAPNSBodyMessageENData
-    """
-
-    def test_notification_apns_body_message_en_data_serialization(self):
-        """
-        Test serialization/deserialization for NotificationAPNSBodyMessageENData
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        notification_apns_body_message_data_model = {} # NotificationAPNSBodyMessageData
-        notification_apns_body_message_data_model['alert'] = 'Mario'
-        notification_apns_body_message_data_model['badge'] = 38
-        notification_apns_body_message_data_model['interactiveCategory'] = 'testString'
-        notification_apns_body_message_data_model['iosActionKey'] = 'testString'
-        notification_apns_body_message_data_model['payload'] = { 'foo': 'bar' }
-        notification_apns_body_message_data_model['sound'] = 'testString'
-        notification_apns_body_message_data_model['titleLocKey'] = 'testString'
-        notification_apns_body_message_data_model['locKey'] = 'testString'
-        notification_apns_body_message_data_model['launchImage'] = 'testString'
-        notification_apns_body_message_data_model['titleLocArgs'] = ['testString']
-        notification_apns_body_message_data_model['locArgs'] = ['testString']
-        notification_apns_body_message_data_model['title'] = 'testString'
-        notification_apns_body_message_data_model['subtitle'] = 'testString'
-        notification_apns_body_message_data_model['attachmentUrl'] = 'testString'
-        notification_apns_body_message_data_model['type'] = 'DEFAULT'
-        notification_apns_body_message_data_model['apnsCollapseId'] = 'testString'
-        notification_apns_body_message_data_model['apnsThreadId'] = 'testString'
-        notification_apns_body_message_data_model['apnsGroupSummaryArg'] = 'testString'
-        notification_apns_body_message_data_model['apnsGroupSummaryArgCount'] = 38
-
-        # Construct a json representation of a NotificationAPNSBodyMessageENData model
-        notification_apns_body_message_en_data_model_json = {}
-        notification_apns_body_message_en_data_model_json['en_data'] = notification_apns_body_message_data_model
-        notification_apns_body_message_en_data_model_json['foo'] = 'testString'
-
-        # Construct a model instance of NotificationAPNSBodyMessageENData by calling from_dict on the json representation
-        notification_apns_body_message_en_data_model = NotificationAPNSBodyMessageENData.from_dict(notification_apns_body_message_en_data_model_json)
-        assert notification_apns_body_message_en_data_model != False
-
-        # Construct a model instance of NotificationAPNSBodyMessageENData by calling from_dict on the json representation
-        notification_apns_body_message_en_data_model_dict = NotificationAPNSBodyMessageENData.from_dict(notification_apns_body_message_en_data_model_json).__dict__
-        notification_apns_body_message_en_data_model2 = NotificationAPNSBodyMessageENData(**notification_apns_body_message_en_data_model_dict)
-
-        # Verify the model instances are equivalent
-        assert notification_apns_body_message_en_data_model == notification_apns_body_message_en_data_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        notification_apns_body_message_en_data_model_json2 = notification_apns_body_message_en_data_model.to_dict()
-        assert notification_apns_body_message_en_data_model_json2 == notification_apns_body_message_en_data_model_json
-
-        # Test get_properties and set_properties methods.
-        notification_apns_body_message_en_data_model.set_properties({})
-        actual_dict = notification_apns_body_message_en_data_model.get_properties()
-        assert actual_dict == {}
-
-        expected_dict = {'foo': 'testString'}
-        notification_apns_body_message_en_data_model.set_properties(expected_dict)
-        actual_dict = notification_apns_body_message_en_data_model.get_properties()
-        assert actual_dict == expected_dict
-
-class TestModel_NotificationAPNSBodyNotificationPayload():
-    """
-    Test Class for NotificationAPNSBodyNotificationPayload
-    """
-
-    def test_notification_apns_body_notification_payload_serialization(self):
-        """
-        Test serialization/deserialization for NotificationAPNSBodyNotificationPayload
-        """
-
-        # Construct a json representation of a NotificationAPNSBodyNotificationPayload model
-        notification_apns_body_notification_payload_model_json = {}
-        notification_apns_body_notification_payload_model_json['foo'] = 'testString'
-
-        # Construct a model instance of NotificationAPNSBodyNotificationPayload by calling from_dict on the json representation
-        notification_apns_body_notification_payload_model = NotificationAPNSBodyNotificationPayload.from_dict(notification_apns_body_notification_payload_model_json)
-        assert notification_apns_body_notification_payload_model != False
-
-        # Construct a model instance of NotificationAPNSBodyNotificationPayload by calling from_dict on the json representation
-        notification_apns_body_notification_payload_model_dict = NotificationAPNSBodyNotificationPayload.from_dict(notification_apns_body_notification_payload_model_json).__dict__
-        notification_apns_body_notification_payload_model2 = NotificationAPNSBodyNotificationPayload(**notification_apns_body_notification_payload_model_dict)
-
-        # Verify the model instances are equivalent
-        assert notification_apns_body_notification_payload_model == notification_apns_body_notification_payload_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        notification_apns_body_notification_payload_model_json2 = notification_apns_body_notification_payload_model.to_dict()
-        assert notification_apns_body_notification_payload_model_json2 == notification_apns_body_notification_payload_model_json
-
-        # Test get_properties and set_properties methods.
-        notification_apns_body_notification_payload_model.set_properties({})
-        actual_dict = notification_apns_body_notification_payload_model.get_properties()
-        assert actual_dict == {}
-
-        expected_dict = {'foo': 'testString'}
-        notification_apns_body_notification_payload_model.set_properties(expected_dict)
-        actual_dict = notification_apns_body_notification_payload_model.get_properties()
-        assert actual_dict == expected_dict
-
-class TestModel_NotificationFCMBodyMessageENData():
-    """
-    Test Class for NotificationFCMBodyMessageENData
-    """
-
-    def test_notification_fcm_body_message_en_data_serialization(self):
-        """
-        Test serialization/deserialization for NotificationFCMBodyMessageENData
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        lights_model = {} # Lights
-        lights_model['led_argb'] = 'testString'
-        lights_model['led_on_ms'] = 0
-        lights_model['led_off_ms'] = 'testString'
-
-        style_model = {} # Style
-        style_model['type'] = 'testString'
-        style_model['title'] = 'testString'
-        style_model['url'] = 'testString'
-        style_model['text'] = 'testString'
-        style_model['lines'] = ['testString']
-        style_model['foo'] = 'testString'
-
-        notification_fcm_body_message_data_model = {} # NotificationFCMBodyMessageData
-        notification_fcm_body_message_data_model['alert'] = 'Mario'
-        notification_fcm_body_message_data_model['collapse_key'] = 'testString'
-        notification_fcm_body_message_data_model['interactive_category'] = 'testString'
-        notification_fcm_body_message_data_model['icon'] = 'testString'
-        notification_fcm_body_message_data_model['delay_while_idle'] = True
-        notification_fcm_body_message_data_model['sync'] = True
-        notification_fcm_body_message_data_model['visibility'] = 'testString'
-        notification_fcm_body_message_data_model['redact'] = 'testString'
-        notification_fcm_body_message_data_model['payload'] = {}
-        notification_fcm_body_message_data_model['priority'] = 'testString'
-        notification_fcm_body_message_data_model['sound'] = 'testString'
-        notification_fcm_body_message_data_model['time_to_live'] = 100
-        notification_fcm_body_message_data_model['lights'] = lights_model
-        notification_fcm_body_message_data_model['android_title'] = 'testString'
-        notification_fcm_body_message_data_model['group_id'] = 'testString'
-        notification_fcm_body_message_data_model['style'] = style_model
-        notification_fcm_body_message_data_model['type'] = 'DEFAULT'
-
-        # Construct a json representation of a NotificationFCMBodyMessageENData model
-        notification_fcm_body_message_en_data_model_json = {}
-        notification_fcm_body_message_en_data_model_json['en_data'] = notification_fcm_body_message_data_model
-        notification_fcm_body_message_en_data_model_json['foo'] = 'testString'
-
-        # Construct a model instance of NotificationFCMBodyMessageENData by calling from_dict on the json representation
-        notification_fcm_body_message_en_data_model = NotificationFCMBodyMessageENData.from_dict(notification_fcm_body_message_en_data_model_json)
-        assert notification_fcm_body_message_en_data_model != False
-
-        # Construct a model instance of NotificationFCMBodyMessageENData by calling from_dict on the json representation
-        notification_fcm_body_message_en_data_model_dict = NotificationFCMBodyMessageENData.from_dict(notification_fcm_body_message_en_data_model_json).__dict__
-        notification_fcm_body_message_en_data_model2 = NotificationFCMBodyMessageENData(**notification_fcm_body_message_en_data_model_dict)
-
-        # Verify the model instances are equivalent
-        assert notification_fcm_body_message_en_data_model == notification_fcm_body_message_en_data_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        notification_fcm_body_message_en_data_model_json2 = notification_fcm_body_message_en_data_model.to_dict()
-        assert notification_fcm_body_message_en_data_model_json2 == notification_fcm_body_message_en_data_model_json
-
-        # Test get_properties and set_properties methods.
-        notification_fcm_body_message_en_data_model.set_properties({})
-        actual_dict = notification_fcm_body_message_en_data_model.get_properties()
-        assert actual_dict == {}
-
-        expected_dict = {'foo': 'testString'}
-        notification_fcm_body_message_en_data_model.set_properties(expected_dict)
-        actual_dict = notification_fcm_body_message_en_data_model.get_properties()
-        assert actual_dict == expected_dict
-
-class TestModel_NotificationFCMBodyNotificationPayload():
-    """
-    Test Class for NotificationFCMBodyNotificationPayload
-    """
-
-    def test_notification_fcm_body_notification_payload_serialization(self):
-        """
-        Test serialization/deserialization for NotificationFCMBodyNotificationPayload
-        """
-
-        # Construct a json representation of a NotificationFCMBodyNotificationPayload model
-        notification_fcm_body_notification_payload_model_json = {}
-        notification_fcm_body_notification_payload_model_json['foo'] = 'testString'
-
-        # Construct a model instance of NotificationFCMBodyNotificationPayload by calling from_dict on the json representation
-        notification_fcm_body_notification_payload_model = NotificationFCMBodyNotificationPayload.from_dict(notification_fcm_body_notification_payload_model_json)
-        assert notification_fcm_body_notification_payload_model != False
-
-        # Construct a model instance of NotificationFCMBodyNotificationPayload by calling from_dict on the json representation
-        notification_fcm_body_notification_payload_model_dict = NotificationFCMBodyNotificationPayload.from_dict(notification_fcm_body_notification_payload_model_json).__dict__
-        notification_fcm_body_notification_payload_model2 = NotificationFCMBodyNotificationPayload(**notification_fcm_body_notification_payload_model_dict)
-
-        # Verify the model instances are equivalent
-        assert notification_fcm_body_notification_payload_model == notification_fcm_body_notification_payload_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        notification_fcm_body_notification_payload_model_json2 = notification_fcm_body_notification_payload_model.to_dict()
-        assert notification_fcm_body_notification_payload_model_json2 == notification_fcm_body_notification_payload_model_json
-
-        # Test get_properties and set_properties methods.
-        notification_fcm_body_notification_payload_model.set_properties({})
-        actual_dict = notification_fcm_body_notification_payload_model.get_properties()
-        assert actual_dict == {}
-
-        expected_dict = {'foo': 'testString'}
-        notification_fcm_body_notification_payload_model.set_properties(expected_dict)
-        actual_dict = notification_fcm_body_notification_payload_model.get_properties()
-        assert actual_dict == expected_dict
 
 class TestModel_SubscriptionAttributesEmailAttributesResponse():
     """

@@ -438,7 +438,6 @@ message_apns_headers = {
             }
 
 notification_id := "<notification-id>"
-notification_subject := "<notification-subject>"
 notification_severity := "<notification-severity>"
 type_value := "<notification-type>"
 notifications_source := "<notification-source>"
@@ -446,18 +445,18 @@ notifications_source := "<notification-source>"
 
 notification_response = event_notifications_service.send_notifications(
                 instance_id,
-                subject=notification_subject,
-                ibmenseverity=notification_severity,
-                id=notification_id,
-                source=notifications_source,
-                ibmensourceid=source_id,
-                type=type_value,
-                time='<notification-time>',
-                data={},
-                ibmenpushto=notification_devices_model,
-                ibmenfcmbody=notification_fcm_body_model,
-                ibmenapnsbody=notification_apns_body_model,
-                ibmenapnsheaders=message_apns_headers,
+                ce_ibmenseverity=notification_severity,
+                ce_id=notification_id,
+                ce_source=notifications_source,
+                ce_ibmensourceid=source_id,
+                ce_type=type_value,
+                body={},
+                ce_time='2019-01-01T12:00:00.000Z',
+                ce_ibmenpushto=json.dumps(notification_devices_model),
+                ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
+                ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
+                ce_ibmenapnsheaders=json.dumps(message_apns_headers),
+                ce_specversion='1.0'
             ).get_result()
 
 ```
@@ -466,30 +465,35 @@ notification_response = event_notifications_service.send_notifications(
 <summary>Send Notifications Variables</summary>
 <br>
 
-- **FCM Target NotificationFcmDevices** - Set up the push notifications targets.
-  - *UserIds* (Array of **String**) - Send notification to the specified userIds.
-  - *FcmDevices* (Array of **String**) - Send notification to the list of specified devices.
-  - *Tags* (Array of **String**) - Send notification to the devices that have subscribed to any of these tags.
-  - *Platforms* (Array of **String**) - Send notification to the devices of the specified platforms. Pass 'G' for google (Android) devices. Pass 'A' for iOS  devices.
-- **FCM MessageFcmBody** - Set payload specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. We support `notification` and `data` keys in FCM.
-- **iOS MessageApnsBody** - Set payload specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
-- **APNs MessageApnsHeaders** - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)].
+- **ce_ibmenpushto** - Set up the the push notifications tragets.
+  - *user_ids* (Array of **String**) - Send notification to the specified userIds.
+  - *fcm_devices* (Array of **String**) - Send notification to the list of specified Android devices.
+  - *fcm_devices* (Array of **String**) - Send notification to the list of specified iOS devices.
+  - *_devices* (Array of **String**) - Send notification to the list of specified Chrome devices.
+  - *firefox_devices* (Array of **String**) - Send notification to the list of specified Firefox devices.
+  - *tags* (Array of **String**) - Send notification to the devices that have subscribed to any of these tags.
+  - *platforms* (Array of **String**) - Send notification to the devices of the specified platforms. 
+  	- Pass 'G' for google (Android) devices.
+	- Pass 'A' for iOS devices.
+	- Pass 'WEB_FIREFOX' for Firefox browser.
+	- Pass 'WEB_CHROME' for Chrome browser.
 - **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method. 
   - *InstanceID* (**String**) - Event Notifications instance AppGUID. 
-  - *Subject* (**String**) - Subject for the notifications. 
-  - *ibmenseverity* (**String**) - Severity for the notifications. 
-  - *ID* (**ID**) - ID for the notifications. 
-  - *Source* (**String**) - Source of the notifications. 
-  - *ibmensourceid* (**String**) - Event Notifications instance Source ID. 
-  - *Type* (**String**) - Type for the notifications. 
-  - *Time* (**String**) - Time of the notifications. 
-  - *Data* (**map[string]interface{}**) - Data for the notifications. Supported only for `Webhook` destination. 
-  - *ibmenpushto* (**NotificationFcmDevices**) - Targets for the FCM notifications. 
-  - *ibmenfcmbody* (**NotificationFcmBody**) - Message body for the FCM notifications. 
-  - *ibmenapnsbody* (**NotificationApnsBody**) - Message body for the APNs notifications. 
-  - *ibmenapnsheaders* (**map[string]interface{}**) - Headers for the APNs notifications. 
-  - *Datacontenttype* (**String**) - Data content type of the notifications. 
-  - *Specversion* (**String**) - Spec version of the Event Notifications. Default value is `1.0`. 
+  - *ce_ibmenseverity* (**String**) - Severity for the notifications. 
+  - *ce_id* (**String**) - ID for the notifications. 
+  - *ce_source* (**String**) - Source of the notifications. 
+  - *ce_ibmensourceid* (**String**) - Event Notifications instance Source ID. 
+  - *ce_type* (**String**) - Type for the notifications. 
+  - *ce_time* (**String**) - Time of the notifications. 
+  - *ce_ibmenpushto* (**string**) - Targets for the FCM notifications. 
+  - *ce_ibmenfcmbody* (**string**) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. 
+  - *ce_ibmenapnsbody* (**string**) - Set payload string specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+  - *ce_ibmenapnsheaders* (**string**) - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
+  - *ce_ibmenchromebody* (**string**) - Message body for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *ce_ibmenfirefoxbody* (**string**) - Message body for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *ce_ibmenchromeheaders* (**string**) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *ce_ibmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *ce_specversion* (**String**) - Spec version of the Event Notifications. Default value is `1.0`. 
 
 </details>
 
