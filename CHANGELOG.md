@@ -1,3 +1,10 @@
+# [0.1.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.6...v0.1.0) (2022-04-29)
+
+
+### Features
+
+* Support for Web push destinations (Chrome and Firefox)  BREAKING CHANGE: SendNotifications accepts json string for the `ce-ibmenpushto'`, `ce-ibmenapnsheaders`, `ce-ibmenfcmbody`, `ce-ibmenapnsbody` fields. ([b4dacc5](https://github.com/IBM/event-notifications-python-admin-sdk/commit/b4dacc59a9ae2c45b6f2f3f75091fdc2159ccd3c))
+
 ## [0.0.6](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.5...v0.0.6) (2022-03-25)
 
 
