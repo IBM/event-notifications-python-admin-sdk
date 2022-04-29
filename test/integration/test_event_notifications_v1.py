@@ -21,7 +21,6 @@ import os
 import pytest
 from ibm_cloud_sdk_core import *
 from ibm_eventnotifications.event_notifications_v1 import *
-from ibm_eventnotifications.send_notifications import *
 
 # Config file name
 config_file = '../../event_notifications_v1.env'
@@ -392,7 +391,7 @@ class TestEventNotificationsV1():
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
-            'custom_headers': {},
+            'custom_headers': {'gcm_apikey': 'apikey'},
             'sensitive_headers': ['gcm_apikey'],
         }
 
@@ -537,7 +536,7 @@ class TestEventNotificationsV1():
         destination_config_params_model = {
             'url': 'https://cloud.ibm.com/nhwebhook/sendwebhook',
             'verb': 'post',
-            'custom_headers': {},
+            'custom_headers': {'authorization': 'authorization token'},
             'sensitive_headers': ['authorization'],
         }
 
@@ -893,26 +892,23 @@ class TestEventNotificationsV1():
         }
 
         notification_id = "1234-1234-sdfs-234"
-        notification_subject = "FCM_Subject"
         notification_severity = "MEDIUM"
         type_value = "com.acme.offer:new"
         notifications_source = "1234-1234-sdfs-234:test"
 
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
-            subject=notification_subject,
-            ibmenseverity=notification_severity,
-            id=notification_id,
-            source=notifications_source,
-            ibmensourceid=source_id,
-            type=type_value,
-            time=string_to_datetime('2019-01-01T12:00:00.000Z'),
-            data={},
-            ibmenpushto=notification_devices_model,
-            ibmenfcmbody=notification_fcm_body_model,
-            ibmenapnsheaders=notification_apns_body_model,
-            datacontenttype='application/json',
-            specversion='1.0'
+            ce_ibmenseverity=notification_severity,
+            ce_id=notification_id,
+            ce_source=notifications_source,
+            ce_ibmensourceid=source_id,
+            ce_type=type_value,
+            body={},
+            ce_time='2019-01-01T12:00:00.000Z',
+            ce_ibmenpushto=json.dumps(notification_devices_model),
+            ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
+            ce_ibmenapnsheaders=json.dumps(notification_apns_body_model),
+            ce_specversion='1.0'
         )
 
         assert send_notifications_response.get_status_code() == 202
@@ -938,20 +934,18 @@ class TestEventNotificationsV1():
 
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
-            subject=notification_subject,
-            ibmenseverity=notification_severity,
-            id=notification_id,
-            source=notifications_source,
-            ibmensourceid=source_id,
-            type=type_value,
-            time=string_to_datetime('2019-01-01T12:00:00.000Z'),
-            data={},
-            ibmenpushto=notification_devices_model,
-            ibmenfcmbody=notification_fcm_body_model,
-            ibmenapnsbody=notification_apns_body_model,
-            ibmenapnsheaders=message_apns_headers,
-            datacontenttype='application/json',
-            specversion='1.0'
+            ce_ibmenseverity=notification_severity,
+            ce_id=notification_id,
+            ce_source=notifications_source,
+            ce_ibmensourceid=source_id,
+            ce_type=type_value,
+            body={},
+            ce_time='2019-01-01T12:00:00.000Z',
+            ce_ibmenpushto=json.dumps(notification_devices_model),
+            ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
+            ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
+            ce_ibmenapnsheaders=json.dumps(message_apns_headers),
+            ce_specversion='1.0'
         )
 
         assert send_notifications_response.get_status_code() == 202
