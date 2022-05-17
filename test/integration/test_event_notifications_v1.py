@@ -36,6 +36,7 @@ topic_id3 = ''
 destination_id = ''
 destination_id2 = ''
 destination_id3 = ''
+destination_id4 = ''
 subscription_id = ''
 subscription_id2 = ''
 subscription_id3 = ''
@@ -458,6 +459,38 @@ class TestEventNotificationsV1():
 
         destination_id3 = destination.id
 
+        slack_config_params = {
+            'url': 'https://api.slack.com/myslack',
+        }
+
+        destination_config_model = {
+            'params': slack_config_params,
+        }
+
+        name = "Slack_destination"
+        typeVal = "slack"
+        description = "Slack Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeVal,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeVal
+
+        destination_id4 = destination.id
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -951,6 +984,144 @@ class TestEventNotificationsV1():
         assert send_notifications_response.get_status_code() == 202
         notification_response = send_notifications_response.get_result()
         assert notification_response is not None
+
+        #
+        # The following status codes aren't covered by tests.
+        # Please provide integration tests for these too.
+        #
+        # 400
+        # 401
+        # 415
+        # 500
+        #
+
+    @needscredentials
+    def test_send_bulk_notifications(self):
+
+        # Construct a dict representation of a NotificationDevices model
+        notification_devices_model = {
+            'user_ids': ['userId'],
+        }
+
+        # Construct a dict representation of a Lights model
+        lights_model = {
+            'led_argb': 'RED',
+            'led_on_ms': 0,
+            'led_off_ms': '20',
+        }
+
+        # Construct a dict representation of a Style model
+        style_model = {
+            'type': 'picture_notification',
+            'title': 'hello',
+            'url': 'url.ibm.com',
+        }
+
+        # Construct a dict representation of a NotificationFCMBodyMessageData model
+        notification_fcm_body_message_data_model = {
+            'alert': 'Alert message',
+            'collapse_key': 'collapse_key',
+            'interactive_category': 'category_test',
+            'icon': 'test.png',
+            'delay_while_idle': True,
+            'sync': True,
+            'visibility': '0',
+            'redact': 'redact test alert',
+            'payload': {},
+            'priority': 'MIN',
+            'sound': 'newSound',
+            'time_to_live': 0,
+            'lights': lights_model,
+            'android_title': 'IBM test title',
+            'group_id': 'Group_ID_1',
+            'style': style_model,
+            'type': 'DEFAULT',
+        }
+
+        # Construct a dict representation of a NotificationFCMBodyMessageENData model
+        notification_fcm_body_model = {
+            'en_data': notification_fcm_body_message_data_model,
+        }
+
+        # Construct a dict representation of a NotificationAPNSBodyMessageData model
+        notification_apns_body_message_data_model = {
+            'alert': 'Alert message',
+            'badge': 38,
+            'interactiveCategory': 'InteractiveCategory',
+            'iosActionKey': 'IosActionKey',
+            'payload': {'foo': 'bar'},
+            'sound': 'sound.wav',
+            'titleLocKey': 'TitleLocKey',
+            'locKey': 'LocKey',
+            'launchImage': 'image.png',
+            'titleLocArgs': ['TitleLocArgs1'],
+            'locArgs': ['LocArgs1'],
+            'title': 'Message Title',
+            'subtitle': 'Message SubTitle',
+            'attachmentUrl': 'https://testimage.sub.png',
+            'type': 'DEFAULT',
+            'apnsCollapseId': 'ApnsCollapseID',
+            'apnsThreadId': 'ApnsThreadID',
+            'apnsGroupSummaryArg': 'ApnsGroupSummaryArg',
+            'apnsGroupSummaryArgCount': 38,
+        }
+
+        # Construct a dict representation of a NotificationAPNSBodyMessageENData model
+        notification_apns_body_model = {
+            'en_data': notification_apns_body_message_data_model,
+        }
+
+        message_apns_headers = {
+            "apns-collapse-id": "123",
+        }
+
+        notification_id = "1234-1234-sdfs-234"
+        notification_severity = "MEDIUM"
+        type_value = "com.acme.offer:new"
+        notifications_source = "1234-1234-sdfs-234:test"
+
+        # Construct a dict representation of a NotificationCreate model
+        notification_create_model = {
+            'ibmenseverity': notification_severity,
+            'ibmenfcmbody': json.dumps(notification_fcm_body_model),
+            'ibmenpushto': json.dumps(notification_devices_model),
+            'ibmenapnsheaders': json.dumps(message_apns_headers),
+            'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmensourceid': source_id,
+            'id': notification_id,
+            'source': notifications_source,
+            'type': type_value,
+            'specversion': '1.0',
+            'time': '2019-01-01T12:00:00.000Z',
+        }
+
+        notification_id1 = "1234-1111-sdfs-234"
+        notification_severity1 = "HIGH"
+        type_value1 = "com.ibm.cloud.compliance.certificate_manager:certificate_expired"
+        notifications_source1 = "1234-1234-sdfs-234:test"
+
+        notification_create_model1 = {
+            'ibmenseverity': notification_severity1,
+            'ibmenfcmbody': json.dumps(notification_fcm_body_model),
+            'ibmenpushto': json.dumps(notification_devices_model),
+            'ibmenapnsheaders': json.dumps(message_apns_headers),
+            'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmensourceid': source_id,
+            'id': notification_id1,
+            'source': notifications_source1,
+            'type': type_value1,
+            'specversion': '1.0',
+            'time': '2019-01-01T12:00:00.000Z',
+        }
+
+        send_bulk_notifications_response = self.event_notifications_service.send_bulk_notifications(
+            instance_id=instance_id,
+            bulk_messages=[notification_create_model,notification_create_model1]
+        )
+
+        assert send_bulk_notifications_response.get_status_code() == 202
+        bulk_notification_response = send_bulk_notifications_response.get_result()
+        assert bulk_notification_response is not None
 
         #
         # The following status codes aren't covered by tests.
