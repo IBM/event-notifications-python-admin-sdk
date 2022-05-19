@@ -77,29 +77,30 @@ SDK Methods to consume
 
 - [Source](#source)
     - [Create Source](#create-source)
-	- [List Sources](#list-sources)
-	- [Get Source](#get-source)
+    - [List Sources](#list-sources)
+    - [Get Source](#get-source)
     - [Update Source](#update-source)
     - [Delete Source](#delete-source)
 - [Topics](#topics)
-	- [Create Topics](#create-topic)
-	- [List Topics](#list-topics)
-	- [Get Topic](#get-topic)
-	- [Update Topics](#update-topic)
-	- [Delete Topics](#delete-topic)
+    - [Create Topics](#create-topic)
+    - [List Topics](#list-topics)
+    - [Get Topic](#get-topic)
+    - [Update Topics](#update-topic)
+    - [Delete Topics](#delete-topic)
 - [Destinations](#destinations)
-	- [Create Destination](#create-destination)
-	- [List Destinations](#list-destinations)
-	- [Get Destination](#get-destination)
-	- [Update Destination](#update-destination)
-	- [Delete Destination](#delete-destination)
+    - [Create Destination](#create-destination)
+    - [List Destinations](#list-destinations)
+    - [Get Destination](#get-destination)
+    - [Update Destination](#update-destination)
+    - [Delete Destination](#delete-destination)
 - [Subscriptions](#subscriptions)
-	- [Create Subscription](#create-subscription)
-	- [List Subscriptions](#list-subscriptions)
-	- [Get Subscription](#get-subscription)
-	- [Update Subscription](#update-subscription)
-	- [Delete Subscription](#delete-subscription)
+    - [Create Subscription](#create-subscription)
+    - [List Subscriptions](#list-subscriptions)
+    - [Get Subscription](#get-subscription)
+    - [Update Subscription](#update-subscription)
+    - [Delete Subscription](#delete-subscription)
 - [Send Notifications](#send-notifications)
+- [Send Bulk Notifications](#send-bulk-notifications)
 
 ## Source 
 
@@ -494,6 +495,98 @@ notification_response = event_notifications_service.send_notifications(
   - *ce_ibmenchromeheaders* (**string**) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - *ce_ibmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - *ce_specversion* (**String**) - Spec version of the Event Notifications. Default value is `1.0`. 
+
+</details>
+
+### Send Bulk Notifications
+
+
+```py
+notification_devices_model = {
+            'fcm_devices': ['<fcm-device-ids>'],
+            'apns_devices': ['<apns-device-ids>'],
+            'user_ids': ['<user-ids>'],
+            'tags': ['<tag-names>'],
+            'platforms': ['<device-platforms>'],
+          }
+
+notification_apns_body_model = {
+                "aps": {
+                    "alert": "<notification-message>",
+                    "badge": 5,
+                },
+            }
+notification_fcm_body_model = {
+                "notification": {
+                    "title": "<notification-title>",
+                    "body": "<notification-message>",
+                },
+            }
+
+message_apns_headers = {
+                "apns-collapse-id": "<apns-apns-collapse-id-value>",
+            }
+
+notification_id := "<notification-id>"
+notification_severity := "<notification-severity>"
+type_value := "<notification-type>"
+notifications_source := "<notification-source>"
+
+notification_create_model = {
+            'ibmenseverity': notification_severity,
+            'ibmenfcmbody': json.dumps(notification_fcm_body_model),
+            'ibmenpushto': json.dumps(notification_devices_model),
+            'ibmenapnsheaders': json.dumps(message_apns_headers),
+            'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmensourceid': source_id,
+            'id': notification_id,
+            'source': notifications_source,
+            'type': type_value,
+            'specversion': '1.0',
+            'time': '2019-01-01T12:00:00.000Z',
+        }
+
+ send_bulk_notifications_response = self.event_notifications_service.send_bulk_notifications(
+            instance_id=instance_id,
+            bulk_messages=[notification_create_model,notification_create_model1]
+        )
+
+bulk_notification_response = send_bulk_notifications_response.get_result()
+```
+
+<details open>
+<summary>Send Bulk Notifications Variables</summary>
+<br>
+
+- **ce_ibmenpushto** - Set up the the push notifications tragets.
+  - *user_ids* (Array of **String**) - Send notification to the specified userIds.
+  - *fcm_devices* (Array of **String**) - Send notification to the list of specified Android devices.
+  - *fcm_devices* (Array of **String**) - Send notification to the list of specified iOS devices.
+  - *_devices* (Array of **String**) - Send notification to the list of specified Chrome devices.
+  - *firefox_devices* (Array of **String**) - Send notification to the list of specified Firefox devices.
+  - *tags* (Array of **String**) - Send notification to the devices that have subscribed to any of these tags.
+  - *platforms* (Array of **String**) - Send notification to the devices of the specified platforms. 
+  	- Pass 'G' for google (Android) devices.
+	- Pass 'A' for iOS devices.
+	- Pass 'WEB_FIREFOX' for Firefox browser.
+	- Pass 'WEB_CHROME' for Chrome browser.
+- **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method. 
+  - *InstanceID* (**String**) - Event Notifications instance AppGUID. 
+  - *ibmenseverity* (**String**) - Severity for the notifications. 
+  - *id* (**String**) - ID for the notifications. 
+  - *source* (**String**) - Source of the notifications. 
+  - *ibmensourceid* (**String**) - Event Notifications instance Source ID. 
+  - *type* (**String**) - Type for the notifications. 
+  - *time* (**String**) - Time of the notifications. 
+  - *ibmenpushto* (**string**) - Targets for the FCM notifications. 
+  - *ibmenfcmbody* (**string**) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. 
+  - *ibmenapnsbody* (**string**) - Set payload string specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+  - *ibmenapnsheaders* (**string**) - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
+  - *ibmenchromebody* (**string**) - Message body for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *ibmenfirefoxbody* (**string**) - Message body for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *ibmenchromeheaders* (**string**) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *ibmenfirefoxheaders* (**string**) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
+  - *specversion* (**String**) - Spec version of the Event Notifications. Default value is `1.0`. 
 
 </details>
 
