@@ -4288,7 +4288,7 @@ class SubscriptionUpdateAttributes():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['SubscriptionUpdateAttributesSMSAttributes', 'SubscriptionUpdateAttributesEmailUpdateAttributes', 'SubscriptionUpdateAttributesWebhookAttributes']))
+                  ", ".join(['SubscriptionUpdateAttributesSMSAttributes', 'SubscriptionUpdateAttributesEmailUpdateAttributes', 'SubscriptionUpdateAttributesWebhookAttributes', 'SubscriptionUpdateAttributesSlackAttributes']))
         raise Exception(msg)
 
 class TagsSubscriptionList():
@@ -6210,6 +6210,63 @@ class SubscriptionUpdateAttributesSMSAttributes(SubscriptionUpdateAttributes):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionUpdateAttributesSMSAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for a slack notification.
+
+    :attr str attachment_color: Attachment Color for the slack message.
+    """
+
+    def __init__(self,
+                 attachment_color: str) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesSlackAttributes object.
+
+        :param str attachment_color: Attachment Color for the slack message.
+        """
+        # pylint: disable=super-init-not-called
+        self.attachment_color = attachment_color
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesSlackAttributes':
+        """Initialize a SubscriptionUpdateAttributesSlackAttributes object from a json dictionary."""
+        args = {}
+        if 'attachment_color' in _dict:
+            args['attachment_color'] = _dict.get('attachment_color')
+        else:
+            raise ValueError('Required property \'attachment_color\' not present in SubscriptionUpdateAttributesSlackAttributes JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesSlackAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'attachment_color') and self.attachment_color is not None:
+            _dict['attachment_color'] = self.attachment_color
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesSlackAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesSlackAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesSlackAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

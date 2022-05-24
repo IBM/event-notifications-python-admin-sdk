@@ -5245,6 +5245,35 @@ class TestModel_SubscriptionUpdateAttributesSMSAttributes():
         subscription_update_attributes_sms_attributes_model_json2 = subscription_update_attributes_sms_attributes_model.to_dict()
         assert subscription_update_attributes_sms_attributes_model_json2 == subscription_update_attributes_sms_attributes_model_json
 
+class TestModel_SubscriptionUpdateAttributesSlackAttributes():
+    """
+    Test Class for SubscriptionUpdateAttributesSlackAttributes
+    """
+
+    def test_subscription_update_attributes_slack_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesSlackAttributes
+        """
+
+        # Construct a json representation of a SubscriptionUpdateAttributesSlackAttributes model
+        subscription_update_attributes_slack_attributes_model_json = {}
+        subscription_update_attributes_slack_attributes_model_json['attachment_color'] = 'testString'
+
+        # Construct a model instance of SubscriptionUpdateAttributesSlackAttributes by calling from_dict on the json representation
+        subscription_update_attributes_slack_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(subscription_update_attributes_slack_attributes_model_json)
+        assert subscription_update_attributes_slack_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesSlackAttributes by calling from_dict on the json representation
+        subscription_update_attributes_slack_attributes_model_dict = SubscriptionUpdateAttributesSlackAttributes.from_dict(subscription_update_attributes_slack_attributes_model_json).__dict__
+        subscription_update_attributes_slack_attributes_model2 = SubscriptionUpdateAttributesSlackAttributes(**subscription_update_attributes_slack_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_update_attributes_slack_attributes_model == subscription_update_attributes_slack_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_slack_attributes_model_json2 = subscription_update_attributes_slack_attributes_model.to_dict()
+        assert subscription_update_attributes_slack_attributes_model_json2 == subscription_update_attributes_slack_attributes_model_json
+
 class TestModel_SubscriptionUpdateAttributesWebhookAttributes():
     """
     Test Class for SubscriptionUpdateAttributesWebhookAttributes
