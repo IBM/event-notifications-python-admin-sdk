@@ -388,7 +388,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3
+        global destination_id, destination_id3, destination_id4
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -1185,6 +1185,13 @@ class TestEventNotificationsV1():
         delete_destination_response = self.event_notifications_service.delete_destination(
             instance_id,
             id=destination_id3
+        )
+
+        assert delete_destination_response.get_status_code() == 204
+
+        delete_destination_response = self.event_notifications_service.delete_destination(
+            instance_id,
+            id=destination_id4
         )
 
         assert delete_destination_response.get_status_code() == 204
