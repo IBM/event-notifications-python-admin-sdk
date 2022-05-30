@@ -2,9 +2,6 @@
 
 Python client library to interact with various [IBM Cloud Event Notifications APIs](https://cloud.ibm.com/apidocs?category=event-notifications).
 
-Disclaimer: this SDK is being released initially as a **pre-release** version.
-Changes might occur which impact applications that use this SDK.
-
 ## Table of Contents
 
 <!-- toc -->
@@ -77,28 +74,28 @@ SDK Methods to consume
 
 - [Source](#source)
     - [Create Source](#create-source)
-	- [List Sources](#list-sources)
-	- [Get Source](#get-source)
+    - [List Sources](#list-sources)
+    - [Get Source](#get-source)
     - [Update Source](#update-source)
     - [Delete Source](#delete-source)
 - [Topics](#topics)
-	- [Create Topics](#create-topic)
-	- [List Topics](#list-topics)
-	- [Get Topic](#get-topic)
-	- [Update Topics](#update-topic)
-	- [Delete Topics](#delete-topic)
+    - [Create Topics](#create-topic)
+    - [List Topics](#list-topics)
+    - [Get Topic](#get-topic)
+    - [Update Topics](#update-topic)
+    - [Delete Topics](#delete-topic)
 - [Destinations](#destinations)
-	- [Create Destination](#create-destination)
-	- [List Destinations](#list-destinations)
-	- [Get Destination](#get-destination)
-	- [Update Destination](#update-destination)
-	- [Delete Destination](#delete-destination)
+    - [Create Destination](#create-destination)
+    - [List Destinations](#list-destinations)
+    - [Get Destination](#get-destination)
+    - [Update Destination](#update-destination)
+    - [Delete Destination](#delete-destination)
 - [Subscriptions](#subscriptions)
-	- [Create Subscription](#create-subscription)
-	- [List Subscriptions](#list-subscriptions)
-	- [Get Subscription](#get-subscription)
-	- [Update Subscription](#update-subscription)
-	- [Delete Subscription](#delete-subscription)
+    - [Create Subscription](#create-subscription)
+    - [List Subscriptions](#list-subscriptions)
+    - [Get Subscription](#get-subscription)
+    - [Update Subscription](#update-subscription)
+    - [Delete Subscription](#delete-subscription)
 - [Send Notifications](#send-notifications)
 
 ## Source 

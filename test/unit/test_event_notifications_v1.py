@@ -116,7 +116,7 @@ class TestSendNotifications():
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=201)
+                      status=202)
 
         # Construct a dict representation of a NotificationCreate model
         notification_create_model = {}
@@ -189,7 +189,7 @@ class TestSendNotifications():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 201
+        assert response.status_code == 202
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body == body
@@ -215,7 +215,7 @@ class TestSendNotifications():
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=201)
+                      status=202)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -228,7 +228,7 @@ class TestSendNotifications():
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 201
+        assert response.status_code == 202
 
     def test_send_notifications_required_params_with_retries(self):
         # Enable retries and run test_send_notifications_required_params.
@@ -251,7 +251,7 @@ class TestSendNotifications():
                       url,
                       body=mock_response,
                       content_type='application/json',
-                      status=201)
+                      status=202)
 
         # Set up parameter values
         instance_id = 'testString'
@@ -274,6 +274,148 @@ class TestSendNotifications():
         # Disable retries and run test_send_notifications_value_error.
         _service.disable_retries()
         self.test_send_notifications_value_error()
+
+class TestSendBulkNotifications():
+    """
+    Test Class for send_bulk_notifications
+    """
+
+    @responses.activate
+    def test_send_bulk_notifications_all_params(self):
+        """
+        send_bulk_notifications()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications/bulk')
+        mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=202)
+
+        # Construct a dict representation of a NotificationCreate model
+        notification_create_model = {}
+        notification_create_model['data'] = {}
+        notification_create_model['ibmenseverity'] = 'testString'
+        notification_create_model['ibmenfcmbody'] = 'testString'
+        notification_create_model['ibmenapnsbody'] = 'testString'
+        notification_create_model['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
+        notification_create_model['ibmenapnsheaders'] = 'testString'
+        notification_create_model['ibmendefaultshort'] = 'testString'
+        notification_create_model['ibmendefaultlong'] = 'testString'
+        notification_create_model['ibmenchromebody'] = 'testString'
+        notification_create_model['ibmenfirefoxbody'] = 'testString'
+        notification_create_model['ibmenchromeheaders'] = 'testString'
+        notification_create_model['ibmenfirefoxheaders'] = 'testString'
+        notification_create_model['ibmensourceid'] = 'testString'
+        notification_create_model['datacontenttype'] = 'application/json'
+        notification_create_model['subject'] = 'testString'
+        notification_create_model['id'] = 'testString'
+        notification_create_model['source'] = 'testString'
+        notification_create_model['type'] = 'testString'
+        notification_create_model['specversion'] = '1.0'
+        notification_create_model['time'] = 'testString'
+        notification_create_model['foo'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        bulk_messages = [notification_create_model]
+
+        # Invoke method
+        response = _service.send_bulk_notifications(
+            instance_id,
+            bulk_messages=bulk_messages,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['bulk_messages'] == [notification_create_model]
+
+    def test_send_bulk_notifications_all_params_with_retries(self):
+        # Enable retries and run test_send_bulk_notifications_all_params.
+        _service.enable_retries()
+        self.test_send_bulk_notifications_all_params()
+
+        # Disable retries and run test_send_bulk_notifications_all_params.
+        _service.disable_retries()
+        self.test_send_bulk_notifications_all_params()
+
+    @responses.activate
+    def test_send_bulk_notifications_required_params(self):
+        """
+        test_send_bulk_notifications_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications/bulk')
+        mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=202)
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Invoke method
+        response = _service.send_bulk_notifications(
+            instance_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 202
+
+    def test_send_bulk_notifications_required_params_with_retries(self):
+        # Enable retries and run test_send_bulk_notifications_required_params.
+        _service.enable_retries()
+        self.test_send_bulk_notifications_required_params()
+
+        # Disable retries and run test_send_bulk_notifications_required_params.
+        _service.disable_retries()
+        self.test_send_bulk_notifications_required_params()
+
+    @responses.activate
+    def test_send_bulk_notifications_value_error(self):
+        """
+        test_send_bulk_notifications_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications/bulk')
+        mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=202)
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.send_bulk_notifications(**req_copy)
+
+
+    def test_send_bulk_notifications_value_error_with_retries(self):
+        # Enable retries and run test_send_bulk_notifications_value_error.
+        _service.enable_retries()
+        self.test_send_bulk_notifications_value_error()
+
+        # Disable retries and run test_send_bulk_notifications_value_error.
+        _service.disable_retries()
+        self.test_send_bulk_notifications_value_error()
 
 # endregion
 ##############################################################################
@@ -3336,6 +3478,36 @@ class TestUpdateSubscription():
 # Start of Model Tests
 ##############################################################################
 # region
+class TestModel_BulkNotificationResponse():
+    """
+    Test Class for BulkNotificationResponse
+    """
+
+    def test_bulk_notification_response_serialization(self):
+        """
+        Test serialization/deserialization for BulkNotificationResponse
+        """
+
+        # Construct a json representation of a BulkNotificationResponse model
+        bulk_notification_response_model_json = {}
+        bulk_notification_response_model_json['bulk_notification_id'] = 'testString'
+        bulk_notification_response_model_json['bulk_messages'] = ['testString']
+
+        # Construct a model instance of BulkNotificationResponse by calling from_dict on the json representation
+        bulk_notification_response_model = BulkNotificationResponse.from_dict(bulk_notification_response_model_json)
+        assert bulk_notification_response_model != False
+
+        # Construct a model instance of BulkNotificationResponse by calling from_dict on the json representation
+        bulk_notification_response_model_dict = BulkNotificationResponse.from_dict(bulk_notification_response_model_json).__dict__
+        bulk_notification_response_model2 = BulkNotificationResponse(**bulk_notification_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert bulk_notification_response_model == bulk_notification_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        bulk_notification_response_model_json2 = bulk_notification_response_model.to_dict()
+        assert bulk_notification_response_model_json2 == bulk_notification_response_model_json
+
 class TestModel_Destination():
     """
     Test Class for Destination
@@ -4632,6 +4804,35 @@ class TestModel_DestinationConfigParamsIOSDestinationConfig():
         destination_config_params_ios_destination_config_model_json2 = destination_config_params_ios_destination_config_model.to_dict()
         assert destination_config_params_ios_destination_config_model_json2 == destination_config_params_ios_destination_config_model_json
 
+class TestModel_DestinationConfigParamsSlackDestinationConfig():
+    """
+    Test Class for DestinationConfigParamsSlackDestinationConfig
+    """
+
+    def test_destination_config_params_slack_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigParamsSlackDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigParamsSlackDestinationConfig model
+        destination_config_params_slack_destination_config_model_json = {}
+        destination_config_params_slack_destination_config_model_json['url'] = 'testString'
+
+        # Construct a model instance of DestinationConfigParamsSlackDestinationConfig by calling from_dict on the json representation
+        destination_config_params_slack_destination_config_model = DestinationConfigParamsSlackDestinationConfig.from_dict(destination_config_params_slack_destination_config_model_json)
+        assert destination_config_params_slack_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigParamsSlackDestinationConfig by calling from_dict on the json representation
+        destination_config_params_slack_destination_config_model_dict = DestinationConfigParamsSlackDestinationConfig.from_dict(destination_config_params_slack_destination_config_model_json).__dict__
+        destination_config_params_slack_destination_config_model2 = DestinationConfigParamsSlackDestinationConfig(**destination_config_params_slack_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_params_slack_destination_config_model == destination_config_params_slack_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_params_slack_destination_config_model_json2 = destination_config_params_slack_destination_config_model.to_dict()
+        assert destination_config_params_slack_destination_config_model_json2 == destination_config_params_slack_destination_config_model_json
+
 class TestModel_DestinationConfigParamsWebhookDestinationConfig():
     """
     Test Class for DestinationConfigParamsWebhookDestinationConfig
@@ -4740,6 +4941,46 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
         expected_dict = {'foo': 'testString'}
         subscription_attributes_sms_attributes_response_model.set_properties(expected_dict)
         actual_dict = subscription_attributes_sms_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_SubscriptionAttributesSlackAttributesResponse():
+    """
+    Test Class for SubscriptionAttributesSlackAttributesResponse
+    """
+
+    def test_subscription_attributes_slack_attributes_response_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionAttributesSlackAttributesResponse
+        """
+
+        # Construct a json representation of a SubscriptionAttributesSlackAttributesResponse model
+        subscription_attributes_slack_attributes_response_model_json = {}
+        subscription_attributes_slack_attributes_response_model_json['attachment_color'] = 'testString'
+        subscription_attributes_slack_attributes_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of SubscriptionAttributesSlackAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_slack_attributes_response_model = SubscriptionAttributesSlackAttributesResponse.from_dict(subscription_attributes_slack_attributes_response_model_json)
+        assert subscription_attributes_slack_attributes_response_model != False
+
+        # Construct a model instance of SubscriptionAttributesSlackAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_slack_attributes_response_model_dict = SubscriptionAttributesSlackAttributesResponse.from_dict(subscription_attributes_slack_attributes_response_model_json).__dict__
+        subscription_attributes_slack_attributes_response_model2 = SubscriptionAttributesSlackAttributesResponse(**subscription_attributes_slack_attributes_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_attributes_slack_attributes_response_model == subscription_attributes_slack_attributes_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_attributes_slack_attributes_response_model_json2 = subscription_attributes_slack_attributes_response_model.to_dict()
+        assert subscription_attributes_slack_attributes_response_model_json2 == subscription_attributes_slack_attributes_response_model_json
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_slack_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_slack_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_slack_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_slack_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 class TestModel_SubscriptionAttributesWebhookAttributesResponse():
@@ -4873,6 +5114,35 @@ class TestModel_SubscriptionCreateAttributesSMSAttributes():
         subscription_create_attributes_sms_attributes_model_json2 = subscription_create_attributes_sms_attributes_model.to_dict()
         assert subscription_create_attributes_sms_attributes_model_json2 == subscription_create_attributes_sms_attributes_model_json
 
+class TestModel_SubscriptionCreateAttributesSlackAttributes():
+    """
+    Test Class for SubscriptionCreateAttributesSlackAttributes
+    """
+
+    def test_subscription_create_attributes_slack_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesSlackAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesSlackAttributes model
+        subscription_create_attributes_slack_attributes_model_json = {}
+        subscription_create_attributes_slack_attributes_model_json['attachment_color'] = 'testString'
+
+        # Construct a model instance of SubscriptionCreateAttributesSlackAttributes by calling from_dict on the json representation
+        subscription_create_attributes_slack_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(subscription_create_attributes_slack_attributes_model_json)
+        assert subscription_create_attributes_slack_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesSlackAttributes by calling from_dict on the json representation
+        subscription_create_attributes_slack_attributes_model_dict = SubscriptionCreateAttributesSlackAttributes.from_dict(subscription_create_attributes_slack_attributes_model_json).__dict__
+        subscription_create_attributes_slack_attributes_model2 = SubscriptionCreateAttributesSlackAttributes(**subscription_create_attributes_slack_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_create_attributes_slack_attributes_model == subscription_create_attributes_slack_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_slack_attributes_model_json2 = subscription_create_attributes_slack_attributes_model.to_dict()
+        assert subscription_create_attributes_slack_attributes_model_json2 == subscription_create_attributes_slack_attributes_model_json
+
 class TestModel_SubscriptionCreateAttributesWebhookAttributes():
     """
     Test Class for SubscriptionCreateAttributesWebhookAttributes
@@ -4974,6 +5244,35 @@ class TestModel_SubscriptionUpdateAttributesSMSAttributes():
         # Convert model instance back to dict and verify no loss of data
         subscription_update_attributes_sms_attributes_model_json2 = subscription_update_attributes_sms_attributes_model.to_dict()
         assert subscription_update_attributes_sms_attributes_model_json2 == subscription_update_attributes_sms_attributes_model_json
+
+class TestModel_SubscriptionUpdateAttributesSlackAttributes():
+    """
+    Test Class for SubscriptionUpdateAttributesSlackAttributes
+    """
+
+    def test_subscription_update_attributes_slack_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesSlackAttributes
+        """
+
+        # Construct a json representation of a SubscriptionUpdateAttributesSlackAttributes model
+        subscription_update_attributes_slack_attributes_model_json = {}
+        subscription_update_attributes_slack_attributes_model_json['attachment_color'] = 'testString'
+
+        # Construct a model instance of SubscriptionUpdateAttributesSlackAttributes by calling from_dict on the json representation
+        subscription_update_attributes_slack_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(subscription_update_attributes_slack_attributes_model_json)
+        assert subscription_update_attributes_slack_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesSlackAttributes by calling from_dict on the json representation
+        subscription_update_attributes_slack_attributes_model_dict = SubscriptionUpdateAttributesSlackAttributes.from_dict(subscription_update_attributes_slack_attributes_model_json).__dict__
+        subscription_update_attributes_slack_attributes_model2 = SubscriptionUpdateAttributesSlackAttributes(**subscription_update_attributes_slack_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_update_attributes_slack_attributes_model == subscription_update_attributes_slack_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_slack_attributes_model_json2 = subscription_update_attributes_slack_attributes_model.to_dict()
+        assert subscription_update_attributes_slack_attributes_model_json2 == subscription_update_attributes_slack_attributes_model_json
 
 class TestModel_SubscriptionUpdateAttributesWebhookAttributes():
     """
