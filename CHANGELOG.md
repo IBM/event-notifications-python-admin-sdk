@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.0...v0.1.1) (2022-05-30)
+
+
+### Bug Fixes
+
+* add slack destination support ([5cd8eaf](https://github.com/IBM/event-notifications-python-admin-sdk/commit/5cd8eafc2907aaa5be1c6ec767d8156375f33e9a))
+
 # [0.1.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.0.6...v0.1.0) (2022-04-29)
 
 
