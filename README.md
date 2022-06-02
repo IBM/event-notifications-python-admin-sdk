@@ -434,6 +434,13 @@ message_apns_headers = {
                 "apns-collapse-id": "<apns-apns-collapse-id-value>",
             }
 
+notificationSafariBodymodel = {
+            'saf': {
+                'alert': 'Game Request',
+                'badge': 5,
+            },
+        }
+
 notification_id := "<notification-id>"
 notification_severity := "<notification-severity>"
 type_value := "<notification-type>"
@@ -453,6 +460,7 @@ notification_response = event_notifications_service.send_notifications(
                 ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
                 ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
                 ce_ibmenapnsheaders=json.dumps(message_apns_headers),
+                ce_ibmensafaribody=json.dumps(notificationSafariBodymodel),
                 ce_specversion='1.0'
             ).get_result()
 
@@ -485,6 +493,7 @@ notification_response = event_notifications_service.send_notifications(
   - *ce_ibmenpushto* (**string**) - Targets for the FCM notifications. 
   - *ce_ibmenfcmbody* (**string**) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. 
   - *ce_ibmenapnsbody* (**string**) - Set payload string specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
+  - *ce_ibmensafaribody* (**string**) - Set payload string specific to safari platform [Refer this Safari official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
   - *ce_ibmenapnsheaders* (**string**) - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
   - *ce_ibmenchromebody* (**string**) - Message body for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - *ce_ibmenfirefoxbody* (**string**) - Message body for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
