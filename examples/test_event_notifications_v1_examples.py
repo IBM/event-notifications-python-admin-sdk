@@ -49,6 +49,8 @@ topic_name = 'Admin Topic Compliance'
 source_id = ''
 topic_id = ''
 destination_id = ''
+destination_id5 = ''
+safariCertificatePath = ''
 subscription_id = ''
 fcmServerKey = ''
 fcmSenderId = ''
@@ -309,7 +311,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id
+        global destination_id, destination_id5
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -341,6 +343,35 @@ class TestEventNotificationsV1Examples():
             destination = DestinationResponse.from_dict(destination)
             destination_id = destination.id
 
+            safari_config_params = {
+                'cert_type': 'p12',
+                'password': 'safari',
+                'website_url': 'https://ensafaripush.mybluemix.net',
+                'website_name': 'NodeJS Starter Application',
+                'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
+                'website_push_id': 'web.net.mybluemix.ensafaripush',
+            }
+
+            destination_config_model = {
+                'params': safari_config_params,
+            }
+
+            name = "Safari_destination"
+            typeVal = "push_safari"
+            description = "Safari Destination"
+
+            certificatefile = open('/Users/nitishkulkarni/SDK/Safari.p12', 'rb')
+            create_destination_response = event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeVal,
+                description=description,
+                config=destination_config_model,
+                certificate=certificatefile,
+            ).get_result()
+
+            destination = DestinationResponse.from_dict(create_destination_response)
+            destination_id5 = destination.id
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -414,6 +445,34 @@ class TestEventNotificationsV1Examples():
             ).get_result()
 
             print(json.dumps(destination, indent=2))
+
+            safari_destination_config_params_model = {
+                'cert_type': 'p12',
+                'password': 'safari',
+                'website_url': 'https://ensafaripush.mybluemix.net',
+                'website_name': 'NodeJS Starter Application',
+                'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
+                'website_push_id': 'web.net.mybluemix.ensafaripush',
+            }
+
+            # Construct a dict representation of a DestinationConfig model
+            safari_destination_config_model = {
+                'params': safari_destination_config_params_model,
+            }
+
+            certificatefile = open('/Users/nitishkulkarni/SDK/Safari.p12', 'rb')
+            name = "Safari Dest"
+            description = "This destination is for Safari"
+            update_destination_response = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id5,
+                name=name,
+                description=description,
+                config=safari_destination_config_model,
+                certificate=certificatefile
+            ).get_result()
+
+            print(json.dumps(update_destination_response, indent=2))
 
             # end-update_destination
 
@@ -594,6 +653,13 @@ class TestEventNotificationsV1Examples():
                 "apns-collapse-id": "123",
             }
 
+            notificationSafariBodymodel = {
+                'saf': {
+                    'alert': 'Game Request',
+                    'badge': 5,
+                },
+            }
+
             notification_response = event_notifications_service.send_notifications(
                 instance_id,
                 ce_ibmenseverity=notification_severity,
@@ -606,6 +672,7 @@ class TestEventNotificationsV1Examples():
                 ce_ibmenpushto=json.dumps(notification_devices_model),
                 ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
                 ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
+                ce_ibmensafaribody=json.dumps(notificationSafariBodymodel),
                 ce_ibmenapnsheaders=json.dumps(message_apns_headers),
                 ce_specversion='1.0'
             ).get_result()
@@ -654,12 +721,21 @@ class TestEventNotificationsV1Examples():
             message_apns_headers = {
                 "apns-collapse-id": "123",
             }
+
+            notification_safari_body_model = {
+                'saf': {
+                    'alert': 'Game Request',
+                    'badge': 5,
+                },
+            }
+
             notification_create_model = {
                 'ibmenseverity': notification_severity,
                 'ibmenfcmbody': json.dumps(notification_fcm_body_model),
                 'ibmenpushto': json.dumps(notification_devices_model),
                 'ibmenapnsheaders': json.dumps(message_apns_headers),
                 'ibmenapnsbody': json.dumps(notification_apns_body_model),
+                'ibmensafaribody': json.dumps(notification_safari_body_model),
                 'ibmensourceid': source_id,
                 'id': notification_id,
                 'source': notifications_source,
@@ -728,6 +804,14 @@ class TestEventNotificationsV1Examples():
             response = event_notifications_service.delete_destination(
                 instance_id,
                 id=destination_id
+            )
+
+            # end-delete_destination
+            print('\ndelete_destination() response status code: ', response.get_status_code())
+
+            response = event_notifications_service.delete_destination(
+                instance_id,
+                id=destination_id5
             )
 
             # end-delete_destination
