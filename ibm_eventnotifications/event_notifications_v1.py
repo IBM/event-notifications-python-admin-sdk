@@ -89,6 +89,7 @@ class EventNotificationsV1(BaseService):
         ce_ibmendefaultlong: str = None,
         ce_ibmenfcmbody: str = None,
         ce_ibmenapnsbody: str = None,
+        ce_ibmensafaribody: str = None,
         ce_ibmenpushto: str = None,
         ce_ibmenapnsheaders: str = None,
         ce_ibmenchromebody: str = None,
@@ -116,6 +117,7 @@ class EventNotificationsV1(BaseService):
                text.
         :param str ce_ibmenfcmbody: (optional) The FCM Notification body.
         :param str ce_ibmenapnsbody: (optional) The APNS Notification body.
+        :param str ce_ibmensafaribody: (optional) The safari Notification body.
         :param str ce_ibmenpushto: (optional) Push Notifications Targets.
         :param str ce_ibmenapnsheaders: (optional) Push Notifications APNS Headers.
         :param str ce_ibmenchromebody: (optional) Push Notifications Chrome body.
@@ -149,6 +151,7 @@ class EventNotificationsV1(BaseService):
             'ce-ibmendefaultlong': ce_ibmendefaultlong,
             'ce-ibmenfcmbody': ce_ibmenfcmbody,
             'ce-ibmenapnsbody': ce_ibmenapnsbody,
+            'ce-ibmensafaribody': ce_ibmensafaribody,
             'ce-ibmenpushto': ce_ibmenpushto,
             'ce-ibmenapnsheaders': ce_ibmenapnsheaders,
             'ce-ibmenchromebody': ce_ibmenchromebody,
@@ -796,6 +799,18 @@ class EventNotificationsV1(BaseService):
         config: 'DestinationConfig' = None,
         certificate: BinaryIO = None,
         certificate_content_type: str = None,
+        icon_16x16: BinaryIO = None,
+        icon_16x16_content_type: str = None,
+        icon_16x162x: BinaryIO = None,
+        icon_16x162x_content_type: str = None,
+        icon_32x32: BinaryIO = None,
+        icon_32x32_content_type: str = None,
+        icon_32x322x: BinaryIO = None,
+        icon_32x322x_content_type: str = None,
+        icon_128x128: BinaryIO = None,
+        icon_128x128_content_type: str = None,
+        icon_128x1282x: BinaryIO = None,
+        icon_128x1282x_content_type: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -813,6 +828,24 @@ class EventNotificationsV1(BaseService):
         :param BinaryIO certificate: (optional) Certificate for APNS.
         :param str certificate_content_type: (optional) The content type of
                certificate.
+        :param BinaryIO icon_16x16: (optional) Safari icon 16x16.
+        :param str icon_16x16_content_type: (optional) The content type of
+               icon_16x16.
+        :param BinaryIO icon_16x162x: (optional) Safari icon 16x16@2x.
+        :param str icon_16x162x_content_type: (optional) The content type of
+               icon_16x162x.
+        :param BinaryIO icon_32x32: (optional) Safari icon 32x32.
+        :param str icon_32x32_content_type: (optional) The content type of
+               icon_32x32.
+        :param BinaryIO icon_32x322x: (optional) Safari icon 32x32@2x.
+        :param str icon_32x322x_content_type: (optional) The content type of
+               icon_32x322x.
+        :param BinaryIO icon_128x128: (optional) Safari icon 128x128.
+        :param str icon_128x128_content_type: (optional) The content type of
+               icon_128x128.
+        :param BinaryIO icon_128x1282x: (optional) Safari icon 128x128@2x.
+        :param str icon_128x1282x_content_type: (optional) The content type of
+               icon_128x1282x.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `DestinationResponse` object
@@ -839,6 +872,18 @@ class EventNotificationsV1(BaseService):
             form_data.append(('config', (None, json.dumps(config), 'application/json')))
         if certificate:
             form_data.append(('certificate', (None, certificate, certificate_content_type or 'application/octet-stream')))
+        if icon_16x16:
+            form_data.append(('icon_16x16', (None, icon_16x16, icon_16x16_content_type or 'application/octet-stream')))
+        if icon_16x162x:
+            form_data.append(('icon_16x16@2x', (None, icon_16x162x, icon_16x162x_content_type or 'application/octet-stream')))
+        if icon_32x32:
+            form_data.append(('icon_32x32', (None, icon_32x32, icon_32x32_content_type or 'application/octet-stream')))
+        if icon_32x322x:
+            form_data.append(('icon_32x32@2x', (None, icon_32x322x, icon_32x322x_content_type or 'application/octet-stream')))
+        if icon_128x128:
+            form_data.append(('icon_128x128', (None, icon_128x128, icon_128x128_content_type or 'application/octet-stream')))
+        if icon_128x1282x:
+            form_data.append(('icon_128x128@2x', (None, icon_128x1282x, icon_128x1282x_content_type or 'application/octet-stream')))
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -964,6 +1009,18 @@ class EventNotificationsV1(BaseService):
         config: 'DestinationConfig' = None,
         certificate: BinaryIO = None,
         certificate_content_type: str = None,
+        icon_16x16: BinaryIO = None,
+        icon_16x16_content_type: str = None,
+        icon_16x162x: BinaryIO = None,
+        icon_16x162x_content_type: str = None,
+        icon_32x32: BinaryIO = None,
+        icon_32x32_content_type: str = None,
+        icon_32x322x: BinaryIO = None,
+        icon_32x322x_content_type: str = None,
+        icon_128x128: BinaryIO = None,
+        icon_128x128_content_type: str = None,
+        icon_128x1282x: BinaryIO = None,
+        icon_128x1282x_content_type: str = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -981,6 +1038,24 @@ class EventNotificationsV1(BaseService):
         :param BinaryIO certificate: (optional) Certificate for APNS.
         :param str certificate_content_type: (optional) The content type of
                certificate.
+        :param BinaryIO icon_16x16: (optional) Safari icon 16x16.
+        :param str icon_16x16_content_type: (optional) The content type of
+               icon_16x16.
+        :param BinaryIO icon_16x162x: (optional) Safari icon 16x16@2x.
+        :param str icon_16x162x_content_type: (optional) The content type of
+               icon_16x162x.
+        :param BinaryIO icon_32x32: (optional) Safari icon 32x32.
+        :param str icon_32x32_content_type: (optional) The content type of
+               icon_32x32.
+        :param BinaryIO icon_32x322x: (optional) Safari icon 32x32@2x.
+        :param str icon_32x322x_content_type: (optional) The content type of
+               icon_32x322x.
+        :param BinaryIO icon_128x128: (optional) Safari icon 128x128.
+        :param str icon_128x128_content_type: (optional) The content type of
+               icon_128x128.
+        :param BinaryIO icon_128x1282x: (optional) Safari icon 128x128@2x.
+        :param str icon_128x1282x_content_type: (optional) The content type of
+               icon_128x1282x.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Destination` object
@@ -1005,6 +1080,18 @@ class EventNotificationsV1(BaseService):
             form_data.append(('config', (None, json.dumps(config), 'application/json')))
         if certificate:
             form_data.append(('certificate', (None, certificate, certificate_content_type or 'application/octet-stream')))
+        if icon_16x16:
+            form_data.append(('icon_16x16', (None, icon_16x16, icon_16x16_content_type or 'application/octet-stream')))
+        if icon_16x162x:
+            form_data.append(('icon_16x16@2x', (None, icon_16x162x, icon_16x162x_content_type or 'application/octet-stream')))
+        if icon_32x32:
+            form_data.append(('icon_32x32', (None, icon_32x32, icon_32x32_content_type or 'application/octet-stream')))
+        if icon_32x322x:
+            form_data.append(('icon_32x32@2x', (None, icon_32x322x, icon_32x322x_content_type or 'application/octet-stream')))
+        if icon_128x128:
+            form_data.append(('icon_128x128', (None, icon_128x128, icon_128x128_content_type or 'application/octet-stream')))
+        if icon_128x1282x:
+            form_data.append(('icon_128x128@2x', (None, icon_128x1282x, icon_128x1282x_content_type or 'application/octet-stream')))
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1726,6 +1813,7 @@ class CreateDestinationEnums:
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
+        PUSH_SAFARI = 'push_safari'
 
 
 ##############################################################################
@@ -1933,6 +2021,7 @@ class Destination():
         PUSH_ANDROID = 'push_android'
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
+        PUSH_SAFARI = 'push_safari'
 
 
 class DestinationConfig():
@@ -2006,7 +2095,7 @@ class DestinationConfigParams():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig', 'DestinationConfigParamsSlackDestinationConfig']))
+                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig', 'DestinationConfigParamsSlackDestinationConfig', 'DestinationConfigParamsSafariDestinationConfig']))
         raise Exception(msg)
 
 class DestinationDevicesList():
@@ -2399,7 +2488,7 @@ class DestinationListItem():
     :attr str id: Destination ID.
     :attr str name: Destination name.
     :attr str description: Destination description.
-    :attr str type: Destination type Email/SMS/Webhook.
+    :attr str type: Destination type.
     :attr int subscription_count: Subscription count.
     :attr List[str] subscription_names: Names of subscriptions.
     :attr datetime updated_at: Updated at.
@@ -2419,7 +2508,7 @@ class DestinationListItem():
         :param str id: Destination ID.
         :param str name: Destination name.
         :param str description: Destination description.
-        :param str type: Destination type Email/SMS/Webhook.
+        :param str type: Destination type.
         :param int subscription_count: Subscription count.
         :param List[str] subscription_names: Names of subscriptions.
         :param datetime updated_at: Updated at.
@@ -2510,7 +2599,7 @@ class DestinationListItem():
 
     class TypeEnum(str, Enum):
         """
-        Destination type Email/SMS/Webhook.
+        Destination type.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -2518,6 +2607,7 @@ class DestinationListItem():
         PUSH_ANDROID = 'push_android'
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
+        PUSH_SAFARI = 'push_safari'
 
 
 class DestinationResponse():
@@ -2527,7 +2617,7 @@ class DestinationResponse():
     :attr str id: Destination ID.
     :attr str name: Destination name.
     :attr str description: Destination description.
-    :attr str type: Destination type Email/SMS/Webhook.
+    :attr str type: Destination type.
     :attr DestinationConfig config: Payload describing a destination configuration.
     :attr datetime created_at: Last updated time.
     """
@@ -2545,7 +2635,7 @@ class DestinationResponse():
         :param str id: Destination ID.
         :param str name: Destination name.
         :param str description: Destination description.
-        :param str type: Destination type Email/SMS/Webhook.
+        :param str type: Destination type.
         :param DestinationConfig config: Payload describing a destination
                configuration.
         :param datetime created_at: Last updated time.
@@ -2629,9 +2719,15 @@ class DestinationResponse():
 
     class TypeEnum(str, Enum):
         """
-        Destination type Email/SMS/Webhook.
+        Destination type.
         """
         WEBHOOK = 'webhook'
+        PUSH_ANDROID = 'push_android'
+        PUSH_IOS = 'push_ios'
+        PUSH_CHROME = 'push_chrome'
+        PUSH_FIREFOX = 'push_firefox'
+        SLACK = 'slack'
+        PUSH_SAFARI = 'push_safari'
 
 
 class DestinationTagsSubscriptionResponse():
@@ -2857,6 +2953,7 @@ class NotificationCreate():
     :attr str ibmenseverity: (optional) The Notifications id.
     :attr str ibmenfcmbody: (optional) The Notifications FCM body.
     :attr str ibmenapnsbody: (optional) The Notifications APNS body.
+    :attr str ibmensafaribody: (optional) The Notifications safari body.
     :attr str ibmenpushto: (optional) This field should not be empty. The allowed
           fields are fcm_devices, apns_devices, chrome_devices, firefox_devices,
           platforms, tags and user_ids. If platforms or tags or user_ids are being used
@@ -2880,7 +2977,7 @@ class NotificationCreate():
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['data', 'ibmenseverity', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmenpushto', 'ibmenapnsheaders', 'ibmendefaultshort', 'ibmendefaultlong', 'ibmenchromebody', 'ibmenfirefoxbody', 'ibmenchromeheaders', 'ibmenfirefoxheaders', 'ibmensourceid', 'datacontenttype', 'subject', 'id', 'source', 'type', 'specversion', 'time'])
+    _properties = frozenset(['data', 'ibmenseverity', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmensafaribody', 'ibmenpushto', 'ibmenapnsheaders', 'ibmendefaultshort', 'ibmendefaultlong', 'ibmenchromebody', 'ibmenfirefoxbody', 'ibmenchromeheaders', 'ibmenfirefoxheaders', 'ibmensourceid', 'datacontenttype', 'subject', 'id', 'source', 'type', 'specversion', 'time'])
 
     def __init__(self,
                  *,
@@ -2888,6 +2985,7 @@ class NotificationCreate():
                  ibmenseverity: str = None,
                  ibmenfcmbody: str = None,
                  ibmenapnsbody: str = None,
+                 ibmensafaribody: str = None,
                  ibmenpushto: str = None,
                  ibmenapnsheaders: str = None,
                  ibmendefaultshort: str = None,
@@ -2912,6 +3010,7 @@ class NotificationCreate():
         :param str ibmenseverity: (optional) The Notifications id.
         :param str ibmenfcmbody: (optional) The Notifications FCM body.
         :param str ibmenapnsbody: (optional) The Notifications APNS body.
+        :param str ibmensafaribody: (optional) The Notifications safari body.
         :param str ibmenpushto: (optional) This field should not be empty. The
                allowed fields are fcm_devices, apns_devices, chrome_devices,
                firefox_devices, platforms, tags and user_ids. If platforms or tags or
@@ -2941,6 +3040,7 @@ class NotificationCreate():
         self.ibmenseverity = ibmenseverity
         self.ibmenfcmbody = ibmenfcmbody
         self.ibmenapnsbody = ibmenapnsbody
+        self.ibmensafaribody = ibmensafaribody
         self.ibmenpushto = ibmenpushto
         self.ibmenapnsheaders = ibmenapnsheaders
         self.ibmendefaultshort = ibmendefaultshort
@@ -2972,6 +3072,8 @@ class NotificationCreate():
             args['ibmenfcmbody'] = _dict.get('ibmenfcmbody')
         if 'ibmenapnsbody' in _dict:
             args['ibmenapnsbody'] = _dict.get('ibmenapnsbody')
+        if 'ibmensafaribody' in _dict:
+            args['ibmensafaribody'] = _dict.get('ibmensafaribody')
         if 'ibmenpushto' in _dict:
             args['ibmenpushto'] = _dict.get('ibmenpushto')
         if 'ibmenapnsheaders' in _dict:
@@ -3023,6 +3125,8 @@ class NotificationCreate():
             _dict['ibmenfcmbody'] = self.ibmenfcmbody
         if hasattr(self, 'ibmenapnsbody') and self.ibmenapnsbody is not None:
             _dict['ibmenapnsbody'] = self.ibmenapnsbody
+        if hasattr(self, 'ibmensafaribody') and self.ibmensafaribody is not None:
+            _dict['ibmensafaribody'] = self.ibmensafaribody
         if hasattr(self, 'ibmenpushto') and self.ibmenpushto is not None:
             _dict['ibmenpushto'] = self.ibmenpushto
         if hasattr(self, 'ibmenapnsheaders') and self.ibmenapnsheaders is not None:
@@ -4012,7 +4116,12 @@ class Subscription():
         SMS_IBM = 'sms_ibm'
         SMTP_IBM = 'smtp_ibm'
         WEBHOOK = 'webhook'
+        PUSH_ANDROID = 'push_android'
+        PUSH_IOS = 'push_ios'
+        PUSH_CHROME = 'push_chrome'
+        PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
+        PUSH_SAFARI = 'push_safari'
 
 
 class SubscriptionAttributes():
@@ -4273,7 +4382,12 @@ class SubscriptionListItem():
         SMS_IBM = 'sms_ibm'
         SMTP_IBM = 'smtp_ibm'
         WEBHOOK = 'webhook'
+        PUSH_ANDROID = 'push_android'
+        PUSH_IOS = 'push_ios'
+        PUSH_CHROME = 'push_chrome'
+        PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
+        PUSH_SAFARI = 'push_safari'
 
 
 class SubscriptionUpdateAttributes():
@@ -5256,6 +5370,113 @@ class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigParamsIOSDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigParamsSafariDestinationConfig(DestinationConfigParams):
+    """
+    Payload describing a safari destination configuration.
+
+    :attr str cert_type: (optional) Authentication type p12.
+    :attr str password: Password for certificate (Required when cert_type is p12).
+    :attr str website_url: Websire url.
+    :attr str website_name: Websire url.
+    :attr str url_format_string: Websire url.
+    :attr str website_push_id: Websire url.
+    """
+
+    def __init__(self,
+                 password: str,
+                 website_url: str,
+                 website_name: str,
+                 url_format_string: str,
+                 website_push_id: str,
+                 *,
+                 cert_type: str = None) -> None:
+        """
+        Initialize a DestinationConfigParamsSafariDestinationConfig object.
+
+        :param str password: Password for certificate (Required when cert_type is
+               p12).
+        :param str website_url: Websire url.
+        :param str website_name: Websire url.
+        :param str url_format_string: Websire url.
+        :param str website_push_id: Websire url.
+        :param str cert_type: (optional) Authentication type p12.
+        """
+        # pylint: disable=super-init-not-called
+        self.cert_type = cert_type
+        self.password = password
+        self.website_url = website_url
+        self.website_name = website_name
+        self.url_format_string = url_format_string
+        self.website_push_id = website_push_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsSafariDestinationConfig':
+        """Initialize a DestinationConfigParamsSafariDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'cert_type' in _dict:
+            args['cert_type'] = _dict.get('cert_type')
+        if 'password' in _dict:
+            args['password'] = _dict.get('password')
+        else:
+            raise ValueError('Required property \'password\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+        if 'website_url' in _dict:
+            args['website_url'] = _dict.get('website_url')
+        else:
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+        if 'website_name' in _dict:
+            args['website_name'] = _dict.get('website_name')
+        else:
+            raise ValueError('Required property \'website_name\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+        if 'url_format_string' in _dict:
+            args['url_format_string'] = _dict.get('url_format_string')
+        else:
+            raise ValueError('Required property \'url_format_string\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+        if 'website_push_id' in _dict:
+            args['website_push_id'] = _dict.get('website_push_id')
+        else:
+            raise ValueError('Required property \'website_push_id\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigParamsSafariDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'cert_type') and self.cert_type is not None:
+            _dict['cert_type'] = self.cert_type
+        if hasattr(self, 'password') and self.password is not None:
+            _dict['password'] = self.password
+        if hasattr(self, 'website_url') and self.website_url is not None:
+            _dict['website_url'] = self.website_url
+        if hasattr(self, 'website_name') and self.website_name is not None:
+            _dict['website_name'] = self.website_name
+        if hasattr(self, 'url_format_string') and self.url_format_string is not None:
+            _dict['url_format_string'] = self.url_format_string
+        if hasattr(self, 'website_push_id') and self.website_push_id is not None:
+            _dict['website_push_id'] = self.website_push_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigParamsSafariDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigParamsSafariDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigParamsSafariDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

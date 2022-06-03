@@ -124,6 +124,7 @@ class TestSendNotifications():
         notification_create_model['ibmenseverity'] = 'testString'
         notification_create_model['ibmenfcmbody'] = 'testString'
         notification_create_model['ibmenapnsbody'] = 'testString'
+        notification_create_model['ibmensafaribody'] = 'testString'
         notification_create_model['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
         notification_create_model['ibmenapnsheaders'] = 'testString'
         notification_create_model['ibmendefaultshort'] = 'testString'
@@ -150,6 +151,7 @@ class TestSendNotifications():
         ce_ibmendefaultlong = 'testString'
         ce_ibmenfcmbody = 'testString'
         ce_ibmenapnsbody = 'testString'
+        ce_ibmensafaribody = 'testString'
         ce_ibmenpushto = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
         ce_ibmenapnsheaders = 'testString'
         ce_ibmenchromebody = 'testString'
@@ -172,6 +174,7 @@ class TestSendNotifications():
             ce_ibmendefaultlong=ce_ibmendefaultlong,
             ce_ibmenfcmbody=ce_ibmenfcmbody,
             ce_ibmenapnsbody=ce_ibmenapnsbody,
+            ce_ibmensafaribody=ce_ibmensafaribody,
             ce_ibmenpushto=ce_ibmenpushto,
             ce_ibmenapnsheaders=ce_ibmenapnsheaders,
             ce_ibmenchromebody=ce_ibmenchromebody,
@@ -300,6 +303,7 @@ class TestSendBulkNotifications():
         notification_create_model['ibmenseverity'] = 'testString'
         notification_create_model['ibmenfcmbody'] = 'testString'
         notification_create_model['ibmenapnsbody'] = 'testString'
+        notification_create_model['ibmensafaribody'] = 'testString'
         notification_create_model['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
         notification_create_model['ibmenapnsheaders'] = 'testString'
         notification_create_model['ibmendefaultshort'] = 'testString'
@@ -1591,6 +1595,18 @@ class TestCreateDestination():
         config = destination_config_model
         certificate = io.BytesIO(b'This is a mock file.').getvalue()
         certificate_content_type = 'testString'
+        icon_16x16 = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_16x16_content_type = 'testString'
+        icon_16x162x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_16x162x_content_type = 'testString'
+        icon_32x32 = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_32x32_content_type = 'testString'
+        icon_32x322x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_32x322x_content_type = 'testString'
+        icon_128x128 = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_128x128_content_type = 'testString'
+        icon_128x1282x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_128x1282x_content_type = 'testString'
 
         # Invoke method
         response = _service.create_destination(
@@ -1601,6 +1617,18 @@ class TestCreateDestination():
             config=config,
             certificate=certificate,
             certificate_content_type=certificate_content_type,
+            icon_16x16=icon_16x16,
+            icon_16x16_content_type=icon_16x16_content_type,
+            icon_16x162x=icon_16x162x,
+            icon_16x162x_content_type=icon_16x162x_content_type,
+            icon_32x32=icon_32x32,
+            icon_32x32_content_type=icon_32x32_content_type,
+            icon_32x322x=icon_32x322x,
+            icon_32x322x_content_type=icon_32x322x_content_type,
+            icon_128x128=icon_128x128,
+            icon_128x128_content_type=icon_128x128_content_type,
+            icon_128x1282x=icon_128x1282x,
+            icon_128x1282x_content_type=icon_128x1282x_content_type,
             headers={}
         )
 
@@ -1941,6 +1969,18 @@ class TestUpdateDestination():
         config = destination_config_model
         certificate = io.BytesIO(b'This is a mock file.').getvalue()
         certificate_content_type = 'testString'
+        icon_16x16 = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_16x16_content_type = 'testString'
+        icon_16x162x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_16x162x_content_type = 'testString'
+        icon_32x32 = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_32x32_content_type = 'testString'
+        icon_32x322x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_32x322x_content_type = 'testString'
+        icon_128x128 = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_128x128_content_type = 'testString'
+        icon_128x1282x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_128x1282x_content_type = 'testString'
 
         # Invoke method
         response = _service.update_destination(
@@ -1951,6 +1991,18 @@ class TestUpdateDestination():
             config=config,
             certificate=certificate,
             certificate_content_type=certificate_content_type,
+            icon_16x16=icon_16x16,
+            icon_16x16_content_type=icon_16x16_content_type,
+            icon_16x162x=icon_16x162x,
+            icon_16x162x_content_type=icon_16x162x_content_type,
+            icon_32x32=icon_32x32,
+            icon_32x32_content_type=icon_32x32_content_type,
+            icon_32x322x=icon_32x322x,
+            icon_32x322x_content_type=icon_32x322x_content_type,
+            icon_128x128=icon_128x128,
+            icon_128x128_content_type=icon_128x128_content_type,
+            icon_128x1282x=icon_128x1282x,
+            icon_128x1282x_content_type=icon_128x1282x_content_type,
             headers={}
         )
 
@@ -3932,6 +3984,7 @@ class TestModel_NotificationCreate():
         notification_create_model_json['ibmenseverity'] = 'testString'
         notification_create_model_json['ibmenfcmbody'] = 'testString'
         notification_create_model_json['ibmenapnsbody'] = 'testString'
+        notification_create_model_json['ibmensafaribody'] = 'testString'
         notification_create_model_json['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
         notification_create_model_json['ibmenapnsheaders'] = 'testString'
         notification_create_model_json['ibmendefaultshort'] = 'testString'
@@ -4803,6 +4856,40 @@ class TestModel_DestinationConfigParamsIOSDestinationConfig():
         # Convert model instance back to dict and verify no loss of data
         destination_config_params_ios_destination_config_model_json2 = destination_config_params_ios_destination_config_model.to_dict()
         assert destination_config_params_ios_destination_config_model_json2 == destination_config_params_ios_destination_config_model_json
+
+class TestModel_DestinationConfigParamsSafariDestinationConfig():
+    """
+    Test Class for DestinationConfigParamsSafariDestinationConfig
+    """
+
+    def test_destination_config_params_safari_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigParamsSafariDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigParamsSafariDestinationConfig model
+        destination_config_params_safari_destination_config_model_json = {}
+        destination_config_params_safari_destination_config_model_json['cert_type'] = 'p12'
+        destination_config_params_safari_destination_config_model_json['password'] = 'testString'
+        destination_config_params_safari_destination_config_model_json['website_url'] = 'testString'
+        destination_config_params_safari_destination_config_model_json['website_name'] = 'testString'
+        destination_config_params_safari_destination_config_model_json['url_format_string'] = 'testString'
+        destination_config_params_safari_destination_config_model_json['website_push_id'] = 'testString'
+
+        # Construct a model instance of DestinationConfigParamsSafariDestinationConfig by calling from_dict on the json representation
+        destination_config_params_safari_destination_config_model = DestinationConfigParamsSafariDestinationConfig.from_dict(destination_config_params_safari_destination_config_model_json)
+        assert destination_config_params_safari_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigParamsSafariDestinationConfig by calling from_dict on the json representation
+        destination_config_params_safari_destination_config_model_dict = DestinationConfigParamsSafariDestinationConfig.from_dict(destination_config_params_safari_destination_config_model_json).__dict__
+        destination_config_params_safari_destination_config_model2 = DestinationConfigParamsSafariDestinationConfig(**destination_config_params_safari_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_params_safari_destination_config_model == destination_config_params_safari_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_params_safari_destination_config_model_json2 = destination_config_params_safari_destination_config_model.to_dict()
+        assert destination_config_params_safari_destination_config_model_json2 == destination_config_params_safari_destination_config_model_json
 
 class TestModel_DestinationConfigParamsSlackDestinationConfig():
     """

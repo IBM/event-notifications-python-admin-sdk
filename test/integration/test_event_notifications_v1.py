@@ -16,7 +16,7 @@
 """
 Integration Tests for EventNotificationsV1
 """
-
+import io
 import os
 import pytest
 from ibm_cloud_sdk_core import *
@@ -36,6 +36,8 @@ topic_id3 = ''
 destination_id = ''
 destination_id2 = ''
 destination_id3 = ''
+destination_id5 = ''
+safariCertificatePath = ''
 destination_id4 = ''
 subscription_id = ''
 subscription_id2 = ''
@@ -50,7 +52,7 @@ class TestEventNotificationsV1():
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
@@ -67,6 +69,7 @@ class TestEventNotificationsV1():
             instance_id = cls.config['GUID']
             fcmServerKey = cls.config['FCM_KEY']
             fcmSenderId = cls.config['FCM_ID']
+            safariCertificatePath = cls.config['SAFARI_CERTIFICATE']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -388,7 +391,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4
+        global destination_id, destination_id3, destination_id4, destination_id5
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -491,6 +494,47 @@ class TestEventNotificationsV1():
         assert destination.type == typeVal
 
         destination_id4 = destination.id
+
+        safari_config_params = {
+            'cert_type': 'p12',
+            'password': 'safari',
+            'website_url': 'https://ensafaripush.mybluemix.net',
+            'website_name': 'NodeJS Starter Application',
+            'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
+            'website_push_id': 'web.net.mybluemix.ensafaripush',
+        }
+
+        destination_config_model = {
+            'params': safari_config_params,
+        }
+
+        name = "Safari_destination"
+        typeVal = "push_safari"
+        description = "Safari Destination"
+
+        certificatefile = open(safariCertificatePath, 'rb')
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeVal,
+            description=description,
+            config=destination_config_model,
+            certificate=certificatefile,
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeVal
+
+        destination_id5 = destination.id
+
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -597,6 +641,44 @@ class TestEventNotificationsV1():
         res_description = destination_response.get('description')
 
         assert res_id == destination_id
+        assert res_name == name
+        assert res_description == description
+
+        safari_destination_config_params_model = {
+            'cert_type': 'p12',
+            'password': 'safari',
+            'website_url': 'https://ensafaripush.mybluemix.net',
+            'website_name': 'NodeJS Starter Application',
+            'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
+            'website_push_id': 'web.net.mybluemix.ensafaripush',
+        }
+
+        # Construct a dict representation of a DestinationConfig model
+        safari_destination_config_model = {
+            'params': safari_destination_config_params_model,
+        }
+
+        certificatefile = open(safariCertificatePath, 'rb')
+        name = "Safari Dest"
+        description = "This destination is for Safari"
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id5,
+            name=name,
+            description=description,
+            config=safari_destination_config_model,
+            certificate=certificatefile
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id5
         assert res_name == name
         assert res_description == description
 
@@ -929,6 +1011,13 @@ class TestEventNotificationsV1():
         type_value = "com.acme.offer:new"
         notifications_source = "1234-1234-sdfs-234:test"
 
+        notificationSafariBodymodel = {
+            'saf': {
+                'alert': 'Game Request',
+                'badge': 5,
+            },
+        }
+
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
             ce_ibmenseverity=notification_severity,
@@ -941,6 +1030,7 @@ class TestEventNotificationsV1():
             ce_ibmenpushto=json.dumps(notification_devices_model),
             ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
             ce_ibmenapnsheaders=json.dumps(notification_apns_body_model),
+            ce_ibmensafaribody=json.dumps(notificationSafariBodymodel),
             ce_specversion='1.0'
         )
 
@@ -977,6 +1067,7 @@ class TestEventNotificationsV1():
             ce_ibmenpushto=json.dumps(notification_devices_model),
             ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
             ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
+            ce_ibmensafaribody=json.dumps(notificationSafariBodymodel),
             ce_ibmenapnsheaders=json.dumps(message_apns_headers),
             ce_specversion='1.0'
         )
@@ -1075,6 +1166,13 @@ class TestEventNotificationsV1():
             "apns-collapse-id": "123",
         }
 
+        notification_safari_body_model = {
+            'saf': {
+                'alert': 'Game Request',
+                'badge': 5,
+            },
+        }
+
         notification_id = "1234-1234-sdfs-234"
         notification_severity = "MEDIUM"
         type_value = "com.acme.offer:new"
@@ -1087,6 +1185,7 @@ class TestEventNotificationsV1():
             'ibmenpushto': json.dumps(notification_devices_model),
             'ibmenapnsheaders': json.dumps(message_apns_headers),
             'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmensafaribody': json.dumps(notification_safari_body_model),
             'ibmensourceid': source_id,
             'id': notification_id,
             'source': notifications_source,
@@ -1106,6 +1205,7 @@ class TestEventNotificationsV1():
             'ibmenpushto': json.dumps(notification_devices_model),
             'ibmenapnsheaders': json.dumps(message_apns_headers),
             'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmensafaribody': json.dumps(notification_safari_body_model),
             'ibmensourceid': source_id,
             'id': notification_id1,
             'source': notifications_source1,
@@ -1192,6 +1292,13 @@ class TestEventNotificationsV1():
         delete_destination_response = self.event_notifications_service.delete_destination(
             instance_id,
             id=destination_id4
+        )
+
+        assert delete_destination_response.get_status_code() == 204
+
+        delete_destination_response = self.event_notifications_service.delete_destination(
+            instance_id,
+            id=destination_id5
         )
 
         assert delete_destination_response.get_status_code() == 204
