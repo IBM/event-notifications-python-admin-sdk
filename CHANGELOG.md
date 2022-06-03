@@ -1,3 +1,10 @@
+## [0.1.2](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.1...v0.1.2) (2022-06-03)
+
+
+### Bug Fixes
+
+* add safari destination support ([23866eb](https://github.com/IBM/event-notifications-python-admin-sdk/commit/23866ebd1ea8bd046e444cb5a332c83b0ed5a1ac))
+
 ## [0.1.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.0...v0.1.1) (2022-05-30)
 
 
