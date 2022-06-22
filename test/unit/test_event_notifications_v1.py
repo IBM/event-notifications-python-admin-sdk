@@ -4857,6 +4857,35 @@ class TestModel_DestinationConfigParamsIOSDestinationConfig():
         destination_config_params_ios_destination_config_model_json2 = destination_config_params_ios_destination_config_model.to_dict()
         assert destination_config_params_ios_destination_config_model_json2 == destination_config_params_ios_destination_config_model_json
 
+class TestModel_DestinationConfigParamsMSTeamsDestinationConfig():
+    """
+    Test Class for DestinationConfigParamsMSTeamsDestinationConfig
+    """
+
+    def test_destination_config_params_ms_teams_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigParamsMSTeamsDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigParamsMSTeamsDestinationConfig model
+        destination_config_params_ms_teams_destination_config_model_json = {}
+        destination_config_params_ms_teams_destination_config_model_json['url'] = 'testString'
+
+        # Construct a model instance of DestinationConfigParamsMSTeamsDestinationConfig by calling from_dict on the json representation
+        destination_config_params_ms_teams_destination_config_model = DestinationConfigParamsMSTeamsDestinationConfig.from_dict(destination_config_params_ms_teams_destination_config_model_json)
+        assert destination_config_params_ms_teams_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigParamsMSTeamsDestinationConfig by calling from_dict on the json representation
+        destination_config_params_ms_teams_destination_config_model_dict = DestinationConfigParamsMSTeamsDestinationConfig.from_dict(destination_config_params_ms_teams_destination_config_model_json).__dict__
+        destination_config_params_ms_teams_destination_config_model2 = DestinationConfigParamsMSTeamsDestinationConfig(**destination_config_params_ms_teams_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_params_ms_teams_destination_config_model == destination_config_params_ms_teams_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_params_ms_teams_destination_config_model_json2 = destination_config_params_ms_teams_destination_config_model.to_dict()
+        assert destination_config_params_ms_teams_destination_config_model_json2 == destination_config_params_ms_teams_destination_config_model_json
+
 class TestModel_DestinationConfigParamsSafariDestinationConfig():
     """
     Test Class for DestinationConfigParamsSafariDestinationConfig

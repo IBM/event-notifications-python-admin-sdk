@@ -16,7 +16,6 @@
 """
 Integration Tests for EventNotificationsV1
 """
-import io
 import os
 import pytest
 from ibm_cloud_sdk_core import *
@@ -37,6 +36,7 @@ destination_id = ''
 destination_id2 = ''
 destination_id3 = ''
 destination_id5 = ''
+destination_id6 = ''
 safariCertificatePath = ''
 destination_id4 = ''
 subscription_id = ''
@@ -391,7 +391,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -534,6 +534,39 @@ class TestEventNotificationsV1():
         assert destination.type == typeVal
 
         destination_id5 = destination.id
+
+        msteams_config_params = {
+            'url': 'https://teams.microsoft.com',
+        }
+
+        destination_config_model = {
+            'params': msteams_config_params,
+        }
+
+        name = "MSTeams_destination"
+        typeVal = "msteams"
+        description = "MSteams Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeVal,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeVal
+
+        destination_id6 = destination.id
 
         #
         # The following status codes aren't covered by tests.
@@ -1299,6 +1332,13 @@ class TestEventNotificationsV1():
         delete_destination_response = self.event_notifications_service.delete_destination(
             instance_id,
             id=destination_id5
+        )
+
+        assert delete_destination_response.get_status_code() == 204
+
+        delete_destination_response = self.event_notifications_service.delete_destination(
+            instance_id,
+            id=destination_id6
         )
 
         assert delete_destination_response.get_status_code() == 204
