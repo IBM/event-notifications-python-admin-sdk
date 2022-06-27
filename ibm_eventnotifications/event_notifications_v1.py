@@ -1814,6 +1814,7 @@ class CreateDestinationEnums:
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         PUSH_SAFARI = 'push_safari'
+        MSTEAMS = 'msteams'
 
 
 ##############################################################################
@@ -1891,7 +1892,7 @@ class Destination():
     :attr str id: Destination ID.
     :attr str name: Destination name.
     :attr str description: Destination description.
-    :attr str type: Destination type Email/SMS/Webhook/FCM.
+    :attr str type: Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1915,7 +1916,7 @@ class Destination():
         :param str id: Destination ID.
         :param str name: Destination name.
         :param str description: Destination description.
-        :param str type: Destination type Email/SMS/Webhook/FCM.
+        :param str type: Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -2013,7 +2014,7 @@ class Destination():
 
     class TypeEnum(str, Enum):
         """
-        Destination type Email/SMS/Webhook/FCM.
+        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -2022,6 +2023,7 @@ class Destination():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         PUSH_SAFARI = 'push_safari'
+        MSTEAMS = 'msteams'
 
 
 class DestinationConfig():
@@ -2095,7 +2097,7 @@ class DestinationConfigParams():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig', 'DestinationConfigParamsSlackDestinationConfig', 'DestinationConfigParamsSafariDestinationConfig']))
+                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig', 'DestinationConfigParamsSlackDestinationConfig', 'DestinationConfigParamsSafariDestinationConfig', 'DestinationConfigParamsMSTeamsDestinationConfig']))
         raise Exception(msg)
 
 class DestinationDevicesList():
@@ -2488,7 +2490,7 @@ class DestinationListItem():
     :attr str id: Destination ID.
     :attr str name: Destination name.
     :attr str description: Destination description.
-    :attr str type: Destination type.
+    :attr str type: Destination typeEmail/SMS/Webhook/Slack/Safari/MSTeams.
     :attr int subscription_count: Subscription count.
     :attr List[str] subscription_names: Names of subscriptions.
     :attr datetime updated_at: Updated at.
@@ -2508,7 +2510,7 @@ class DestinationListItem():
         :param str id: Destination ID.
         :param str name: Destination name.
         :param str description: Destination description.
-        :param str type: Destination type.
+        :param str type: Destination typeEmail/SMS/Webhook/Slack/Safari/MSTeams.
         :param int subscription_count: Subscription count.
         :param List[str] subscription_names: Names of subscriptions.
         :param datetime updated_at: Updated at.
@@ -2599,7 +2601,7 @@ class DestinationListItem():
 
     class TypeEnum(str, Enum):
         """
-        Destination type.
+        Destination typeEmail/SMS/Webhook/Slack/Safari/MSTeams.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -2608,6 +2610,7 @@ class DestinationListItem():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         PUSH_SAFARI = 'push_safari'
+        MSTEAMS = 'msteams'
 
 
 class DestinationResponse():
@@ -2728,6 +2731,7 @@ class DestinationResponse():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         PUSH_SAFARI = 'push_safari'
+        MSTEAMS = 'msteams'
 
 
 class DestinationTagsSubscriptionResponse():
@@ -4122,6 +4126,7 @@ class Subscription():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         PUSH_SAFARI = 'push_safari'
+        MSTEAMS = 'msteams'
 
 
 class SubscriptionAttributes():
@@ -4388,6 +4393,7 @@ class SubscriptionListItem():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         PUSH_SAFARI = 'push_safari'
+        MSTEAMS = 'msteams'
 
 
 class SubscriptionUpdateAttributes():
@@ -5370,6 +5376,63 @@ class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigParamsIOSDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigParamsMSTeamsDestinationConfig(DestinationConfigParams):
+    """
+    Payload describing a MS Teams destination configuration.
+
+    :attr str url: URL of MS Teams Incoming Webhook.
+    """
+
+    def __init__(self,
+                 url: str) -> None:
+        """
+        Initialize a DestinationConfigParamsMSTeamsDestinationConfig object.
+
+        :param str url: URL of MS Teams Incoming Webhook.
+        """
+        # pylint: disable=super-init-not-called
+        self.url = url
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsMSTeamsDestinationConfig':
+        """Initialize a DestinationConfigParamsMSTeamsDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'url' in _dict:
+            args['url'] = _dict.get('url')
+        else:
+            raise ValueError('Required property \'url\' not present in DestinationConfigParamsMSTeamsDestinationConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigParamsMSTeamsDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'url') and self.url is not None:
+            _dict['url'] = self.url
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigParamsMSTeamsDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigParamsMSTeamsDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigParamsMSTeamsDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
