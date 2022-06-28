@@ -1,3 +1,11 @@
+## [0.1.3](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.2...v0.1.3) (2022-06-28)
+
+
+### Bug Fixes
+
+* add msteams destination support ([c8b40b8](https://github.com/IBM/event-notifications-python-admin-sdk/commit/c8b40b8576eafe29764588da0e712d14b6084b65))
+* add msteams destination support ([2ed2c83](https://github.com/IBM/event-notifications-python-admin-sdk/commit/2ed2c83fbe1a7782f6018350bfb41c40eefd6030))
+
 ## [0.1.2](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.1...v0.1.2) (2022-06-03)
 
 
