@@ -120,73 +120,37 @@ class TestSendNotifications():
 
         # Construct a dict representation of a NotificationCreate model
         notification_create_model = {}
-        notification_create_model['data'] = {}
-        notification_create_model['ibmenseverity'] = 'testString'
-        notification_create_model['ibmenfcmbody'] = 'testString'
-        notification_create_model['ibmenapnsbody'] = 'testString'
-        notification_create_model['ibmensafaribody'] = 'testString'
-        notification_create_model['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
-        notification_create_model['ibmenapnsheaders'] = 'testString'
-        notification_create_model['ibmendefaultshort'] = 'testString'
-        notification_create_model['ibmendefaultlong'] = 'testString'
-        notification_create_model['ibmenchromebody'] = 'testString'
-        notification_create_model['ibmenfirefoxbody'] = 'testString'
-        notification_create_model['ibmenchromeheaders'] = 'testString'
-        notification_create_model['ibmenfirefoxheaders'] = 'testString'
-        notification_create_model['ibmensourceid'] = 'testString'
-        notification_create_model['datacontenttype'] = 'application/json'
-        notification_create_model['subject'] = 'testString'
+        notification_create_model['specversion'] = '1.0'
+        notification_create_model['time'] = '2019-01-01T12:00:00Z'
         notification_create_model['id'] = 'testString'
         notification_create_model['source'] = 'testString'
         notification_create_model['type'] = 'testString'
-        notification_create_model['specversion'] = '1.0'
-        notification_create_model['time'] = 'testString'
+        notification_create_model['ibmenseverity'] = 'testString'
+        notification_create_model['ibmensourceid'] = 'testString'
+        notification_create_model['ibmendefaultshort'] = 'testString'
+        notification_create_model['ibmendefaultlong'] = 'testString'
+        notification_create_model['subject'] = 'testString'
+        notification_create_model['data'] = {'key1': 'testString'}
+        notification_create_model['datacontenttype'] = 'application/json'
+        notification_create_model['ibmenpushto'] = '{"platforms":["push_android"]}'
+        notification_create_model['ibmenfcmbody'] = 'testString'
+        notification_create_model['ibmenapnsbody'] = 'testString'
+        notification_create_model['ibmenapnsheaders'] = 'testString'
+        notification_create_model['ibmenchromebody'] = 'testString'
+        notification_create_model['ibmenchromeheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model['ibmenfirefoxbody'] = 'testString'
+        notification_create_model['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model['ibmensafaribody'] = 'testString'
         notification_create_model['foo'] = 'testString'
 
         # Set up parameter values
         instance_id = 'testString'
         body = notification_create_model
-        ce_ibmenseverity = 'testString'
-        ce_ibmendefaultshort = 'testString'
-        ce_ibmendefaultlong = 'testString'
-        ce_ibmenfcmbody = 'testString'
-        ce_ibmenapnsbody = 'testString'
-        ce_ibmensafaribody = 'testString'
-        ce_ibmenpushto = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
-        ce_ibmenapnsheaders = 'testString'
-        ce_ibmenchromebody = 'testString'
-        ce_ibmenfirefoxbody = 'testString'
-        ce_ibmenchromeheaders = 'testString'
-        ce_ibmenfirefoxheaders = 'testString'
-        ce_ibmensourceid = 'testString'
-        ce_id = 'testString'
-        ce_source = 'testString'
-        ce_type = 'testString'
-        ce_specversion = '1.0'
-        ce_time = 'testString'
 
         # Invoke method
         response = _service.send_notifications(
             instance_id,
             body=body,
-            ce_ibmenseverity=ce_ibmenseverity,
-            ce_ibmendefaultshort=ce_ibmendefaultshort,
-            ce_ibmendefaultlong=ce_ibmendefaultlong,
-            ce_ibmenfcmbody=ce_ibmenfcmbody,
-            ce_ibmenapnsbody=ce_ibmenapnsbody,
-            ce_ibmensafaribody=ce_ibmensafaribody,
-            ce_ibmenpushto=ce_ibmenpushto,
-            ce_ibmenapnsheaders=ce_ibmenapnsheaders,
-            ce_ibmenchromebody=ce_ibmenchromebody,
-            ce_ibmenfirefoxbody=ce_ibmenfirefoxbody,
-            ce_ibmenchromeheaders=ce_ibmenchromeheaders,
-            ce_ibmenfirefoxheaders=ce_ibmenfirefoxheaders,
-            ce_ibmensourceid=ce_ibmensourceid,
-            ce_id=ce_id,
-            ce_source=ce_source,
-            ce_type=ce_type,
-            ce_specversion=ce_specversion,
-            ce_time=ce_time,
             headers={}
         )
 
@@ -268,7 +232,6 @@ class TestSendNotifications():
             with pytest.raises(ValueError):
                 _service.send_notifications(**req_copy)
 
-
     def test_send_notifications_value_error_with_retries(self):
         # Enable retries and run test_send_notifications_value_error.
         _service.enable_retries()
@@ -299,27 +262,27 @@ class TestSendBulkNotifications():
 
         # Construct a dict representation of a NotificationCreate model
         notification_create_model = {}
-        notification_create_model['data'] = {}
-        notification_create_model['ibmenseverity'] = 'testString'
-        notification_create_model['ibmenfcmbody'] = 'testString'
-        notification_create_model['ibmenapnsbody'] = 'testString'
-        notification_create_model['ibmensafaribody'] = 'testString'
-        notification_create_model['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
-        notification_create_model['ibmenapnsheaders'] = 'testString'
-        notification_create_model['ibmendefaultshort'] = 'testString'
-        notification_create_model['ibmendefaultlong'] = 'testString'
-        notification_create_model['ibmenchromebody'] = 'testString'
-        notification_create_model['ibmenfirefoxbody'] = 'testString'
-        notification_create_model['ibmenchromeheaders'] = 'testString'
-        notification_create_model['ibmenfirefoxheaders'] = 'testString'
-        notification_create_model['ibmensourceid'] = 'testString'
-        notification_create_model['datacontenttype'] = 'application/json'
-        notification_create_model['subject'] = 'testString'
+        notification_create_model['specversion'] = '1.0'
+        notification_create_model['time'] = '2019-01-01T12:00:00Z'
         notification_create_model['id'] = 'testString'
         notification_create_model['source'] = 'testString'
         notification_create_model['type'] = 'testString'
-        notification_create_model['specversion'] = '1.0'
-        notification_create_model['time'] = 'testString'
+        notification_create_model['ibmenseverity'] = 'testString'
+        notification_create_model['ibmensourceid'] = 'testString'
+        notification_create_model['ibmendefaultshort'] = 'testString'
+        notification_create_model['ibmendefaultlong'] = 'testString'
+        notification_create_model['subject'] = 'testString'
+        notification_create_model['data'] = {'key1': 'testString'}
+        notification_create_model['datacontenttype'] = 'application/json'
+        notification_create_model['ibmenpushto'] = '{"platforms":["push_android"]}'
+        notification_create_model['ibmenfcmbody'] = 'testString'
+        notification_create_model['ibmenapnsbody'] = 'testString'
+        notification_create_model['ibmenapnsheaders'] = 'testString'
+        notification_create_model['ibmenchromebody'] = 'testString'
+        notification_create_model['ibmenchromeheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model['ibmenfirefoxbody'] = 'testString'
+        notification_create_model['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model['ibmensafaribody'] = 'testString'
         notification_create_model['foo'] = 'testString'
 
         # Set up parameter values
@@ -410,7 +373,6 @@ class TestSendBulkNotifications():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.send_bulk_notifications(**req_copy)
-
 
     def test_send_bulk_notifications_value_error_with_retries(self):
         # Enable retries and run test_send_bulk_notifications_value_error.
@@ -541,7 +503,6 @@ class TestCreateSources():
             with pytest.raises(ValueError):
                 _service.create_sources(**req_copy)
 
-
     def test_create_sources_value_error_with_retries(self):
         # Enable retries and run test_create_sources_value_error.
         _service.enable_retries()
@@ -666,7 +627,6 @@ class TestListSources():
             with pytest.raises(ValueError):
                 _service.list_sources(**req_copy)
 
-
     def test_list_sources_value_error_with_retries(self):
         # Enable retries and run test_list_sources_value_error.
         _service.enable_retries()
@@ -747,7 +707,6 @@ class TestGetSource():
             with pytest.raises(ValueError):
                 _service.get_source(**req_copy)
 
-
     def test_get_source_value_error_with_retries(self):
         # Enable retries and run test_get_source_value_error.
         _service.enable_retries()
@@ -821,7 +780,6 @@ class TestDeleteSource():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_source(**req_copy)
-
 
     def test_delete_source_value_error_with_retries(self):
         # Enable retries and run test_delete_source_value_error.
@@ -916,7 +874,6 @@ class TestUpdateSource():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_source(**req_copy)
-
 
     def test_update_source_value_error_with_retries(self):
         # Enable retries and run test_update_source_value_error.
@@ -1068,7 +1025,6 @@ class TestCreateTopic():
             with pytest.raises(ValueError):
                 _service.create_topic(**req_copy)
 
-
     def test_create_topic_value_error_with_retries(self):
         # Enable retries and run test_create_topic_value_error.
         _service.enable_retries()
@@ -1192,7 +1148,6 @@ class TestListTopics():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_topics(**req_copy)
-
 
     def test_list_topics_value_error_with_retries(self):
         # Enable retries and run test_list_topics_value_error.
@@ -1318,7 +1273,6 @@ class TestGetTopic():
             with pytest.raises(ValueError):
                 _service.get_topic(**req_copy)
 
-
     def test_get_topic_value_error_with_retries(self):
         # Enable retries and run test_get_topic_value_error.
         _service.enable_retries()
@@ -1435,7 +1389,6 @@ class TestReplaceTopic():
             with pytest.raises(ValueError):
                 _service.replace_topic(**req_copy)
 
-
     def test_replace_topic_value_error_with_retries(self):
         # Enable retries and run test_replace_topic_value_error.
         _service.enable_retries()
@@ -1510,7 +1463,6 @@ class TestDeleteTopic():
             with pytest.raises(ValueError):
                 _service.delete_topic(**req_copy)
 
-
     def test_delete_topic_value_error_with_retries(self):
         # Enable retries and run test_delete_topic_value_error.
         _service.enable_retries()
@@ -1580,7 +1532,7 @@ class TestCreateDestination():
         destination_config_params_model = {}
         destination_config_params_model['url'] = 'testString'
         destination_config_params_model['verb'] = 'get'
-        destination_config_params_model['custom_headers'] = {}
+        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
         destination_config_params_model['sensitive_headers'] = ['testString']
 
         # Construct a dict representation of a DestinationConfig model
@@ -1597,16 +1549,16 @@ class TestCreateDestination():
         certificate_content_type = 'testString'
         icon_16x16 = io.BytesIO(b'This is a mock file.').getvalue()
         icon_16x16_content_type = 'testString'
-        icon_16x162x = io.BytesIO(b'This is a mock file.').getvalue()
-        icon_16x162x_content_type = 'testString'
+        icon_16x16_2x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_16x16_2x_content_type = 'testString'
         icon_32x32 = io.BytesIO(b'This is a mock file.').getvalue()
         icon_32x32_content_type = 'testString'
-        icon_32x322x = io.BytesIO(b'This is a mock file.').getvalue()
-        icon_32x322x_content_type = 'testString'
+        icon_32x32_2x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_32x32_2x_content_type = 'testString'
         icon_128x128 = io.BytesIO(b'This is a mock file.').getvalue()
         icon_128x128_content_type = 'testString'
-        icon_128x1282x = io.BytesIO(b'This is a mock file.').getvalue()
-        icon_128x1282x_content_type = 'testString'
+        icon_128x128_2x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_128x128_2x_content_type = 'testString'
 
         # Invoke method
         response = _service.create_destination(
@@ -1619,16 +1571,16 @@ class TestCreateDestination():
             certificate_content_type=certificate_content_type,
             icon_16x16=icon_16x16,
             icon_16x16_content_type=icon_16x16_content_type,
-            icon_16x162x=icon_16x162x,
-            icon_16x162x_content_type=icon_16x162x_content_type,
+            icon_16x16_2x=icon_16x16_2x,
+            icon_16x16_2x_content_type=icon_16x16_2x_content_type,
             icon_32x32=icon_32x32,
             icon_32x32_content_type=icon_32x32_content_type,
-            icon_32x322x=icon_32x322x,
-            icon_32x322x_content_type=icon_32x322x_content_type,
+            icon_32x32_2x=icon_32x32_2x,
+            icon_32x32_2x_content_type=icon_32x32_2x_content_type,
             icon_128x128=icon_128x128,
             icon_128x128_content_type=icon_128x128_content_type,
-            icon_128x1282x=icon_128x1282x,
-            icon_128x1282x_content_type=icon_128x1282x_content_type,
+            icon_128x128_2x=icon_128x128_2x,
+            icon_128x128_2x_content_type=icon_128x128_2x_content_type,
             headers={}
         )
 
@@ -1714,7 +1666,6 @@ class TestCreateDestination():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_destination(**req_copy)
-
 
     def test_create_destination_value_error_with_retries(self):
         # Enable retries and run test_create_destination_value_error.
@@ -1840,7 +1791,6 @@ class TestListDestinations():
             with pytest.raises(ValueError):
                 _service.list_destinations(**req_copy)
 
-
     def test_list_destinations_value_error_with_retries(self):
         # Enable retries and run test_list_destinations_value_error.
         _service.enable_retries()
@@ -1921,7 +1871,6 @@ class TestGetDestination():
             with pytest.raises(ValueError):
                 _service.get_destination(**req_copy)
 
-
     def test_get_destination_value_error_with_retries(self):
         # Enable retries and run test_get_destination_value_error.
         _service.enable_retries()
@@ -1954,7 +1903,7 @@ class TestUpdateDestination():
         destination_config_params_model = {}
         destination_config_params_model['url'] = 'testString'
         destination_config_params_model['verb'] = 'get'
-        destination_config_params_model['custom_headers'] = {}
+        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
         destination_config_params_model['sensitive_headers'] = ['testString']
 
         # Construct a dict representation of a DestinationConfig model
@@ -1971,16 +1920,16 @@ class TestUpdateDestination():
         certificate_content_type = 'testString'
         icon_16x16 = io.BytesIO(b'This is a mock file.').getvalue()
         icon_16x16_content_type = 'testString'
-        icon_16x162x = io.BytesIO(b'This is a mock file.').getvalue()
-        icon_16x162x_content_type = 'testString'
+        icon_16x16_2x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_16x16_2x_content_type = 'testString'
         icon_32x32 = io.BytesIO(b'This is a mock file.').getvalue()
         icon_32x32_content_type = 'testString'
-        icon_32x322x = io.BytesIO(b'This is a mock file.').getvalue()
-        icon_32x322x_content_type = 'testString'
+        icon_32x32_2x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_32x32_2x_content_type = 'testString'
         icon_128x128 = io.BytesIO(b'This is a mock file.').getvalue()
         icon_128x128_content_type = 'testString'
-        icon_128x1282x = io.BytesIO(b'This is a mock file.').getvalue()
-        icon_128x1282x_content_type = 'testString'
+        icon_128x128_2x = io.BytesIO(b'This is a mock file.').getvalue()
+        icon_128x128_2x_content_type = 'testString'
 
         # Invoke method
         response = _service.update_destination(
@@ -1993,16 +1942,16 @@ class TestUpdateDestination():
             certificate_content_type=certificate_content_type,
             icon_16x16=icon_16x16,
             icon_16x16_content_type=icon_16x16_content_type,
-            icon_16x162x=icon_16x162x,
-            icon_16x162x_content_type=icon_16x162x_content_type,
+            icon_16x16_2x=icon_16x16_2x,
+            icon_16x16_2x_content_type=icon_16x16_2x_content_type,
             icon_32x32=icon_32x32,
             icon_32x32_content_type=icon_32x32_content_type,
-            icon_32x322x=icon_32x322x,
-            icon_32x322x_content_type=icon_32x322x_content_type,
+            icon_32x32_2x=icon_32x32_2x,
+            icon_32x32_2x_content_type=icon_32x32_2x_content_type,
             icon_128x128=icon_128x128,
             icon_128x128_content_type=icon_128x128_content_type,
-            icon_128x1282x=icon_128x1282x,
-            icon_128x1282x_content_type=icon_128x1282x_content_type,
+            icon_128x128_2x=icon_128x128_2x,
+            icon_128x128_2x_content_type=icon_128x128_2x_content_type,
             headers={}
         )
 
@@ -2085,7 +2034,6 @@ class TestUpdateDestination():
             with pytest.raises(ValueError):
                 _service.update_destination(**req_copy)
 
-
     def test_update_destination_value_error_with_retries(self):
         # Enable retries and run test_update_destination_value_error.
         _service.enable_retries()
@@ -2160,7 +2108,6 @@ class TestDeleteDestination():
             with pytest.raises(ValueError):
                 _service.delete_destination(**req_copy)
 
-
     def test_delete_destination_value_error_with_retries(self):
         # Enable retries and run test_delete_destination_value_error.
         _service.enable_retries()
@@ -2176,7 +2123,7 @@ class TestDeleteDestination():
 ##############################################################################
 
 ##############################################################################
-# Start of Service: DestinationsPushDevices
+# Start of Service: PushDestinationAPIs
 ##############################################################################
 # region
 
@@ -2207,308 +2154,15 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestListDestinationDevices():
+class TestGetTagsSubscriptionsDevice():
     """
-    Test Class for list_destination_devices
-    """
-
-    @responses.activate
-    def test_list_destination_devices_all_params(self):
-        """
-        list_destination_devices()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "devices": [{"id": "id", "user_id": "user_id", "platform": "platform", "token": "token", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        limit = 1
-        offset = 0
-        search = 'testString'
-
-        # Invoke method
-        response = _service.list_destination_devices(
-            instance_id,
-            id,
-            limit=limit,
-            offset=offset,
-            search=search,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'limit={}'.format(limit) in query_string
-        assert 'offset={}'.format(offset) in query_string
-        assert 'search={}'.format(search) in query_string
-
-    def test_list_destination_devices_all_params_with_retries(self):
-        # Enable retries and run test_list_destination_devices_all_params.
-        _service.enable_retries()
-        self.test_list_destination_devices_all_params()
-
-        # Disable retries and run test_list_destination_devices_all_params.
-        _service.disable_retries()
-        self.test_list_destination_devices_all_params()
-
-    @responses.activate
-    def test_list_destination_devices_required_params(self):
-        """
-        test_list_destination_devices_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "devices": [{"id": "id", "user_id": "user_id", "platform": "platform", "token": "token", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-
-        # Invoke method
-        response = _service.list_destination_devices(
-            instance_id,
-            id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_list_destination_devices_required_params_with_retries(self):
-        # Enable retries and run test_list_destination_devices_required_params.
-        _service.enable_retries()
-        self.test_list_destination_devices_required_params()
-
-        # Disable retries and run test_list_destination_devices_required_params.
-        _service.disable_retries()
-        self.test_list_destination_devices_required_params()
-
-    @responses.activate
-    def test_list_destination_devices_value_error(self):
-        """
-        test_list_destination_devices_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "devices": [{"id": "id", "user_id": "user_id", "platform": "platform", "token": "token", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.list_destination_devices(**req_copy)
-
-
-    def test_list_destination_devices_value_error_with_retries(self):
-        # Enable retries and run test_list_destination_devices_value_error.
-        _service.enable_retries()
-        self.test_list_destination_devices_value_error()
-
-        # Disable retries and run test_list_destination_devices_value_error.
-        _service.disable_retries()
-        self.test_list_destination_devices_value_error()
-
-class TestGetDestinationDevicesReport():
-    """
-    Test Class for get_destination_devices_report
+    Test Class for get_tags_subscriptions_device
     """
 
     @responses.activate
-    def test_get_destination_devices_report_all_params(self):
+    def test_get_tags_subscriptions_device_all_params(self):
         """
-        get_destination_devices_report()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/report')
-        mock_response = '{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 14, "all": 3}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        days = 1
-
-        # Invoke method
-        response = _service.get_destination_devices_report(
-            instance_id,
-            id,
-            days=days,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'days={}'.format(days) in query_string
-
-    def test_get_destination_devices_report_all_params_with_retries(self):
-        # Enable retries and run test_get_destination_devices_report_all_params.
-        _service.enable_retries()
-        self.test_get_destination_devices_report_all_params()
-
-        # Disable retries and run test_get_destination_devices_report_all_params.
-        _service.disable_retries()
-        self.test_get_destination_devices_report_all_params()
-
-    @responses.activate
-    def test_get_destination_devices_report_required_params(self):
-        """
-        test_get_destination_devices_report_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/report')
-        mock_response = '{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 14, "all": 3}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-
-        # Invoke method
-        response = _service.get_destination_devices_report(
-            instance_id,
-            id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_destination_devices_report_required_params_with_retries(self):
-        # Enable retries and run test_get_destination_devices_report_required_params.
-        _service.enable_retries()
-        self.test_get_destination_devices_report_required_params()
-
-        # Disable retries and run test_get_destination_devices_report_required_params.
-        _service.disable_retries()
-        self.test_get_destination_devices_report_required_params()
-
-    @responses.activate
-    def test_get_destination_devices_report_value_error(self):
-        """
-        test_get_destination_devices_report_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/report')
-        mock_response = '{"android": 7, "ios": 3, "chrome": 6, "firefox": 7, "safari": 6, "chromeAppExt": 14, "all": 3}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_destination_devices_report(**req_copy)
-
-
-    def test_get_destination_devices_report_value_error_with_retries(self):
-        # Enable retries and run test_get_destination_devices_report_value_error.
-        _service.enable_retries()
-        self.test_get_destination_devices_report_value_error()
-
-        # Disable retries and run test_get_destination_devices_report_value_error.
-        _service.disable_retries()
-        self.test_get_destination_devices_report_value_error()
-
-# endregion
-##############################################################################
-# End of Service: DestinationsPushDevices
-##############################################################################
-
-##############################################################################
-# Start of Service: DestinationTagsSubscriptions
-##############################################################################
-# region
-
-class TestNewInstance():
-    """
-    Test Class for new_instance
-    """
-
-    def test_new_instance(self):
-        """
-        new_instance()
-        """
-        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
-
-        service = EventNotificationsV1.new_instance(
-            service_name='TEST_SERVICE',
-        )
-
-        assert service is not None
-        assert isinstance(service, EventNotificationsV1)
-
-    def test_new_instance_without_authenticator(self):
-        """
-        new_instance_without_authenticator()
-        """
-        with pytest.raises(ValueError, match='authenticator must be provided'):
-            service = EventNotificationsV1.new_instance(
-                service_name='TEST_SERVICE_NOT_FOUND',
-            )
-
-class TestListTagsSubscriptionsDevice():
-    """
-    Test Class for list_tags_subscriptions_device
-    """
-
-    @responses.activate
-    def test_list_tags_subscriptions_device_all_params(self):
-        """
-        list_tags_subscriptions_device()
+        get_tags_subscriptions_device()
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
@@ -2528,7 +2182,7 @@ class TestListTagsSubscriptionsDevice():
         offset = 0
 
         # Invoke method
-        response = _service.list_tags_subscriptions_device(
+        response = _service.get_tags_subscriptions_device(
             instance_id,
             id,
             device_id,
@@ -2548,19 +2202,19 @@ class TestListTagsSubscriptionsDevice():
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
 
-    def test_list_tags_subscriptions_device_all_params_with_retries(self):
-        # Enable retries and run test_list_tags_subscriptions_device_all_params.
+    def test_get_tags_subscriptions_device_all_params_with_retries(self):
+        # Enable retries and run test_get_tags_subscriptions_device_all_params.
         _service.enable_retries()
-        self.test_list_tags_subscriptions_device_all_params()
+        self.test_get_tags_subscriptions_device_all_params()
 
-        # Disable retries and run test_list_tags_subscriptions_device_all_params.
+        # Disable retries and run test_get_tags_subscriptions_device_all_params.
         _service.disable_retries()
-        self.test_list_tags_subscriptions_device_all_params()
+        self.test_get_tags_subscriptions_device_all_params()
 
     @responses.activate
-    def test_list_tags_subscriptions_device_required_params(self):
+    def test_get_tags_subscriptions_device_required_params(self):
         """
-        test_list_tags_subscriptions_device_required_params()
+        test_get_tags_subscriptions_device_required_params()
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
@@ -2577,7 +2231,7 @@ class TestListTagsSubscriptionsDevice():
         device_id = 'testString'
 
         # Invoke method
-        response = _service.list_tags_subscriptions_device(
+        response = _service.get_tags_subscriptions_device(
             instance_id,
             id,
             device_id,
@@ -2588,19 +2242,19 @@ class TestListTagsSubscriptionsDevice():
         assert len(responses.calls) == 1
         assert response.status_code == 200
 
-    def test_list_tags_subscriptions_device_required_params_with_retries(self):
-        # Enable retries and run test_list_tags_subscriptions_device_required_params.
+    def test_get_tags_subscriptions_device_required_params_with_retries(self):
+        # Enable retries and run test_get_tags_subscriptions_device_required_params.
         _service.enable_retries()
-        self.test_list_tags_subscriptions_device_required_params()
+        self.test_get_tags_subscriptions_device_required_params()
 
-        # Disable retries and run test_list_tags_subscriptions_device_required_params.
+        # Disable retries and run test_get_tags_subscriptions_device_required_params.
         _service.disable_retries()
-        self.test_list_tags_subscriptions_device_required_params()
+        self.test_get_tags_subscriptions_device_required_params()
 
     @responses.activate
-    def test_list_tags_subscriptions_device_value_error(self):
+    def test_get_tags_subscriptions_device_value_error(self):
         """
-        test_list_tags_subscriptions_device_value_error()
+        test_get_tags_subscriptions_device_value_error()
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
@@ -2625,17 +2279,188 @@ class TestListTagsSubscriptionsDevice():
         for param in req_param_dict.keys():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
-                _service.list_tags_subscriptions_device(**req_copy)
+                _service.get_tags_subscriptions_device(**req_copy)
 
-
-    def test_list_tags_subscriptions_device_value_error_with_retries(self):
-        # Enable retries and run test_list_tags_subscriptions_device_value_error.
+    def test_get_tags_subscriptions_device_value_error_with_retries(self):
+        # Enable retries and run test_get_tags_subscriptions_device_value_error.
         _service.enable_retries()
-        self.test_list_tags_subscriptions_device_value_error()
+        self.test_get_tags_subscriptions_device_value_error()
 
-        # Disable retries and run test_list_tags_subscriptions_device_value_error.
+        # Disable retries and run test_get_tags_subscriptions_device_value_error.
         _service.disable_retries()
-        self.test_list_tags_subscriptions_device_value_error()
+        self.test_get_tags_subscriptions_device_value_error()
+
+class TestGetDeviceCount():
+    """
+    Test Class for get_device_count
+    """
+
+    @responses.activate
+    def test_get_device_count_all_params(self):
+        """
+        get_device_count()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/count')
+        mock_response = '{"total_count": 11}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_device_count(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_device_count_all_params_with_retries(self):
+        # Enable retries and run test_get_device_count_all_params.
+        _service.enable_retries()
+        self.test_get_device_count_all_params()
+
+        # Disable retries and run test_get_device_count_all_params.
+        _service.disable_retries()
+        self.test_get_device_count_all_params()
+
+    @responses.activate
+    def test_get_device_count_value_error(self):
+        """
+        test_get_device_count_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/count')
+        mock_response = '{"total_count": 11}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_device_count(**req_copy)
+
+    def test_get_device_count_value_error_with_retries(self):
+        # Enable retries and run test_get_device_count_value_error.
+        _service.enable_retries()
+        self.test_get_device_count_value_error()
+
+        # Disable retries and run test_get_device_count_value_error.
+        _service.disable_retries()
+        self.test_get_device_count_value_error()
+
+class TestCreateTagsSubscription():
+    """
+    Test Class for create_tags_subscription
+    """
+
+    @responses.activate
+    def test_create_tags_subscription_all_params(self):
+        """
+        create_tags_subscription()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+        tag_name = 'testString'
+
+        # Invoke method
+        response = _service.create_tags_subscription(
+            instance_id,
+            id,
+            device_id,
+            tag_name,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['device_id'] == 'testString'
+        assert req_body['tag_name'] == 'testString'
+
+    def test_create_tags_subscription_all_params_with_retries(self):
+        # Enable retries and run test_create_tags_subscription_all_params.
+        _service.enable_retries()
+        self.test_create_tags_subscription_all_params()
+
+        # Disable retries and run test_create_tags_subscription_all_params.
+        _service.disable_retries()
+        self.test_create_tags_subscription_all_params()
+
+    @responses.activate
+    def test_create_tags_subscription_value_error(self):
+        """
+        test_create_tags_subscription_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.POST,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=201)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        device_id = 'testString'
+        tag_name = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "device_id": device_id,
+            "tag_name": tag_name,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_tags_subscription(**req_copy)
+
+    def test_create_tags_subscription_value_error_with_retries(self):
+        # Enable retries and run test_create_tags_subscription_value_error.
+        _service.enable_retries()
+        self.test_create_tags_subscription_value_error()
+
+        # Disable retries and run test_create_tags_subscription_value_error.
+        _service.disable_retries()
+        self.test_create_tags_subscription_value_error()
 
 class TestListTagsSubscription():
     """
@@ -2767,7 +2592,6 @@ class TestListTagsSubscription():
             with pytest.raises(ValueError):
                 _service.list_tags_subscription(**req_copy)
 
-
     def test_list_tags_subscription_value_error_with_retries(self):
         # Enable retries and run test_list_tags_subscription_value_error.
         _service.enable_retries()
@@ -2776,99 +2600,6 @@ class TestListTagsSubscription():
         # Disable retries and run test_list_tags_subscription_value_error.
         _service.disable_retries()
         self.test_list_tags_subscription_value_error()
-
-class TestCreateTagsSubscription():
-    """
-    Test Class for create_tags_subscription
-    """
-
-    @responses.activate
-    def test_create_tags_subscription_all_params(self):
-        """
-        create_tags_subscription()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        device_id = 'testString'
-        tag_name = 'testString'
-
-        # Invoke method
-        response = _service.create_tags_subscription(
-            instance_id,
-            id,
-            device_id,
-            tag_name,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 201
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['device_id'] == 'testString'
-        assert req_body['tag_name'] == 'testString'
-
-    def test_create_tags_subscription_all_params_with_retries(self):
-        # Enable retries and run test_create_tags_subscription_all_params.
-        _service.enable_retries()
-        self.test_create_tags_subscription_all_params()
-
-        # Disable retries and run test_create_tags_subscription_all_params.
-        _service.disable_retries()
-        self.test_create_tags_subscription_all_params()
-
-    @responses.activate
-    def test_create_tags_subscription_value_error(self):
-        """
-        test_create_tags_subscription_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        device_id = 'testString'
-        tag_name = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-            "id": id,
-            "device_id": device_id,
-            "tag_name": tag_name,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.create_tags_subscription(**req_copy)
-
-
-    def test_create_tags_subscription_value_error_with_retries(self):
-        # Enable retries and run test_create_tags_subscription_value_error.
-        _service.enable_retries()
-        self.test_create_tags_subscription_value_error()
-
-        # Disable retries and run test_create_tags_subscription_value_error.
-        _service.disable_retries()
-        self.test_create_tags_subscription_value_error()
 
 class TestDeleteTagsSubscription():
     """
@@ -2979,7 +2710,6 @@ class TestDeleteTagsSubscription():
             with pytest.raises(ValueError):
                 _service.delete_tags_subscription(**req_copy)
 
-
     def test_delete_tags_subscription_value_error_with_retries(self):
         # Enable retries and run test_delete_tags_subscription_value_error.
         _service.enable_retries()
@@ -2991,7 +2721,7 @@ class TestDeleteTagsSubscription():
 
 # endregion
 ##############################################################################
-# End of Service: DestinationTagsSubscriptions
+# End of Service: PushDestinationAPIs
 ##############################################################################
 
 ##############################################################################
@@ -3126,7 +2856,6 @@ class TestCreateSubscription():
             with pytest.raises(ValueError):
                 _service.create_subscription(**req_copy)
 
-
     def test_create_subscription_value_error_with_retries(self):
         # Enable retries and run test_create_subscription_value_error.
         _service.enable_retries()
@@ -3251,7 +2980,6 @@ class TestListSubscriptions():
             with pytest.raises(ValueError):
                 _service.list_subscriptions(**req_copy)
 
-
     def test_list_subscriptions_value_error_with_retries(self):
         # Enable retries and run test_list_subscriptions_value_error.
         _service.enable_retries()
@@ -3332,7 +3060,6 @@ class TestGetSubscription():
             with pytest.raises(ValueError):
                 _service.get_subscription(**req_copy)
 
-
     def test_get_subscription_value_error_with_retries(self):
         # Enable retries and run test_get_subscription_value_error.
         _service.enable_retries()
@@ -3406,7 +3133,6 @@ class TestDeleteSubscription():
             req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_subscription(**req_copy)
-
 
     def test_delete_subscription_value_error_with_retries(self):
         # Enable retries and run test_delete_subscription_value_error.
@@ -3510,7 +3236,6 @@ class TestUpdateSubscription():
             with pytest.raises(ValueError):
                 _service.update_subscription(**req_copy)
 
-
     def test_update_subscription_value_error_with_retries(self):
         # Enable retries and run test_update_subscription_value_error.
         _service.enable_retries()
@@ -3575,7 +3300,7 @@ class TestModel_Destination():
         destination_config_params_model = {} # DestinationConfigParamsWebhookDestinationConfig
         destination_config_params_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
         destination_config_params_model['verb'] = 'post'
-        destination_config_params_model['custom_headers'] = {}
+        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
         destination_config_params_model['sensitive_headers'] = ['authorization']
 
         destination_config_model = {} # DestinationConfig
@@ -3622,7 +3347,7 @@ class TestModel_DestinationConfig():
         destination_config_params_model = {} # DestinationConfigParamsWebhookDestinationConfig
         destination_config_params_model['url'] = 'https://1ea472c0.us-south.apigw.appdomain.cloud/nhwebhook/sendwebhook'
         destination_config_params_model['verb'] = 'post'
-        destination_config_params_model['custom_headers'] = {}
+        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
         destination_config_params_model['sensitive_headers'] = ['authorization']
 
         # Construct a json representation of a DestinationConfig model
@@ -3643,115 +3368,6 @@ class TestModel_DestinationConfig():
         # Convert model instance back to dict and verify no loss of data
         destination_config_model_json2 = destination_config_model.to_dict()
         assert destination_config_model_json2 == destination_config_model_json
-
-class TestModel_DestinationDevicesList():
-    """
-    Test Class for DestinationDevicesList
-    """
-
-    def test_destination_devices_list_serialization(self):
-        """
-        Test serialization/deserialization for DestinationDevicesList
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        destination_devices_list_item_model = {} # DestinationDevicesListItem
-        destination_devices_list_item_model['id'] = '11fe18ba-d0c8-4108-9f07-adsa'
-        destination_devices_list_item_model['user_id'] = 'TestUserId'
-        destination_devices_list_item_model['platform'] = 'A'
-        destination_devices_list_item_model['token'] = '************'
-        destination_devices_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
-
-        # Construct a json representation of a DestinationDevicesList model
-        destination_devices_list_model_json = {}
-        destination_devices_list_model_json['total_count'] = 38
-        destination_devices_list_model_json['offset'] = 38
-        destination_devices_list_model_json['limit'] = 38
-        destination_devices_list_model_json['devices'] = [destination_devices_list_item_model]
-
-        # Construct a model instance of DestinationDevicesList by calling from_dict on the json representation
-        destination_devices_list_model = DestinationDevicesList.from_dict(destination_devices_list_model_json)
-        assert destination_devices_list_model != False
-
-        # Construct a model instance of DestinationDevicesList by calling from_dict on the json representation
-        destination_devices_list_model_dict = DestinationDevicesList.from_dict(destination_devices_list_model_json).__dict__
-        destination_devices_list_model2 = DestinationDevicesList(**destination_devices_list_model_dict)
-
-        # Verify the model instances are equivalent
-        assert destination_devices_list_model == destination_devices_list_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        destination_devices_list_model_json2 = destination_devices_list_model.to_dict()
-        assert destination_devices_list_model_json2 == destination_devices_list_model_json
-
-class TestModel_DestinationDevicesListItem():
-    """
-    Test Class for DestinationDevicesListItem
-    """
-
-    def test_destination_devices_list_item_serialization(self):
-        """
-        Test serialization/deserialization for DestinationDevicesListItem
-        """
-
-        # Construct a json representation of a DestinationDevicesListItem model
-        destination_devices_list_item_model_json = {}
-        destination_devices_list_item_model_json['id'] = 'testString'
-        destination_devices_list_item_model_json['user_id'] = 'testString'
-        destination_devices_list_item_model_json['platform'] = 'testString'
-        destination_devices_list_item_model_json['token'] = 'testString'
-        destination_devices_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
-
-        # Construct a model instance of DestinationDevicesListItem by calling from_dict on the json representation
-        destination_devices_list_item_model = DestinationDevicesListItem.from_dict(destination_devices_list_item_model_json)
-        assert destination_devices_list_item_model != False
-
-        # Construct a model instance of DestinationDevicesListItem by calling from_dict on the json representation
-        destination_devices_list_item_model_dict = DestinationDevicesListItem.from_dict(destination_devices_list_item_model_json).__dict__
-        destination_devices_list_item_model2 = DestinationDevicesListItem(**destination_devices_list_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert destination_devices_list_item_model == destination_devices_list_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        destination_devices_list_item_model_json2 = destination_devices_list_item_model.to_dict()
-        assert destination_devices_list_item_model_json2 == destination_devices_list_item_model_json
-
-class TestModel_DestinationDevicesReport():
-    """
-    Test Class for DestinationDevicesReport
-    """
-
-    def test_destination_devices_report_serialization(self):
-        """
-        Test serialization/deserialization for DestinationDevicesReport
-        """
-
-        # Construct a json representation of a DestinationDevicesReport model
-        destination_devices_report_model_json = {}
-        destination_devices_report_model_json['android'] = 26
-        destination_devices_report_model_json['ios'] = 26
-        destination_devices_report_model_json['chrome'] = 26
-        destination_devices_report_model_json['firefox'] = 26
-        destination_devices_report_model_json['safari'] = 26
-        destination_devices_report_model_json['chromeAppExt'] = 26
-        destination_devices_report_model_json['all'] = 26
-
-        # Construct a model instance of DestinationDevicesReport by calling from_dict on the json representation
-        destination_devices_report_model = DestinationDevicesReport.from_dict(destination_devices_report_model_json)
-        assert destination_devices_report_model != False
-
-        # Construct a model instance of DestinationDevicesReport by calling from_dict on the json representation
-        destination_devices_report_model_dict = DestinationDevicesReport.from_dict(destination_devices_report_model_json).__dict__
-        destination_devices_report_model2 = DestinationDevicesReport(**destination_devices_report_model_dict)
-
-        # Verify the model instances are equivalent
-        assert destination_devices_report_model == destination_devices_report_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        destination_devices_report_model_json2 = destination_devices_report_model.to_dict()
-        assert destination_devices_report_model_json2 == destination_devices_report_model_json
 
 class TestModel_DestinationList():
     """
@@ -3846,7 +3462,7 @@ class TestModel_DestinationResponse():
         destination_config_params_model = {} # DestinationConfigParamsWebhookDestinationConfig
         destination_config_params_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
         destination_config_params_model['verb'] = 'post'
-        destination_config_params_model['custom_headers'] = {}
+        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
         destination_config_params_model['sensitive_headers'] = ['authorization']
 
         destination_config_model = {} # DestinationConfig
@@ -3908,6 +3524,125 @@ class TestModel_DestinationTagsSubscriptionResponse():
         # Convert model instance back to dict and verify no loss of data
         destination_tags_subscription_response_model_json2 = destination_tags_subscription_response_model.to_dict()
         assert destination_tags_subscription_response_model_json2 == destination_tags_subscription_response_model_json
+
+class TestModel_DeviceCount():
+    """
+    Test Class for DeviceCount
+    """
+
+    def test_device_count_serialization(self):
+        """
+        Test serialization/deserialization for DeviceCount
+        """
+
+        # Construct a json representation of a DeviceCount model
+        device_count_model_json = {}
+        device_count_model_json['total_count'] = 38
+
+        # Construct a model instance of DeviceCount by calling from_dict on the json representation
+        device_count_model = DeviceCount.from_dict(device_count_model_json)
+        assert device_count_model != False
+
+        # Construct a model instance of DeviceCount by calling from_dict on the json representation
+        device_count_model_dict = DeviceCount.from_dict(device_count_model_json).__dict__
+        device_count_model2 = DeviceCount(**device_count_model_dict)
+
+        # Verify the model instances are equivalent
+        assert device_count_model == device_count_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        device_count_model_json2 = device_count_model.to_dict()
+        assert device_count_model_json2 == device_count_model_json
+
+class TestModel_EmailAttributesResponseInvitedItem():
+    """
+    Test Class for EmailAttributesResponseInvitedItem
+    """
+
+    def test_email_attributes_response_invited_item_serialization(self):
+        """
+        Test serialization/deserialization for EmailAttributesResponseInvitedItem
+        """
+
+        # Construct a json representation of a EmailAttributesResponseInvitedItem model
+        email_attributes_response_invited_item_model_json = {}
+        email_attributes_response_invited_item_model_json['email'] = 'testString'
+        email_attributes_response_invited_item_model_json['time'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of EmailAttributesResponseInvitedItem by calling from_dict on the json representation
+        email_attributes_response_invited_item_model = EmailAttributesResponseInvitedItem.from_dict(email_attributes_response_invited_item_model_json)
+        assert email_attributes_response_invited_item_model != False
+
+        # Construct a model instance of EmailAttributesResponseInvitedItem by calling from_dict on the json representation
+        email_attributes_response_invited_item_model_dict = EmailAttributesResponseInvitedItem.from_dict(email_attributes_response_invited_item_model_json).__dict__
+        email_attributes_response_invited_item_model2 = EmailAttributesResponseInvitedItem(**email_attributes_response_invited_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert email_attributes_response_invited_item_model == email_attributes_response_invited_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        email_attributes_response_invited_item_model_json2 = email_attributes_response_invited_item_model.to_dict()
+        assert email_attributes_response_invited_item_model_json2 == email_attributes_response_invited_item_model_json
+
+class TestModel_EmailAttributesResponseToItem():
+    """
+    Test Class for EmailAttributesResponseToItem
+    """
+
+    def test_email_attributes_response_to_item_serialization(self):
+        """
+        Test serialization/deserialization for EmailAttributesResponseToItem
+        """
+
+        # Construct a json representation of a EmailAttributesResponseToItem model
+        email_attributes_response_to_item_model_json = {}
+        email_attributes_response_to_item_model_json['email'] = 'testString'
+        email_attributes_response_to_item_model_json['time'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of EmailAttributesResponseToItem by calling from_dict on the json representation
+        email_attributes_response_to_item_model = EmailAttributesResponseToItem.from_dict(email_attributes_response_to_item_model_json)
+        assert email_attributes_response_to_item_model != False
+
+        # Construct a model instance of EmailAttributesResponseToItem by calling from_dict on the json representation
+        email_attributes_response_to_item_model_dict = EmailAttributesResponseToItem.from_dict(email_attributes_response_to_item_model_json).__dict__
+        email_attributes_response_to_item_model2 = EmailAttributesResponseToItem(**email_attributes_response_to_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert email_attributes_response_to_item_model == email_attributes_response_to_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        email_attributes_response_to_item_model_json2 = email_attributes_response_to_item_model.to_dict()
+        assert email_attributes_response_to_item_model_json2 == email_attributes_response_to_item_model_json
+
+class TestModel_EmailAttributesResponseUnsubscribedItem():
+    """
+    Test Class for EmailAttributesResponseUnsubscribedItem
+    """
+
+    def test_email_attributes_response_unsubscribed_item_serialization(self):
+        """
+        Test serialization/deserialization for EmailAttributesResponseUnsubscribedItem
+        """
+
+        # Construct a json representation of a EmailAttributesResponseUnsubscribedItem model
+        email_attributes_response_unsubscribed_item_model_json = {}
+        email_attributes_response_unsubscribed_item_model_json['email'] = 'testString'
+        email_attributes_response_unsubscribed_item_model_json['time'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of EmailAttributesResponseUnsubscribedItem by calling from_dict on the json representation
+        email_attributes_response_unsubscribed_item_model = EmailAttributesResponseUnsubscribedItem.from_dict(email_attributes_response_unsubscribed_item_model_json)
+        assert email_attributes_response_unsubscribed_item_model != False
+
+        # Construct a model instance of EmailAttributesResponseUnsubscribedItem by calling from_dict on the json representation
+        email_attributes_response_unsubscribed_item_model_dict = EmailAttributesResponseUnsubscribedItem.from_dict(email_attributes_response_unsubscribed_item_model_json).__dict__
+        email_attributes_response_unsubscribed_item_model2 = EmailAttributesResponseUnsubscribedItem(**email_attributes_response_unsubscribed_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert email_attributes_response_unsubscribed_item_model == email_attributes_response_unsubscribed_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        email_attributes_response_unsubscribed_item_model_json2 = email_attributes_response_unsubscribed_item_model.to_dict()
+        assert email_attributes_response_unsubscribed_item_model_json2 == email_attributes_response_unsubscribed_item_model_json
 
 class TestModel_EmailUpdateAttributesTo():
     """
@@ -3980,27 +3715,27 @@ class TestModel_NotificationCreate():
 
         # Construct a json representation of a NotificationCreate model
         notification_create_model_json = {}
-        notification_create_model_json['data'] = {}
-        notification_create_model_json['ibmenseverity'] = 'testString'
-        notification_create_model_json['ibmenfcmbody'] = 'testString'
-        notification_create_model_json['ibmenapnsbody'] = 'testString'
-        notification_create_model_json['ibmensafaribody'] = 'testString'
-        notification_create_model_json['ibmenpushto'] = '{"fcm_devices":["9c75975a-37d0-3898-905d-3b5ee0d7c172","C9CACDF5-6EBF-49E1-AD60-E25BA23E954C"],"apns_devices":["3423-37d0-3898-905d-42342","432423-6EBF-49E1-AD60-4234"],"user_ids":["user-1","user-2"],"tags":["tag-1","tag-2"],"platforms":["push_android","push_ios","push_chrome","push_firefox"]}'
-        notification_create_model_json['ibmenapnsheaders'] = 'testString'
-        notification_create_model_json['ibmendefaultshort'] = 'testString'
-        notification_create_model_json['ibmendefaultlong'] = 'testString'
-        notification_create_model_json['ibmenchromebody'] = 'testString'
-        notification_create_model_json['ibmenfirefoxbody'] = 'testString'
-        notification_create_model_json['ibmenchromeheaders'] = 'testString'
-        notification_create_model_json['ibmenfirefoxheaders'] = 'testString'
-        notification_create_model_json['ibmensourceid'] = 'testString'
-        notification_create_model_json['datacontenttype'] = 'application/json'
-        notification_create_model_json['subject'] = 'testString'
+        notification_create_model_json['specversion'] = '1.0'
+        notification_create_model_json['time'] = '2019-01-01T12:00:00Z'
         notification_create_model_json['id'] = 'testString'
         notification_create_model_json['source'] = 'testString'
         notification_create_model_json['type'] = 'testString'
-        notification_create_model_json['specversion'] = '1.0'
-        notification_create_model_json['time'] = 'testString'
+        notification_create_model_json['ibmenseverity'] = 'testString'
+        notification_create_model_json['ibmensourceid'] = 'testString'
+        notification_create_model_json['ibmendefaultshort'] = 'testString'
+        notification_create_model_json['ibmendefaultlong'] = 'testString'
+        notification_create_model_json['subject'] = 'testString'
+        notification_create_model_json['data'] = {'key1': 'testString'}
+        notification_create_model_json['datacontenttype'] = 'application/json'
+        notification_create_model_json['ibmenpushto'] = '{"platforms":["push_android"]}'
+        notification_create_model_json['ibmenfcmbody'] = 'testString'
+        notification_create_model_json['ibmenapnsbody'] = 'testString'
+        notification_create_model_json['ibmenapnsheaders'] = 'testString'
+        notification_create_model_json['ibmenchromebody'] = 'testString'
+        notification_create_model_json['ibmenchromeheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model_json['ibmenfirefoxbody'] = 'testString'
+        notification_create_model_json['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model_json['ibmensafaribody'] = 'testString'
         notification_create_model_json['foo'] = 'testString'
 
         # Construct a model instance of NotificationCreate by calling from_dict on the json representation
@@ -4320,15 +4055,27 @@ class TestModel_Subscription():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_attributes_model = {} # SubscriptionAttributesWebhookAttributesResponse
-        subscription_attributes_model['signing_enabled'] = True
+        email_attributes_response_to_item_model = {} # EmailAttributesResponseToItem
+        email_attributes_response_to_item_model['email'] = 'example1@gmail.com'
+        email_attributes_response_to_item_model['time'] = '2021-11-26T07:06:27.693000Z'
+
+        email_attributes_response_unsubscribed_item_model = {} # EmailAttributesResponseUnsubscribedItem
+        email_attributes_response_unsubscribed_item_model['email'] = 'testString'
+        email_attributes_response_unsubscribed_item_model['time'] = '2019-01-01T12:00:00Z'
+
+        email_attributes_response_invited_item_model = {} # EmailAttributesResponseInvitedItem
+        email_attributes_response_invited_item_model['email'] = 'testString'
+        email_attributes_response_invited_item_model['time'] = '2019-01-01T12:00:00Z'
+
+        subscription_attributes_model = {} # SubscriptionAttributesEmailAttributesResponse
+        subscription_attributes_model['to'] = [email_attributes_response_to_item_model]
+        subscription_attributes_model['unsubscribed'] = [email_attributes_response_unsubscribed_item_model]
+        subscription_attributes_model['invited'] = [email_attributes_response_invited_item_model]
         subscription_attributes_model['add_notification_payload'] = True
         subscription_attributes_model['reply_to_mail'] = 'example@ibm.com'
         subscription_attributes_model['reply_to_name'] = 'USA news'
         subscription_attributes_model['from_name'] = 'IBM'
-        subscription_attributes_model['to'] = '[{"email":"example1@gmail.com","time":"2021-11-26T12:36:27.693544+05:30"}]'
-        subscription_attributes_model['unsubscribed'] = '[]'
-        subscription_attributes_model['invited'] = '[]'
+        subscription_attributes_model['foo'] = 'testString'
 
         # Construct a json representation of a Subscription model
         subscription_model_json = {}
@@ -4465,7 +4212,7 @@ class TestModel_TagsSubscriptionList():
         # Construct dict forms of any model objects needed in order to build this model.
 
         tags_subscription_list_item_model = {} # TagsSubscriptionListItem
-        tags_subscription_list_item_model['id'] = 'nkjl-d0c8-4108-9f07-890'
+        tags_subscription_list_item_model['id'] = '330cfdf8-7ae6-4afb-aac1-458243877d00'
         tags_subscription_list_item_model['device_id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
         tags_subscription_list_item_model['tag_name'] = 'Slack_Webhook'
         tags_subscription_list_item_model['user_id'] = 'fcm_id_123'
@@ -4747,6 +4494,7 @@ class TestModel_DestinationConfigParamsChromeDestinationConfig():
         destination_config_params_chrome_destination_config_model_json['api_key'] = 'testString'
         destination_config_params_chrome_destination_config_model_json['website_url'] = 'testString'
         destination_config_params_chrome_destination_config_model_json['public_key'] = 'testString'
+        destination_config_params_chrome_destination_config_model_json['pre_prod'] = False
 
         # Construct a model instance of DestinationConfigParamsChromeDestinationConfig by calling from_dict on the json representation
         destination_config_params_chrome_destination_config_model = DestinationConfigParamsChromeDestinationConfig.from_dict(destination_config_params_chrome_destination_config_model_json)
@@ -4777,6 +4525,7 @@ class TestModel_DestinationConfigParamsFCMDestinationConfig():
         destination_config_params_fcm_destination_config_model_json = {}
         destination_config_params_fcm_destination_config_model_json['server_key'] = 'testString'
         destination_config_params_fcm_destination_config_model_json['sender_id'] = 'testString'
+        destination_config_params_fcm_destination_config_model_json['pre_prod'] = False
 
         # Construct a model instance of DestinationConfigParamsFCMDestinationConfig by calling from_dict on the json representation
         destination_config_params_fcm_destination_config_model = DestinationConfigParamsFCMDestinationConfig.from_dict(destination_config_params_fcm_destination_config_model_json)
@@ -4807,6 +4556,7 @@ class TestModel_DestinationConfigParamsFirefoxDestinationConfig():
         destination_config_params_firefox_destination_config_model_json = {}
         destination_config_params_firefox_destination_config_model_json['website_url'] = 'testString'
         destination_config_params_firefox_destination_config_model_json['public_key'] = 'testString'
+        destination_config_params_firefox_destination_config_model_json['pre_prod'] = False
 
         # Construct a model instance of DestinationConfigParamsFirefoxDestinationConfig by calling from_dict on the json representation
         destination_config_params_firefox_destination_config_model = DestinationConfigParamsFirefoxDestinationConfig.from_dict(destination_config_params_firefox_destination_config_model_json)
@@ -4841,6 +4591,7 @@ class TestModel_DestinationConfigParamsIOSDestinationConfig():
         destination_config_params_ios_destination_config_model_json['key_id'] = 'testString'
         destination_config_params_ios_destination_config_model_json['team_id'] = 'testString'
         destination_config_params_ios_destination_config_model_json['bundle_id'] = 'testString'
+        destination_config_params_ios_destination_config_model_json['pre_prod'] = False
 
         # Construct a model instance of DestinationConfigParamsIOSDestinationConfig by calling from_dict on the json representation
         destination_config_params_ios_destination_config_model = DestinationConfigParamsIOSDestinationConfig.from_dict(destination_config_params_ios_destination_config_model_json)
@@ -4904,6 +4655,7 @@ class TestModel_DestinationConfigParamsSafariDestinationConfig():
         destination_config_params_safari_destination_config_model_json['website_name'] = 'testString'
         destination_config_params_safari_destination_config_model_json['url_format_string'] = 'testString'
         destination_config_params_safari_destination_config_model_json['website_push_id'] = 'testString'
+        destination_config_params_safari_destination_config_model_json['pre_prod'] = False
 
         # Construct a model instance of DestinationConfigParamsSafariDestinationConfig by calling from_dict on the json representation
         destination_config_params_safari_destination_config_model = DestinationConfigParamsSafariDestinationConfig.from_dict(destination_config_params_safari_destination_config_model_json)
@@ -4963,7 +4715,7 @@ class TestModel_DestinationConfigParamsWebhookDestinationConfig():
         destination_config_params_webhook_destination_config_model_json = {}
         destination_config_params_webhook_destination_config_model_json['url'] = 'testString'
         destination_config_params_webhook_destination_config_model_json['verb'] = 'get'
-        destination_config_params_webhook_destination_config_model_json['custom_headers'] = {}
+        destination_config_params_webhook_destination_config_model_json['custom_headers'] = {'key1': 'testString'}
         destination_config_params_webhook_destination_config_model_json['sensitive_headers'] = ['testString']
 
         # Construct a model instance of DestinationConfigParamsWebhookDestinationConfig by calling from_dict on the json representation
@@ -4991,8 +4743,29 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse():
         Test serialization/deserialization for SubscriptionAttributesEmailAttributesResponse
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        email_attributes_response_to_item_model = {} # EmailAttributesResponseToItem
+        email_attributes_response_to_item_model['email'] = 'testString'
+        email_attributes_response_to_item_model['time'] = '2019-01-01T12:00:00Z'
+
+        email_attributes_response_unsubscribed_item_model = {} # EmailAttributesResponseUnsubscribedItem
+        email_attributes_response_unsubscribed_item_model['email'] = 'testString'
+        email_attributes_response_unsubscribed_item_model['time'] = '2019-01-01T12:00:00Z'
+
+        email_attributes_response_invited_item_model = {} # EmailAttributesResponseInvitedItem
+        email_attributes_response_invited_item_model['email'] = 'testString'
+        email_attributes_response_invited_item_model['time'] = '2019-01-01T12:00:00Z'
+
         # Construct a json representation of a SubscriptionAttributesEmailAttributesResponse model
         subscription_attributes_email_attributes_response_model_json = {}
+        subscription_attributes_email_attributes_response_model_json['to'] = [email_attributes_response_to_item_model]
+        subscription_attributes_email_attributes_response_model_json['unsubscribed'] = [email_attributes_response_unsubscribed_item_model]
+        subscription_attributes_email_attributes_response_model_json['invited'] = [email_attributes_response_invited_item_model]
+        subscription_attributes_email_attributes_response_model_json['add_notification_payload'] = False
+        subscription_attributes_email_attributes_response_model_json['reply_to_mail'] = 'testString'
+        subscription_attributes_email_attributes_response_model_json['reply_to_name'] = 'testString'
+        subscription_attributes_email_attributes_response_model_json['from_name'] = 'testString'
         subscription_attributes_email_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesEmailAttributesResponse by calling from_dict on the json representation
