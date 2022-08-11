@@ -343,7 +343,7 @@ response = event_notifications_service.delete_destination(
 ## Push Destination APIs
 
 ### Create Destination tag subscription
-```python
+```py
 tag_subscription = _event_notifications_service.create_tags_subscription(
     <instance-id>,      # Event notifications service instance GUID
     <destination-id>,   # Event notifications service Destintaion ID
@@ -354,7 +354,7 @@ tag_subscription = _event_notifications_service.create_tags_subscription(
 print(json.dumps(tag_subscription, indent=2))
 ```
 ### List Destination tag subscription
-```python
+```py
 subscription = _event_notifications_service.list_tags_subscription(
   <instance-id>,   # Event notifications service instance GUID
   <destination-id> # Event notifications service Destintaion ID
@@ -363,7 +363,7 @@ subscription = _event_notifications_service.list_tags_subscription(
 print(json.dumps(subscription, indent=2))
 ```
 ### List Destination device tag subscriptions
-```python
+```py
 all_subscription_for_device = _event_notifications_service.get_tags_subscriptions_device(
   <instance-id>,      # Event notifications service instance GUID
   <destination-id>,   # Event notifications service Destintaion ID
@@ -373,7 +373,7 @@ all_subscription_for_device = _event_notifications_service.get_tags_subscription
 print(json.dumps(all_subscription_for_device, indent=2))
 ```
 ### Get Device Count
-```python
+```py
 get_deviceCount_response = _event_notifications_service.get_device_count(
   <instance-id>,      # Event notifications service instance GUID
   <destination-id>,   # Event notifications service Destintaion ID
@@ -383,7 +383,7 @@ print(json.dumps(get_deviceCount_response, indent=2))
 ```
 
 ### Delete Destination device tag subscription
-```python
+```py
 response = _event_notifications_service.delete_tags_subscription(
   <instance-id>,      # Event notifications service instance GUID
   <destination-id>,   # Event notifications service Destintaion ID
