@@ -481,48 +481,6 @@ class TestEventNotificationsV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
-    def test_list_destination_devices_example(self):
-        """
-        list_destination_devices request example
-        """
-        try:
-            print('\nlist_destination_devices() result:')
-            # begin-list_destination_devices
-
-            destination_devices_list = event_notifications_service.list_destination_devices(
-                instance_id,
-                id=destination_id
-            ).get_result()
-
-            print(json.dumps(destination_devices_list, indent=2))
-
-            # end-list_destination_devices
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_get_destination_devices_report_example(self):
-        """
-        get_destination_devices_report request example
-        """
-        try:
-            print('\nget_destination_devices_report() result:')
-            # begin-get_destination_devices_report
-
-            destination_devices_report = event_notifications_service.get_destination_devices_report(
-                instance_id,
-                id=destination_id
-            ).get_result()
-
-            print(json.dumps(destination_devices_report, indent=2))
-
-            # end-get_destination_devices_report
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
     def test_create_subscription_example(self):
         """
         create_subscription request example
@@ -661,24 +619,28 @@ class TestEventNotificationsV1Examples():
                 },
             }
 
-            notification_response = event_notifications_service.send_notifications(
+            notification_create_model = {
+                'ibmenseverity': notification_severity,
+                'ibmenfcmbody': json.dumps(notification_fcm_body_model),
+                'ibmenpushto': json.dumps(notification_devices_model),
+                'ibmenapnsbody': json.dumps(notification_apns_body_model),
+                'ibmensourceid': source_id,
+                'ibmendefaultshort': 'teststring',
+                'ibmendefaultlong': 'teststring',
+                'ibmensafaribody': json.dumps(notificationSafariBodymodel),
+                'id': notification_id,
+                'source': notifications_source,
+                'type': type_value,
+                'specversion': '1.0',
+                'time': '2019-01-01T12:00:00.000Z',
+            }
+
+            send_notifications_response = event_notifications_service.send_notifications(
                 instance_id,
-                ce_ibmenseverity=notification_severity,
-                ce_id=notification_id,
-                ce_source=notifications_source,
-                ce_ibmensourceid=source_id,
-                ce_type=type_value,
-                ce_time=date,
-                body={},
-                ce_ibmenpushto=json.dumps(notification_devices_model),
-                ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
-                ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
-                ce_ibmensafaribody=json.dumps(notificationSafariBodymodel),
-                ce_ibmenapnsheaders=json.dumps(message_apns_headers),
-                ce_specversion='1.0'
+                body=notification_create_model
             ).get_result()
 
-            print(json.dumps(notification_response, indent=2))
+            print(json.dumps(send_notifications_response, indent=2))
 
             # end-send_notifications
 

@@ -728,41 +728,16 @@ class TestEventNotificationsV1():
         #
 
     @needscredentials
-    def test_list_destination_devices(self):
+    def test_get_deviceCount(self):
 
-        list_destination_devices_response = self.event_notifications_service.list_destination_devices(
+        get_deviceCount_response = self.event_notifications_service.get_device_count(
             instance_id,
-            id=destination_id3,
-            limit=1,
-            offset=0,
-            search=''
+            id=destination_id3
         )
 
-        assert list_destination_devices_response.get_status_code() == 200
-        destination_devices_list = list_destination_devices_response.get_result()
-        assert destination_devices_list is not None
-
-        #
-        # The following status codes aren't covered by tests.
-        # Please provide integration tests for these too.
-        #
-        # 401
-        # 404
-        # 500
-        #
-
-    @needscredentials
-    def test_get_destination_devices_report(self):
-
-        get_destination_devices_report_response = self.event_notifications_service.get_destination_devices_report(
-            instance_id,
-            id=destination_id3,
-            days=1
-        )
-
-        assert get_destination_devices_report_response.get_status_code() == 200
-        destination_devices_report = get_destination_devices_report_response.get_result()
-        assert destination_devices_report is not None
+        assert get_deviceCount_response.get_status_code() == 200
+        devicecount = get_deviceCount_response.get_result()
+        assert devicecount is not None
 
         #
         # The following status codes aren't covered by tests.
@@ -1051,20 +1026,25 @@ class TestEventNotificationsV1():
             },
         }
 
+        notification_create_model = {
+            'ibmenseverity': notification_severity,
+            'ibmenfcmbody': json.dumps(notification_fcm_body_model),
+            'ibmenpushto': json.dumps(notification_devices_model),
+            'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmensourceid': source_id,
+            'ibmendefaultshort': 'Alert Message',
+            'ibmendefaultlong': 'Alert for closing offers',
+            'ibmensafaribody': json.dumps(notificationSafariBodymodel),
+            'id': notification_id,
+            'source': notifications_source,
+            'type': type_value,
+            'specversion': '1.0',
+            'time': '2019-01-01T12:00:00.000Z',
+        }
+
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
-            ce_ibmenseverity=notification_severity,
-            ce_id=notification_id,
-            ce_source=notifications_source,
-            ce_ibmensourceid=source_id,
-            ce_type=type_value,
-            body={},
-            ce_time='2019-01-01T12:00:00.000Z',
-            ce_ibmenpushto=json.dumps(notification_devices_model),
-            ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
-            ce_ibmenapnsheaders=json.dumps(notification_apns_body_model),
-            ce_ibmensafaribody=json.dumps(notificationSafariBodymodel),
-            ce_specversion='1.0'
+            body = notification_create_model
         )
 
         assert send_notifications_response.get_status_code() == 202
@@ -1088,23 +1068,27 @@ class TestEventNotificationsV1():
             "apns-collapse-id": "123",
         }
 
+        notification_create_model1 = {
+            'ibmenseverity': notification_severity,
+            'ibmenfcmbody': json.dumps(notification_fcm_body_model),
+            'ibmenpushto': json.dumps(notification_devices_model),
+            'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmensourceid': source_id,
+            'ibmendefaultshort': 'teststring',
+            'ibmendefaultlong': 'teststring',
+            'ibmensafaribody': json.dumps(notificationSafariBodymodel),
+            'ibmenapnsheaders': json.dumps(message_apns_headers),
+            'id': notification_id,
+            'source': notifications_source,
+            'type': type_value,
+            'specversion': '1.0',
+            'time': '2019-01-01T12:00:00.000Z',
+        }
+
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
-            ce_ibmenseverity=notification_severity,
-            ce_id=notification_id,
-            ce_source=notifications_source,
-            ce_ibmensourceid=source_id,
-            ce_type=type_value,
-            body={},
-            ce_time='2019-01-01T12:00:00.000Z',
-            ce_ibmenpushto=json.dumps(notification_devices_model),
-            ce_ibmenfcmbody=json.dumps(notification_fcm_body_model),
-            ce_ibmenapnsbody=json.dumps(notification_apns_body_model),
-            ce_ibmensafaribody=json.dumps(notificationSafariBodymodel),
-            ce_ibmenapnsheaders=json.dumps(message_apns_headers),
-            ce_specversion='1.0'
+            body=notification_create_model1
         )
-
         assert send_notifications_response.get_status_code() == 202
         notification_response = send_notifications_response.get_result()
         assert notification_response is not None
