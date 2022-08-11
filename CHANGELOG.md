@@ -1,3 +1,10 @@
+## [0.1.4](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.3...v0.1.4) (2022-08-11)
+
+
+### Bug Fixes
+
+* add device count API, apispeclint errors fix and binary mode separtion ([6029a19](https://github.com/IBM/event-notifications-python-admin-sdk/commit/6029a19dd4ad9c2738a553a9810dee5468af0549))
+
 ## [0.1.3](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.2...v0.1.3) (2022-06-28)
 
 
