@@ -37,6 +37,7 @@ destination_id2 = ''
 destination_id3 = ''
 destination_id5 = ''
 destination_id6 = ''
+destination_id7 = ''
 safariCertificatePath = ''
 destination_id4 = ''
 subscription_id = ''
@@ -391,7 +392,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -568,6 +569,39 @@ class TestEventNotificationsV1():
 
         destination_id6 = destination.id
 
+        cf_config_params = {
+            "url": "https://www.ibmcfendpoint.com/",
+            "api_key": "wedleknlwenwern9832jhde"
+        }
+
+        destination_config_model = {
+            'params': cf_config_params,
+        }
+        name = "Cloud_Functions_destination"
+        typeVal = "ibmcf"
+        description = "This is a Cloud Functions Destination for actions"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeVal,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeVal
+
+        destination_id7 = destination.id
+
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -712,6 +746,37 @@ class TestEventNotificationsV1():
         res_description = destination_response.get('description')
 
         assert res_id == destination_id5
+        assert res_name == name
+        assert res_description == description
+
+        destination_config_params_model = {
+            "url": "https://www.ibmcfendpoint.com/",
+            "api_key": "jjkkawdkashda89qw8ek"
+        }
+
+        destination_config_model = {
+            'params': destination_config_params_model,
+        }
+        name = "Cloud_Functions_dest"
+        description = "This is a Cloud Functions Destination"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id7,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id7
         assert res_name == name
         assert res_description == description
 
@@ -1323,6 +1388,13 @@ class TestEventNotificationsV1():
         delete_destination_response = self.event_notifications_service.delete_destination(
             instance_id,
             id=destination_id6
+        )
+
+        assert delete_destination_response.get_status_code() == 204
+
+        delete_destination_response = self.event_notifications_service.delete_destination(
+            instance_id,
+            id=destination_id7
         )
 
         assert delete_destination_response.get_status_code() == 204

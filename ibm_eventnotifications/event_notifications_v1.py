@@ -1707,6 +1707,7 @@ class CreateDestinationEnums:
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
+        IBMCF = 'ibmcf'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -1786,7 +1787,8 @@ class Destination():
     :attr str id: Destination ID.
     :attr str name: Destination name.
     :attr str description: Destination description.
-    :attr str type: Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
+    :attr str type: Destination type
+          Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1810,7 +1812,8 @@ class Destination():
         :param str id: Destination ID.
         :param str name: Destination name.
         :param str description: Destination description.
-        :param str type: Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
+        :param str type: Destination type
+               Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -1908,7 +1911,7 @@ class Destination():
 
     class TypeEnum(str, Enum):
         """
-        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams.
+        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -1916,6 +1919,7 @@ class Destination():
         PUSH_ANDROID = 'push_android'
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
+        IBMCF = 'ibmcf'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -1991,7 +1995,7 @@ class DestinationConfigParams():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig', 'DestinationConfigParamsSlackDestinationConfig', 'DestinationConfigParamsSafariDestinationConfig', 'DestinationConfigParamsMSTeamsDestinationConfig']))
+                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig', 'DestinationConfigParamsSlackDestinationConfig', 'DestinationConfigParamsSafariDestinationConfig', 'DestinationConfigParamsMSTeamsDestinationConfig', 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig']))
         raise Exception(msg)
 
 class DestinationList():
@@ -2206,6 +2210,7 @@ class DestinationListItem():
         PUSH_ANDROID = 'push_android'
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
+        IBMCF = 'ibmcf'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -2327,6 +2332,7 @@ class DestinationResponse():
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
+        IBMCF = 'ibmcf'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -3286,6 +3292,258 @@ class RulesGet():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class SMSAttributesResponseInvitedItem():
+    """
+    SMSAttributesResponseInvitedItem.
+
+    :attr str phone_number: (optional) Phone number.
+    :attr datetime time: (optional) time of addition.
+    """
+
+    def __init__(self,
+                 *,
+                 phone_number: str = None,
+                 time: datetime = None) -> None:
+        """
+        Initialize a SMSAttributesResponseInvitedItem object.
+
+        :param str phone_number: (optional) Phone number.
+        :param datetime time: (optional) time of addition.
+        """
+        self.phone_number = phone_number
+        self.time = time
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SMSAttributesResponseInvitedItem':
+        """Initialize a SMSAttributesResponseInvitedItem object from a json dictionary."""
+        args = {}
+        if 'phone_number' in _dict:
+            args['phone_number'] = _dict.get('phone_number')
+        if 'time' in _dict:
+            args['time'] = string_to_datetime(_dict.get('time'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SMSAttributesResponseInvitedItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'phone_number') and self.phone_number is not None:
+            _dict['phone_number'] = self.phone_number
+        if hasattr(self, 'time') and self.time is not None:
+            _dict['time'] = datetime_to_string(self.time)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SMSAttributesResponseInvitedItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SMSAttributesResponseInvitedItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SMSAttributesResponseInvitedItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class SMSAttributesResponseToItem():
+    """
+    SMSAttributesResponseToItem.
+
+    :attr str phone_number: (optional) Phone number.
+    :attr datetime time: (optional) time of addition.
+    """
+
+    def __init__(self,
+                 *,
+                 phone_number: str = None,
+                 time: datetime = None) -> None:
+        """
+        Initialize a SMSAttributesResponseToItem object.
+
+        :param str phone_number: (optional) Phone number.
+        :param datetime time: (optional) time of addition.
+        """
+        self.phone_number = phone_number
+        self.time = time
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SMSAttributesResponseToItem':
+        """Initialize a SMSAttributesResponseToItem object from a json dictionary."""
+        args = {}
+        if 'phone_number' in _dict:
+            args['phone_number'] = _dict.get('phone_number')
+        if 'time' in _dict:
+            args['time'] = string_to_datetime(_dict.get('time'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SMSAttributesResponseToItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'phone_number') and self.phone_number is not None:
+            _dict['phone_number'] = self.phone_number
+        if hasattr(self, 'time') and self.time is not None:
+            _dict['time'] = datetime_to_string(self.time)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SMSAttributesResponseToItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SMSAttributesResponseToItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SMSAttributesResponseToItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class SMSAttributesResponseUnsubscribedItem():
+    """
+    SMSAttributesResponseUnsubscribedItem.
+
+    :attr str phone_number: (optional) Phone number.
+    :attr datetime time: (optional) time of addition.
+    """
+
+    def __init__(self,
+                 *,
+                 phone_number: str = None,
+                 time: datetime = None) -> None:
+        """
+        Initialize a SMSAttributesResponseUnsubscribedItem object.
+
+        :param str phone_number: (optional) Phone number.
+        :param datetime time: (optional) time of addition.
+        """
+        self.phone_number = phone_number
+        self.time = time
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SMSAttributesResponseUnsubscribedItem':
+        """Initialize a SMSAttributesResponseUnsubscribedItem object from a json dictionary."""
+        args = {}
+        if 'phone_number' in _dict:
+            args['phone_number'] = _dict.get('phone_number')
+        if 'time' in _dict:
+            args['time'] = string_to_datetime(_dict.get('time'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SMSAttributesResponseUnsubscribedItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'phone_number') and self.phone_number is not None:
+            _dict['phone_number'] = self.phone_number
+        if hasattr(self, 'time') and self.time is not None:
+            _dict['time'] = datetime_to_string(self.time)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SMSAttributesResponseUnsubscribedItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SMSAttributesResponseUnsubscribedItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SMSAttributesResponseUnsubscribedItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class SMSupdateAttributesTo():
+    """
+    The phone number to send the SMS to.
+
+    :attr List[str] add: (optional) array to add new items.
+    :attr List[str] remove: (optional) array to add new items.
+    """
+
+    def __init__(self,
+                 *,
+                 add: List[str] = None,
+                 remove: List[str] = None) -> None:
+        """
+        Initialize a SMSupdateAttributesTo object.
+
+        :param List[str] add: (optional) array to add new items.
+        :param List[str] remove: (optional) array to add new items.
+        """
+        self.add = add
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SMSupdateAttributesTo':
+        """Initialize a SMSupdateAttributesTo object from a json dictionary."""
+        args = {}
+        if 'add' in _dict:
+            args['add'] = _dict.get('add')
+        if 'remove' in _dict:
+            args['remove'] = _dict.get('remove')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SMSupdateAttributesTo object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SMSupdateAttributesTo object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SMSupdateAttributesTo') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SMSupdateAttributesTo') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class Source():
     """
     Payload describing a source generate request.
@@ -3984,6 +4242,7 @@ class Subscription():
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
+        IBMCF = 'ibmcf'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -4251,6 +4510,7 @@ class SubscriptionListItem():
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
+        IBMCF = 'ibmcf'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -4267,7 +4527,7 @@ class SubscriptionUpdateAttributes():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['SubscriptionUpdateAttributesSMSAttributes', 'SubscriptionUpdateAttributesEmailUpdateAttributes', 'SubscriptionUpdateAttributesWebhookAttributes', 'SubscriptionUpdateAttributesSlackAttributes']))
+                  ", ".join(['SubscriptionUpdateAttributesSMSUpdateAttributes', 'SubscriptionUpdateAttributesEmailUpdateAttributes', 'SubscriptionUpdateAttributesWebhookAttributes', 'SubscriptionUpdateAttributesSlackAttributes']))
         raise Exception(msg)
 
 class TagsSubscriptionList():
@@ -5157,6 +5417,74 @@ class DestinationConfigParamsFirefoxDestinationConfig(DestinationConfigParams):
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class DestinationConfigParamsIBMCloudFunctionsDestinationConfig(DestinationConfigParams):
+    """
+    Payload describing a IBM Cloud Functions destination configuration.
+
+    :attr str url: URL of IBM Cloud Functions Trigger EndPoint.
+    :attr str api_key: (optional) APIKey with access of IBM Cloud Functions IAM
+          Namespace.
+    """
+
+    def __init__(self,
+                 url: str,
+                 *,
+                 api_key: str = None) -> None:
+        """
+        Initialize a DestinationConfigParamsIBMCloudFunctionsDestinationConfig object.
+
+        :param str url: URL of IBM Cloud Functions Trigger EndPoint.
+        :param str api_key: (optional) APIKey with access of IBM Cloud Functions
+               IAM Namespace.
+        """
+        # pylint: disable=super-init-not-called
+        self.url = url
+        self.api_key = api_key
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig':
+        """Initialize a DestinationConfigParamsIBMCloudFunctionsDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'url' in _dict:
+            args['url'] = _dict.get('url')
+        else:
+            raise ValueError('Required property \'url\' not present in DestinationConfigParamsIBMCloudFunctionsDestinationConfig JSON')
+        if 'api_key' in _dict:
+            args['api_key'] = _dict.get('api_key')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigParamsIBMCloudFunctionsDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'url') and self.url is not None:
+            _dict['url'] = self.url
+        if hasattr(self, 'api_key') and self.api_key is not None:
+            _dict['api_key'] = self.api_key
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigParamsIBMCloudFunctionsDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
     """
     Payload describing a IOS destination configuration.
@@ -5750,23 +6078,53 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
     """
     SMS attributes object.
 
+    :attr List[SMSAttributesResponseToItem] to: The email id string.
+    :attr List[SMSAttributesResponseUnsubscribedItem] unsubscribed: (optional) The
+          unsubscribe list.
+    :attr List[SMSAttributesResponseInvitedItem] invited: (optional) The invited
+          list.
     """
 
+    # The set of defined properties for the class
+    _properties = frozenset(['to', 'unsubscribed', 'invited'])
+
     def __init__(self,
+                 to: List['SMSAttributesResponseToItem'],
+                 *,
+                 unsubscribed: List['SMSAttributesResponseUnsubscribedItem'] = None,
+                 invited: List['SMSAttributesResponseInvitedItem'] = None,
                  **kwargs) -> None:
         """
         Initialize a SubscriptionAttributesSMSAttributesResponse object.
 
+        :param List[SMSAttributesResponseToItem] to: The email id string.
+        :param List[SMSAttributesResponseUnsubscribedItem] unsubscribed: (optional)
+               The unsubscribe list.
+        :param List[SMSAttributesResponseInvitedItem] invited: (optional) The
+               invited list.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
+        self.to = to
+        self.unsubscribed = unsubscribed
+        self.invited = invited
         for _key, _value in kwargs.items():
             setattr(self, _key, _value)
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesSMSAttributesResponse':
         """Initialize a SubscriptionAttributesSMSAttributesResponse object from a json dictionary."""
-        return cls(**_dict)
+        args = {}
+        if 'to' in _dict:
+            args['to'] = [SMSAttributesResponseToItem.from_dict(x) for x in _dict.get('to')]
+        else:
+            raise ValueError('Required property \'to\' not present in SubscriptionAttributesSMSAttributesResponse JSON')
+        if 'unsubscribed' in _dict:
+            args['unsubscribed'] = [SMSAttributesResponseUnsubscribedItem.from_dict(x) for x in _dict.get('unsubscribed')]
+        if 'invited' in _dict:
+            args['invited'] = [SMSAttributesResponseInvitedItem.from_dict(x) for x in _dict.get('invited')]
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
@@ -5775,7 +6133,17 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
-        return vars(self)
+        _dict = {}
+        if hasattr(self, 'to') and self.to is not None:
+            _dict['to'] = [x.to_dict() for x in self.to]
+        if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
+            _dict['unsubscribed'] = [x.to_dict() for x in self.unsubscribed]
+        if hasattr(self, 'invited') and self.invited is not None:
+            _dict['invited'] = [x.to_dict() for x in self.invited]
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSMSAttributesResponse._properties]:
+            if getattr(self, _key, None) is not None:
+                _dict[_key] = getattr(self, _key)
+        return _dict
 
     def _to_dict(self):
         """Return a json dictionary representing this model."""
@@ -5785,17 +6153,18 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesSMSAttributesResponse"""
         _dict = {}
 
-        for _key in [k for k in vars(self).keys()]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSMSAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesSMSAttributesResponse"""
-        for _key in [k for k in vars(self).keys()]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSMSAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
-            setattr(self, _key, _value)
+            if _key not in SubscriptionAttributesSMSAttributesResponse._properties:
+                setattr(self, _key, _value)
 
     def __str__(self) -> str:
         """Return a `str` version of this SubscriptionAttributesSMSAttributesResponse object."""
@@ -6139,9 +6508,9 @@ class SubscriptionCreateAttributesFCMAttributes(SubscriptionCreateAttributes):
 
 class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
     """
-    SMS attributes object.
+    The attributes for an email notification.
 
-    :attr List[str] to: The phone number to send the SMS to.
+    :attr List[str] to: The email id string.
     """
 
     def __init__(self,
@@ -6149,7 +6518,7 @@ class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
         """
         Initialize a SubscriptionCreateAttributesSMSAttributes object.
 
-        :param List[str] to: The phone number to send the SMS to.
+        :param List[str] to: The email id string.
         """
         # pylint: disable=super-init-not-called
         self.to = to
@@ -6425,43 +6794,43 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SubscriptionUpdateAttributesSMSAttributes(SubscriptionUpdateAttributes):
+class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttributes):
     """
     SMS attributes object.
 
-    :attr List[str] to: The phone number to send the SMS to.
+    :attr SMSupdateAttributesTo to: The phone number to send the SMS to.
     """
 
     def __init__(self,
-                 to: List[str]) -> None:
+                 to: 'SMSupdateAttributesTo') -> None:
         """
-        Initialize a SubscriptionUpdateAttributesSMSAttributes object.
+        Initialize a SubscriptionUpdateAttributesSMSUpdateAttributes object.
 
-        :param List[str] to: The phone number to send the SMS to.
+        :param SMSupdateAttributesTo to: The phone number to send the SMS to.
         """
         # pylint: disable=super-init-not-called
         self.to = to
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesSMSAttributes':
-        """Initialize a SubscriptionUpdateAttributesSMSAttributes object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesSMSUpdateAttributes':
+        """Initialize a SubscriptionUpdateAttributesSMSUpdateAttributes object from a json dictionary."""
         args = {}
         if 'to' in _dict:
-            args['to'] = _dict.get('to')
+            args['to'] = SMSupdateAttributesTo.from_dict(_dict.get('to'))
         else:
-            raise ValueError('Required property \'to\' not present in SubscriptionUpdateAttributesSMSAttributes JSON')
+            raise ValueError('Required property \'to\' not present in SubscriptionUpdateAttributesSMSUpdateAttributes JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a SubscriptionUpdateAttributesSMSAttributes object from a json dictionary."""
+        """Initialize a SubscriptionUpdateAttributesSMSUpdateAttributes object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
         if hasattr(self, 'to') and self.to is not None:
-            _dict['to'] = self.to
+            _dict['to'] = self.to.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -6469,16 +6838,16 @@ class SubscriptionUpdateAttributesSMSAttributes(SubscriptionUpdateAttributes):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this SubscriptionUpdateAttributesSMSAttributes object."""
+        """Return a `str` version of this SubscriptionUpdateAttributesSMSUpdateAttributes object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'SubscriptionUpdateAttributesSMSAttributes') -> bool:
+    def __eq__(self, other: 'SubscriptionUpdateAttributesSMSUpdateAttributes') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'SubscriptionUpdateAttributesSMSAttributes') -> bool:
+    def __ne__(self, other: 'SubscriptionUpdateAttributesSMSUpdateAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
