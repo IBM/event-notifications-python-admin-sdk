@@ -50,6 +50,7 @@ source_id = ''
 topic_id = ''
 destination_id = ''
 destination_id5 = ''
+destination_id7 = ''
 safariCertificatePath = ''
 subscription_id = ''
 fcmServerKey = ''
@@ -312,14 +313,15 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id5
+        global destination_id, destination_id5, destination_id7
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
 
             destination_config_params_model = {
                 "server_key": fcmServerKey,
-                "sender_id": fcmSenderId
+                "sender_id": fcmSenderId,
+                "pre_prod": False
             }
 
             destination_config_model = {
@@ -339,8 +341,6 @@ class TestEventNotificationsV1Examples():
 
             print(json.dumps(destination, indent=2))
 
-            # end-create_destination
-
             destination = DestinationResponse.from_dict(destination)
             destination_id = destination.id
 
@@ -351,6 +351,7 @@ class TestEventNotificationsV1Examples():
                 'website_name': 'NodeJS Starter Application',
                 'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
                 'website_push_id': 'web.net.mybluemix.ensafaripush',
+                "pre_prod": False
             }
 
             destination_config_model = {
@@ -373,6 +374,30 @@ class TestEventNotificationsV1Examples():
 
             destination = DestinationResponse.from_dict(create_destination_response)
             destination_id5 = destination.id
+
+            cf_config_params = {
+                "url": "https://www.ibmcfendpoint.com/",
+                "api_key": "wewelkndliejoiewe898"
+            }
+
+            destination_config_model = {
+                'params': cf_config_params,
+            }
+            name = "Cloud_Functions_destination"
+            typeVal = "ibmcf"
+            description = "This is a Cloud Functions Destination for actions"
+
+            create_destination_response = event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeVal,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            destination = DestinationResponse.from_dict(create_destination_response)
+            destination_id7 = destination.id
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -475,6 +500,26 @@ class TestEventNotificationsV1Examples():
 
             print(json.dumps(update_destination_response, indent=2))
 
+            destination_config_params_model = {
+                "url": "https://www.ibmcfendpoint.com/",
+                "api_key": "wqowieqwoieqsfsdfs899eoqwieu"
+            }
+
+            destination_config_model = {
+                'params': destination_config_params_model,
+            }
+            name = "Cloud_Functions_dest"
+            description = "This is a Cloud Functions Destination"
+
+            update_destination_response = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id7,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(update_destination_response, indent=2))
             # end-update_destination
 
         except ApiException as e:
@@ -704,6 +749,14 @@ class TestEventNotificationsV1Examples():
             response = event_notifications_service.delete_destination(
                 instance_id,
                 id=destination_id5
+            )
+
+            # end-delete_destination
+            print('\ndelete_destination() response status code: ', response.get_status_code())
+
+            response = event_notifications_service.delete_destination(
+                instance_id,
+                id=destination_id7
             )
 
             # end-delete_destination
