@@ -1,3 +1,10 @@
+## [0.1.5](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.4...v0.1.5) (2022-08-30)
+
+
+### Bug Fixes
+
+* add cloud functions destination support ([792de7d](https://github.com/IBM/event-notifications-python-admin-sdk/commit/792de7dc9a219b750d55bc1c4bc46fcd65aab4b2))
+
 ## [0.1.4](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.3...v0.1.4) (2022-08-11)
 
 
