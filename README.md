@@ -65,10 +65,27 @@ event_notifications_service = EventNotificationsV1(authenticator=authenticator)
 # Set our custom service URL (optional)
 event_notifications_service.set_service_url('https://' + region + '.event-notifications.cloud.ibm.com/event-notifications')
 
-# To configure service URL for Private Endpoint
-event_notifications_service.set_service_url('https://private.' + region + '.event-notifications.cloud.ibm.com/event-notifications')
+
 
 ```
+**To configure service URL for Private Endpoint**
+
+If you enabled service endpoints in your account, you can send API requests over the IBM Cloud private network. In the initialisation, the base endpoint URLs of the IAM(authenticator) & Event Notification(service) should be modified to point to private endpoints.
+1) Setting client options programmatically
+```py
+ # Create an IAM authenticator.
+authenticator = IAMAuthenticator('<iam-api-key>', 'https://private.iam.cloud.ibm.com')
+
+# Construct the service client.
+event_notifications_service = EventNotificationsV1(authenticator=authenticator)
+# To configure service URL for Private Endpoint
+event_notifications_service.set_service_url('https://private.' + region + '.event-notifications.cloud.ibm.com/event-notifications')
+```
+2) Using external configuration properties
+```py
+ EVENT_NOTIFICATIONS_AUTH_URL = https://private.iam.cloud.ibm.com/identity/token
+```
+
 - region : Region of the Event Notifications Instance
 
 ## Using the SDK
