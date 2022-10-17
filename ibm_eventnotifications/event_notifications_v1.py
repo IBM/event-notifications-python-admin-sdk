@@ -28,7 +28,7 @@ from enum import Enum
 from typing import BinaryIO, Dict, List
 import json
 
-from ibm_cloud_sdk_core import BaseService, DetailedResponse
+from ibm_cloud_sdk_core import BaseService, DetailedResponse, get_query_param
 from ibm_cloud_sdk_core.authenticators.authenticator import Authenticator
 from ibm_cloud_sdk_core.get_authenticator import get_authenticator_from_environment
 from ibm_cloud_sdk_core.utils import convert_model, datetime_to_string, string_to_datetime
@@ -89,7 +89,9 @@ class EventNotificationsV1(BaseService):
         """
         Send a notification.
 
-        Send Notifications body from the instance.
+        Send Notifications body from the instance. For more information on Event
+        notifications payload, see
+        [here](https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-spec-payload).
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -464,7 +466,7 @@ class EventNotificationsV1(BaseService):
         name: str,
         *,
         description: str = None,
-        sources: List['TopicUpdateSourcesItem'] = None,
+        sources: List['SourcesItems'] = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -476,7 +478,7 @@ class EventNotificationsV1(BaseService):
                instance.
         :param str name: Name of the topic.
         :param str description: (optional) Description of the topic.
-        :param List[TopicUpdateSourcesItem] sources: (optional) List of sources.
+        :param List[SourcesItems] sources: (optional) List of sources.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `TopicResponse` object
@@ -635,7 +637,7 @@ class EventNotificationsV1(BaseService):
         *,
         name: str = None,
         description: str = None,
-        sources: List['TopicUpdateSourcesItem'] = None,
+        sources: List['SourcesItems'] = None,
         **kwargs
     ) -> DetailedResponse:
         """
@@ -648,7 +650,7 @@ class EventNotificationsV1(BaseService):
         :param str id: Unique identifier for Topic.
         :param str name: (optional) Name of the topic.
         :param str description: (optional) Description of the topic.
-        :param List[TopicUpdateSourcesItem] sources: (optional) List of sources.
+        :param List[SourcesItems] sources: (optional) List of sources.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Topic` object
@@ -1111,114 +1113,6 @@ class EventNotificationsV1(BaseService):
     #########################
     # Push Destination APIs
     #########################
-
-
-    def get_tags_subscriptions_device(self,
-        instance_id: str,
-        id: str,
-        device_id: str,
-        *,
-        tag_name: str = None,
-        limit: int = None,
-        offset: int = None,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        List all Tag Subscriptions for a device.
-
-        List all Tag Subscriptions for a device.
-
-        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
-               instance.
-        :param str id: Unique identifier for Destination.
-        :param str device_id: DeviceID of the destination.
-        :param str tag_name: (optional) TagName of the subscription.
-        :param int limit: (optional) Page limit for paginated results.
-        :param int offset: (optional) offset for paginated results.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `TagsSubscriptionList` object
-        """
-
-        if instance_id is None:
-            raise ValueError('instance_id must be provided')
-        if id is None:
-            raise ValueError('id must be provided')
-        if device_id is None:
-            raise ValueError('device_id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_tags_subscriptions_device')
-        headers.update(sdk_headers)
-
-        params = {
-            'tag_name': tag_name,
-            'limit': limit,
-            'offset': offset
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['instance_id', 'id', 'device_id']
-        path_param_values = self.encode_path_vars(instance_id, id, device_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions/devices/{device_id}'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers,
-                                       params=params)
-
-        response = self.send(request, **kwargs)
-        return response
-
-
-    def get_device_count(self,
-        instance_id: str,
-        id: str,
-        **kwargs
-    ) -> DetailedResponse:
-        """
-        Get Device count.
-
-        Get Device count.
-
-        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
-               instance.
-        :param str id: Unique identifier for Destination.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `DeviceCount` object
-        """
-
-        if instance_id is None:
-            raise ValueError('instance_id must be provided')
-        if id is None:
-            raise ValueError('id must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
-                                      service_version='V1',
-                                      operation_id='get_device_count')
-        headers.update(sdk_headers)
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['instance_id', 'id']
-        path_param_values = self.encode_path_vars(instance_id, id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/instances/{instance_id}/destinations/{id}/devices/count'.format(**path_param_dict)
-        request = self.prepare_request(method='GET',
-                                       url=url,
-                                       headers=headers)
-
-        response = self.send(request, **kwargs)
-        return response
 
 
     def create_tags_subscription(self,
@@ -1928,15 +1822,15 @@ class DestinationConfig():
     """
     Payload describing a destination configuration.
 
-    :attr DestinationConfigParams params:
+    :attr DestinationConfigOneOf params:
     """
 
     def __init__(self,
-                 params: 'DestinationConfigParams') -> None:
+                 params: 'DestinationConfigOneOf') -> None:
         """
         Initialize a DestinationConfig object.
 
-        :param DestinationConfigParams params:
+        :param DestinationConfigOneOf params:
         """
         self.params = params
 
@@ -1983,19 +1877,19 @@ class DestinationConfig():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParams():
+class DestinationConfigOneOf():
     """
-    DestinationConfigParams.
+    DestinationConfigOneOf.
 
     """
 
     def __init__(self) -> None:
         """
-        Initialize a DestinationConfigParams object.
+        Initialize a DestinationConfigOneOf object.
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigParamsWebhookDestinationConfig', 'DestinationConfigParamsFCMDestinationConfig', 'DestinationConfigParamsIOSDestinationConfig', 'DestinationConfigParamsChromeDestinationConfig', 'DestinationConfigParamsFirefoxDestinationConfig', 'DestinationConfigParamsSlackDestinationConfig', 'DestinationConfigParamsSafariDestinationConfig', 'DestinationConfigParamsMSTeamsDestinationConfig', 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig']))
+                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig']))
         raise Exception(msg)
 
 class DestinationList():
@@ -2006,13 +1900,20 @@ class DestinationList():
     :attr int offset: Current offset.
     :attr int limit: limit to show destinations.
     :attr List[DestinationListItem] destinations: List of destinations.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
     """
 
     def __init__(self,
                  total_count: int,
                  offset: int,
                  limit: int,
-                 destinations: List['DestinationListItem']) -> None:
+                 destinations: List['DestinationListItem'],
+                 *,
+                 first: 'PageHrefResponse' = None,
+                 previous: 'PageHrefResponse' = None,
+                 next: 'PageHrefResponse' = None) -> None:
         """
         Initialize a DestinationList object.
 
@@ -2020,11 +1921,18 @@ class DestinationList():
         :param int offset: Current offset.
         :param int limit: limit to show destinations.
         :param List[DestinationListItem] destinations: List of destinations.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
         """
         self.total_count = total_count
         self.offset = offset
         self.limit = limit
         self.destinations = destinations
+        self.first = first
+        self.previous = previous
+        self.next = next
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'DestinationList':
@@ -2046,6 +1954,12 @@ class DestinationList():
             args['destinations'] = [DestinationListItem.from_dict(x) for x in _dict.get('destinations')]
         else:
             raise ValueError('Required property \'destinations\' not present in DestinationList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
         return cls(**args)
 
     @classmethod
@@ -2064,6 +1978,12 @@ class DestinationList():
             _dict['limit'] = self.limit
         if hasattr(self, 'destinations') and self.destinations is not None:
             _dict['destinations'] = [x.to_dict() for x in self.destinations]
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -2434,96 +2354,46 @@ class DestinationTagsSubscriptionResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DeviceCount():
+class EmailAttributesResponseInvitedItems():
     """
-    Payload describing Device Count.
-
-    :attr int total_count: Total number of devices.
-    """
-
-    def __init__(self,
-                 total_count: int) -> None:
-        """
-        Initialize a DeviceCount object.
-
-        :param int total_count: Total number of devices.
-        """
-        self.total_count = total_count
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DeviceCount':
-        """Initialize a DeviceCount object from a json dictionary."""
-        args = {}
-        if 'total_count' in _dict:
-            args['total_count'] = _dict.get('total_count')
-        else:
-            raise ValueError('Required property \'total_count\' not present in DeviceCount JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a DeviceCount object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'total_count') and self.total_count is not None:
-            _dict['total_count'] = self.total_count
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this DeviceCount object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'DeviceCount') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'DeviceCount') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class EmailAttributesResponseInvitedItem():
-    """
-    EmailAttributesResponseInvitedItem.
+    EmailAttributesResponseInvitedItems.
 
     :attr str email: (optional) email address.
-    :attr datetime time: (optional) time of addition.
+    :attr datetime updated_at: (optional) last updated time.
+    :attr datetime expires_at: (optional) time of expiration.
     """
 
     def __init__(self,
                  *,
                  email: str = None,
-                 time: datetime = None) -> None:
+                 updated_at: datetime = None,
+                 expires_at: datetime = None) -> None:
         """
-        Initialize a EmailAttributesResponseInvitedItem object.
+        Initialize a EmailAttributesResponseInvitedItems object.
 
         :param str email: (optional) email address.
-        :param datetime time: (optional) time of addition.
+        :param datetime updated_at: (optional) last updated time.
+        :param datetime expires_at: (optional) time of expiration.
         """
         self.email = email
-        self.time = time
+        self.updated_at = updated_at
+        self.expires_at = expires_at
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'EmailAttributesResponseInvitedItem':
-        """Initialize a EmailAttributesResponseInvitedItem object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'EmailAttributesResponseInvitedItems':
+        """Initialize a EmailAttributesResponseInvitedItems object from a json dictionary."""
         args = {}
         if 'email' in _dict:
             args['email'] = _dict.get('email')
-        if 'time' in _dict:
-            args['time'] = string_to_datetime(_dict.get('time'))
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        if 'expires_at' in _dict:
+            args['expires_at'] = string_to_datetime(_dict.get('expires_at'))
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a EmailAttributesResponseInvitedItem object from a json dictionary."""
+        """Initialize a EmailAttributesResponseInvitedItems object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2531,8 +2401,10 @@ class EmailAttributesResponseInvitedItem():
         _dict = {}
         if hasattr(self, 'email') and self.email is not None:
             _dict['email'] = self.email
-        if hasattr(self, 'time') and self.time is not None:
-            _dict['time'] = datetime_to_string(self.time)
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        if hasattr(self, 'expires_at') and self.expires_at is not None:
+            _dict['expires_at'] = datetime_to_string(self.expires_at)
         return _dict
 
     def _to_dict(self):
@@ -2540,53 +2412,53 @@ class EmailAttributesResponseInvitedItem():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this EmailAttributesResponseInvitedItem object."""
+        """Return a `str` version of this EmailAttributesResponseInvitedItems object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'EmailAttributesResponseInvitedItem') -> bool:
+    def __eq__(self, other: 'EmailAttributesResponseInvitedItems') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'EmailAttributesResponseInvitedItem') -> bool:
+    def __ne__(self, other: 'EmailAttributesResponseInvitedItems') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class EmailAttributesResponseToItem():
+class EmailAttributesResponseSubscribedUnsubscribedItems():
     """
-    EmailAttributesResponseToItem.
+    EmailAttributesResponseSubscribedUnsubscribedItems.
 
     :attr str email: (optional) email address.
-    :attr datetime time: (optional) time of addition.
+    :attr datetime updated_at: (optional) last updated time.
     """
 
     def __init__(self,
                  *,
                  email: str = None,
-                 time: datetime = None) -> None:
+                 updated_at: datetime = None) -> None:
         """
-        Initialize a EmailAttributesResponseToItem object.
+        Initialize a EmailAttributesResponseSubscribedUnsubscribedItems object.
 
         :param str email: (optional) email address.
-        :param datetime time: (optional) time of addition.
+        :param datetime updated_at: (optional) last updated time.
         """
         self.email = email
-        self.time = time
+        self.updated_at = updated_at
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'EmailAttributesResponseToItem':
-        """Initialize a EmailAttributesResponseToItem object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'EmailAttributesResponseSubscribedUnsubscribedItems':
+        """Initialize a EmailAttributesResponseSubscribedUnsubscribedItems object from a json dictionary."""
         args = {}
         if 'email' in _dict:
             args['email'] = _dict.get('email')
-        if 'time' in _dict:
-            args['time'] = string_to_datetime(_dict.get('time'))
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a EmailAttributesResponseToItem object from a json dictionary."""
+        """Initialize a EmailAttributesResponseSubscribedUnsubscribedItems object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -2594,8 +2466,8 @@ class EmailAttributesResponseToItem():
         _dict = {}
         if hasattr(self, 'email') and self.email is not None:
             _dict['email'] = self.email
-        if hasattr(self, 'time') and self.time is not None:
-            _dict['time'] = datetime_to_string(self.time)
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
         return _dict
 
     def _to_dict(self):
@@ -2603,197 +2475,16 @@ class EmailAttributesResponseToItem():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this EmailAttributesResponseToItem object."""
+        """Return a `str` version of this EmailAttributesResponseSubscribedUnsubscribedItems object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'EmailAttributesResponseToItem') -> bool:
+    def __eq__(self, other: 'EmailAttributesResponseSubscribedUnsubscribedItems') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'EmailAttributesResponseToItem') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class EmailAttributesResponseUnsubscribedItem():
-    """
-    EmailAttributesResponseUnsubscribedItem.
-
-    :attr str email: (optional) email address.
-    :attr datetime time: (optional) time of addition.
-    """
-
-    def __init__(self,
-                 *,
-                 email: str = None,
-                 time: datetime = None) -> None:
-        """
-        Initialize a EmailAttributesResponseUnsubscribedItem object.
-
-        :param str email: (optional) email address.
-        :param datetime time: (optional) time of addition.
-        """
-        self.email = email
-        self.time = time
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'EmailAttributesResponseUnsubscribedItem':
-        """Initialize a EmailAttributesResponseUnsubscribedItem object from a json dictionary."""
-        args = {}
-        if 'email' in _dict:
-            args['email'] = _dict.get('email')
-        if 'time' in _dict:
-            args['time'] = string_to_datetime(_dict.get('time'))
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a EmailAttributesResponseUnsubscribedItem object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'email') and self.email is not None:
-            _dict['email'] = self.email
-        if hasattr(self, 'time') and self.time is not None:
-            _dict['time'] = datetime_to_string(self.time)
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this EmailAttributesResponseUnsubscribedItem object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'EmailAttributesResponseUnsubscribedItem') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'EmailAttributesResponseUnsubscribedItem') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class EmailUpdateAttributesTo():
-    """
-    The email ids.
-
-    :attr List[str] add: (optional) The email ids.
-    :attr List[str] remove: (optional) The email ids for removal.
-    """
-
-    def __init__(self,
-                 *,
-                 add: List[str] = None,
-                 remove: List[str] = None) -> None:
-        """
-        Initialize a EmailUpdateAttributesTo object.
-
-        :param List[str] add: (optional) The email ids.
-        :param List[str] remove: (optional) The email ids for removal.
-        """
-        self.add = add
-        self.remove = remove
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'EmailUpdateAttributesTo':
-        """Initialize a EmailUpdateAttributesTo object from a json dictionary."""
-        args = {}
-        if 'add' in _dict:
-            args['add'] = _dict.get('add')
-        if 'remove' in _dict:
-            args['remove'] = _dict.get('remove')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a EmailUpdateAttributesTo object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'add') and self.add is not None:
-            _dict['add'] = self.add
-        if hasattr(self, 'remove') and self.remove is not None:
-            _dict['remove'] = self.remove
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this EmailUpdateAttributesTo object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'EmailUpdateAttributesTo') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'EmailUpdateAttributesTo') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class EmailUpdateAttributesUnsubscribed():
-    """
-    The email ids.
-
-    :attr List[str] remove: (optional) The email ids unsubscribed.
-    """
-
-    def __init__(self,
-                 *,
-                 remove: List[str] = None) -> None:
-        """
-        Initialize a EmailUpdateAttributesUnsubscribed object.
-
-        :param List[str] remove: (optional) The email ids unsubscribed.
-        """
-        self.remove = remove
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'EmailUpdateAttributesUnsubscribed':
-        """Initialize a EmailUpdateAttributesUnsubscribed object from a json dictionary."""
-        args = {}
-        if 'remove' in _dict:
-            args['remove'] = _dict.get('remove')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a EmailUpdateAttributesUnsubscribed object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'remove') and self.remove is not None:
-            _dict['remove'] = self.remove
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this EmailUpdateAttributesUnsubscribed object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'EmailUpdateAttributesUnsubscribed') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'EmailUpdateAttributesUnsubscribed') -> bool:
+    def __ne__(self, other: 'EmailAttributesResponseSubscribedUnsubscribedItems') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -2803,9 +2494,9 @@ class NotificationCreate():
 
     :attr str specversion: The version of the notification specification.
     :attr datetime time: (optional) The time notification was created.
-    :attr str id: (optional) The unique identifier of the notification.
-    :attr str source: (optional) The source of notifications.
-    :attr str type: (optional) The notifications type.
+    :attr str id: The unique identifier of the notification.
+    :attr str source: The source of notifications.
+    :attr str type: The notifications type.
     :attr str ibmenseverity: (optional) The severity of the notification.
     :attr str ibmensourceid: The source id of the notification.
     :attr str ibmendefaultshort: Default short text for the message.
@@ -2815,23 +2506,23 @@ class NotificationCreate():
     :attr str datacontenttype: (optional) The notification content type.
     :attr str ibmenpushto: (optional) If platforms or tags or user_ids is used then
           do not use fcm_devices / apns_devices / chrome_devices / firefox_devices /
-          safari_devices with it. Value should be stringified json.
+          safari_devices with it. Value should be stringified.
     :attr str ibmenfcmbody: (optional) Payload describing a notification FCM body.
-          Value should be stringified json.
+          Value should be stringified.
     :attr str ibmenapnsbody: (optional) Payload describing a notification APNs body.
-          Value should be stringified json.
+          Value should be stringified.
     :attr str ibmenapnsheaders: (optional) Headers for iOS notification. Value
-          should be stringified json.
+          should be stringified.
     :attr str ibmenchromebody: (optional) Notification payload for Chrome. Value
-          should be stringified json.
+          should be stringified.
     :attr str ibmenchromeheaders: (optional) Headers for a Chrome notification.
-          Value should be stringified json.
+          Value should be stringified.
     :attr str ibmenfirefoxbody: (optional) Notification payload for Firefox. Value
-          should be stringified json.
+          should be stringified.
     :attr str ibmenfirefoxheaders: (optional) Headers for a Firefox notification.
-          Value should be stringified json.
+          Value should be stringified.
     :attr str ibmensafaribody: (optional) Payload describing a notification Safari
-          body. Value should be stringified json.
+          body. Value should be stringified.
     """
 
     # The set of defined properties for the class
@@ -2839,14 +2530,14 @@ class NotificationCreate():
 
     def __init__(self,
                  specversion: str,
+                 id: str,
+                 source: str,
+                 type: str,
                  ibmensourceid: str,
                  ibmendefaultshort: str,
                  ibmendefaultlong: str,
                  *,
                  time: datetime = None,
-                 id: str = None,
-                 source: str = None,
-                 type: str = None,
                  ibmenseverity: str = None,
                  subject: str = None,
                  data: dict = None,
@@ -2865,36 +2556,36 @@ class NotificationCreate():
         Initialize a NotificationCreate object.
 
         :param str specversion: The version of the notification specification.
+        :param str id: The unique identifier of the notification.
+        :param str source: The source of notifications.
+        :param str type: The notifications type.
         :param str ibmensourceid: The source id of the notification.
         :param str ibmendefaultshort: Default short text for the message.
         :param str ibmendefaultlong: Default long text for the message.
         :param datetime time: (optional) The time notification was created.
-        :param str id: (optional) The unique identifier of the notification.
-        :param str source: (optional) The source of notifications.
-        :param str type: (optional) The notifications type.
         :param str ibmenseverity: (optional) The severity of the notification.
         :param str subject: (optional) The subject of the notification.
         :param dict data: (optional) The payload for webhook notification.
         :param str datacontenttype: (optional) The notification content type.
         :param str ibmenpushto: (optional) If platforms or tags or user_ids is used
                then do not use fcm_devices / apns_devices / chrome_devices /
-               firefox_devices / safari_devices with it. Value should be stringified json.
+               firefox_devices / safari_devices with it. Value should be stringified.
         :param str ibmenfcmbody: (optional) Payload describing a notification FCM
-               body. Value should be stringified json.
+               body. Value should be stringified.
         :param str ibmenapnsbody: (optional) Payload describing a notification APNs
-               body. Value should be stringified json.
+               body. Value should be stringified.
         :param str ibmenapnsheaders: (optional) Headers for iOS notification. Value
-               should be stringified json.
+               should be stringified.
         :param str ibmenchromebody: (optional) Notification payload for Chrome.
-               Value should be stringified json.
+               Value should be stringified.
         :param str ibmenchromeheaders: (optional) Headers for a Chrome
-               notification. Value should be stringified json.
+               notification. Value should be stringified.
         :param str ibmenfirefoxbody: (optional) Notification payload for Firefox.
-               Value should be stringified json.
+               Value should be stringified.
         :param str ibmenfirefoxheaders: (optional) Headers for a Firefox
-               notification. Value should be stringified json.
+               notification. Value should be stringified.
         :param str ibmensafaribody: (optional) Payload describing a notification
-               Safari body. Value should be stringified json.
+               Safari body. Value should be stringified.
         :param **kwargs: (optional) Any additional properties.
         """
         self.specversion = specversion
@@ -2933,10 +2624,16 @@ class NotificationCreate():
             args['time'] = string_to_datetime(_dict.get('time'))
         if 'id' in _dict:
             args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in NotificationCreate JSON')
         if 'source' in _dict:
             args['source'] = _dict.get('source')
+        else:
+            raise ValueError('Required property \'source\' not present in NotificationCreate JSON')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in NotificationCreate JSON')
         if 'ibmenseverity' in _dict:
             args['ibmenseverity'] = _dict.get('ibmenseverity')
         if 'ibmensourceid' in _dict:
@@ -3123,6 +2820,62 @@ class NotificationResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class PageHrefResponse():
+    """
+    Response having URL of the page.
+
+    :attr str href: URL to the page.
+    """
+
+    def __init__(self,
+                 href: str) -> None:
+        """
+        Initialize a PageHrefResponse object.
+
+        :param str href: URL to the page.
+        """
+        self.href = href
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PageHrefResponse':
+        """Initialize a PageHrefResponse object from a json dictionary."""
+        args = {}
+        if 'href' in _dict:
+            args['href'] = _dict.get('href')
+        else:
+            raise ValueError('Required property \'href\' not present in PageHrefResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PageHrefResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'href') and self.href is not None:
+            _dict['href'] = self.href
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PageHrefResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PageHrefResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PageHrefResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class Rules():
     """
     Rule object.
@@ -3292,12 +3045,12 @@ class RulesGet():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SMSAttributesResponseInvitedItem():
+class SMAttributesItems():
     """
-    SMSAttributesResponseInvitedItem.
+    The sms attributes.
 
     :attr str phone_number: (optional) Phone number.
-    :attr datetime time: (optional) time of addition.
+    :attr datetime time: (optional) last updated time.
     """
 
     def __init__(self,
@@ -3305,17 +3058,17 @@ class SMSAttributesResponseInvitedItem():
                  phone_number: str = None,
                  time: datetime = None) -> None:
         """
-        Initialize a SMSAttributesResponseInvitedItem object.
+        Initialize a SMAttributesItems object.
 
         :param str phone_number: (optional) Phone number.
-        :param datetime time: (optional) time of addition.
+        :param datetime time: (optional) last updated time.
         """
         self.phone_number = phone_number
         self.time = time
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SMSAttributesResponseInvitedItem':
-        """Initialize a SMSAttributesResponseInvitedItem object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'SMAttributesItems':
+        """Initialize a SMAttributesItems object from a json dictionary."""
         args = {}
         if 'phone_number' in _dict:
             args['phone_number'] = _dict.get('phone_number')
@@ -3325,7 +3078,7 @@ class SMSAttributesResponseInvitedItem():
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a SMSAttributesResponseInvitedItem object from a json dictionary."""
+        """Initialize a SMAttributesItems object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3342,142 +3095,16 @@ class SMSAttributesResponseInvitedItem():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this SMSAttributesResponseInvitedItem object."""
+        """Return a `str` version of this SMAttributesItems object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'SMSAttributesResponseInvitedItem') -> bool:
+    def __eq__(self, other: 'SMAttributesItems') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'SMSAttributesResponseInvitedItem') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class SMSAttributesResponseToItem():
-    """
-    SMSAttributesResponseToItem.
-
-    :attr str phone_number: (optional) Phone number.
-    :attr datetime time: (optional) time of addition.
-    """
-
-    def __init__(self,
-                 *,
-                 phone_number: str = None,
-                 time: datetime = None) -> None:
-        """
-        Initialize a SMSAttributesResponseToItem object.
-
-        :param str phone_number: (optional) Phone number.
-        :param datetime time: (optional) time of addition.
-        """
-        self.phone_number = phone_number
-        self.time = time
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SMSAttributesResponseToItem':
-        """Initialize a SMSAttributesResponseToItem object from a json dictionary."""
-        args = {}
-        if 'phone_number' in _dict:
-            args['phone_number'] = _dict.get('phone_number')
-        if 'time' in _dict:
-            args['time'] = string_to_datetime(_dict.get('time'))
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a SMSAttributesResponseToItem object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'phone_number') and self.phone_number is not None:
-            _dict['phone_number'] = self.phone_number
-        if hasattr(self, 'time') and self.time is not None:
-            _dict['time'] = datetime_to_string(self.time)
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this SMSAttributesResponseToItem object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'SMSAttributesResponseToItem') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'SMSAttributesResponseToItem') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class SMSAttributesResponseUnsubscribedItem():
-    """
-    SMSAttributesResponseUnsubscribedItem.
-
-    :attr str phone_number: (optional) Phone number.
-    :attr datetime time: (optional) time of addition.
-    """
-
-    def __init__(self,
-                 *,
-                 phone_number: str = None,
-                 time: datetime = None) -> None:
-        """
-        Initialize a SMSAttributesResponseUnsubscribedItem object.
-
-        :param str phone_number: (optional) Phone number.
-        :param datetime time: (optional) time of addition.
-        """
-        self.phone_number = phone_number
-        self.time = time
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SMSAttributesResponseUnsubscribedItem':
-        """Initialize a SMSAttributesResponseUnsubscribedItem object from a json dictionary."""
-        args = {}
-        if 'phone_number' in _dict:
-            args['phone_number'] = _dict.get('phone_number')
-        if 'time' in _dict:
-            args['time'] = string_to_datetime(_dict.get('time'))
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a SMSAttributesResponseUnsubscribedItem object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'phone_number') and self.phone_number is not None:
-            _dict['phone_number'] = self.phone_number
-        if hasattr(self, 'time') and self.time is not None:
-            _dict['time'] = datetime_to_string(self.time)
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this SMSAttributesResponseUnsubscribedItem object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'SMSAttributesResponseUnsubscribedItem') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'SMSAttributesResponseUnsubscribedItem') -> bool:
+    def __ne__(self, other: 'SMAttributesItems') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3678,13 +3305,20 @@ class SourceList():
     :attr int offset: Current offset.
     :attr int limit: limit to show sources.
     :attr List[SourceListItem] sources: List of sources.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
     """
 
     def __init__(self,
                  total_count: int,
                  offset: int,
                  limit: int,
-                 sources: List['SourceListItem']) -> None:
+                 sources: List['SourceListItem'],
+                 *,
+                 first: 'PageHrefResponse' = None,
+                 previous: 'PageHrefResponse' = None,
+                 next: 'PageHrefResponse' = None) -> None:
         """
         Initialize a SourceList object.
 
@@ -3692,11 +3326,18 @@ class SourceList():
         :param int offset: Current offset.
         :param int limit: limit to show sources.
         :param List[SourceListItem] sources: List of sources.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
         """
         self.total_count = total_count
         self.offset = offset
         self.limit = limit
         self.sources = sources
+        self.first = first
+        self.previous = previous
+        self.next = next
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SourceList':
@@ -3718,6 +3359,12 @@ class SourceList():
             args['sources'] = [SourceListItem.from_dict(x) for x in _dict.get('sources')]
         else:
             raise ValueError('Required property \'sources\' not present in SourceList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
         return cls(**args)
 
     @classmethod
@@ -3736,6 +3383,12 @@ class SourceList():
             _dict['limit'] = self.limit
         if hasattr(self, 'sources') and self.sources is not None:
             _dict['sources'] = [x.to_dict() for x in self.sources]
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -3968,51 +3621,116 @@ class SourceResponse():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SourcesListItem():
+class SourcesItems():
     """
-    SourcesListItem.
+    SourcesItems.
+
+    :attr str id: ID of the source.
+    :attr List[Rules] rules: List of rules.
+    """
+
+    def __init__(self,
+                 id: str,
+                 rules: List['Rules']) -> None:
+        """
+        Initialize a SourcesItems object.
+
+        :param str id: ID of the source.
+        :param List[Rules] rules: List of rules.
+        """
+        self.id = id
+        self.rules = rules
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SourcesItems':
+        """Initialize a SourcesItems object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in SourcesItems JSON')
+        if 'rules' in _dict:
+            args['rules'] = [Rules.from_dict(x) for x in _dict.get('rules')]
+        else:
+            raise ValueError('Required property \'rules\' not present in SourcesItems JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SourcesItems object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'rules') and self.rules is not None:
+            _dict['rules'] = [x.to_dict() for x in self.rules]
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SourcesItems object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SourcesItems') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SourcesItems') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class SourcesListItems():
+    """
+    Payload describing a source list item.
 
     :attr str id: ID of the source.
     :attr str name: Name of the source.
-    :attr List[RulesGet] rules: List of rules.
+    :attr List[RulesGet] rules: (optional) List of rules.
     """
 
     def __init__(self,
                  id: str,
                  name: str,
-                 rules: List['RulesGet']) -> None:
+                 *,
+                 rules: List['RulesGet'] = None) -> None:
         """
-        Initialize a SourcesListItem object.
+        Initialize a SourcesListItems object.
 
         :param str id: ID of the source.
         :param str name: Name of the source.
-        :param List[RulesGet] rules: List of rules.
+        :param List[RulesGet] rules: (optional) List of rules.
         """
         self.id = id
         self.name = name
         self.rules = rules
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SourcesListItem':
-        """Initialize a SourcesListItem object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'SourcesListItems':
+        """Initialize a SourcesListItems object from a json dictionary."""
         args = {}
         if 'id' in _dict:
             args['id'] = _dict.get('id')
         else:
-            raise ValueError('Required property \'id\' not present in SourcesListItem JSON')
+            raise ValueError('Required property \'id\' not present in SourcesListItems JSON')
         if 'name' in _dict:
             args['name'] = _dict.get('name')
         else:
-            raise ValueError('Required property \'name\' not present in SourcesListItem JSON')
+            raise ValueError('Required property \'name\' not present in SourcesListItems JSON')
         if 'rules' in _dict:
             args['rules'] = [RulesGet.from_dict(x) for x in _dict.get('rules')]
-        else:
-            raise ValueError('Required property \'rules\' not present in SourcesListItem JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a SourcesListItem object from a json dictionary."""
+        """Initialize a SourcesListItems object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -4031,16 +3749,16 @@ class SourcesListItem():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this SourcesListItem object."""
+        """Return a `str` version of this SourcesListItems object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'SourcesListItem') -> bool:
+    def __eq__(self, other: 'SourcesListItems') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'SourcesListItem') -> bool:
+    def __ne__(self, other: 'SourcesListItems') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -4287,13 +4005,20 @@ class SubscriptionList():
     :attr int offset: Current offset.
     :attr int limit: limit to show subscriptions.
     :attr List[SubscriptionListItem] subscriptions: List of subscriptions.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
     """
 
     def __init__(self,
                  total_count: int,
                  offset: int,
                  limit: int,
-                 subscriptions: List['SubscriptionListItem']) -> None:
+                 subscriptions: List['SubscriptionListItem'],
+                 *,
+                 first: 'PageHrefResponse' = None,
+                 previous: 'PageHrefResponse' = None,
+                 next: 'PageHrefResponse' = None) -> None:
         """
         Initialize a SubscriptionList object.
 
@@ -4301,11 +4026,18 @@ class SubscriptionList():
         :param int offset: Current offset.
         :param int limit: limit to show subscriptions.
         :param List[SubscriptionListItem] subscriptions: List of subscriptions.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
         """
         self.total_count = total_count
         self.offset = offset
         self.limit = limit
         self.subscriptions = subscriptions
+        self.first = first
+        self.previous = previous
+        self.next = next
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionList':
@@ -4327,6 +4059,12 @@ class SubscriptionList():
             args['subscriptions'] = [SubscriptionListItem.from_dict(x) for x in _dict.get('subscriptions')]
         else:
             raise ValueError('Required property \'subscriptions\' not present in SubscriptionList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
         return cls(**args)
 
     @classmethod
@@ -4345,6 +4083,12 @@ class SubscriptionList():
             _dict['limit'] = self.limit
         if hasattr(self, 'subscriptions') and self.subscriptions is not None:
             _dict['subscriptions'] = [x.to_dict() for x in self.subscriptions]
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -4538,13 +4282,20 @@ class TagsSubscriptionList():
     :attr int offset: Current offset.
     :attr int limit: limit to show tags.
     :attr List[TagsSubscriptionListItem] tag_subscriptions: List of tags.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
     """
 
     def __init__(self,
                  total_count: int,
                  offset: int,
                  limit: int,
-                 tag_subscriptions: List['TagsSubscriptionListItem']) -> None:
+                 tag_subscriptions: List['TagsSubscriptionListItem'],
+                 *,
+                 first: 'PageHrefResponse' = None,
+                 previous: 'PageHrefResponse' = None,
+                 next: 'PageHrefResponse' = None) -> None:
         """
         Initialize a TagsSubscriptionList object.
 
@@ -4552,11 +4303,18 @@ class TagsSubscriptionList():
         :param int offset: Current offset.
         :param int limit: limit to show tags.
         :param List[TagsSubscriptionListItem] tag_subscriptions: List of tags.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
         """
         self.total_count = total_count
         self.offset = offset
         self.limit = limit
         self.tag_subscriptions = tag_subscriptions
+        self.first = first
+        self.previous = previous
+        self.next = next
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'TagsSubscriptionList':
@@ -4578,6 +4336,12 @@ class TagsSubscriptionList():
             args['tag_subscriptions'] = [TagsSubscriptionListItem.from_dict(x) for x in _dict.get('tag_subscriptions')]
         else:
             raise ValueError('Required property \'tag_subscriptions\' not present in TagsSubscriptionList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
         return cls(**args)
 
     @classmethod
@@ -4596,6 +4360,12 @@ class TagsSubscriptionList():
             _dict['limit'] = self.limit
         if hasattr(self, 'tag_subscriptions') and self.tag_subscriptions is not None:
             _dict['tag_subscriptions'] = [x.to_dict() for x in self.tag_subscriptions]
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -4722,7 +4492,7 @@ class Topic():
     :attr str name: Name of the topic.
     :attr str updated_at: Last time the topic was updated.
     :attr int source_count: Number of sources.
-    :attr List[SourcesListItem] sources: List of sources.
+    :attr List[SourcesListItems] sources: List of sources.
     :attr int subscription_count: Number of subscriptions.
     :attr List[SubscriptionListItem] subscriptions: List of subscriptions.
     """
@@ -4733,7 +4503,7 @@ class Topic():
                  name: str,
                  updated_at: str,
                  source_count: int,
-                 sources: List['SourcesListItem'],
+                 sources: List['SourcesListItems'],
                  subscription_count: int,
                  subscriptions: List['SubscriptionListItem']) -> None:
         """
@@ -4744,7 +4514,7 @@ class Topic():
         :param str name: Name of the topic.
         :param str updated_at: Last time the topic was updated.
         :param int source_count: Number of sources.
-        :param List[SourcesListItem] sources: List of sources.
+        :param List[SourcesListItems] sources: List of sources.
         :param int subscription_count: Number of subscriptions.
         :param List[SubscriptionListItem] subscriptions: List of subscriptions.
         """
@@ -4782,7 +4552,7 @@ class Topic():
         else:
             raise ValueError('Required property \'source_count\' not present in Topic JSON')
         if 'sources' in _dict:
-            args['sources'] = [SourcesListItem.from_dict(x) for x in _dict.get('sources')]
+            args['sources'] = [SourcesListItems.from_dict(x) for x in _dict.get('sources')]
         else:
             raise ValueError('Required property \'sources\' not present in Topic JSON')
         if 'subscription_count' in _dict:
@@ -4847,13 +4617,20 @@ class TopicList():
     :attr int offset: Current offset.
     :attr int limit: limit to show subscriptions.
     :attr List[TopicsListItem] topics: List of topics.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
     """
 
     def __init__(self,
                  total_count: int,
                  offset: int,
                  limit: int,
-                 topics: List['TopicsListItem']) -> None:
+                 topics: List['TopicsListItem'],
+                 *,
+                 first: 'PageHrefResponse' = None,
+                 previous: 'PageHrefResponse' = None,
+                 next: 'PageHrefResponse' = None) -> None:
         """
         Initialize a TopicList object.
 
@@ -4861,11 +4638,18 @@ class TopicList():
         :param int offset: Current offset.
         :param int limit: limit to show subscriptions.
         :param List[TopicsListItem] topics: List of topics.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
         """
         self.total_count = total_count
         self.offset = offset
         self.limit = limit
         self.topics = topics
+        self.first = first
+        self.previous = previous
+        self.next = next
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'TopicList':
@@ -4887,6 +4671,12 @@ class TopicList():
             args['topics'] = [TopicsListItem.from_dict(x) for x in _dict.get('topics')]
         else:
             raise ValueError('Required property \'topics\' not present in TopicList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
         return cls(**args)
 
     @classmethod
@@ -4905,6 +4695,12 @@ class TopicList():
             _dict['limit'] = self.limit
         if hasattr(self, 'topics') and self.topics is not None:
             _dict['topics'] = [x.to_dict() for x in self.topics]
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -5008,72 +4804,6 @@ class TopicResponse():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TopicResponse') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-class TopicUpdateSourcesItem():
-    """
-    TopicUpdateSourcesItem.
-
-    :attr str id: ID of the source.
-    :attr List[Rules] rules: List of rules.
-    """
-
-    def __init__(self,
-                 id: str,
-                 rules: List['Rules']) -> None:
-        """
-        Initialize a TopicUpdateSourcesItem object.
-
-        :param str id: ID of the source.
-        :param List[Rules] rules: List of rules.
-        """
-        self.id = id
-        self.rules = rules
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'TopicUpdateSourcesItem':
-        """Initialize a TopicUpdateSourcesItem object from a json dictionary."""
-        args = {}
-        if 'id' in _dict:
-            args['id'] = _dict.get('id')
-        else:
-            raise ValueError('Required property \'id\' not present in TopicUpdateSourcesItem JSON')
-        if 'rules' in _dict:
-            args['rules'] = [Rules.from_dict(x) for x in _dict.get('rules')]
-        else:
-            raise ValueError('Required property \'rules\' not present in TopicUpdateSourcesItem JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a TopicUpdateSourcesItem object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'id') and self.id is not None:
-            _dict['id'] = self.id
-        if hasattr(self, 'rules') and self.rules is not None:
-            _dict['rules'] = [x.to_dict() for x in self.rules]
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this TopicUpdateSourcesItem object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'TopicUpdateSourcesItem') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'TopicUpdateSourcesItem') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -5183,7 +4913,181 @@ class TopicsListItem():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsChromeDestinationConfig(DestinationConfigParams):
+class UpdateAttributesInvited():
+    """
+    The email ids or phone numbers.
+
+    :attr List[str] add: (optional) The email ids or phone numbers.
+    :attr List[str] remove: (optional) The email ids for removal.
+    """
+
+    def __init__(self,
+                 *,
+                 add: List[str] = None,
+                 remove: List[str] = None) -> None:
+        """
+        Initialize a UpdateAttributesInvited object.
+
+        :param List[str] add: (optional) The email ids or phone numbers.
+        :param List[str] remove: (optional) The email ids for removal.
+        """
+        self.add = add
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateAttributesInvited':
+        """Initialize a UpdateAttributesInvited object from a json dictionary."""
+        args = {}
+        if 'add' in _dict:
+            args['add'] = _dict.get('add')
+        if 'remove' in _dict:
+            args['remove'] = _dict.get('remove')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateAttributesInvited object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'add') and self.add is not None:
+            _dict['add'] = self.add
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateAttributesInvited object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateAttributesInvited') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateAttributesInvited') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class UpdateAttributesSubscribed():
+    """
+    The email ids or phone number.
+
+    :attr List[str] remove: (optional) The email ids or phone number unsubscribed.
+    """
+
+    def __init__(self,
+                 *,
+                 remove: List[str] = None) -> None:
+        """
+        Initialize a UpdateAttributesSubscribed object.
+
+        :param List[str] remove: (optional) The email ids or phone number
+               unsubscribed.
+        """
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateAttributesSubscribed':
+        """Initialize a UpdateAttributesSubscribed object from a json dictionary."""
+        args = {}
+        if 'remove' in _dict:
+            args['remove'] = _dict.get('remove')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateAttributesSubscribed object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateAttributesSubscribed object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateAttributesSubscribed') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateAttributesSubscribed') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class UpdateAttributesUnsubscribed():
+    """
+    The phone number or Email id to send the SMS/email to.
+
+    :attr List[str] remove: (optional) array to add new items.
+    """
+
+    def __init__(self,
+                 *,
+                 remove: List[str] = None) -> None:
+        """
+        Initialize a UpdateAttributesUnsubscribed object.
+
+        :param List[str] remove: (optional) array to add new items.
+        """
+        self.remove = remove
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'UpdateAttributesUnsubscribed':
+        """Initialize a UpdateAttributesUnsubscribed object from a json dictionary."""
+        args = {}
+        if 'remove' in _dict:
+            args['remove'] = _dict.get('remove')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a UpdateAttributesUnsubscribed object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'remove') and self.remove is not None:
+            _dict['remove'] = self.remove
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this UpdateAttributesUnsubscribed object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'UpdateAttributesUnsubscribed') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'UpdateAttributesUnsubscribed') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a Chrome destination configuration.
 
@@ -5200,7 +5104,7 @@ class DestinationConfigParamsChromeDestinationConfig(DestinationConfigParams):
                  public_key: str = None,
                  pre_prod: bool = None) -> None:
         """
-        Initialize a DestinationConfigParamsChromeDestinationConfig object.
+        Initialize a DestinationConfigOneOfChromeDestinationConfig object.
 
         :param str api_key: FCM api_key.
         :param str website_url: Website url.
@@ -5214,17 +5118,17 @@ class DestinationConfigParamsChromeDestinationConfig(DestinationConfigParams):
         self.pre_prod = pre_prod
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsChromeDestinationConfig':
-        """Initialize a DestinationConfigParamsChromeDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfChromeDestinationConfig':
+        """Initialize a DestinationConfigOneOfChromeDestinationConfig object from a json dictionary."""
         args = {}
         if 'api_key' in _dict:
             args['api_key'] = _dict.get('api_key')
         else:
-            raise ValueError('Required property \'api_key\' not present in DestinationConfigParamsChromeDestinationConfig JSON')
+            raise ValueError('Required property \'api_key\' not present in DestinationConfigOneOfChromeDestinationConfig JSON')
         if 'website_url' in _dict:
             args['website_url'] = _dict.get('website_url')
         else:
-            raise ValueError('Required property \'website_url\' not present in DestinationConfigParamsChromeDestinationConfig JSON')
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigOneOfChromeDestinationConfig JSON')
         if 'public_key' in _dict:
             args['public_key'] = _dict.get('public_key')
         if 'pre_prod' in _dict:
@@ -5233,7 +5137,7 @@ class DestinationConfigParamsChromeDestinationConfig(DestinationConfigParams):
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsChromeDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfChromeDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5254,20 +5158,20 @@ class DestinationConfigParamsChromeDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsChromeDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfChromeDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsChromeDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfChromeDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsChromeDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfChromeDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsFCMDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfFCMDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a FCM destination configuration.
 
@@ -5282,7 +5186,7 @@ class DestinationConfigParamsFCMDestinationConfig(DestinationConfigParams):
                  *,
                  pre_prod: bool = None) -> None:
         """
-        Initialize a DestinationConfigParamsFCMDestinationConfig object.
+        Initialize a DestinationConfigOneOfFCMDestinationConfig object.
 
         :param str server_key: FCM server_key.
         :param str sender_id: FCM sender_id.
@@ -5294,24 +5198,24 @@ class DestinationConfigParamsFCMDestinationConfig(DestinationConfigParams):
         self.pre_prod = pre_prod
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsFCMDestinationConfig':
-        """Initialize a DestinationConfigParamsFCMDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfFCMDestinationConfig':
+        """Initialize a DestinationConfigOneOfFCMDestinationConfig object from a json dictionary."""
         args = {}
         if 'server_key' in _dict:
             args['server_key'] = _dict.get('server_key')
         else:
-            raise ValueError('Required property \'server_key\' not present in DestinationConfigParamsFCMDestinationConfig JSON')
+            raise ValueError('Required property \'server_key\' not present in DestinationConfigOneOfFCMDestinationConfig JSON')
         if 'sender_id' in _dict:
             args['sender_id'] = _dict.get('sender_id')
         else:
-            raise ValueError('Required property \'sender_id\' not present in DestinationConfigParamsFCMDestinationConfig JSON')
+            raise ValueError('Required property \'sender_id\' not present in DestinationConfigOneOfFCMDestinationConfig JSON')
         if 'pre_prod' in _dict:
             args['pre_prod'] = _dict.get('pre_prod')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsFCMDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfFCMDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5330,20 +5234,20 @@ class DestinationConfigParamsFCMDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsFCMDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfFCMDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsFCMDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfFCMDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsFCMDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfFCMDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsFirefoxDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfFirefoxDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a Firefox destination configuration.
 
@@ -5358,7 +5262,7 @@ class DestinationConfigParamsFirefoxDestinationConfig(DestinationConfigParams):
                  public_key: str = None,
                  pre_prod: bool = None) -> None:
         """
-        Initialize a DestinationConfigParamsFirefoxDestinationConfig object.
+        Initialize a DestinationConfigOneOfFirefoxDestinationConfig object.
 
         :param str website_url: Website url.
         :param str public_key: (optional) Chrome VAPID public key.
@@ -5370,13 +5274,13 @@ class DestinationConfigParamsFirefoxDestinationConfig(DestinationConfigParams):
         self.pre_prod = pre_prod
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsFirefoxDestinationConfig':
-        """Initialize a DestinationConfigParamsFirefoxDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfFirefoxDestinationConfig':
+        """Initialize a DestinationConfigOneOfFirefoxDestinationConfig object from a json dictionary."""
         args = {}
         if 'website_url' in _dict:
             args['website_url'] = _dict.get('website_url')
         else:
-            raise ValueError('Required property \'website_url\' not present in DestinationConfigParamsFirefoxDestinationConfig JSON')
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigOneOfFirefoxDestinationConfig JSON')
         if 'public_key' in _dict:
             args['public_key'] = _dict.get('public_key')
         if 'pre_prod' in _dict:
@@ -5385,7 +5289,7 @@ class DestinationConfigParamsFirefoxDestinationConfig(DestinationConfigParams):
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsFirefoxDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfFirefoxDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5404,20 +5308,20 @@ class DestinationConfigParamsFirefoxDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsFirefoxDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfFirefoxDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsFirefoxDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfFirefoxDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsFirefoxDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfFirefoxDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsIBMCloudFunctionsDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a IBM Cloud Functions destination configuration.
 
@@ -5431,7 +5335,7 @@ class DestinationConfigParamsIBMCloudFunctionsDestinationConfig(DestinationConfi
                  *,
                  api_key: str = None) -> None:
         """
-        Initialize a DestinationConfigParamsIBMCloudFunctionsDestinationConfig object.
+        Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object.
 
         :param str url: URL of IBM Cloud Functions Trigger EndPoint.
         :param str api_key: (optional) APIKey with access of IBM Cloud Functions
@@ -5442,20 +5346,20 @@ class DestinationConfigParamsIBMCloudFunctionsDestinationConfig(DestinationConfi
         self.api_key = api_key
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig':
-        """Initialize a DestinationConfigParamsIBMCloudFunctionsDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig':
+        """Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object from a json dictionary."""
         args = {}
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         else:
-            raise ValueError('Required property \'url\' not present in DestinationConfigParamsIBMCloudFunctionsDestinationConfig JSON')
+            raise ValueError('Required property \'url\' not present in DestinationConfigOneOfIBMCloudFunctionsDestinationConfig JSON')
         if 'api_key' in _dict:
             args['api_key'] = _dict.get('api_key')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsIBMCloudFunctionsDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5472,20 +5376,20 @@ class DestinationConfigParamsIBMCloudFunctionsDestinationConfig(DestinationConfi
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsIBMCloudFunctionsDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsIBMCloudFunctionsDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfIOSDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a IOS destination configuration.
 
@@ -5510,7 +5414,7 @@ class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
                  bundle_id: str = None,
                  pre_prod: bool = None) -> None:
         """
-        Initialize a DestinationConfigParamsIOSDestinationConfig object.
+        Initialize a DestinationConfigOneOfIOSDestinationConfig object.
 
         :param str cert_type: Authentication type (p8 or p12).
         :param bool is_sandbox: Sandbox mode for IOS destinations.
@@ -5534,17 +5438,17 @@ class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
         self.pre_prod = pre_prod
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsIOSDestinationConfig':
-        """Initialize a DestinationConfigParamsIOSDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfIOSDestinationConfig':
+        """Initialize a DestinationConfigOneOfIOSDestinationConfig object from a json dictionary."""
         args = {}
         if 'cert_type' in _dict:
             args['cert_type'] = _dict.get('cert_type')
         else:
-            raise ValueError('Required property \'cert_type\' not present in DestinationConfigParamsIOSDestinationConfig JSON')
+            raise ValueError('Required property \'cert_type\' not present in DestinationConfigOneOfIOSDestinationConfig JSON')
         if 'is_sandbox' in _dict:
             args['is_sandbox'] = _dict.get('is_sandbox')
         else:
-            raise ValueError('Required property \'is_sandbox\' not present in DestinationConfigParamsIOSDestinationConfig JSON')
+            raise ValueError('Required property \'is_sandbox\' not present in DestinationConfigOneOfIOSDestinationConfig JSON')
         if 'password' in _dict:
             args['password'] = _dict.get('password')
         if 'key_id' in _dict:
@@ -5559,7 +5463,7 @@ class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsIOSDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfIOSDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5586,20 +5490,20 @@ class DestinationConfigParamsIOSDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsIOSDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfIOSDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsIOSDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfIOSDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsIOSDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfIOSDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsMSTeamsDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfMSTeamsDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a MS Teams destination configuration.
 
@@ -5609,7 +5513,7 @@ class DestinationConfigParamsMSTeamsDestinationConfig(DestinationConfigParams):
     def __init__(self,
                  url: str) -> None:
         """
-        Initialize a DestinationConfigParamsMSTeamsDestinationConfig object.
+        Initialize a DestinationConfigOneOfMSTeamsDestinationConfig object.
 
         :param str url: URL of MS Teams Incoming Webhook.
         """
@@ -5617,18 +5521,18 @@ class DestinationConfigParamsMSTeamsDestinationConfig(DestinationConfigParams):
         self.url = url
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsMSTeamsDestinationConfig':
-        """Initialize a DestinationConfigParamsMSTeamsDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfMSTeamsDestinationConfig':
+        """Initialize a DestinationConfigOneOfMSTeamsDestinationConfig object from a json dictionary."""
         args = {}
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         else:
-            raise ValueError('Required property \'url\' not present in DestinationConfigParamsMSTeamsDestinationConfig JSON')
+            raise ValueError('Required property \'url\' not present in DestinationConfigOneOfMSTeamsDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsMSTeamsDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfMSTeamsDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5643,20 +5547,20 @@ class DestinationConfigParamsMSTeamsDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsMSTeamsDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfMSTeamsDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsMSTeamsDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfMSTeamsDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsMSTeamsDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfMSTeamsDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsSafariDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfSafariDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a safari destination configuration.
 
@@ -5679,7 +5583,7 @@ class DestinationConfigParamsSafariDestinationConfig(DestinationConfigParams):
                  *,
                  pre_prod: bool = None) -> None:
         """
-        Initialize a DestinationConfigParamsSafariDestinationConfig object.
+        Initialize a DestinationConfigOneOfSafariDestinationConfig object.
 
         :param str cert_type: Authentication type p12.
         :param str password: Password for certificate (Required when cert_type is
@@ -5700,40 +5604,40 @@ class DestinationConfigParamsSafariDestinationConfig(DestinationConfigParams):
         self.pre_prod = pre_prod
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsSafariDestinationConfig':
-        """Initialize a DestinationConfigParamsSafariDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfSafariDestinationConfig':
+        """Initialize a DestinationConfigOneOfSafariDestinationConfig object from a json dictionary."""
         args = {}
         if 'cert_type' in _dict:
             args['cert_type'] = _dict.get('cert_type')
         else:
-            raise ValueError('Required property \'cert_type\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+            raise ValueError('Required property \'cert_type\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'password' in _dict:
             args['password'] = _dict.get('password')
         else:
-            raise ValueError('Required property \'password\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+            raise ValueError('Required property \'password\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'website_url' in _dict:
             args['website_url'] = _dict.get('website_url')
         else:
-            raise ValueError('Required property \'website_url\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'website_name' in _dict:
             args['website_name'] = _dict.get('website_name')
         else:
-            raise ValueError('Required property \'website_name\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+            raise ValueError('Required property \'website_name\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'url_format_string' in _dict:
             args['url_format_string'] = _dict.get('url_format_string')
         else:
-            raise ValueError('Required property \'url_format_string\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+            raise ValueError('Required property \'url_format_string\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'website_push_id' in _dict:
             args['website_push_id'] = _dict.get('website_push_id')
         else:
-            raise ValueError('Required property \'website_push_id\' not present in DestinationConfigParamsSafariDestinationConfig JSON')
+            raise ValueError('Required property \'website_push_id\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'pre_prod' in _dict:
             args['pre_prod'] = _dict.get('pre_prod')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsSafariDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfSafariDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5760,20 +5664,20 @@ class DestinationConfigParamsSafariDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsSafariDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfSafariDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsSafariDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfSafariDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsSafariDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfSafariDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsSlackDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a slack destination configuration.
 
@@ -5783,7 +5687,7 @@ class DestinationConfigParamsSlackDestinationConfig(DestinationConfigParams):
     def __init__(self,
                  url: str) -> None:
         """
-        Initialize a DestinationConfigParamsSlackDestinationConfig object.
+        Initialize a DestinationConfigOneOfSlackDestinationConfig object.
 
         :param str url: URL of Slack Incoming Webhook.
         """
@@ -5791,18 +5695,18 @@ class DestinationConfigParamsSlackDestinationConfig(DestinationConfigParams):
         self.url = url
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsSlackDestinationConfig':
-        """Initialize a DestinationConfigParamsSlackDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfSlackDestinationConfig':
+        """Initialize a DestinationConfigOneOfSlackDestinationConfig object from a json dictionary."""
         args = {}
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         else:
-            raise ValueError('Required property \'url\' not present in DestinationConfigParamsSlackDestinationConfig JSON')
+            raise ValueError('Required property \'url\' not present in DestinationConfigOneOfSlackDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsSlackDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfSlackDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5817,20 +5721,20 @@ class DestinationConfigParamsSlackDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsSlackDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfSlackDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsSlackDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfSlackDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsSlackDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfSlackDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class DestinationConfigParamsWebhookDestinationConfig(DestinationConfigParams):
+class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a webhook destination configuration.
 
@@ -5849,7 +5753,7 @@ class DestinationConfigParamsWebhookDestinationConfig(DestinationConfigParams):
                  custom_headers: dict = None,
                  sensitive_headers: List[str] = None) -> None:
         """
-        Initialize a DestinationConfigParamsWebhookDestinationConfig object.
+        Initialize a DestinationConfigOneOfWebhookDestinationConfig object.
 
         :param str url: URL of webhook.
         :param str verb: HTTP method of webhook.
@@ -5865,17 +5769,17 @@ class DestinationConfigParamsWebhookDestinationConfig(DestinationConfigParams):
         self.sensitive_headers = sensitive_headers
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigParamsWebhookDestinationConfig':
-        """Initialize a DestinationConfigParamsWebhookDestinationConfig object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfWebhookDestinationConfig':
+        """Initialize a DestinationConfigOneOfWebhookDestinationConfig object from a json dictionary."""
         args = {}
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         else:
-            raise ValueError('Required property \'url\' not present in DestinationConfigParamsWebhookDestinationConfig JSON')
+            raise ValueError('Required property \'url\' not present in DestinationConfigOneOfWebhookDestinationConfig JSON')
         if 'verb' in _dict:
             args['verb'] = _dict.get('verb')
         else:
-            raise ValueError('Required property \'verb\' not present in DestinationConfigParamsWebhookDestinationConfig JSON')
+            raise ValueError('Required property \'verb\' not present in DestinationConfigOneOfWebhookDestinationConfig JSON')
         if 'custom_headers' in _dict:
             args['custom_headers'] = _dict.get('custom_headers')
         if 'sensitive_headers' in _dict:
@@ -5884,7 +5788,7 @@ class DestinationConfigParamsWebhookDestinationConfig(DestinationConfigParams):
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigParamsWebhookDestinationConfig object from a json dictionary."""
+        """Initialize a DestinationConfigOneOfWebhookDestinationConfig object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -5905,16 +5809,16 @@ class DestinationConfigParamsWebhookDestinationConfig(DestinationConfigParams):
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigParamsWebhookDestinationConfig object."""
+        """Return a `str` version of this DestinationConfigOneOfWebhookDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'DestinationConfigParamsWebhookDestinationConfig') -> bool:
+    def __eq__(self, other: 'DestinationConfigOneOfWebhookDestinationConfig') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'DestinationConfigParamsWebhookDestinationConfig') -> bool:
+    def __ne__(self, other: 'DestinationConfigOneOfWebhookDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -5930,11 +5834,12 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
     """
     The attributes reponse for an email destination.
 
-    :attr List[EmailAttributesResponseToItem] to: The email id string.
-    :attr List[EmailAttributesResponseUnsubscribedItem] unsubscribed: (optional) The
-          unsubscribe list.
-    :attr List[EmailAttributesResponseInvitedItem] invited: (optional) The invited
-          list.
+    :attr List[EmailAttributesResponseInvitedItems] invited: (optional) The email id
+          string.
+    :attr List[EmailAttributesResponseSubscribedUnsubscribedItems] subscribed:
+          (optional) The unsubscribe list.
+    :attr List[EmailAttributesResponseSubscribedUnsubscribedItems] unsubscribed:
+          (optional) The subscribed list.
     :attr bool add_notification_payload: Whether to add the notification payload to
           the email.
     :attr str reply_to_mail: The email address to reply to.
@@ -5943,37 +5848,38 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['to', 'unsubscribed', 'invited', 'add_notification_payload', 'reply_to_mail', 'reply_to_name', 'from_name'])
+    _properties = frozenset(['invited', 'subscribed', 'unsubscribed', 'add_notification_payload', 'reply_to_mail', 'reply_to_name', 'from_name'])
 
     def __init__(self,
-                 to: List['EmailAttributesResponseToItem'],
                  add_notification_payload: bool,
                  reply_to_mail: str,
                  reply_to_name: str,
                  from_name: str,
                  *,
-                 unsubscribed: List['EmailAttributesResponseUnsubscribedItem'] = None,
-                 invited: List['EmailAttributesResponseInvitedItem'] = None,
+                 invited: List['EmailAttributesResponseInvitedItems'] = None,
+                 subscribed: List['EmailAttributesResponseSubscribedUnsubscribedItems'] = None,
+                 unsubscribed: List['EmailAttributesResponseSubscribedUnsubscribedItems'] = None,
                  **kwargs) -> None:
         """
         Initialize a SubscriptionAttributesEmailAttributesResponse object.
 
-        :param List[EmailAttributesResponseToItem] to: The email id string.
         :param bool add_notification_payload: Whether to add the notification
                payload to the email.
         :param str reply_to_mail: The email address to reply to.
         :param str reply_to_name: The email name to reply to.
         :param str from_name: The email name of From.
-        :param List[EmailAttributesResponseUnsubscribedItem] unsubscribed:
+        :param List[EmailAttributesResponseInvitedItems] invited: (optional) The
+               email id string.
+        :param List[EmailAttributesResponseSubscribedUnsubscribedItems] subscribed:
                (optional) The unsubscribe list.
-        :param List[EmailAttributesResponseInvitedItem] invited: (optional) The
-               invited list.
+        :param List[EmailAttributesResponseSubscribedUnsubscribedItems]
+               unsubscribed: (optional) The subscribed list.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
-        self.to = to
-        self.unsubscribed = unsubscribed
         self.invited = invited
+        self.subscribed = subscribed
+        self.unsubscribed = unsubscribed
         self.add_notification_payload = add_notification_payload
         self.reply_to_mail = reply_to_mail
         self.reply_to_name = reply_to_name
@@ -5985,14 +5891,12 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
     def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesEmailAttributesResponse':
         """Initialize a SubscriptionAttributesEmailAttributesResponse object from a json dictionary."""
         args = {}
-        if 'to' in _dict:
-            args['to'] = [EmailAttributesResponseToItem.from_dict(x) for x in _dict.get('to')]
-        else:
-            raise ValueError('Required property \'to\' not present in SubscriptionAttributesEmailAttributesResponse JSON')
-        if 'unsubscribed' in _dict:
-            args['unsubscribed'] = [EmailAttributesResponseUnsubscribedItem.from_dict(x) for x in _dict.get('unsubscribed')]
         if 'invited' in _dict:
-            args['invited'] = [EmailAttributesResponseInvitedItem.from_dict(x) for x in _dict.get('invited')]
+            args['invited'] = [EmailAttributesResponseInvitedItems.from_dict(x) for x in _dict.get('invited')]
+        if 'subscribed' in _dict:
+            args['subscribed'] = [EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(x) for x in _dict.get('subscribed')]
+        if 'unsubscribed' in _dict:
+            args['unsubscribed'] = [EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(x) for x in _dict.get('unsubscribed')]
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
@@ -6020,12 +5924,12 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'to') and self.to is not None:
-            _dict['to'] = [x.to_dict() for x in self.to]
-        if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
-            _dict['unsubscribed'] = [x.to_dict() for x in self.unsubscribed]
         if hasattr(self, 'invited') and self.invited is not None:
             _dict['invited'] = [x.to_dict() for x in self.invited]
+        if hasattr(self, 'subscribed') and self.subscribed is not None:
+            _dict['subscribed'] = [x.to_dict() for x in self.subscribed]
+        if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
+            _dict['unsubscribed'] = [x.to_dict() for x in self.unsubscribed]
         if hasattr(self, 'add_notification_payload') and self.add_notification_payload is not None:
             _dict['add_notification_payload'] = self.add_notification_payload
         if hasattr(self, 'reply_to_mail') and self.reply_to_mail is not None:
@@ -6078,30 +5982,27 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
     """
     SMS attributes object.
 
-    :attr List[SMSAttributesResponseToItem] to: The email id string.
-    :attr List[SMSAttributesResponseUnsubscribedItem] unsubscribed: (optional) The
-          unsubscribe list.
-    :attr List[SMSAttributesResponseInvitedItem] invited: (optional) The invited
-          list.
+    :attr List[SMAttributesItems] to: The subscribed list.
+    :attr List[SMAttributesItems] unsubscribed: (optional) The unsubscribe list.
+    :attr List[SMAttributesItems] invited: (optional) The email id string.
     """
 
     # The set of defined properties for the class
     _properties = frozenset(['to', 'unsubscribed', 'invited'])
 
     def __init__(self,
-                 to: List['SMSAttributesResponseToItem'],
+                 to: List['SMAttributesItems'],
                  *,
-                 unsubscribed: List['SMSAttributesResponseUnsubscribedItem'] = None,
-                 invited: List['SMSAttributesResponseInvitedItem'] = None,
+                 unsubscribed: List['SMAttributesItems'] = None,
+                 invited: List['SMAttributesItems'] = None,
                  **kwargs) -> None:
         """
         Initialize a SubscriptionAttributesSMSAttributesResponse object.
 
-        :param List[SMSAttributesResponseToItem] to: The email id string.
-        :param List[SMSAttributesResponseUnsubscribedItem] unsubscribed: (optional)
-               The unsubscribe list.
-        :param List[SMSAttributesResponseInvitedItem] invited: (optional) The
-               invited list.
+        :param List[SMAttributesItems] to: The subscribed list.
+        :param List[SMAttributesItems] unsubscribed: (optional) The unsubscribe
+               list.
+        :param List[SMAttributesItems] invited: (optional) The email id string.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
@@ -6116,13 +6017,13 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
         """Initialize a SubscriptionAttributesSMSAttributesResponse object from a json dictionary."""
         args = {}
         if 'to' in _dict:
-            args['to'] = [SMSAttributesResponseToItem.from_dict(x) for x in _dict.get('to')]
+            args['to'] = [SMAttributesItems.from_dict(x) for x in _dict.get('to')]
         else:
             raise ValueError('Required property \'to\' not present in SubscriptionAttributesSMSAttributesResponse JSON')
         if 'unsubscribed' in _dict:
-            args['unsubscribed'] = [SMSAttributesResponseUnsubscribedItem.from_dict(x) for x in _dict.get('unsubscribed')]
+            args['unsubscribed'] = [SMAttributesItems.from_dict(x) for x in _dict.get('unsubscribed')]
         if 'invited' in _dict:
-            args['invited'] = [SMSAttributesResponseInvitedItem.from_dict(x) for x in _dict.get('invited')]
+            args['invited'] = [SMAttributesItems.from_dict(x) for x in _dict.get('invited')]
         args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -6366,7 +6267,7 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
     """
     The attributes for an email notification.
 
-    :attr List[str] to: The email id string.
+    :attr List[str] invited: The email id string.
     :attr bool add_notification_payload: Whether to add the notification payload to
           the email.
     :attr str reply_to_mail: The email address to reply to.
@@ -6375,7 +6276,7 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
     """
 
     def __init__(self,
-                 to: List[str],
+                 invited: List[str],
                  add_notification_payload: bool,
                  reply_to_mail: str,
                  reply_to_name: str,
@@ -6383,7 +6284,7 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
         """
         Initialize a SubscriptionCreateAttributesEmailAttributes object.
 
-        :param List[str] to: The email id string.
+        :param List[str] invited: The email id string.
         :param bool add_notification_payload: Whether to add the notification
                payload to the email.
         :param str reply_to_mail: The email address to reply to.
@@ -6391,7 +6292,7 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
         :param str from_name: The email name of From.
         """
         # pylint: disable=super-init-not-called
-        self.to = to
+        self.invited = invited
         self.add_notification_payload = add_notification_payload
         self.reply_to_mail = reply_to_mail
         self.reply_to_name = reply_to_name
@@ -6401,10 +6302,10 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
     def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesEmailAttributes':
         """Initialize a SubscriptionCreateAttributesEmailAttributes object from a json dictionary."""
         args = {}
-        if 'to' in _dict:
-            args['to'] = _dict.get('to')
+        if 'invited' in _dict:
+            args['invited'] = _dict.get('invited')
         else:
-            raise ValueError('Required property \'to\' not present in SubscriptionCreateAttributesEmailAttributes JSON')
+            raise ValueError('Required property \'invited\' not present in SubscriptionCreateAttributesEmailAttributes JSON')
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
@@ -6431,8 +6332,8 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'to') and self.to is not None:
-            _dict['to'] = self.to
+        if hasattr(self, 'invited') and self.invited is not None:
+            _dict['invited'] = self.invited
         if hasattr(self, 'add_notification_payload') and self.add_notification_payload is not None:
             _dict['add_notification_payload'] = self.add_notification_payload
         if hasattr(self, 'reply_to_mail') and self.reply_to_mail is not None:
@@ -6508,9 +6409,9 @@ class SubscriptionCreateAttributesFCMAttributes(SubscriptionCreateAttributes):
 
 class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
     """
-    The attributes for an email notification.
+    The attributes for an sms notification.
 
-    :attr List[str] to: The email id string.
+    :attr List[str] to: The sms id string.
     """
 
     def __init__(self,
@@ -6518,7 +6419,7 @@ class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
         """
         Initialize a SubscriptionCreateAttributesSMSAttributes object.
 
-        :param List[str] to: The email id string.
+        :param List[str] to: The sms id string.
         """
         # pylint: disable=super-init-not-called
         self.to = to
@@ -6681,55 +6582,58 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
     """
     The attributes for an email notification.
 
-    :attr EmailUpdateAttributesTo to: The email ids.
+    :attr UpdateAttributesInvited invited: (optional) The email ids or phone
+          numbers.
     :attr bool add_notification_payload: Whether to add the notification payload to
           the email.
     :attr str reply_to_mail: The email address to reply to.
     :attr str reply_to_name: The email name to reply to.
     :attr str from_name: The email name of From.
-    :attr List[str] invited: (optional) The email ids invited.
-    :attr EmailUpdateAttributesUnsubscribed unsubscribed: (optional) The email ids.
+    :attr UpdateAttributesSubscribed subscribed: (optional) The email ids or phone
+          number.
+    :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The phone number or
+          Email id to send the SMS/email to.
     """
 
     def __init__(self,
-                 to: 'EmailUpdateAttributesTo',
                  add_notification_payload: bool,
                  reply_to_mail: str,
                  reply_to_name: str,
                  from_name: str,
                  *,
-                 invited: List[str] = None,
-                 unsubscribed: 'EmailUpdateAttributesUnsubscribed' = None) -> None:
+                 invited: 'UpdateAttributesInvited' = None,
+                 subscribed: 'UpdateAttributesSubscribed' = None,
+                 unsubscribed: 'UpdateAttributesUnsubscribed' = None) -> None:
         """
         Initialize a SubscriptionUpdateAttributesEmailUpdateAttributes object.
 
-        :param EmailUpdateAttributesTo to: The email ids.
         :param bool add_notification_payload: Whether to add the notification
                payload to the email.
         :param str reply_to_mail: The email address to reply to.
         :param str reply_to_name: The email name to reply to.
         :param str from_name: The email name of From.
-        :param List[str] invited: (optional) The email ids invited.
-        :param EmailUpdateAttributesUnsubscribed unsubscribed: (optional) The email
-               ids.
+        :param UpdateAttributesInvited invited: (optional) The email ids or phone
+               numbers.
+        :param UpdateAttributesSubscribed subscribed: (optional) The email ids or
+               phone number.
+        :param UpdateAttributesUnsubscribed unsubscribed: (optional) The phone
+               number or Email id to send the SMS/email to.
         """
         # pylint: disable=super-init-not-called
-        self.to = to
+        self.invited = invited
         self.add_notification_payload = add_notification_payload
         self.reply_to_mail = reply_to_mail
         self.reply_to_name = reply_to_name
         self.from_name = from_name
-        self.invited = invited
+        self.subscribed = subscribed
         self.unsubscribed = unsubscribed
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesEmailUpdateAttributes':
         """Initialize a SubscriptionUpdateAttributesEmailUpdateAttributes object from a json dictionary."""
         args = {}
-        if 'to' in _dict:
-            args['to'] = EmailUpdateAttributesTo.from_dict(_dict.get('to'))
-        else:
-            raise ValueError('Required property \'to\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON')
+        if 'invited' in _dict:
+            args['invited'] = UpdateAttributesInvited.from_dict(_dict.get('invited'))
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
@@ -6746,10 +6650,10 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
             args['from_name'] = _dict.get('from_name')
         else:
             raise ValueError('Required property \'from_name\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON')
-        if 'invited' in _dict:
-            args['invited'] = _dict.get('invited')
+        if 'subscribed' in _dict:
+            args['subscribed'] = UpdateAttributesSubscribed.from_dict(_dict.get('subscribed'))
         if 'unsubscribed' in _dict:
-            args['unsubscribed'] = EmailUpdateAttributesUnsubscribed.from_dict(_dict.get('unsubscribed'))
+            args['unsubscribed'] = UpdateAttributesUnsubscribed.from_dict(_dict.get('unsubscribed'))
         return cls(**args)
 
     @classmethod
@@ -6760,8 +6664,8 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'to') and self.to is not None:
-            _dict['to'] = self.to.to_dict()
+        if hasattr(self, 'invited') and self.invited is not None:
+            _dict['invited'] = self.invited.to_dict()
         if hasattr(self, 'add_notification_payload') and self.add_notification_payload is not None:
             _dict['add_notification_payload'] = self.add_notification_payload
         if hasattr(self, 'reply_to_mail') and self.reply_to_mail is not None:
@@ -6770,8 +6674,8 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
             _dict['reply_to_name'] = self.reply_to_name
         if hasattr(self, 'from_name') and self.from_name is not None:
             _dict['from_name'] = self.from_name
-        if hasattr(self, 'invited') and self.invited is not None:
-            _dict['invited'] = self.invited
+        if hasattr(self, 'subscribed') and self.subscribed is not None:
+            _dict['subscribed'] = self.subscribed.to_dict()
         if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
             _dict['unsubscribed'] = self.unsubscribed.to_dict()
         return _dict
@@ -6798,18 +6702,26 @@ class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttribut
     """
     SMS attributes object.
 
-    :attr SMSupdateAttributesTo to: The phone number to send the SMS to.
+    :attr SMSupdateAttributesTo to: (optional) The phone number to send the SMS to.
+    :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The phone number or
+          Email id to send the SMS/email to.
     """
 
     def __init__(self,
-                 to: 'SMSupdateAttributesTo') -> None:
+                 *,
+                 to: 'SMSupdateAttributesTo' = None,
+                 unsubscribed: 'UpdateAttributesUnsubscribed' = None) -> None:
         """
         Initialize a SubscriptionUpdateAttributesSMSUpdateAttributes object.
 
-        :param SMSupdateAttributesTo to: The phone number to send the SMS to.
+        :param SMSupdateAttributesTo to: (optional) The phone number to send the
+               SMS to.
+        :param UpdateAttributesUnsubscribed unsubscribed: (optional) The phone
+               number or Email id to send the SMS/email to.
         """
         # pylint: disable=super-init-not-called
         self.to = to
+        self.unsubscribed = unsubscribed
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesSMSUpdateAttributes':
@@ -6817,8 +6729,8 @@ class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttribut
         args = {}
         if 'to' in _dict:
             args['to'] = SMSupdateAttributesTo.from_dict(_dict.get('to'))
-        else:
-            raise ValueError('Required property \'to\' not present in SubscriptionUpdateAttributesSMSUpdateAttributes JSON')
+        if 'unsubscribed' in _dict:
+            args['unsubscribed'] = UpdateAttributesUnsubscribed.from_dict(_dict.get('unsubscribed'))
         return cls(**args)
 
     @classmethod
@@ -6831,6 +6743,8 @@ class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttribut
         _dict = {}
         if hasattr(self, 'to') and self.to is not None:
             _dict['to'] = self.to.to_dict()
+        if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
+            _dict['unsubscribed'] = self.unsubscribed.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -6964,3 +6878,379 @@ class SubscriptionUpdateAttributesWebhookAttributes(SubscriptionUpdateAttributes
     def __ne__(self, other: 'SubscriptionUpdateAttributesWebhookAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+##############################################################################
+# Pagers
+##############################################################################
+
+class SourcesPager():
+    """
+    SourcesPager can be used to simplify the use of the "list_sources" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EventNotificationsV1,
+                 instance_id: str,
+                 limit: int = None,
+                 search: str = None,
+    ) -> None:
+        """
+        Initialize a SourcesPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._instance_id = instance_id
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of SourceListItem.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_sources(
+            instance_id=self._instance_id,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('sources')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of SourceListItem.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class TopicsPager():
+    """
+    TopicsPager can be used to simplify the use of the "list_topics" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EventNotificationsV1,
+                 instance_id: str,
+                 limit: int = None,
+                 search: str = None,
+    ) -> None:
+        """
+        Initialize a TopicsPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._instance_id = instance_id
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of TopicsListItem.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_topics(
+            instance_id=self._instance_id,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('topics')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of TopicsListItem.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class DestinationsPager():
+    """
+    DestinationsPager can be used to simplify the use of the "list_destinations" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EventNotificationsV1,
+                 instance_id: str,
+                 limit: int = None,
+                 search: str = None,
+    ) -> None:
+        """
+        Initialize a DestinationsPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._instance_id = instance_id
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of DestinationListItem.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_destinations(
+            instance_id=self._instance_id,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('destinations')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of DestinationListItem.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class TagsSubscriptionPager():
+    """
+    TagsSubscriptionPager can be used to simplify the use of the "list_tags_subscription" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EventNotificationsV1,
+                 instance_id: str,
+                 id: str,
+                 device_id: str = None,
+                 user_id: str = None,
+                 tag_name: str = None,
+                 limit: int = None,
+                 search: str = None,
+    ) -> None:
+        """
+        Initialize a TagsSubscriptionPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Destination.
+        :param str device_id: (optional) DeviceID of the destination
+               tagsubscription.
+        :param str user_id: (optional) UserID of the destination.
+        :param str tag_name: (optional) TagName of the subscription.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._instance_id = instance_id
+        self._id = id
+        self._device_id = device_id
+        self._user_id = user_id
+        self._tag_name = tag_name
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of TagsSubscriptionListItem.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_tags_subscription(
+            instance_id=self._instance_id,
+            id=self._id,
+            device_id=self._device_id,
+            user_id=self._user_id,
+            tag_name=self._tag_name,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('tag_subscriptions')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of TagsSubscriptionListItem.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class SubscriptionsPager():
+    """
+    SubscriptionsPager can be used to simplify the use of the "list_subscriptions" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EventNotificationsV1,
+                 instance_id: str,
+                 limit: int = None,
+                 search: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionsPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._instance_id = instance_id
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of SubscriptionListItem.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_subscriptions(
+            instance_id=self._instance_id,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('subscriptions')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of SubscriptionListItem.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results

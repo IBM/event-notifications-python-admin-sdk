@@ -49,10 +49,12 @@ topic_name = 'Admin Topic Compliance'
 source_id = ''
 topic_id = ''
 destination_id = ''
+destination_id2 = ''
 destination_id5 = ''
 destination_id7 = ''
 safariCertificatePath = ''
 subscription_id = ''
+subscription_id2 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 
@@ -406,6 +408,10 @@ class TestEventNotificationsV1Examples():
         """
         list_destinations request example
         """
+        global destination_id2
+        more_results = True
+        limit = 1
+        offset = 0
         try:
             print('\nlist_destinations() result:')
             # begin-list_destinations
@@ -414,10 +420,19 @@ class TestEventNotificationsV1Examples():
                 instance_id
             ).get_result()
 
+            # end-list_destinations
             print(json.dumps(destination_list, indent=2))
 
-            # end-list_destinations
+            destinations = DestinationList.from_dict(destination_list)
+            assert destinations is not None
 
+            for i in range(0, len(destinations.destinations)):
+                destination = destinations.destinations[i]
+                if destination.id != destination_id and destination.type == 'smtp_ibm':
+                    destination_id2 = destination.id
+            if destinations.total_count <= offset:
+                more_results = False
+            offset += 1
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -530,7 +545,7 @@ class TestEventNotificationsV1Examples():
         """
         create_subscription request example
         """
-        global subscription_id
+        global subscription_id, subscription_id2
         try:
             print('\ncreate_subscription() result:')
             # begin-create_subscription
@@ -553,6 +568,29 @@ class TestEventNotificationsV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
+        subscription_create_attributes_model = {
+            'invited': ["tester1@gmail.com", "tester3@ibm.com"],
+            'add_notification_payload': True,
+            "reply_to_mail": "reply_to_mail@us.com",
+            "reply_to_name": "US News",
+            "from_name": "IBM"
+        }
+
+        name = 'subscription_email'
+        description = 'Subscription for email'
+        create_subscription_response = event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id2,
+            topic_id=topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        subscription_id2 = subscription_response.get('id')
 
     @needscredentials
     def test_list_subscriptions_example(self):
@@ -615,7 +653,36 @@ class TestEventNotificationsV1Examples():
 
             print(json.dumps(subscription, indent=2))
 
+            sms_update_attributes_invite_model = {}
+            sms_update_attributes_invite_model['add'] = ['tester4@ibm.com']
+
+            sms_update_attributes_toremove_model = {}
+            sms_update_attributes_toremove_model['remove'] = ['tester3@ibm.com']
+
+            subscription_update_attributes_model = {
+                'invited': sms_update_attributes_invite_model,
+                'add_notification_payload': True,
+                "reply_to_mail": "reply_to_mail@us.com",
+                "reply_to_name": "US News",
+                "from_name": "IBM",
+                "subscribed": sms_update_attributes_toremove_model,
+                "unsubscribed": sms_update_attributes_toremove_model
+            }
+
+            name = 'subscription_email update'
+            description = 'Subscription for email updated'
+            update_subscription_response = event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id2,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
             # end-update_subscription
+
+            print(json.dumps(subscription_response, indent=2))
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -704,9 +771,15 @@ class TestEventNotificationsV1Examples():
                 instance_id,
                 id=subscription_id
             )
-
             # end-delete_subscription
             print('\ndelete_subscription() response status code: ', response.get_status_code())
+
+            for id in [subscription_id2]:
+                delete_subscription_response = event_notifications_service.delete_subscription(
+                    instance_id,
+                    id
+                )
+            print('\ndelete_subscription() response status code: ', delete_subscription_response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -746,21 +819,12 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            response = event_notifications_service.delete_destination(
-                instance_id,
-                id=destination_id5
-            )
-
-            # end-delete_destination
-            print('\ndelete_destination() response status code: ', response.get_status_code())
-
-            response = event_notifications_service.delete_destination(
-                instance_id,
-                id=destination_id7
-            )
-
-            # end-delete_destination
-            print('\ndelete_destination() response status code: ', response.get_status_code())
+            for id in [destination_id5, destination_id7]:
+                delete_destination_response = self.event_notifications_service.delete_destination(
+                    instance_id,
+                    id
+                )
+            print('\ndelete_destination() response status code: ', delete_destination_response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
