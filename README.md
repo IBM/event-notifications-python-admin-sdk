@@ -113,8 +113,6 @@ SDK Methods to consume
 - [Push Destination APIs](#push-destination-apis)
   - [Create Destination tag subscription](#create-destination-tag-subscription)
   - [List Destination tag subscription](#list-destination-tag-subscription)
-  - [List Destination device tag subscriptions](#list-destination-device-tag-subscriptions)
-  - [Get Device Count](#get-device-count)
   - [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
 - [Subscriptions](#subscriptions)
     - [Create Subscription](#create-subscription)
@@ -385,26 +383,6 @@ subscription = _event_notifications_service.list_tags_subscription(
 
 print(json.dumps(subscription, indent=2))
 ```
-### List Destination device tag subscriptions
-```py
-all_subscription_for_device = _event_notifications_service.get_tags_subscriptions_device(
-  <instance-id>,      # Event notifications service instance GUID
-  <destination-id>,   # Event notifications service Destintaion ID
-  <device_id>,        # Event notifications service Device ID
-).get_result()
-
-print(json.dumps(all_subscription_for_device, indent=2))
-```
-### Get Device Count
-```py
-get_deviceCount_response = _event_notifications_service.get_device_count(
-  <instance-id>,      # Event notifications service instance GUID
-  <destination-id>,   # Event notifications service Destintaion ID
-).get_result()
-
-print(json.dumps(get_deviceCount_response, indent=2))
-```
-
 ### Delete Destination device tag subscription
 ```py
 response = _event_notifications_service.delete_tags_subscription(

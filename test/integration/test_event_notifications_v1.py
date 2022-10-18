@@ -793,27 +793,6 @@ class TestEventNotificationsV1():
         #
 
     @needscredentials
-    def test_get_deviceCount(self):
-
-        get_deviceCount_response = self.event_notifications_service.get_device_count(
-            instance_id,
-            id=destination_id3
-        )
-
-        assert get_deviceCount_response.get_status_code() == 200
-        devicecount = get_deviceCount_response.get_result()
-        assert devicecount is not None
-
-        #
-        # The following status codes aren't covered by tests.
-        # Please provide integration tests for these too.
-        #
-        # 401
-        # 404
-        # 500
-        #
-
-    @needscredentials
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
@@ -844,7 +823,7 @@ class TestEventNotificationsV1():
         assert subscription_description == description
 
         subscription_create_attributes_model = {
-            'to': ["tester1@gmail.com", "tester3@ibm.com"],
+            'invited': ["tester1@gmail.com", "tester3@ibm.com"],
             'add_notification_payload': True,
             "reply_to_mail": "reply_to_mail@us.com",
             "reply_to_name": "US News",
@@ -991,6 +970,41 @@ class TestEventNotificationsV1():
         assert subscription_new_id == subscription_id
         assert subscription_description == description
 
+        sms_update_attributes_invite_model = {}
+        sms_update_attributes_invite_model['add'] = ['tester4@ibm.com']
+
+        sms_update_attributes_toremove_model = {}
+        sms_update_attributes_toremove_model['remove'] = ['tester3@ibm.com']
+
+        subscription_update_attributes_model = {
+            'invited': sms_update_attributes_invite_model,
+            'add_notification_payload': True,
+            "reply_to_mail": "reply_to_mail@us.com",
+            "reply_to_name": "US News",
+            "from_name": "IBM",
+            "subscribed": sms_update_attributes_toremove_model,
+            "unsubscribed": sms_update_attributes_toremove_model
+        }
+
+        name = 'subscription_email update'
+        description = 'Subscription for email updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id2,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1357,47 +1371,12 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_delete_destination(self):
 
-        delete_destination_response = self.event_notifications_service.delete_destination(
-            instance_id,
-            id=destination_id
-        )
-
-        assert delete_destination_response.get_status_code() == 204
-
-        delete_destination_response = self.event_notifications_service.delete_destination(
-            instance_id,
-            id=destination_id3
-        )
-
-        assert delete_destination_response.get_status_code() == 204
-
-        delete_destination_response = self.event_notifications_service.delete_destination(
-            instance_id,
-            id=destination_id4
-        )
-
-        assert delete_destination_response.get_status_code() == 204
-
-        delete_destination_response = self.event_notifications_service.delete_destination(
-            instance_id,
-            id=destination_id5
-        )
-
-        assert delete_destination_response.get_status_code() == 204
-
-        delete_destination_response = self.event_notifications_service.delete_destination(
-            instance_id,
-            id=destination_id6
-        )
-
-        assert delete_destination_response.get_status_code() == 204
-
-        delete_destination_response = self.event_notifications_service.delete_destination(
-            instance_id,
-            id=destination_id7
-        )
-
-        assert delete_destination_response.get_status_code() == 204
+        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7]:
+            delete_destination_response = self.event_notifications_service.delete_destination(
+                instance_id,
+                id
+            )
+        print('\ndelete_destination() response status code: ', delete_destination_response.get_status_code())
 
         #
         # The following status codes aren't covered by tests.

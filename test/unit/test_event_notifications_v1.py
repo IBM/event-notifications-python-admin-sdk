@@ -524,7 +524,7 @@ class TestListSources():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -572,7 +572,7 @@ class TestListSources():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -608,7 +608,7 @@ class TestListSources():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -635,6 +635,71 @@ class TestListSources():
         # Disable retries and run test_list_sources_value_error.
         _service.disable_retries()
         self.test_list_sources_value_error()
+
+    @responses.activate
+    def test_list_sources_with_pager_get_next(self):
+        """
+        test_list_sources_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/sources')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = SourcesPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_sources_with_pager_get_all(self):
+        """
+        test_list_sources_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/sources')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = SourcesPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetSource():
     """
@@ -946,16 +1011,16 @@ class TestCreateTopic():
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
 
-        # Construct a dict representation of a TopicUpdateSourcesItem model
-        topic_update_sources_item_model = {}
-        topic_update_sources_item_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
-        topic_update_sources_item_model['rules'] = [rules_model]
+        # Construct a dict representation of a SourcesItems model
+        sources_items_model = {}
+        sources_items_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
+        sources_items_model['rules'] = [rules_model]
 
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
         description = 'testString'
-        sources = [topic_update_sources_item_model]
+        sources = [sources_items_model]
 
         # Invoke method
         response = _service.create_topic(
@@ -973,7 +1038,7 @@ class TestCreateTopic():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
-        assert req_body['sources'] == [topic_update_sources_item_model]
+        assert req_body['sources'] == [sources_items_model]
 
     def test_create_topic_all_params_with_retries(self):
         # Enable retries and run test_create_topic_all_params.
@@ -1004,16 +1069,16 @@ class TestCreateTopic():
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
 
-        # Construct a dict representation of a TopicUpdateSourcesItem model
-        topic_update_sources_item_model = {}
-        topic_update_sources_item_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
-        topic_update_sources_item_model['rules'] = [rules_model]
+        # Construct a dict representation of a SourcesItems model
+        sources_items_model = {}
+        sources_items_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
+        sources_items_model['rules'] = [rules_model]
 
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
         description = 'testString'
-        sources = [topic_update_sources_item_model]
+        sources = [sources_items_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1046,7 +1111,7 @@ class TestListTopics():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1094,7 +1159,7 @@ class TestListTopics():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1130,7 +1195,7 @@ class TestListTopics():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1157,6 +1222,71 @@ class TestListTopics():
         # Disable retries and run test_list_topics_value_error.
         _service.disable_retries()
         self.test_list_topics_value_error()
+
+    @responses.activate
+    def test_list_topics_with_pager_get_next(self):
+        """
+        test_list_topics_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/topics')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
+        mock_response2 = '{"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = TopicsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_topics_with_pager_get_all(self):
+        """
+        test_list_topics_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/topics')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
+        mock_response2 = '{"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = TopicsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetTopic():
     """
@@ -1307,17 +1437,17 @@ class TestReplaceTopic():
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
 
-        # Construct a dict representation of a TopicUpdateSourcesItem model
-        topic_update_sources_item_model = {}
-        topic_update_sources_item_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
-        topic_update_sources_item_model['rules'] = [rules_model]
+        # Construct a dict representation of a SourcesItems model
+        sources_items_model = {}
+        sources_items_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
+        sources_items_model['rules'] = [rules_model]
 
         # Set up parameter values
         instance_id = 'testString'
         id = 'testString'
         name = 'testString'
         description = 'testString'
-        sources = [topic_update_sources_item_model]
+        sources = [sources_items_model]
 
         # Invoke method
         response = _service.replace_topic(
@@ -1336,7 +1466,7 @@ class TestReplaceTopic():
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
-        assert req_body['sources'] == [topic_update_sources_item_model]
+        assert req_body['sources'] == [sources_items_model]
 
     def test_replace_topic_all_params_with_retries(self):
         # Enable retries and run test_replace_topic_all_params.
@@ -1367,17 +1497,17 @@ class TestReplaceTopic():
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
 
-        # Construct a dict representation of a TopicUpdateSourcesItem model
-        topic_update_sources_item_model = {}
-        topic_update_sources_item_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
-        topic_update_sources_item_model['rules'] = [rules_model]
+        # Construct a dict representation of a SourcesItems model
+        sources_items_model = {}
+        sources_items_model['id'] = 'e7c3b3ee-78d9-4e02-95c3-c001a05e6ea5:api'
+        sources_items_model['rules'] = [rules_model]
 
         # Set up parameter values
         instance_id = 'testString'
         id = 'testString'
         name = 'testString'
         description = 'testString'
-        sources = [topic_update_sources_item_model]
+        sources = [sources_items_model]
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -1528,16 +1658,16 @@ class TestCreateDestination():
                       content_type='application/json',
                       status=201)
 
-        # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        destination_config_params_model = {}
-        destination_config_params_model['url'] = 'testString'
-        destination_config_params_model['verb'] = 'get'
-        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
-        destination_config_params_model['sensitive_headers'] = ['testString']
+        # Construct a dict representation of a DestinationConfigOneOfWebhookDestinationConfig model
+        destination_config_one_of_model = {}
+        destination_config_one_of_model['url'] = 'testString'
+        destination_config_one_of_model['verb'] = 'get'
+        destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
+        destination_config_one_of_model['sensitive_headers'] = ['testString']
 
         # Construct a dict representation of a DestinationConfig model
         destination_config_model = {}
-        destination_config_model['params'] = destination_config_params_model
+        destination_config_model['params'] = destination_config_one_of_model
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1688,7 +1818,7 @@ class TestListDestinations():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1736,7 +1866,7 @@ class TestListDestinations():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1772,7 +1902,7 @@ class TestListDestinations():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -1799,6 +1929,71 @@ class TestListDestinations():
         # Disable retries and run test_list_destinations_value_error.
         _service.disable_retries()
         self.test_list_destinations_value_error()
+
+    @responses.activate
+    def test_list_destinations_with_pager_get_next(self):
+        """
+        test_list_destinations_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/destinations')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = DestinationsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_destinations_with_pager_get_all(self):
+        """
+        test_list_destinations_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/destinations')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = DestinationsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetDestination():
     """
@@ -1899,16 +2094,16 @@ class TestUpdateDestination():
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        destination_config_params_model = {}
-        destination_config_params_model['url'] = 'testString'
-        destination_config_params_model['verb'] = 'get'
-        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
-        destination_config_params_model['sensitive_headers'] = ['testString']
+        # Construct a dict representation of a DestinationConfigOneOfWebhookDestinationConfig model
+        destination_config_one_of_model = {}
+        destination_config_one_of_model['url'] = 'testString'
+        destination_config_one_of_model['verb'] = 'get'
+        destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
+        destination_config_one_of_model['sensitive_headers'] = ['testString']
 
         # Construct a dict representation of a DestinationConfig model
         destination_config_model = {}
-        destination_config_model['params'] = destination_config_params_model
+        destination_config_model['params'] = destination_config_one_of_model
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2154,222 +2349,6 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestGetTagsSubscriptionsDevice():
-    """
-    Test Class for get_tags_subscriptions_device
-    """
-
-    @responses.activate
-    def test_get_tags_subscriptions_device_all_params(self):
-        """
-        get_tags_subscriptions_device()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        device_id = 'testString'
-        tag_name = 'testString'
-        limit = 1
-        offset = 0
-
-        # Invoke method
-        response = _service.get_tags_subscriptions_device(
-            instance_id,
-            id,
-            device_id,
-            tag_name=tag_name,
-            limit=limit,
-            offset=offset,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'tag_name={}'.format(tag_name) in query_string
-        assert 'limit={}'.format(limit) in query_string
-        assert 'offset={}'.format(offset) in query_string
-
-    def test_get_tags_subscriptions_device_all_params_with_retries(self):
-        # Enable retries and run test_get_tags_subscriptions_device_all_params.
-        _service.enable_retries()
-        self.test_get_tags_subscriptions_device_all_params()
-
-        # Disable retries and run test_get_tags_subscriptions_device_all_params.
-        _service.disable_retries()
-        self.test_get_tags_subscriptions_device_all_params()
-
-    @responses.activate
-    def test_get_tags_subscriptions_device_required_params(self):
-        """
-        test_get_tags_subscriptions_device_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        device_id = 'testString'
-
-        # Invoke method
-        response = _service.get_tags_subscriptions_device(
-            instance_id,
-            id,
-            device_id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_tags_subscriptions_device_required_params_with_retries(self):
-        # Enable retries and run test_get_tags_subscriptions_device_required_params.
-        _service.enable_retries()
-        self.test_get_tags_subscriptions_device_required_params()
-
-        # Disable retries and run test_get_tags_subscriptions_device_required_params.
-        _service.disable_retries()
-        self.test_get_tags_subscriptions_device_required_params()
-
-    @responses.activate
-    def test_get_tags_subscriptions_device_value_error(self):
-        """
-        test_get_tags_subscriptions_device_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions/devices/testString')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        device_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-            "id": id,
-            "device_id": device_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_tags_subscriptions_device(**req_copy)
-
-    def test_get_tags_subscriptions_device_value_error_with_retries(self):
-        # Enable retries and run test_get_tags_subscriptions_device_value_error.
-        _service.enable_retries()
-        self.test_get_tags_subscriptions_device_value_error()
-
-        # Disable retries and run test_get_tags_subscriptions_device_value_error.
-        _service.disable_retries()
-        self.test_get_tags_subscriptions_device_value_error()
-
-class TestGetDeviceCount():
-    """
-    Test Class for get_device_count
-    """
-
-    @responses.activate
-    def test_get_device_count_all_params(self):
-        """
-        get_device_count()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/count')
-        mock_response = '{"total_count": 11}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-
-        # Invoke method
-        response = _service.get_device_count(
-            instance_id,
-            id,
-            headers={}
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-
-    def test_get_device_count_all_params_with_retries(self):
-        # Enable retries and run test_get_device_count_all_params.
-        _service.enable_retries()
-        self.test_get_device_count_all_params()
-
-        # Disable retries and run test_get_device_count_all_params.
-        _service.disable_retries()
-        self.test_get_device_count_all_params()
-
-    @responses.activate
-    def test_get_device_count_value_error(self):
-        """
-        test_get_device_count_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/destinations/testString/devices/count')
-        mock_response = '{"total_count": 11}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-            "id": id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.get_device_count(**req_copy)
-
-    def test_get_device_count_value_error_with_retries(self):
-        # Enable retries and run test_get_device_count_value_error.
-        _service.enable_retries()
-        self.test_get_device_count_value_error()
-
-        # Disable retries and run test_get_device_count_value_error.
-        _service.disable_retries()
-        self.test_get_device_count_value_error()
-
 class TestCreateTagsSubscription():
     """
     Test Class for create_tags_subscription
@@ -2474,7 +2453,7 @@ class TestListTagsSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2533,7 +2512,7 @@ class TestListTagsSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2571,7 +2550,7 @@ class TestListTagsSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2600,6 +2579,79 @@ class TestListTagsSubscription():
         # Disable retries and run test_list_tags_subscription_value_error.
         _service.disable_retries()
         self.test_list_tags_subscription_value_error()
+
+    @responses.activate
+    def test_list_tags_subscription_with_pager_get_next(self):
+        """
+        test_list_tags_subscription_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = TagsSubscriptionPager(
+            client=_service,
+            instance_id='testString',
+            id='testString',
+            device_id='testString',
+            user_id='testString',
+            tag_name='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_tags_subscription_with_pager_get_all(self):
+        """
+        test_list_tags_subscription_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = TagsSubscriptionPager(
+            client=_service,
+            instance_id='testString',
+            id='testString',
+            device_id='testString',
+            user_id='testString',
+            tag_name='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestDeleteTagsSubscription():
     """
@@ -2877,7 +2929,7 @@ class TestListSubscriptions():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2925,7 +2977,7 @@ class TestListSubscriptions():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2961,7 +3013,7 @@ class TestListSubscriptions():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -2988,6 +3040,71 @@ class TestListSubscriptions():
         # Disable retries and run test_list_subscriptions_value_error.
         _service.disable_retries()
         self.test_list_subscriptions_value_error()
+
+    @responses.activate
+    def test_list_subscriptions_with_pager_get_next(self):
+        """
+        test_list_subscriptions_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/subscriptions')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = SubscriptionsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_subscriptions_with_pager_get_all(self):
+        """
+        test_list_subscriptions_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/subscriptions')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
+        mock_response2 = '{"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = SubscriptionsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 class TestGetSubscription():
     """
@@ -3167,9 +3284,14 @@ class TestUpdateSubscription():
         sm_supdate_attributes_to_model['add'] = ['testString']
         sm_supdate_attributes_to_model['remove'] = ['testString']
 
+        # Construct a dict representation of a UpdateAttributesUnsubscribed model
+        update_attributes_unsubscribed_model = {}
+        update_attributes_unsubscribed_model['remove'] = ['testString']
+
         # Construct a dict representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_model = {}
         subscription_update_attributes_model['to'] = sm_supdate_attributes_to_model
+        subscription_update_attributes_model['unsubscribed'] = update_attributes_unsubscribed_model
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3225,9 +3347,14 @@ class TestUpdateSubscription():
         sm_supdate_attributes_to_model['add'] = ['testString']
         sm_supdate_attributes_to_model['remove'] = ['testString']
 
+        # Construct a dict representation of a UpdateAttributesUnsubscribed model
+        update_attributes_unsubscribed_model = {}
+        update_attributes_unsubscribed_model['remove'] = ['testString']
+
         # Construct a dict representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_model = {}
         subscription_update_attributes_model['to'] = sm_supdate_attributes_to_model
+        subscription_update_attributes_model['unsubscribed'] = update_attributes_unsubscribed_model
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3307,14 +3434,14 @@ class TestModel_Destination():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_params_model = {} # DestinationConfigParamsWebhookDestinationConfig
-        destination_config_params_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
-        destination_config_params_model['verb'] = 'post'
-        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
-        destination_config_params_model['sensitive_headers'] = ['authorization']
+        destination_config_one_of_model = {} # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
+        destination_config_one_of_model['verb'] = 'post'
+        destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
+        destination_config_one_of_model['sensitive_headers'] = ['authorization']
 
         destination_config_model = {} # DestinationConfig
-        destination_config_model['params'] = destination_config_params_model
+        destination_config_model['params'] = destination_config_one_of_model
 
         # Construct a json representation of a Destination model
         destination_model_json = {}
@@ -3354,15 +3481,15 @@ class TestModel_DestinationConfig():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_params_model = {} # DestinationConfigParamsWebhookDestinationConfig
-        destination_config_params_model['url'] = 'https://1ea472c0.us-south.apigw.appdomain.cloud/nhwebhook/sendwebhook'
-        destination_config_params_model['verb'] = 'post'
-        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
-        destination_config_params_model['sensitive_headers'] = ['authorization']
+        destination_config_one_of_model = {} # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model['url'] = 'https://1ea472c0.us-south.apigw.appdomain.cloud/nhwebhook/sendwebhook'
+        destination_config_one_of_model['verb'] = 'post'
+        destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
+        destination_config_one_of_model['sensitive_headers'] = ['authorization']
 
         # Construct a json representation of a DestinationConfig model
         destination_config_model_json = {}
-        destination_config_model_json['params'] = destination_config_params_model
+        destination_config_model_json['params'] = destination_config_one_of_model
 
         # Construct a model instance of DestinationConfig by calling from_dict on the json representation
         destination_config_model = DestinationConfig.from_dict(destination_config_model_json)
@@ -3400,12 +3527,18 @@ class TestModel_DestinationList():
         destination_list_item_model['subscription_names'] = ['Webhook Sub for new change']
         destination_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
+        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+
         # Construct a json representation of a DestinationList model
         destination_list_model_json = {}
         destination_list_model_json['total_count'] = 38
         destination_list_model_json['offset'] = 38
         destination_list_model_json['limit'] = 38
         destination_list_model_json['destinations'] = [destination_list_item_model]
+        destination_list_model_json['first'] = page_href_response_model
+        destination_list_model_json['previous'] = page_href_response_model
+        destination_list_model_json['next'] = page_href_response_model
 
         # Construct a model instance of DestinationList by calling from_dict on the json representation
         destination_list_model = DestinationList.from_dict(destination_list_model_json)
@@ -3469,14 +3602,14 @@ class TestModel_DestinationResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_params_model = {} # DestinationConfigParamsWebhookDestinationConfig
-        destination_config_params_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
-        destination_config_params_model['verb'] = 'post'
-        destination_config_params_model['custom_headers'] = {'key1': 'testString'}
-        destination_config_params_model['sensitive_headers'] = ['authorization']
+        destination_config_one_of_model = {} # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
+        destination_config_one_of_model['verb'] = 'post'
+        destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
+        destination_config_one_of_model['sensitive_headers'] = ['authorization']
 
         destination_config_model = {} # DestinationConfig
-        destination_config_model['params'] = destination_config_params_model
+        destination_config_model['params'] = destination_config_one_of_model
 
         # Construct a json representation of a DestinationResponse model
         destination_response_model_json = {}
@@ -3535,183 +3668,66 @@ class TestModel_DestinationTagsSubscriptionResponse():
         destination_tags_subscription_response_model_json2 = destination_tags_subscription_response_model.to_dict()
         assert destination_tags_subscription_response_model_json2 == destination_tags_subscription_response_model_json
 
-class TestModel_DeviceCount():
+class TestModel_EmailAttributesResponseInvitedItems():
     """
-    Test Class for DeviceCount
+    Test Class for EmailAttributesResponseInvitedItems
     """
 
-    def test_device_count_serialization(self):
+    def test_email_attributes_response_invited_items_serialization(self):
         """
-        Test serialization/deserialization for DeviceCount
+        Test serialization/deserialization for EmailAttributesResponseInvitedItems
         """
 
-        # Construct a json representation of a DeviceCount model
-        device_count_model_json = {}
-        device_count_model_json['total_count'] = 38
+        # Construct a json representation of a EmailAttributesResponseInvitedItems model
+        email_attributes_response_invited_items_model_json = {}
+        email_attributes_response_invited_items_model_json['email'] = 'testString'
+        email_attributes_response_invited_items_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        email_attributes_response_invited_items_model_json['expires_at'] = '2019-01-01T12:00:00Z'
 
-        # Construct a model instance of DeviceCount by calling from_dict on the json representation
-        device_count_model = DeviceCount.from_dict(device_count_model_json)
-        assert device_count_model != False
+        # Construct a model instance of EmailAttributesResponseInvitedItems by calling from_dict on the json representation
+        email_attributes_response_invited_items_model = EmailAttributesResponseInvitedItems.from_dict(email_attributes_response_invited_items_model_json)
+        assert email_attributes_response_invited_items_model != False
 
-        # Construct a model instance of DeviceCount by calling from_dict on the json representation
-        device_count_model_dict = DeviceCount.from_dict(device_count_model_json).__dict__
-        device_count_model2 = DeviceCount(**device_count_model_dict)
+        # Construct a model instance of EmailAttributesResponseInvitedItems by calling from_dict on the json representation
+        email_attributes_response_invited_items_model_dict = EmailAttributesResponseInvitedItems.from_dict(email_attributes_response_invited_items_model_json).__dict__
+        email_attributes_response_invited_items_model2 = EmailAttributesResponseInvitedItems(**email_attributes_response_invited_items_model_dict)
 
         # Verify the model instances are equivalent
-        assert device_count_model == device_count_model2
+        assert email_attributes_response_invited_items_model == email_attributes_response_invited_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        device_count_model_json2 = device_count_model.to_dict()
-        assert device_count_model_json2 == device_count_model_json
+        email_attributes_response_invited_items_model_json2 = email_attributes_response_invited_items_model.to_dict()
+        assert email_attributes_response_invited_items_model_json2 == email_attributes_response_invited_items_model_json
 
-class TestModel_EmailAttributesResponseInvitedItem():
+class TestModel_EmailAttributesResponseSubscribedUnsubscribedItems():
     """
-    Test Class for EmailAttributesResponseInvitedItem
+    Test Class for EmailAttributesResponseSubscribedUnsubscribedItems
     """
 
-    def test_email_attributes_response_invited_item_serialization(self):
+    def test_email_attributes_response_subscribed_unsubscribed_items_serialization(self):
         """
-        Test serialization/deserialization for EmailAttributesResponseInvitedItem
+        Test serialization/deserialization for EmailAttributesResponseSubscribedUnsubscribedItems
         """
 
-        # Construct a json representation of a EmailAttributesResponseInvitedItem model
-        email_attributes_response_invited_item_model_json = {}
-        email_attributes_response_invited_item_model_json['email'] = 'testString'
-        email_attributes_response_invited_item_model_json['time'] = '2019-01-01T12:00:00Z'
+        # Construct a json representation of a EmailAttributesResponseSubscribedUnsubscribedItems model
+        email_attributes_response_subscribed_unsubscribed_items_model_json = {}
+        email_attributes_response_subscribed_unsubscribed_items_model_json['email'] = 'testString'
+        email_attributes_response_subscribed_unsubscribed_items_model_json['updated_at'] = '2019-01-01T12:00:00Z'
 
-        # Construct a model instance of EmailAttributesResponseInvitedItem by calling from_dict on the json representation
-        email_attributes_response_invited_item_model = EmailAttributesResponseInvitedItem.from_dict(email_attributes_response_invited_item_model_json)
-        assert email_attributes_response_invited_item_model != False
+        # Construct a model instance of EmailAttributesResponseSubscribedUnsubscribedItems by calling from_dict on the json representation
+        email_attributes_response_subscribed_unsubscribed_items_model = EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(email_attributes_response_subscribed_unsubscribed_items_model_json)
+        assert email_attributes_response_subscribed_unsubscribed_items_model != False
 
-        # Construct a model instance of EmailAttributesResponseInvitedItem by calling from_dict on the json representation
-        email_attributes_response_invited_item_model_dict = EmailAttributesResponseInvitedItem.from_dict(email_attributes_response_invited_item_model_json).__dict__
-        email_attributes_response_invited_item_model2 = EmailAttributesResponseInvitedItem(**email_attributes_response_invited_item_model_dict)
+        # Construct a model instance of EmailAttributesResponseSubscribedUnsubscribedItems by calling from_dict on the json representation
+        email_attributes_response_subscribed_unsubscribed_items_model_dict = EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(email_attributes_response_subscribed_unsubscribed_items_model_json).__dict__
+        email_attributes_response_subscribed_unsubscribed_items_model2 = EmailAttributesResponseSubscribedUnsubscribedItems(**email_attributes_response_subscribed_unsubscribed_items_model_dict)
 
         # Verify the model instances are equivalent
-        assert email_attributes_response_invited_item_model == email_attributes_response_invited_item_model2
+        assert email_attributes_response_subscribed_unsubscribed_items_model == email_attributes_response_subscribed_unsubscribed_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        email_attributes_response_invited_item_model_json2 = email_attributes_response_invited_item_model.to_dict()
-        assert email_attributes_response_invited_item_model_json2 == email_attributes_response_invited_item_model_json
-
-class TestModel_EmailAttributesResponseToItem():
-    """
-    Test Class for EmailAttributesResponseToItem
-    """
-
-    def test_email_attributes_response_to_item_serialization(self):
-        """
-        Test serialization/deserialization for EmailAttributesResponseToItem
-        """
-
-        # Construct a json representation of a EmailAttributesResponseToItem model
-        email_attributes_response_to_item_model_json = {}
-        email_attributes_response_to_item_model_json['email'] = 'testString'
-        email_attributes_response_to_item_model_json['time'] = '2019-01-01T12:00:00Z'
-
-        # Construct a model instance of EmailAttributesResponseToItem by calling from_dict on the json representation
-        email_attributes_response_to_item_model = EmailAttributesResponseToItem.from_dict(email_attributes_response_to_item_model_json)
-        assert email_attributes_response_to_item_model != False
-
-        # Construct a model instance of EmailAttributesResponseToItem by calling from_dict on the json representation
-        email_attributes_response_to_item_model_dict = EmailAttributesResponseToItem.from_dict(email_attributes_response_to_item_model_json).__dict__
-        email_attributes_response_to_item_model2 = EmailAttributesResponseToItem(**email_attributes_response_to_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert email_attributes_response_to_item_model == email_attributes_response_to_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        email_attributes_response_to_item_model_json2 = email_attributes_response_to_item_model.to_dict()
-        assert email_attributes_response_to_item_model_json2 == email_attributes_response_to_item_model_json
-
-class TestModel_EmailAttributesResponseUnsubscribedItem():
-    """
-    Test Class for EmailAttributesResponseUnsubscribedItem
-    """
-
-    def test_email_attributes_response_unsubscribed_item_serialization(self):
-        """
-        Test serialization/deserialization for EmailAttributesResponseUnsubscribedItem
-        """
-
-        # Construct a json representation of a EmailAttributesResponseUnsubscribedItem model
-        email_attributes_response_unsubscribed_item_model_json = {}
-        email_attributes_response_unsubscribed_item_model_json['email'] = 'testString'
-        email_attributes_response_unsubscribed_item_model_json['time'] = '2019-01-01T12:00:00Z'
-
-        # Construct a model instance of EmailAttributesResponseUnsubscribedItem by calling from_dict on the json representation
-        email_attributes_response_unsubscribed_item_model = EmailAttributesResponseUnsubscribedItem.from_dict(email_attributes_response_unsubscribed_item_model_json)
-        assert email_attributes_response_unsubscribed_item_model != False
-
-        # Construct a model instance of EmailAttributesResponseUnsubscribedItem by calling from_dict on the json representation
-        email_attributes_response_unsubscribed_item_model_dict = EmailAttributesResponseUnsubscribedItem.from_dict(email_attributes_response_unsubscribed_item_model_json).__dict__
-        email_attributes_response_unsubscribed_item_model2 = EmailAttributesResponseUnsubscribedItem(**email_attributes_response_unsubscribed_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert email_attributes_response_unsubscribed_item_model == email_attributes_response_unsubscribed_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        email_attributes_response_unsubscribed_item_model_json2 = email_attributes_response_unsubscribed_item_model.to_dict()
-        assert email_attributes_response_unsubscribed_item_model_json2 == email_attributes_response_unsubscribed_item_model_json
-
-class TestModel_EmailUpdateAttributesTo():
-    """
-    Test Class for EmailUpdateAttributesTo
-    """
-
-    def test_email_update_attributes_to_serialization(self):
-        """
-        Test serialization/deserialization for EmailUpdateAttributesTo
-        """
-
-        # Construct a json representation of a EmailUpdateAttributesTo model
-        email_update_attributes_to_model_json = {}
-        email_update_attributes_to_model_json['add'] = ['testString']
-        email_update_attributes_to_model_json['remove'] = ['testString']
-
-        # Construct a model instance of EmailUpdateAttributesTo by calling from_dict on the json representation
-        email_update_attributes_to_model = EmailUpdateAttributesTo.from_dict(email_update_attributes_to_model_json)
-        assert email_update_attributes_to_model != False
-
-        # Construct a model instance of EmailUpdateAttributesTo by calling from_dict on the json representation
-        email_update_attributes_to_model_dict = EmailUpdateAttributesTo.from_dict(email_update_attributes_to_model_json).__dict__
-        email_update_attributes_to_model2 = EmailUpdateAttributesTo(**email_update_attributes_to_model_dict)
-
-        # Verify the model instances are equivalent
-        assert email_update_attributes_to_model == email_update_attributes_to_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        email_update_attributes_to_model_json2 = email_update_attributes_to_model.to_dict()
-        assert email_update_attributes_to_model_json2 == email_update_attributes_to_model_json
-
-class TestModel_EmailUpdateAttributesUnsubscribed():
-    """
-    Test Class for EmailUpdateAttributesUnsubscribed
-    """
-
-    def test_email_update_attributes_unsubscribed_serialization(self):
-        """
-        Test serialization/deserialization for EmailUpdateAttributesUnsubscribed
-        """
-
-        # Construct a json representation of a EmailUpdateAttributesUnsubscribed model
-        email_update_attributes_unsubscribed_model_json = {}
-        email_update_attributes_unsubscribed_model_json['remove'] = ['testString']
-
-        # Construct a model instance of EmailUpdateAttributesUnsubscribed by calling from_dict on the json representation
-        email_update_attributes_unsubscribed_model = EmailUpdateAttributesUnsubscribed.from_dict(email_update_attributes_unsubscribed_model_json)
-        assert email_update_attributes_unsubscribed_model != False
-
-        # Construct a model instance of EmailUpdateAttributesUnsubscribed by calling from_dict on the json representation
-        email_update_attributes_unsubscribed_model_dict = EmailUpdateAttributesUnsubscribed.from_dict(email_update_attributes_unsubscribed_model_json).__dict__
-        email_update_attributes_unsubscribed_model2 = EmailUpdateAttributesUnsubscribed(**email_update_attributes_unsubscribed_model_dict)
-
-        # Verify the model instances are equivalent
-        assert email_update_attributes_unsubscribed_model == email_update_attributes_unsubscribed_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        email_update_attributes_unsubscribed_model_json2 = email_update_attributes_unsubscribed_model.to_dict()
-        assert email_update_attributes_unsubscribed_model_json2 == email_update_attributes_unsubscribed_model_json
+        email_attributes_response_subscribed_unsubscribed_items_model_json2 = email_attributes_response_subscribed_unsubscribed_items_model.to_dict()
+        assert email_attributes_response_subscribed_unsubscribed_items_model_json2 == email_attributes_response_subscribed_unsubscribed_items_model_json
 
 class TestModel_NotificationCreate():
     """
@@ -3802,6 +3818,35 @@ class TestModel_NotificationResponse():
         notification_response_model_json2 = notification_response_model.to_dict()
         assert notification_response_model_json2 == notification_response_model_json
 
+class TestModel_PageHrefResponse():
+    """
+    Test Class for PageHrefResponse
+    """
+
+    def test_page_href_response_serialization(self):
+        """
+        Test serialization/deserialization for PageHrefResponse
+        """
+
+        # Construct a json representation of a PageHrefResponse model
+        page_href_response_model_json = {}
+        page_href_response_model_json['href'] = 'testString'
+
+        # Construct a model instance of PageHrefResponse by calling from_dict on the json representation
+        page_href_response_model = PageHrefResponse.from_dict(page_href_response_model_json)
+        assert page_href_response_model != False
+
+        # Construct a model instance of PageHrefResponse by calling from_dict on the json representation
+        page_href_response_model_dict = PageHrefResponse.from_dict(page_href_response_model_json).__dict__
+        page_href_response_model2 = PageHrefResponse(**page_href_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert page_href_response_model == page_href_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        page_href_response_model_json2 = page_href_response_model.to_dict()
+        assert page_href_response_model_json2 == page_href_response_model_json
+
 class TestModel_Rules():
     """
     Test Class for Rules
@@ -3866,95 +3911,35 @@ class TestModel_RulesGet():
         rules_get_model_json2 = rules_get_model.to_dict()
         assert rules_get_model_json2 == rules_get_model_json
 
-class TestModel_SMSAttributesResponseInvitedItem():
+class TestModel_SMAttributesItems():
     """
-    Test Class for SMSAttributesResponseInvitedItem
+    Test Class for SMAttributesItems
     """
 
-    def test_sms_attributes_response_invited_item_serialization(self):
+    def test_sm_attributes_items_serialization(self):
         """
-        Test serialization/deserialization for SMSAttributesResponseInvitedItem
+        Test serialization/deserialization for SMAttributesItems
         """
 
-        # Construct a json representation of a SMSAttributesResponseInvitedItem model
-        sms_attributes_response_invited_item_model_json = {}
-        sms_attributes_response_invited_item_model_json['phone_number'] = 'testString'
-        sms_attributes_response_invited_item_model_json['time'] = '2019-01-01T12:00:00Z'
+        # Construct a json representation of a SMAttributesItems model
+        sm_attributes_items_model_json = {}
+        sm_attributes_items_model_json['phone_number'] = 'testString'
+        sm_attributes_items_model_json['time'] = '2019-01-01T12:00:00Z'
 
-        # Construct a model instance of SMSAttributesResponseInvitedItem by calling from_dict on the json representation
-        sms_attributes_response_invited_item_model = SMSAttributesResponseInvitedItem.from_dict(sms_attributes_response_invited_item_model_json)
-        assert sms_attributes_response_invited_item_model != False
+        # Construct a model instance of SMAttributesItems by calling from_dict on the json representation
+        sm_attributes_items_model = SMAttributesItems.from_dict(sm_attributes_items_model_json)
+        assert sm_attributes_items_model != False
 
-        # Construct a model instance of SMSAttributesResponseInvitedItem by calling from_dict on the json representation
-        sms_attributes_response_invited_item_model_dict = SMSAttributesResponseInvitedItem.from_dict(sms_attributes_response_invited_item_model_json).__dict__
-        sms_attributes_response_invited_item_model2 = SMSAttributesResponseInvitedItem(**sms_attributes_response_invited_item_model_dict)
+        # Construct a model instance of SMAttributesItems by calling from_dict on the json representation
+        sm_attributes_items_model_dict = SMAttributesItems.from_dict(sm_attributes_items_model_json).__dict__
+        sm_attributes_items_model2 = SMAttributesItems(**sm_attributes_items_model_dict)
 
         # Verify the model instances are equivalent
-        assert sms_attributes_response_invited_item_model == sms_attributes_response_invited_item_model2
+        assert sm_attributes_items_model == sm_attributes_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        sms_attributes_response_invited_item_model_json2 = sms_attributes_response_invited_item_model.to_dict()
-        assert sms_attributes_response_invited_item_model_json2 == sms_attributes_response_invited_item_model_json
-
-class TestModel_SMSAttributesResponseToItem():
-    """
-    Test Class for SMSAttributesResponseToItem
-    """
-
-    def test_sms_attributes_response_to_item_serialization(self):
-        """
-        Test serialization/deserialization for SMSAttributesResponseToItem
-        """
-
-        # Construct a json representation of a SMSAttributesResponseToItem model
-        sms_attributes_response_to_item_model_json = {}
-        sms_attributes_response_to_item_model_json['phone_number'] = 'testString'
-        sms_attributes_response_to_item_model_json['time'] = '2019-01-01T12:00:00Z'
-
-        # Construct a model instance of SMSAttributesResponseToItem by calling from_dict on the json representation
-        sms_attributes_response_to_item_model = SMSAttributesResponseToItem.from_dict(sms_attributes_response_to_item_model_json)
-        assert sms_attributes_response_to_item_model != False
-
-        # Construct a model instance of SMSAttributesResponseToItem by calling from_dict on the json representation
-        sms_attributes_response_to_item_model_dict = SMSAttributesResponseToItem.from_dict(sms_attributes_response_to_item_model_json).__dict__
-        sms_attributes_response_to_item_model2 = SMSAttributesResponseToItem(**sms_attributes_response_to_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert sms_attributes_response_to_item_model == sms_attributes_response_to_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        sms_attributes_response_to_item_model_json2 = sms_attributes_response_to_item_model.to_dict()
-        assert sms_attributes_response_to_item_model_json2 == sms_attributes_response_to_item_model_json
-
-class TestModel_SMSAttributesResponseUnsubscribedItem():
-    """
-    Test Class for SMSAttributesResponseUnsubscribedItem
-    """
-
-    def test_sms_attributes_response_unsubscribed_item_serialization(self):
-        """
-        Test serialization/deserialization for SMSAttributesResponseUnsubscribedItem
-        """
-
-        # Construct a json representation of a SMSAttributesResponseUnsubscribedItem model
-        sms_attributes_response_unsubscribed_item_model_json = {}
-        sms_attributes_response_unsubscribed_item_model_json['phone_number'] = 'testString'
-        sms_attributes_response_unsubscribed_item_model_json['time'] = '2019-01-01T12:00:00Z'
-
-        # Construct a model instance of SMSAttributesResponseUnsubscribedItem by calling from_dict on the json representation
-        sms_attributes_response_unsubscribed_item_model = SMSAttributesResponseUnsubscribedItem.from_dict(sms_attributes_response_unsubscribed_item_model_json)
-        assert sms_attributes_response_unsubscribed_item_model != False
-
-        # Construct a model instance of SMSAttributesResponseUnsubscribedItem by calling from_dict on the json representation
-        sms_attributes_response_unsubscribed_item_model_dict = SMSAttributesResponseUnsubscribedItem.from_dict(sms_attributes_response_unsubscribed_item_model_json).__dict__
-        sms_attributes_response_unsubscribed_item_model2 = SMSAttributesResponseUnsubscribedItem(**sms_attributes_response_unsubscribed_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert sms_attributes_response_unsubscribed_item_model == sms_attributes_response_unsubscribed_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        sms_attributes_response_unsubscribed_item_model_json2 = sms_attributes_response_unsubscribed_item_model.to_dict()
-        assert sms_attributes_response_unsubscribed_item_model_json2 == sms_attributes_response_unsubscribed_item_model_json
+        sm_attributes_items_model_json2 = sm_attributes_items_model.to_dict()
+        assert sm_attributes_items_model_json2 == sm_attributes_items_model_json
 
 class TestModel_SMSupdateAttributesTo():
     """
@@ -4043,12 +4028,18 @@ class TestModel_SourceList():
         source_list_item_model['updated_at'] = '2021-08-19T05:30:03.696000Z'
         source_list_item_model['topic_count'] = 0
 
+        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
+
         # Construct a json representation of a SourceList model
         source_list_model_json = {}
         source_list_model_json['total_count'] = 0
         source_list_model_json['offset'] = 38
         source_list_model_json['limit'] = 38
         source_list_model_json['sources'] = [source_list_item_model]
+        source_list_model_json['first'] = page_href_response_model
+        source_list_model_json['previous'] = page_href_response_model
+        source_list_model_json['next'] = page_href_response_model
 
         # Construct a model instance of SourceList by calling from_dict on the json representation
         source_list_model = SourceList.from_dict(source_list_model_json)
@@ -4133,45 +4124,82 @@ class TestModel_SourceResponse():
         source_response_model_json2 = source_response_model.to_dict()
         assert source_response_model_json2 == source_response_model_json
 
-class TestModel_SourcesListItem():
+class TestModel_SourcesItems():
     """
-    Test Class for SourcesListItem
+    Test Class for SourcesItems
     """
 
-    def test_sources_list_item_serialization(self):
+    def test_sources_items_serialization(self):
         """
-        Test serialization/deserialization for SourcesListItem
+        Test serialization/deserialization for SourcesItems
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        rules_model = {} # Rules
+        rules_model['enabled'] = True
+        rules_model['event_type_filter'] = '$.*'
+        rules_model['notification_filter'] = 'testString'
+
+        # Construct a json representation of a SourcesItems model
+        sources_items_model_json = {}
+        sources_items_model_json['id'] = 'testString'
+        sources_items_model_json['rules'] = [rules_model]
+
+        # Construct a model instance of SourcesItems by calling from_dict on the json representation
+        sources_items_model = SourcesItems.from_dict(sources_items_model_json)
+        assert sources_items_model != False
+
+        # Construct a model instance of SourcesItems by calling from_dict on the json representation
+        sources_items_model_dict = SourcesItems.from_dict(sources_items_model_json).__dict__
+        sources_items_model2 = SourcesItems(**sources_items_model_dict)
+
+        # Verify the model instances are equivalent
+        assert sources_items_model == sources_items_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        sources_items_model_json2 = sources_items_model.to_dict()
+        assert sources_items_model_json2 == sources_items_model_json
+
+class TestModel_SourcesListItems():
+    """
+    Test Class for SourcesListItems
+    """
+
+    def test_sources_list_items_serialization(self):
+        """
+        Test serialization/deserialization for SourcesListItems
         """
 
         # Construct dict forms of any model objects needed in order to build this model.
 
         rules_get_model = {} # RulesGet
         rules_get_model['enabled'] = True
-        rules_get_model['event_type_filter'] = '$.*'
-        rules_get_model['notification_filter'] = 'testString'
-        rules_get_model['updated_at'] = 'testString'
-        rules_get_model['id'] = 'testString'
+        rules_get_model['event_type_filter'] = '$.notification_event_info.event_type == \'test\''
+        rules_get_model['notification_filter'] = '$.notification.findings[0].severity == \'LOW\''
+        rules_get_model['updated_at'] = '2021-09-08T13:25:20.523533Z'
+        rules_get_model['id'] = '218f4e30-9af2-4f70-b38b-738f923b0c4b'
 
-        # Construct a json representation of a SourcesListItem model
-        sources_list_item_model_json = {}
-        sources_list_item_model_json['id'] = 'testString'
-        sources_list_item_model_json['name'] = 'testString'
-        sources_list_item_model_json['rules'] = [rules_get_model]
+        # Construct a json representation of a SourcesListItems model
+        sources_list_items_model_json = {}
+        sources_list_items_model_json['id'] = 'testString'
+        sources_list_items_model_json['name'] = 'testString'
+        sources_list_items_model_json['rules'] = [rules_get_model]
 
-        # Construct a model instance of SourcesListItem by calling from_dict on the json representation
-        sources_list_item_model = SourcesListItem.from_dict(sources_list_item_model_json)
-        assert sources_list_item_model != False
+        # Construct a model instance of SourcesListItems by calling from_dict on the json representation
+        sources_list_items_model = SourcesListItems.from_dict(sources_list_items_model_json)
+        assert sources_list_items_model != False
 
-        # Construct a model instance of SourcesListItem by calling from_dict on the json representation
-        sources_list_item_model_dict = SourcesListItem.from_dict(sources_list_item_model_json).__dict__
-        sources_list_item_model2 = SourcesListItem(**sources_list_item_model_dict)
+        # Construct a model instance of SourcesListItems by calling from_dict on the json representation
+        sources_list_items_model_dict = SourcesListItems.from_dict(sources_list_items_model_json).__dict__
+        sources_list_items_model2 = SourcesListItems(**sources_list_items_model_dict)
 
         # Verify the model instances are equivalent
-        assert sources_list_item_model == sources_list_item_model2
+        assert sources_list_items_model == sources_list_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        sources_list_item_model_json2 = sources_list_item_model.to_dict()
-        assert sources_list_item_model_json2 == sources_list_item_model_json
+        sources_list_items_model_json2 = sources_list_items_model.to_dict()
+        assert sources_list_items_model_json2 == sources_list_items_model_json
 
 class TestModel_Subscription():
     """
@@ -4253,12 +4281,18 @@ class TestModel_SubscriptionList():
         subscription_list_item_model['topic_name'] = 'Developers topic'
         subscription_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
+        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+
         # Construct a json representation of a SubscriptionList model
         subscription_list_model_json = {}
         subscription_list_model_json['total_count'] = 0
         subscription_list_model_json['offset'] = 38
         subscription_list_model_json['limit'] = 38
         subscription_list_model_json['subscriptions'] = [subscription_list_item_model]
+        subscription_list_model_json['first'] = page_href_response_model
+        subscription_list_model_json['previous'] = page_href_response_model
+        subscription_list_model_json['next'] = page_href_response_model
 
         # Construct a model instance of SubscriptionList by calling from_dict on the json representation
         subscription_list_model = SubscriptionList.from_dict(subscription_list_model_json)
@@ -4331,12 +4365,18 @@ class TestModel_TagsSubscriptionList():
         tags_subscription_list_item_model['user_id'] = 'fcm_id_123'
         tags_subscription_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
+        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
+
         # Construct a json representation of a TagsSubscriptionList model
         tags_subscription_list_model_json = {}
         tags_subscription_list_model_json['total_count'] = 38
         tags_subscription_list_model_json['offset'] = 38
         tags_subscription_list_model_json['limit'] = 38
         tags_subscription_list_model_json['tag_subscriptions'] = [tags_subscription_list_item_model]
+        tags_subscription_list_model_json['first'] = page_href_response_model
+        tags_subscription_list_model_json['previous'] = page_href_response_model
+        tags_subscription_list_model_json['next'] = page_href_response_model
 
         # Construct a model instance of TagsSubscriptionList by calling from_dict on the json representation
         tags_subscription_list_model = TagsSubscriptionList.from_dict(tags_subscription_list_model_json)
@@ -4405,10 +4445,10 @@ class TestModel_Topic():
         rules_get_model['updated_at'] = '2021-09-08T13:25:20.523533Z'
         rules_get_model['id'] = '218f4e30-9af2-4f70-b38b-738f923b0c4b'
 
-        sources_list_item_model = {} # SourcesListItem
-        sources_list_item_model['id'] = '96dbf538-9fa7-4745-b9e4-32bb6f1dc47a:api'
-        sources_list_item_model['name'] = 'Compliance source'
-        sources_list_item_model['rules'] = [rules_get_model]
+        sources_list_items_model = {} # SourcesListItems
+        sources_list_items_model['id'] = '96dbf538-9fa7-4745-b9e4-32bb6f1dc47a:api'
+        sources_list_items_model['name'] = 'Compliance source'
+        sources_list_items_model['rules'] = [rules_get_model]
 
         subscription_list_item_model = {} # SubscriptionListItem
         subscription_list_item_model['id'] = '87bef75e-f826-4aa9-b64d-91af9be5e12b'
@@ -4428,7 +4468,7 @@ class TestModel_Topic():
         topic_model_json['name'] = 'testString'
         topic_model_json['updated_at'] = 'testString'
         topic_model_json['source_count'] = 38
-        topic_model_json['sources'] = [sources_list_item_model]
+        topic_model_json['sources'] = [sources_list_items_model]
         topic_model_json['subscription_count'] = 38
         topic_model_json['subscriptions'] = [subscription_list_item_model]
 
@@ -4467,12 +4507,18 @@ class TestModel_TopicList():
         topics_list_item_model['sources_names'] = ['Push Source', 'Custom source']
         topics_list_item_model['subscription_count'] = 3
 
+        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
+
         # Construct a json representation of a TopicList model
         topic_list_model_json = {}
         topic_list_model_json['total_count'] = 0
         topic_list_model_json['offset'] = 38
         topic_list_model_json['limit'] = 38
         topic_list_model_json['topics'] = [topics_list_item_model]
+        topic_list_model_json['first'] = page_href_response_model
+        topic_list_model_json['previous'] = page_href_response_model
+        topic_list_model_json['next'] = page_href_response_model
 
         # Construct a model instance of TopicList by calling from_dict on the json representation
         topic_list_model = TopicList.from_dict(topic_list_model_json)
@@ -4521,43 +4567,6 @@ class TestModel_TopicResponse():
         topic_response_model_json2 = topic_response_model.to_dict()
         assert topic_response_model_json2 == topic_response_model_json
 
-class TestModel_TopicUpdateSourcesItem():
-    """
-    Test Class for TopicUpdateSourcesItem
-    """
-
-    def test_topic_update_sources_item_serialization(self):
-        """
-        Test serialization/deserialization for TopicUpdateSourcesItem
-        """
-
-        # Construct dict forms of any model objects needed in order to build this model.
-
-        rules_model = {} # Rules
-        rules_model['enabled'] = True
-        rules_model['event_type_filter'] = '$.*'
-        rules_model['notification_filter'] = 'testString'
-
-        # Construct a json representation of a TopicUpdateSourcesItem model
-        topic_update_sources_item_model_json = {}
-        topic_update_sources_item_model_json['id'] = 'testString'
-        topic_update_sources_item_model_json['rules'] = [rules_model]
-
-        # Construct a model instance of TopicUpdateSourcesItem by calling from_dict on the json representation
-        topic_update_sources_item_model = TopicUpdateSourcesItem.from_dict(topic_update_sources_item_model_json)
-        assert topic_update_sources_item_model != False
-
-        # Construct a model instance of TopicUpdateSourcesItem by calling from_dict on the json representation
-        topic_update_sources_item_model_dict = TopicUpdateSourcesItem.from_dict(topic_update_sources_item_model_json).__dict__
-        topic_update_sources_item_model2 = TopicUpdateSourcesItem(**topic_update_sources_item_model_dict)
-
-        # Verify the model instances are equivalent
-        assert topic_update_sources_item_model == topic_update_sources_item_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        topic_update_sources_item_model_json2 = topic_update_sources_item_model.to_dict()
-        assert topic_update_sources_item_model_json2 == topic_update_sources_item_model_json
-
 class TestModel_TopicsListItem():
     """
     Test Class for TopicsListItem
@@ -4592,289 +4601,377 @@ class TestModel_TopicsListItem():
         topics_list_item_model_json2 = topics_list_item_model.to_dict()
         assert topics_list_item_model_json2 == topics_list_item_model_json
 
-class TestModel_DestinationConfigParamsChromeDestinationConfig():
+class TestModel_UpdateAttributesInvited():
     """
-    Test Class for DestinationConfigParamsChromeDestinationConfig
+    Test Class for UpdateAttributesInvited
     """
 
-    def test_destination_config_params_chrome_destination_config_serialization(self):
+    def test_update_attributes_invited_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsChromeDestinationConfig
+        Test serialization/deserialization for UpdateAttributesInvited
         """
 
-        # Construct a json representation of a DestinationConfigParamsChromeDestinationConfig model
-        destination_config_params_chrome_destination_config_model_json = {}
-        destination_config_params_chrome_destination_config_model_json['api_key'] = 'testString'
-        destination_config_params_chrome_destination_config_model_json['website_url'] = 'testString'
-        destination_config_params_chrome_destination_config_model_json['public_key'] = 'testString'
-        destination_config_params_chrome_destination_config_model_json['pre_prod'] = False
+        # Construct a json representation of a UpdateAttributesInvited model
+        update_attributes_invited_model_json = {}
+        update_attributes_invited_model_json['add'] = ['testString']
+        update_attributes_invited_model_json['remove'] = ['testString']
 
-        # Construct a model instance of DestinationConfigParamsChromeDestinationConfig by calling from_dict on the json representation
-        destination_config_params_chrome_destination_config_model = DestinationConfigParamsChromeDestinationConfig.from_dict(destination_config_params_chrome_destination_config_model_json)
-        assert destination_config_params_chrome_destination_config_model != False
+        # Construct a model instance of UpdateAttributesInvited by calling from_dict on the json representation
+        update_attributes_invited_model = UpdateAttributesInvited.from_dict(update_attributes_invited_model_json)
+        assert update_attributes_invited_model != False
 
-        # Construct a model instance of DestinationConfigParamsChromeDestinationConfig by calling from_dict on the json representation
-        destination_config_params_chrome_destination_config_model_dict = DestinationConfigParamsChromeDestinationConfig.from_dict(destination_config_params_chrome_destination_config_model_json).__dict__
-        destination_config_params_chrome_destination_config_model2 = DestinationConfigParamsChromeDestinationConfig(**destination_config_params_chrome_destination_config_model_dict)
+        # Construct a model instance of UpdateAttributesInvited by calling from_dict on the json representation
+        update_attributes_invited_model_dict = UpdateAttributesInvited.from_dict(update_attributes_invited_model_json).__dict__
+        update_attributes_invited_model2 = UpdateAttributesInvited(**update_attributes_invited_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_chrome_destination_config_model == destination_config_params_chrome_destination_config_model2
+        assert update_attributes_invited_model == update_attributes_invited_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_chrome_destination_config_model_json2 = destination_config_params_chrome_destination_config_model.to_dict()
-        assert destination_config_params_chrome_destination_config_model_json2 == destination_config_params_chrome_destination_config_model_json
+        update_attributes_invited_model_json2 = update_attributes_invited_model.to_dict()
+        assert update_attributes_invited_model_json2 == update_attributes_invited_model_json
 
-class TestModel_DestinationConfigParamsFCMDestinationConfig():
+class TestModel_UpdateAttributesSubscribed():
     """
-    Test Class for DestinationConfigParamsFCMDestinationConfig
+    Test Class for UpdateAttributesSubscribed
     """
 
-    def test_destination_config_params_fcm_destination_config_serialization(self):
+    def test_update_attributes_subscribed_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsFCMDestinationConfig
+        Test serialization/deserialization for UpdateAttributesSubscribed
         """
 
-        # Construct a json representation of a DestinationConfigParamsFCMDestinationConfig model
-        destination_config_params_fcm_destination_config_model_json = {}
-        destination_config_params_fcm_destination_config_model_json['server_key'] = 'testString'
-        destination_config_params_fcm_destination_config_model_json['sender_id'] = 'testString'
-        destination_config_params_fcm_destination_config_model_json['pre_prod'] = False
+        # Construct a json representation of a UpdateAttributesSubscribed model
+        update_attributes_subscribed_model_json = {}
+        update_attributes_subscribed_model_json['remove'] = ['testString']
 
-        # Construct a model instance of DestinationConfigParamsFCMDestinationConfig by calling from_dict on the json representation
-        destination_config_params_fcm_destination_config_model = DestinationConfigParamsFCMDestinationConfig.from_dict(destination_config_params_fcm_destination_config_model_json)
-        assert destination_config_params_fcm_destination_config_model != False
+        # Construct a model instance of UpdateAttributesSubscribed by calling from_dict on the json representation
+        update_attributes_subscribed_model = UpdateAttributesSubscribed.from_dict(update_attributes_subscribed_model_json)
+        assert update_attributes_subscribed_model != False
 
-        # Construct a model instance of DestinationConfigParamsFCMDestinationConfig by calling from_dict on the json representation
-        destination_config_params_fcm_destination_config_model_dict = DestinationConfigParamsFCMDestinationConfig.from_dict(destination_config_params_fcm_destination_config_model_json).__dict__
-        destination_config_params_fcm_destination_config_model2 = DestinationConfigParamsFCMDestinationConfig(**destination_config_params_fcm_destination_config_model_dict)
+        # Construct a model instance of UpdateAttributesSubscribed by calling from_dict on the json representation
+        update_attributes_subscribed_model_dict = UpdateAttributesSubscribed.from_dict(update_attributes_subscribed_model_json).__dict__
+        update_attributes_subscribed_model2 = UpdateAttributesSubscribed(**update_attributes_subscribed_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_fcm_destination_config_model == destination_config_params_fcm_destination_config_model2
+        assert update_attributes_subscribed_model == update_attributes_subscribed_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_fcm_destination_config_model_json2 = destination_config_params_fcm_destination_config_model.to_dict()
-        assert destination_config_params_fcm_destination_config_model_json2 == destination_config_params_fcm_destination_config_model_json
+        update_attributes_subscribed_model_json2 = update_attributes_subscribed_model.to_dict()
+        assert update_attributes_subscribed_model_json2 == update_attributes_subscribed_model_json
 
-class TestModel_DestinationConfigParamsFirefoxDestinationConfig():
+class TestModel_UpdateAttributesUnsubscribed():
     """
-    Test Class for DestinationConfigParamsFirefoxDestinationConfig
+    Test Class for UpdateAttributesUnsubscribed
     """
 
-    def test_destination_config_params_firefox_destination_config_serialization(self):
+    def test_update_attributes_unsubscribed_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsFirefoxDestinationConfig
+        Test serialization/deserialization for UpdateAttributesUnsubscribed
         """
 
-        # Construct a json representation of a DestinationConfigParamsFirefoxDestinationConfig model
-        destination_config_params_firefox_destination_config_model_json = {}
-        destination_config_params_firefox_destination_config_model_json['website_url'] = 'testString'
-        destination_config_params_firefox_destination_config_model_json['public_key'] = 'testString'
-        destination_config_params_firefox_destination_config_model_json['pre_prod'] = False
+        # Construct a json representation of a UpdateAttributesUnsubscribed model
+        update_attributes_unsubscribed_model_json = {}
+        update_attributes_unsubscribed_model_json['remove'] = ['testString']
 
-        # Construct a model instance of DestinationConfigParamsFirefoxDestinationConfig by calling from_dict on the json representation
-        destination_config_params_firefox_destination_config_model = DestinationConfigParamsFirefoxDestinationConfig.from_dict(destination_config_params_firefox_destination_config_model_json)
-        assert destination_config_params_firefox_destination_config_model != False
+        # Construct a model instance of UpdateAttributesUnsubscribed by calling from_dict on the json representation
+        update_attributes_unsubscribed_model = UpdateAttributesUnsubscribed.from_dict(update_attributes_unsubscribed_model_json)
+        assert update_attributes_unsubscribed_model != False
 
-        # Construct a model instance of DestinationConfigParamsFirefoxDestinationConfig by calling from_dict on the json representation
-        destination_config_params_firefox_destination_config_model_dict = DestinationConfigParamsFirefoxDestinationConfig.from_dict(destination_config_params_firefox_destination_config_model_json).__dict__
-        destination_config_params_firefox_destination_config_model2 = DestinationConfigParamsFirefoxDestinationConfig(**destination_config_params_firefox_destination_config_model_dict)
+        # Construct a model instance of UpdateAttributesUnsubscribed by calling from_dict on the json representation
+        update_attributes_unsubscribed_model_dict = UpdateAttributesUnsubscribed.from_dict(update_attributes_unsubscribed_model_json).__dict__
+        update_attributes_unsubscribed_model2 = UpdateAttributesUnsubscribed(**update_attributes_unsubscribed_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_firefox_destination_config_model == destination_config_params_firefox_destination_config_model2
+        assert update_attributes_unsubscribed_model == update_attributes_unsubscribed_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_firefox_destination_config_model_json2 = destination_config_params_firefox_destination_config_model.to_dict()
-        assert destination_config_params_firefox_destination_config_model_json2 == destination_config_params_firefox_destination_config_model_json
+        update_attributes_unsubscribed_model_json2 = update_attributes_unsubscribed_model.to_dict()
+        assert update_attributes_unsubscribed_model_json2 == update_attributes_unsubscribed_model_json
 
-class TestModel_DestinationConfigParamsIBMCloudFunctionsDestinationConfig():
+class TestModel_DestinationConfigOneOfChromeDestinationConfig():
     """
-    Test Class for DestinationConfigParamsIBMCloudFunctionsDestinationConfig
+    Test Class for DestinationConfigOneOfChromeDestinationConfig
     """
 
-    def test_destination_config_params_ibm_cloud_functions_destination_config_serialization(self):
+    def test_destination_config_one_of_chrome_destination_config_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsIBMCloudFunctionsDestinationConfig
+        Test serialization/deserialization for DestinationConfigOneOfChromeDestinationConfig
         """
 
-        # Construct a json representation of a DestinationConfigParamsIBMCloudFunctionsDestinationConfig model
-        destination_config_params_ibm_cloud_functions_destination_config_model_json = {}
-        destination_config_params_ibm_cloud_functions_destination_config_model_json['url'] = 'testString'
-        destination_config_params_ibm_cloud_functions_destination_config_model_json['api_key'] = 'testString'
+        # Construct a json representation of a DestinationConfigOneOfChromeDestinationConfig model
+        destination_config_one_of_chrome_destination_config_model_json = {}
+        destination_config_one_of_chrome_destination_config_model_json['api_key'] = 'testString'
+        destination_config_one_of_chrome_destination_config_model_json['website_url'] = 'testString'
+        destination_config_one_of_chrome_destination_config_model_json['public_key'] = 'testString'
+        destination_config_one_of_chrome_destination_config_model_json['pre_prod'] = False
 
-        # Construct a model instance of DestinationConfigParamsIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
-        destination_config_params_ibm_cloud_functions_destination_config_model = DestinationConfigParamsIBMCloudFunctionsDestinationConfig.from_dict(destination_config_params_ibm_cloud_functions_destination_config_model_json)
-        assert destination_config_params_ibm_cloud_functions_destination_config_model != False
+        # Construct a model instance of DestinationConfigOneOfChromeDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_chrome_destination_config_model = DestinationConfigOneOfChromeDestinationConfig.from_dict(destination_config_one_of_chrome_destination_config_model_json)
+        assert destination_config_one_of_chrome_destination_config_model != False
 
-        # Construct a model instance of DestinationConfigParamsIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
-        destination_config_params_ibm_cloud_functions_destination_config_model_dict = DestinationConfigParamsIBMCloudFunctionsDestinationConfig.from_dict(destination_config_params_ibm_cloud_functions_destination_config_model_json).__dict__
-        destination_config_params_ibm_cloud_functions_destination_config_model2 = DestinationConfigParamsIBMCloudFunctionsDestinationConfig(**destination_config_params_ibm_cloud_functions_destination_config_model_dict)
+        # Construct a model instance of DestinationConfigOneOfChromeDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_chrome_destination_config_model_dict = DestinationConfigOneOfChromeDestinationConfig.from_dict(destination_config_one_of_chrome_destination_config_model_json).__dict__
+        destination_config_one_of_chrome_destination_config_model2 = DestinationConfigOneOfChromeDestinationConfig(**destination_config_one_of_chrome_destination_config_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_ibm_cloud_functions_destination_config_model == destination_config_params_ibm_cloud_functions_destination_config_model2
+        assert destination_config_one_of_chrome_destination_config_model == destination_config_one_of_chrome_destination_config_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_ibm_cloud_functions_destination_config_model_json2 = destination_config_params_ibm_cloud_functions_destination_config_model.to_dict()
-        assert destination_config_params_ibm_cloud_functions_destination_config_model_json2 == destination_config_params_ibm_cloud_functions_destination_config_model_json
+        destination_config_one_of_chrome_destination_config_model_json2 = destination_config_one_of_chrome_destination_config_model.to_dict()
+        assert destination_config_one_of_chrome_destination_config_model_json2 == destination_config_one_of_chrome_destination_config_model_json
 
-class TestModel_DestinationConfigParamsIOSDestinationConfig():
+class TestModel_DestinationConfigOneOfFCMDestinationConfig():
     """
-    Test Class for DestinationConfigParamsIOSDestinationConfig
+    Test Class for DestinationConfigOneOfFCMDestinationConfig
     """
 
-    def test_destination_config_params_ios_destination_config_serialization(self):
+    def test_destination_config_one_of_fcm_destination_config_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsIOSDestinationConfig
+        Test serialization/deserialization for DestinationConfigOneOfFCMDestinationConfig
         """
 
-        # Construct a json representation of a DestinationConfigParamsIOSDestinationConfig model
-        destination_config_params_ios_destination_config_model_json = {}
-        destination_config_params_ios_destination_config_model_json['cert_type'] = 'p8'
-        destination_config_params_ios_destination_config_model_json['is_sandbox'] = False
-        destination_config_params_ios_destination_config_model_json['password'] = 'testString'
-        destination_config_params_ios_destination_config_model_json['key_id'] = 'testString'
-        destination_config_params_ios_destination_config_model_json['team_id'] = 'testString'
-        destination_config_params_ios_destination_config_model_json['bundle_id'] = 'testString'
-        destination_config_params_ios_destination_config_model_json['pre_prod'] = False
+        # Construct a json representation of a DestinationConfigOneOfFCMDestinationConfig model
+        destination_config_one_of_fcm_destination_config_model_json = {}
+        destination_config_one_of_fcm_destination_config_model_json['server_key'] = 'testString'
+        destination_config_one_of_fcm_destination_config_model_json['sender_id'] = 'testString'
+        destination_config_one_of_fcm_destination_config_model_json['pre_prod'] = False
 
-        # Construct a model instance of DestinationConfigParamsIOSDestinationConfig by calling from_dict on the json representation
-        destination_config_params_ios_destination_config_model = DestinationConfigParamsIOSDestinationConfig.from_dict(destination_config_params_ios_destination_config_model_json)
-        assert destination_config_params_ios_destination_config_model != False
+        # Construct a model instance of DestinationConfigOneOfFCMDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_fcm_destination_config_model = DestinationConfigOneOfFCMDestinationConfig.from_dict(destination_config_one_of_fcm_destination_config_model_json)
+        assert destination_config_one_of_fcm_destination_config_model != False
 
-        # Construct a model instance of DestinationConfigParamsIOSDestinationConfig by calling from_dict on the json representation
-        destination_config_params_ios_destination_config_model_dict = DestinationConfigParamsIOSDestinationConfig.from_dict(destination_config_params_ios_destination_config_model_json).__dict__
-        destination_config_params_ios_destination_config_model2 = DestinationConfigParamsIOSDestinationConfig(**destination_config_params_ios_destination_config_model_dict)
+        # Construct a model instance of DestinationConfigOneOfFCMDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_fcm_destination_config_model_dict = DestinationConfigOneOfFCMDestinationConfig.from_dict(destination_config_one_of_fcm_destination_config_model_json).__dict__
+        destination_config_one_of_fcm_destination_config_model2 = DestinationConfigOneOfFCMDestinationConfig(**destination_config_one_of_fcm_destination_config_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_ios_destination_config_model == destination_config_params_ios_destination_config_model2
+        assert destination_config_one_of_fcm_destination_config_model == destination_config_one_of_fcm_destination_config_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_ios_destination_config_model_json2 = destination_config_params_ios_destination_config_model.to_dict()
-        assert destination_config_params_ios_destination_config_model_json2 == destination_config_params_ios_destination_config_model_json
+        destination_config_one_of_fcm_destination_config_model_json2 = destination_config_one_of_fcm_destination_config_model.to_dict()
+        assert destination_config_one_of_fcm_destination_config_model_json2 == destination_config_one_of_fcm_destination_config_model_json
 
-class TestModel_DestinationConfigParamsMSTeamsDestinationConfig():
+class TestModel_DestinationConfigOneOfFirefoxDestinationConfig():
     """
-    Test Class for DestinationConfigParamsMSTeamsDestinationConfig
+    Test Class for DestinationConfigOneOfFirefoxDestinationConfig
     """
 
-    def test_destination_config_params_ms_teams_destination_config_serialization(self):
+    def test_destination_config_one_of_firefox_destination_config_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsMSTeamsDestinationConfig
+        Test serialization/deserialization for DestinationConfigOneOfFirefoxDestinationConfig
         """
 
-        # Construct a json representation of a DestinationConfigParamsMSTeamsDestinationConfig model
-        destination_config_params_ms_teams_destination_config_model_json = {}
-        destination_config_params_ms_teams_destination_config_model_json['url'] = 'testString'
+        # Construct a json representation of a DestinationConfigOneOfFirefoxDestinationConfig model
+        destination_config_one_of_firefox_destination_config_model_json = {}
+        destination_config_one_of_firefox_destination_config_model_json['website_url'] = 'testString'
+        destination_config_one_of_firefox_destination_config_model_json['public_key'] = 'testString'
+        destination_config_one_of_firefox_destination_config_model_json['pre_prod'] = False
 
-        # Construct a model instance of DestinationConfigParamsMSTeamsDestinationConfig by calling from_dict on the json representation
-        destination_config_params_ms_teams_destination_config_model = DestinationConfigParamsMSTeamsDestinationConfig.from_dict(destination_config_params_ms_teams_destination_config_model_json)
-        assert destination_config_params_ms_teams_destination_config_model != False
+        # Construct a model instance of DestinationConfigOneOfFirefoxDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_firefox_destination_config_model = DestinationConfigOneOfFirefoxDestinationConfig.from_dict(destination_config_one_of_firefox_destination_config_model_json)
+        assert destination_config_one_of_firefox_destination_config_model != False
 
-        # Construct a model instance of DestinationConfigParamsMSTeamsDestinationConfig by calling from_dict on the json representation
-        destination_config_params_ms_teams_destination_config_model_dict = DestinationConfigParamsMSTeamsDestinationConfig.from_dict(destination_config_params_ms_teams_destination_config_model_json).__dict__
-        destination_config_params_ms_teams_destination_config_model2 = DestinationConfigParamsMSTeamsDestinationConfig(**destination_config_params_ms_teams_destination_config_model_dict)
+        # Construct a model instance of DestinationConfigOneOfFirefoxDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_firefox_destination_config_model_dict = DestinationConfigOneOfFirefoxDestinationConfig.from_dict(destination_config_one_of_firefox_destination_config_model_json).__dict__
+        destination_config_one_of_firefox_destination_config_model2 = DestinationConfigOneOfFirefoxDestinationConfig(**destination_config_one_of_firefox_destination_config_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_ms_teams_destination_config_model == destination_config_params_ms_teams_destination_config_model2
+        assert destination_config_one_of_firefox_destination_config_model == destination_config_one_of_firefox_destination_config_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_ms_teams_destination_config_model_json2 = destination_config_params_ms_teams_destination_config_model.to_dict()
-        assert destination_config_params_ms_teams_destination_config_model_json2 == destination_config_params_ms_teams_destination_config_model_json
+        destination_config_one_of_firefox_destination_config_model_json2 = destination_config_one_of_firefox_destination_config_model.to_dict()
+        assert destination_config_one_of_firefox_destination_config_model_json2 == destination_config_one_of_firefox_destination_config_model_json
 
-class TestModel_DestinationConfigParamsSafariDestinationConfig():
+class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig():
     """
-    Test Class for DestinationConfigParamsSafariDestinationConfig
+    Test Class for DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
     """
 
-    def test_destination_config_params_safari_destination_config_serialization(self):
+    def test_destination_config_one_of_ibm_cloud_functions_destination_config_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsSafariDestinationConfig
+        Test serialization/deserialization for DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
         """
 
-        # Construct a json representation of a DestinationConfigParamsSafariDestinationConfig model
-        destination_config_params_safari_destination_config_model_json = {}
-        destination_config_params_safari_destination_config_model_json['cert_type'] = 'p12'
-        destination_config_params_safari_destination_config_model_json['password'] = 'testString'
-        destination_config_params_safari_destination_config_model_json['website_url'] = 'testString'
-        destination_config_params_safari_destination_config_model_json['website_name'] = 'testString'
-        destination_config_params_safari_destination_config_model_json['url_format_string'] = 'testString'
-        destination_config_params_safari_destination_config_model_json['website_push_id'] = 'testString'
-        destination_config_params_safari_destination_config_model_json['pre_prod'] = False
+        # Construct a json representation of a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig model
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_json = {}
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_json['url'] = 'testString'
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_json['api_key'] = 'testString'
 
-        # Construct a model instance of DestinationConfigParamsSafariDestinationConfig by calling from_dict on the json representation
-        destination_config_params_safari_destination_config_model = DestinationConfigParamsSafariDestinationConfig.from_dict(destination_config_params_safari_destination_config_model_json)
-        assert destination_config_params_safari_destination_config_model != False
+        # Construct a model instance of DestinationConfigOneOfIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ibm_cloud_functions_destination_config_model = DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(destination_config_one_of_ibm_cloud_functions_destination_config_model_json)
+        assert destination_config_one_of_ibm_cloud_functions_destination_config_model != False
 
-        # Construct a model instance of DestinationConfigParamsSafariDestinationConfig by calling from_dict on the json representation
-        destination_config_params_safari_destination_config_model_dict = DestinationConfigParamsSafariDestinationConfig.from_dict(destination_config_params_safari_destination_config_model_json).__dict__
-        destination_config_params_safari_destination_config_model2 = DestinationConfigParamsSafariDestinationConfig(**destination_config_params_safari_destination_config_model_dict)
+        # Construct a model instance of DestinationConfigOneOfIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_dict = DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(destination_config_one_of_ibm_cloud_functions_destination_config_model_json).__dict__
+        destination_config_one_of_ibm_cloud_functions_destination_config_model2 = DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(**destination_config_one_of_ibm_cloud_functions_destination_config_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_safari_destination_config_model == destination_config_params_safari_destination_config_model2
+        assert destination_config_one_of_ibm_cloud_functions_destination_config_model == destination_config_one_of_ibm_cloud_functions_destination_config_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_safari_destination_config_model_json2 = destination_config_params_safari_destination_config_model.to_dict()
-        assert destination_config_params_safari_destination_config_model_json2 == destination_config_params_safari_destination_config_model_json
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_json2 = destination_config_one_of_ibm_cloud_functions_destination_config_model.to_dict()
+        assert destination_config_one_of_ibm_cloud_functions_destination_config_model_json2 == destination_config_one_of_ibm_cloud_functions_destination_config_model_json
 
-class TestModel_DestinationConfigParamsSlackDestinationConfig():
+class TestModel_DestinationConfigOneOfIOSDestinationConfig():
     """
-    Test Class for DestinationConfigParamsSlackDestinationConfig
+    Test Class for DestinationConfigOneOfIOSDestinationConfig
     """
 
-    def test_destination_config_params_slack_destination_config_serialization(self):
+    def test_destination_config_one_of_ios_destination_config_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsSlackDestinationConfig
+        Test serialization/deserialization for DestinationConfigOneOfIOSDestinationConfig
         """
 
-        # Construct a json representation of a DestinationConfigParamsSlackDestinationConfig model
-        destination_config_params_slack_destination_config_model_json = {}
-        destination_config_params_slack_destination_config_model_json['url'] = 'testString'
+        # Construct a json representation of a DestinationConfigOneOfIOSDestinationConfig model
+        destination_config_one_of_ios_destination_config_model_json = {}
+        destination_config_one_of_ios_destination_config_model_json['cert_type'] = 'p8'
+        destination_config_one_of_ios_destination_config_model_json['is_sandbox'] = False
+        destination_config_one_of_ios_destination_config_model_json['password'] = 'testString'
+        destination_config_one_of_ios_destination_config_model_json['key_id'] = 'testString'
+        destination_config_one_of_ios_destination_config_model_json['team_id'] = 'testString'
+        destination_config_one_of_ios_destination_config_model_json['bundle_id'] = 'testString'
+        destination_config_one_of_ios_destination_config_model_json['pre_prod'] = False
 
-        # Construct a model instance of DestinationConfigParamsSlackDestinationConfig by calling from_dict on the json representation
-        destination_config_params_slack_destination_config_model = DestinationConfigParamsSlackDestinationConfig.from_dict(destination_config_params_slack_destination_config_model_json)
-        assert destination_config_params_slack_destination_config_model != False
+        # Construct a model instance of DestinationConfigOneOfIOSDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ios_destination_config_model = DestinationConfigOneOfIOSDestinationConfig.from_dict(destination_config_one_of_ios_destination_config_model_json)
+        assert destination_config_one_of_ios_destination_config_model != False
 
-        # Construct a model instance of DestinationConfigParamsSlackDestinationConfig by calling from_dict on the json representation
-        destination_config_params_slack_destination_config_model_dict = DestinationConfigParamsSlackDestinationConfig.from_dict(destination_config_params_slack_destination_config_model_json).__dict__
-        destination_config_params_slack_destination_config_model2 = DestinationConfigParamsSlackDestinationConfig(**destination_config_params_slack_destination_config_model_dict)
+        # Construct a model instance of DestinationConfigOneOfIOSDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ios_destination_config_model_dict = DestinationConfigOneOfIOSDestinationConfig.from_dict(destination_config_one_of_ios_destination_config_model_json).__dict__
+        destination_config_one_of_ios_destination_config_model2 = DestinationConfigOneOfIOSDestinationConfig(**destination_config_one_of_ios_destination_config_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_slack_destination_config_model == destination_config_params_slack_destination_config_model2
+        assert destination_config_one_of_ios_destination_config_model == destination_config_one_of_ios_destination_config_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_slack_destination_config_model_json2 = destination_config_params_slack_destination_config_model.to_dict()
-        assert destination_config_params_slack_destination_config_model_json2 == destination_config_params_slack_destination_config_model_json
+        destination_config_one_of_ios_destination_config_model_json2 = destination_config_one_of_ios_destination_config_model.to_dict()
+        assert destination_config_one_of_ios_destination_config_model_json2 == destination_config_one_of_ios_destination_config_model_json
 
-class TestModel_DestinationConfigParamsWebhookDestinationConfig():
+class TestModel_DestinationConfigOneOfMSTeamsDestinationConfig():
     """
-    Test Class for DestinationConfigParamsWebhookDestinationConfig
+    Test Class for DestinationConfigOneOfMSTeamsDestinationConfig
     """
 
-    def test_destination_config_params_webhook_destination_config_serialization(self):
+    def test_destination_config_one_of_ms_teams_destination_config_serialization(self):
         """
-        Test serialization/deserialization for DestinationConfigParamsWebhookDestinationConfig
+        Test serialization/deserialization for DestinationConfigOneOfMSTeamsDestinationConfig
         """
 
-        # Construct a json representation of a DestinationConfigParamsWebhookDestinationConfig model
-        destination_config_params_webhook_destination_config_model_json = {}
-        destination_config_params_webhook_destination_config_model_json['url'] = 'testString'
-        destination_config_params_webhook_destination_config_model_json['verb'] = 'get'
-        destination_config_params_webhook_destination_config_model_json['custom_headers'] = {'key1': 'testString'}
-        destination_config_params_webhook_destination_config_model_json['sensitive_headers'] = ['testString']
+        # Construct a json representation of a DestinationConfigOneOfMSTeamsDestinationConfig model
+        destination_config_one_of_ms_teams_destination_config_model_json = {}
+        destination_config_one_of_ms_teams_destination_config_model_json['url'] = 'testString'
 
-        # Construct a model instance of DestinationConfigParamsWebhookDestinationConfig by calling from_dict on the json representation
-        destination_config_params_webhook_destination_config_model = DestinationConfigParamsWebhookDestinationConfig.from_dict(destination_config_params_webhook_destination_config_model_json)
-        assert destination_config_params_webhook_destination_config_model != False
+        # Construct a model instance of DestinationConfigOneOfMSTeamsDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ms_teams_destination_config_model = DestinationConfigOneOfMSTeamsDestinationConfig.from_dict(destination_config_one_of_ms_teams_destination_config_model_json)
+        assert destination_config_one_of_ms_teams_destination_config_model != False
 
-        # Construct a model instance of DestinationConfigParamsWebhookDestinationConfig by calling from_dict on the json representation
-        destination_config_params_webhook_destination_config_model_dict = DestinationConfigParamsWebhookDestinationConfig.from_dict(destination_config_params_webhook_destination_config_model_json).__dict__
-        destination_config_params_webhook_destination_config_model2 = DestinationConfigParamsWebhookDestinationConfig(**destination_config_params_webhook_destination_config_model_dict)
+        # Construct a model instance of DestinationConfigOneOfMSTeamsDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ms_teams_destination_config_model_dict = DestinationConfigOneOfMSTeamsDestinationConfig.from_dict(destination_config_one_of_ms_teams_destination_config_model_json).__dict__
+        destination_config_one_of_ms_teams_destination_config_model2 = DestinationConfigOneOfMSTeamsDestinationConfig(**destination_config_one_of_ms_teams_destination_config_model_dict)
 
         # Verify the model instances are equivalent
-        assert destination_config_params_webhook_destination_config_model == destination_config_params_webhook_destination_config_model2
+        assert destination_config_one_of_ms_teams_destination_config_model == destination_config_one_of_ms_teams_destination_config_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_config_params_webhook_destination_config_model_json2 = destination_config_params_webhook_destination_config_model.to_dict()
-        assert destination_config_params_webhook_destination_config_model_json2 == destination_config_params_webhook_destination_config_model_json
+        destination_config_one_of_ms_teams_destination_config_model_json2 = destination_config_one_of_ms_teams_destination_config_model.to_dict()
+        assert destination_config_one_of_ms_teams_destination_config_model_json2 == destination_config_one_of_ms_teams_destination_config_model_json
+
+class TestModel_DestinationConfigOneOfSafariDestinationConfig():
+    """
+    Test Class for DestinationConfigOneOfSafariDestinationConfig
+    """
+
+    def test_destination_config_one_of_safari_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfSafariDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfSafariDestinationConfig model
+        destination_config_one_of_safari_destination_config_model_json = {}
+        destination_config_one_of_safari_destination_config_model_json['cert_type'] = 'p12'
+        destination_config_one_of_safari_destination_config_model_json['password'] = 'testString'
+        destination_config_one_of_safari_destination_config_model_json['website_url'] = 'testString'
+        destination_config_one_of_safari_destination_config_model_json['website_name'] = 'testString'
+        destination_config_one_of_safari_destination_config_model_json['url_format_string'] = 'testString'
+        destination_config_one_of_safari_destination_config_model_json['website_push_id'] = 'testString'
+        destination_config_one_of_safari_destination_config_model_json['pre_prod'] = False
+
+        # Construct a model instance of DestinationConfigOneOfSafariDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_safari_destination_config_model = DestinationConfigOneOfSafariDestinationConfig.from_dict(destination_config_one_of_safari_destination_config_model_json)
+        assert destination_config_one_of_safari_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfSafariDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_safari_destination_config_model_dict = DestinationConfigOneOfSafariDestinationConfig.from_dict(destination_config_one_of_safari_destination_config_model_json).__dict__
+        destination_config_one_of_safari_destination_config_model2 = DestinationConfigOneOfSafariDestinationConfig(**destination_config_one_of_safari_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_safari_destination_config_model == destination_config_one_of_safari_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_safari_destination_config_model_json2 = destination_config_one_of_safari_destination_config_model.to_dict()
+        assert destination_config_one_of_safari_destination_config_model_json2 == destination_config_one_of_safari_destination_config_model_json
+
+class TestModel_DestinationConfigOneOfSlackDestinationConfig():
+    """
+    Test Class for DestinationConfigOneOfSlackDestinationConfig
+    """
+
+    def test_destination_config_one_of_slack_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfSlackDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfSlackDestinationConfig model
+        destination_config_one_of_slack_destination_config_model_json = {}
+        destination_config_one_of_slack_destination_config_model_json['url'] = 'testString'
+
+        # Construct a model instance of DestinationConfigOneOfSlackDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_slack_destination_config_model = DestinationConfigOneOfSlackDestinationConfig.from_dict(destination_config_one_of_slack_destination_config_model_json)
+        assert destination_config_one_of_slack_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfSlackDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_slack_destination_config_model_dict = DestinationConfigOneOfSlackDestinationConfig.from_dict(destination_config_one_of_slack_destination_config_model_json).__dict__
+        destination_config_one_of_slack_destination_config_model2 = DestinationConfigOneOfSlackDestinationConfig(**destination_config_one_of_slack_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_slack_destination_config_model == destination_config_one_of_slack_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_slack_destination_config_model_json2 = destination_config_one_of_slack_destination_config_model.to_dict()
+        assert destination_config_one_of_slack_destination_config_model_json2 == destination_config_one_of_slack_destination_config_model_json
+
+class TestModel_DestinationConfigOneOfWebhookDestinationConfig():
+    """
+    Test Class for DestinationConfigOneOfWebhookDestinationConfig
+    """
+
+    def test_destination_config_one_of_webhook_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfWebhookDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfWebhookDestinationConfig model
+        destination_config_one_of_webhook_destination_config_model_json = {}
+        destination_config_one_of_webhook_destination_config_model_json['url'] = 'testString'
+        destination_config_one_of_webhook_destination_config_model_json['verb'] = 'get'
+        destination_config_one_of_webhook_destination_config_model_json['custom_headers'] = {'key1': 'testString'}
+        destination_config_one_of_webhook_destination_config_model_json['sensitive_headers'] = ['testString']
+
+        # Construct a model instance of DestinationConfigOneOfWebhookDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_webhook_destination_config_model = DestinationConfigOneOfWebhookDestinationConfig.from_dict(destination_config_one_of_webhook_destination_config_model_json)
+        assert destination_config_one_of_webhook_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfWebhookDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_webhook_destination_config_model_dict = DestinationConfigOneOfWebhookDestinationConfig.from_dict(destination_config_one_of_webhook_destination_config_model_json).__dict__
+        destination_config_one_of_webhook_destination_config_model2 = DestinationConfigOneOfWebhookDestinationConfig(**destination_config_one_of_webhook_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_webhook_destination_config_model == destination_config_one_of_webhook_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_webhook_destination_config_model_json2 = destination_config_one_of_webhook_destination_config_model.to_dict()
+        assert destination_config_one_of_webhook_destination_config_model_json2 == destination_config_one_of_webhook_destination_config_model_json
 
 class TestModel_SubscriptionAttributesEmailAttributesResponse():
     """
@@ -4888,23 +4985,20 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        email_attributes_response_to_item_model = {} # EmailAttributesResponseToItem
-        email_attributes_response_to_item_model['email'] = 'testString'
-        email_attributes_response_to_item_model['time'] = '2019-01-01T12:00:00Z'
+        email_attributes_response_invited_items_model = {} # EmailAttributesResponseInvitedItems
+        email_attributes_response_invited_items_model['email'] = 'testString'
+        email_attributes_response_invited_items_model['updated_at'] = '2019-01-01T12:00:00Z'
+        email_attributes_response_invited_items_model['expires_at'] = '2019-01-01T12:00:00Z'
 
-        email_attributes_response_unsubscribed_item_model = {} # EmailAttributesResponseUnsubscribedItem
-        email_attributes_response_unsubscribed_item_model['email'] = 'testString'
-        email_attributes_response_unsubscribed_item_model['time'] = '2019-01-01T12:00:00Z'
-
-        email_attributes_response_invited_item_model = {} # EmailAttributesResponseInvitedItem
-        email_attributes_response_invited_item_model['email'] = 'testString'
-        email_attributes_response_invited_item_model['time'] = '2019-01-01T12:00:00Z'
+        email_attributes_response_subscribed_unsubscribed_items_model = {} # EmailAttributesResponseSubscribedUnsubscribedItems
+        email_attributes_response_subscribed_unsubscribed_items_model['email'] = 'testString'
+        email_attributes_response_subscribed_unsubscribed_items_model['updated_at'] = '2019-01-01T12:00:00Z'
 
         # Construct a json representation of a SubscriptionAttributesEmailAttributesResponse model
         subscription_attributes_email_attributes_response_model_json = {}
-        subscription_attributes_email_attributes_response_model_json['to'] = [email_attributes_response_to_item_model]
-        subscription_attributes_email_attributes_response_model_json['unsubscribed'] = [email_attributes_response_unsubscribed_item_model]
-        subscription_attributes_email_attributes_response_model_json['invited'] = [email_attributes_response_invited_item_model]
+        subscription_attributes_email_attributes_response_model_json['invited'] = [email_attributes_response_invited_items_model]
+        subscription_attributes_email_attributes_response_model_json['subscribed'] = [email_attributes_response_subscribed_unsubscribed_items_model]
+        subscription_attributes_email_attributes_response_model_json['unsubscribed'] = [email_attributes_response_subscribed_unsubscribed_items_model]
         subscription_attributes_email_attributes_response_model_json['add_notification_payload'] = False
         subscription_attributes_email_attributes_response_model_json['reply_to_mail'] = 'testString'
         subscription_attributes_email_attributes_response_model_json['reply_to_name'] = 'testString'
@@ -4948,23 +5042,15 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        sms_attributes_response_to_item_model = {} # SMSAttributesResponseToItem
-        sms_attributes_response_to_item_model['phone_number'] = 'testString'
-        sms_attributes_response_to_item_model['time'] = '2019-01-01T12:00:00Z'
-
-        sms_attributes_response_unsubscribed_item_model = {} # SMSAttributesResponseUnsubscribedItem
-        sms_attributes_response_unsubscribed_item_model['phone_number'] = 'testString'
-        sms_attributes_response_unsubscribed_item_model['time'] = '2019-01-01T12:00:00Z'
-
-        sms_attributes_response_invited_item_model = {} # SMSAttributesResponseInvitedItem
-        sms_attributes_response_invited_item_model['phone_number'] = 'testString'
-        sms_attributes_response_invited_item_model['time'] = '2019-01-01T12:00:00Z'
+        sm_attributes_items_model = {} # SMAttributesItems
+        sm_attributes_items_model['phone_number'] = 'testString'
+        sm_attributes_items_model['time'] = '2019-01-01T12:00:00Z'
 
         # Construct a json representation of a SubscriptionAttributesSMSAttributesResponse model
         subscription_attributes_sms_attributes_response_model_json = {}
-        subscription_attributes_sms_attributes_response_model_json['to'] = [sms_attributes_response_to_item_model]
-        subscription_attributes_sms_attributes_response_model_json['unsubscribed'] = [sms_attributes_response_unsubscribed_item_model]
-        subscription_attributes_sms_attributes_response_model_json['invited'] = [sms_attributes_response_invited_item_model]
+        subscription_attributes_sms_attributes_response_model_json['to'] = [sm_attributes_items_model]
+        subscription_attributes_sms_attributes_response_model_json['unsubscribed'] = [sm_attributes_items_model]
+        subscription_attributes_sms_attributes_response_model_json['invited'] = [sm_attributes_items_model]
         subscription_attributes_sms_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesSMSAttributesResponse by calling from_dict on the json representation
@@ -5085,7 +5171,7 @@ class TestModel_SubscriptionCreateAttributesEmailAttributes():
 
         # Construct a json representation of a SubscriptionCreateAttributesEmailAttributes model
         subscription_create_attributes_email_attributes_model_json = {}
-        subscription_create_attributes_email_attributes_model_json['to'] = ['testString']
+        subscription_create_attributes_email_attributes_model_json['invited'] = ['testString']
         subscription_create_attributes_email_attributes_model_json['add_notification_payload'] = False
         subscription_create_attributes_email_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_create_attributes_email_attributes_model_json['reply_to_name'] = 'testString'
@@ -5233,22 +5319,25 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        email_update_attributes_to_model = {} # EmailUpdateAttributesTo
-        email_update_attributes_to_model['add'] = ['testString']
-        email_update_attributes_to_model['remove'] = ['testString']
+        update_attributes_invited_model = {} # UpdateAttributesInvited
+        update_attributes_invited_model['add'] = ['testString']
+        update_attributes_invited_model['remove'] = ['testString']
 
-        email_update_attributes_unsubscribed_model = {} # EmailUpdateAttributesUnsubscribed
-        email_update_attributes_unsubscribed_model['remove'] = ['testString']
+        update_attributes_subscribed_model = {} # UpdateAttributesSubscribed
+        update_attributes_subscribed_model['remove'] = ['testString']
+
+        update_attributes_unsubscribed_model = {} # UpdateAttributesUnsubscribed
+        update_attributes_unsubscribed_model['remove'] = ['testString']
 
         # Construct a json representation of a SubscriptionUpdateAttributesEmailUpdateAttributes model
         subscription_update_attributes_email_update_attributes_model_json = {}
-        subscription_update_attributes_email_update_attributes_model_json['to'] = email_update_attributes_to_model
+        subscription_update_attributes_email_update_attributes_model_json['invited'] = update_attributes_invited_model
         subscription_update_attributes_email_update_attributes_model_json['add_notification_payload'] = False
         subscription_update_attributes_email_update_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['reply_to_name'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['from_name'] = 'testString'
-        subscription_update_attributes_email_update_attributes_model_json['invited'] = ['testString']
-        subscription_update_attributes_email_update_attributes_model_json['unsubscribed'] = email_update_attributes_unsubscribed_model
+        subscription_update_attributes_email_update_attributes_model_json['subscribed'] = update_attributes_subscribed_model
+        subscription_update_attributes_email_update_attributes_model_json['unsubscribed'] = update_attributes_unsubscribed_model
 
         # Construct a model instance of SubscriptionUpdateAttributesEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_email_update_attributes_model = SubscriptionUpdateAttributesEmailUpdateAttributes.from_dict(subscription_update_attributes_email_update_attributes_model_json)
@@ -5281,9 +5370,13 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes():
         sm_supdate_attributes_to_model['add'] = ['testString']
         sm_supdate_attributes_to_model['remove'] = ['testString']
 
+        update_attributes_unsubscribed_model = {} # UpdateAttributesUnsubscribed
+        update_attributes_unsubscribed_model['remove'] = ['testString']
+
         # Construct a json representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_sms_update_attributes_model_json = {}
         subscription_update_attributes_sms_update_attributes_model_json['to'] = sm_supdate_attributes_to_model
+        subscription_update_attributes_sms_update_attributes_model_json['unsubscribed'] = update_attributes_unsubscribed_model
 
         # Construct a model instance of SubscriptionUpdateAttributesSMSUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_sms_update_attributes_model = SubscriptionUpdateAttributesSMSUpdateAttributes.from_dict(subscription_update_attributes_sms_update_attributes_model_json)
