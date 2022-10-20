@@ -35,14 +35,22 @@ topic_id3 = ''
 destination_id = ''
 destination_id2 = ''
 destination_id3 = ''
+destination_id4 = ''
 destination_id5 = ''
 destination_id6 = ''
 destination_id7 = ''
+destination_id8 = ''
+destination_id9 = ''
 safariCertificatePath = ''
-destination_id4 = ''
 subscription_id = ''
 subscription_id2 = ''
 subscription_id3 = ''
+subscription_id4 = ''
+subscription_id5 = ''
+subscription_id6 = ''
+subscription_id7 = ''
+subscription_id8 = ''
+subscription_id9 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 
@@ -392,7 +400,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -406,13 +414,13 @@ class TestEventNotificationsV1():
         }
 
         name = "Webhook_destination"
-        typeVal = "webhook"
+        typeval = "webhook"
         description = "Webhook Destination"
 
         create_destination_response = self.event_notifications_service.create_destination(
             instance_id,
             name,
-            type=typeVal,
+            type=typeval,
             description=description,
             config=destination_config_model
         )
@@ -426,7 +434,7 @@ class TestEventNotificationsV1():
         assert destination is not None
         assert destination.name == name
         assert destination.description == description
-        assert destination.type == typeVal
+        assert destination.type == typeval
 
         destination_id = destination.id
 
@@ -439,13 +447,13 @@ class TestEventNotificationsV1():
             'params': fcm_config_params,
         }
         name = "FCM_destination"
-        typeVal = "push_android"
+        typeval = "push_android"
         description = "FCM Destination"
 
         create_destination_response = self.event_notifications_service.create_destination(
             instance_id,
             name,
-            type=typeVal,
+            type=typeval,
             description=description,
             config=destination_config_model
         )
@@ -459,7 +467,7 @@ class TestEventNotificationsV1():
         assert destination is not None
         assert destination.name == name
         assert destination.description == description
-        assert destination.type == typeVal
+        assert destination.type == typeval
 
         destination_id3 = destination.id
 
@@ -472,13 +480,13 @@ class TestEventNotificationsV1():
         }
 
         name = "Slack_destination"
-        typeVal = "slack"
+        typeval = "slack"
         description = "Slack Destination"
 
         create_destination_response = self.event_notifications_service.create_destination(
             instance_id,
             name,
-            type=typeVal,
+            type=typeval,
             description=description,
             config=destination_config_model
         )
@@ -492,7 +500,7 @@ class TestEventNotificationsV1():
         assert destination is not None
         assert destination.name == name
         assert destination.description == description
-        assert destination.type == typeVal
+        assert destination.type == typeval
 
         destination_id4 = destination.id
 
@@ -510,14 +518,14 @@ class TestEventNotificationsV1():
         }
 
         name = "Safari_destination"
-        typeVal = "push_safari"
+        typeval = "push_safari"
         description = "Safari Destination"
 
         certificatefile = open(safariCertificatePath, 'rb')
         create_destination_response = self.event_notifications_service.create_destination(
             instance_id,
             name,
-            type=typeVal,
+            type=typeval,
             description=description,
             config=destination_config_model,
             certificate=certificatefile,
@@ -532,7 +540,7 @@ class TestEventNotificationsV1():
         assert destination is not None
         assert destination.name == name
         assert destination.description == description
-        assert destination.type == typeVal
+        assert destination.type == typeval
 
         destination_id5 = destination.id
 
@@ -545,13 +553,13 @@ class TestEventNotificationsV1():
         }
 
         name = "MSTeams_destination"
-        typeVal = "msteams"
+        typeval = "msteams"
         description = "MSteams Destination"
 
         create_destination_response = self.event_notifications_service.create_destination(
             instance_id,
             name,
-            type=typeVal,
+            type=typeval,
             description=description,
             config=destination_config_model
         )
@@ -565,7 +573,7 @@ class TestEventNotificationsV1():
         assert destination is not None
         assert destination.name == name
         assert destination.description == description
-        assert destination.type == typeVal
+        assert destination.type == typeval
 
         destination_id6 = destination.id
 
@@ -578,13 +586,13 @@ class TestEventNotificationsV1():
             'params': cf_config_params,
         }
         name = "Cloud_Functions_destination"
-        typeVal = "ibmcf"
+        typeval = "ibmcf"
         description = "This is a Cloud Functions Destination for actions"
 
         create_destination_response = self.event_notifications_service.create_destination(
             instance_id,
             name,
-            type=typeVal,
+            type=typeval,
             description=description,
             config=destination_config_model
         )
@@ -598,10 +606,78 @@ class TestEventNotificationsV1():
         assert destination is not None
         assert destination.name == name
         assert destination.description == description
-        assert destination.type == typeVal
+        assert destination.type == typeval
 
         destination_id7 = destination.id
 
+        chrome_config_params = {
+            "website_url": "https://www.ibmcfendpoint.com/",
+            "api_key": "wedleknlwenwern9832jhde",
+            "public_key": "",
+            "pre_prod": False
+        }
+
+        destination_config_model = {
+            'params': chrome_config_params,
+        }
+        name = "Chrome_destination"
+        typeval = "push_chrome"
+        description = "This is a Chrome Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id8 = destination.id
+
+        fire_config_params = {
+            "website_url": "https://cloud.ibm.com",
+            "public_key": "ksddkasjdaksd",
+            "pre_prod": False
+        }
+
+        destination_config_model = {
+            'params': fire_config_params,
+        }
+        name = "Firefox_destination"
+        typeval = "push_firefox"
+        description = "This is a Firefox Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id9 = destination.id
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -711,6 +787,68 @@ class TestEventNotificationsV1():
         assert res_name == name
         assert res_description == description
 
+        fcm_config_params = {
+            "server_key": fcmServerKey,
+            "sender_id": fcmSenderId
+        }
+
+        destination_config_model = {
+            'params': fcm_config_params,
+        }
+        name = "FCM_destination_update"
+        description = "FCM Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id3,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id3
+        assert res_name == name
+        assert res_description == description
+
+        slack_config_params = {
+            'url': 'https://api.slack.com/myslack',
+        }
+
+        destination_config_model = {
+            'params': slack_config_params,
+        }
+
+        name = "Slack_destination_update"
+        description = "Slack Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id4,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id4
+        assert res_name == name
+        assert res_description == description
+
         safari_destination_config_params_model = {
             'cert_type': 'p12',
             'password': 'safari',
@@ -749,6 +887,37 @@ class TestEventNotificationsV1():
         assert res_name == name
         assert res_description == description
 
+        msteams_config_params = {
+            'url': 'https://teams.microsoft.com',
+        }
+
+        destination_config_model = {
+            'params': msteams_config_params,
+        }
+
+        name = "MSTeams_destination_update"
+        description = "MSteams Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id6,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id6
+        assert res_name == name
+        assert res_description == description
+
         destination_config_params_model = {
             "url": "https://www.ibmcfendpoint.com/",
             "api_key": "jjkkawdkashda89qw8ek"
@@ -780,6 +949,71 @@ class TestEventNotificationsV1():
         assert res_name == name
         assert res_description == description
 
+        chrome_config_params = {
+            "website_url": "https://www.ibmcfendpoint.com/",
+            "api_key": "wedleknlwenwern9832jhde",
+            "public_key": "",
+            "pre_prod": False
+        }
+
+        destination_config_model = {
+            'params': chrome_config_params,
+        }
+        name = "Chrome_destination_update"
+        description = "This is a Chrome Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id8,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id8
+        assert res_name == name
+        assert res_description == description
+
+        fire_config_params = {
+            "website_url": "https://cloud.ibm.com",
+            "public_key": "ksddkasjdaksd",
+            "pre_prod": False
+        }
+
+        destination_config_model = {
+            'params': fire_config_params,
+        }
+        name = "Firefox_destination_update"
+        description = "This is a Firefox Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id9,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id9
+        assert res_name == name
+        assert res_description == description
+
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -796,7 +1030,7 @@ class TestEventNotificationsV1():
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id2, subscription_id3
+        global subscription_id, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9
         subscription_create_attributes_model = {
             'signing_enabled': False,
         }
@@ -876,6 +1110,137 @@ class TestEventNotificationsV1():
         assert subscription_name == name
         assert subscription_description == description
 
+        name = "slack subscription"
+        description = "Subscription for the slack"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id4,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id4 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "safari subscription"
+        description = "Subscription for the safari"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id5,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id5 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "MSTeams subscription"
+        description = "Subscription for the MSTeams"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id6,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id6 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "cloud functions subscription"
+        description = "Subscription for the cloud functions"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id7,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id7 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "chrome subscription"
+        description = "Subscription for the chrome"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id8,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id8 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "Firefox subscription"
+        description = "Subscription for the firefox"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id9,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id9 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -970,11 +1335,9 @@ class TestEventNotificationsV1():
         assert subscription_new_id == subscription_id
         assert subscription_description == description
 
-        sms_update_attributes_invite_model = {}
-        sms_update_attributes_invite_model['add'] = ['tester4@ibm.com']
+        sms_update_attributes_invite_model = {'add': ['tester4@ibm.com']}
 
-        sms_update_attributes_toremove_model = {}
-        sms_update_attributes_toremove_model['remove'] = ['tester3@ibm.com']
+        sms_update_attributes_toremove_model = {'remove': ['tester3@ibm.com']}
 
         subscription_update_attributes_model = {
             'invited': sms_update_attributes_invite_model,
@@ -994,6 +1357,139 @@ class TestEventNotificationsV1():
             name=name,
             description=description,
             attributes=subscription_update_attributes_model,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = 'FCM update'
+        description = 'Subscription for FCM updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id3,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = 'Slack update'
+        description = 'Subscription for slack updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id4,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = 'safari update'
+        description = 'Subscription for safari updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id5,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = 'MSTeams update'
+        description = 'Subscription for MSTeams updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id6,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = 'cloud functions update'
+        description = 'Subscription for cloud functions updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id7,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = 'chrome update'
+        description = 'Subscription for chrome updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id8,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = 'Firefox update'
+        description = 'Subscription for Firefox updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id9,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -1331,7 +1827,7 @@ class TestEventNotificationsV1():
 
     @needscredentials
     def test_delete_subscription(self):
-        for id in [subscription_id, subscription_id2]:
+        for id in [subscription_id, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(
                 instance_id,
                 id
@@ -1371,7 +1867,7 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_delete_destination(self):
 
-        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7]:
+        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9]:
             delete_destination_response = self.event_notifications_service.delete_destination(
                 instance_id,
                 id
