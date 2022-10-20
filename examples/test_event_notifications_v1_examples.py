@@ -476,7 +476,7 @@ class TestEventNotificationsV1Examples():
             typeVal = "ibmcf"
             description = "This is a Cloud Functions Destination for actions"
 
-            create_destination_response = event_notifications_service.create_destination(
+            destination = event_notifications_service.create_destination(
                 instance_id,
                 name,
                 type=typeVal,
@@ -484,7 +484,7 @@ class TestEventNotificationsV1Examples():
                 config=destination_config_model
             ).get_result()
             print(json.dumps(destination, indent=2))
-            destination = DestinationResponse.from_dict(create_destination_response)
+            destination = DestinationResponse.from_dict(destination)
             destination_id7 = destination.id
 
             # chrome
@@ -857,7 +857,7 @@ class TestEventNotificationsV1Examples():
             subscription = event_notifications_service.create_subscription(
                 instance_id,
                 name,
-                destination_id,
+                destination_id3,
                 topic_id,
                 attributes=subscription_create_attributes_model,
                 description=description
@@ -971,7 +971,7 @@ class TestEventNotificationsV1Examples():
             description = 'Update Webhook subscription'
             update_subscription_response = event_notifications_service.update_subscription(
                 instance_id,
-                id=subscription_id,
+                id=subscription_id3,
                 name=name,
                 description=description,
                 attributes=subscription_update_attributes_model
@@ -1116,7 +1116,7 @@ class TestEventNotificationsV1Examples():
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
             for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9]:
-                delete_destination_response = self.event_notifications_service.delete_destination(
+                delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id
                 )
