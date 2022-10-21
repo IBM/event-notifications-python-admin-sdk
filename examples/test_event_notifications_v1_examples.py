@@ -538,6 +538,7 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(destination, indent=2))
             destination = DestinationResponse.from_dict(destination)
             destination_id9 = destination.id
+            # end-create_destination
 
         except ApiException as e:
             pytest.fail(str(e))
