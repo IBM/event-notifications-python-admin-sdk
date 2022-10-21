@@ -50,11 +50,17 @@ source_id = ''
 topic_id = ''
 destination_id = ''
 destination_id2 = ''
+destination_id3 = ''
+destination_id4 = ''
 destination_id5 = ''
+destination_id6 = ''
 destination_id7 = ''
+destination_id8 = ''
+destination_id9 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id2 = ''
+subscription_id3 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 
@@ -315,7 +321,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id5, destination_id7
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -346,6 +352,62 @@ class TestEventNotificationsV1Examples():
             destination = DestinationResponse.from_dict(destination)
             destination_id = destination.id
 
+            # Webhook
+            destination_config_params_model = {
+                'url': 'https://gcm.com',
+                'verb': 'get',
+                'custom_headers': {'gcm_apikey': 'apikey'},
+                'sensitive_headers': ['gcm_apikey'],
+            }
+
+            # Construct a dict representation of a DestinationConfig model
+            destination_config_model = {
+                'params': destination_config_params_model,
+            }
+
+            name = "Webhook_destination"
+            typeval = "webhook"
+            description = "Webhook Destination"
+
+            destination = event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            destination = DestinationResponse.from_dict(destination)
+            destination_id3 = destination.id
+
+            # slack
+            slack_config_params = {
+                'url': 'https://api.slack.com/myslack',
+            }
+
+            destination_config_model = {
+                'params': slack_config_params,
+            }
+
+            name = "Slack_destination"
+            typeval = "slack"
+            description = "Slack Destination"
+
+            destination = event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+            print(json.dumps(destination, indent=2))
+
+            destination = DestinationResponse.from_dict(destination)
+            destination_id4 = destination.id
+
+            # Safari
             safari_config_params = {
                 'cert_type': 'p12',
                 'password': 'safari',
@@ -365,7 +427,7 @@ class TestEventNotificationsV1Examples():
             description = "Safari Destination"
 
             certificatefile = open(safariCertificatePath, 'rb')
-            create_destination_response = event_notifications_service.create_destination(
+            destination = event_notifications_service.create_destination(
                 instance_id,
                 name,
                 type=typeVal,
@@ -373,10 +435,35 @@ class TestEventNotificationsV1Examples():
                 config=destination_config_model,
                 certificate=certificatefile,
             ).get_result()
-
-            destination = DestinationResponse.from_dict(create_destination_response)
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
             destination_id5 = destination.id
 
+            # MSTeams
+            msteams_config_params = {
+                'url': 'https://teams.microsoft.com',
+            }
+
+            destination_config_model = {
+                'params': msteams_config_params,
+            }
+
+            name = "MSTeams_destination"
+            typeval = "msteams"
+            description = "MSteams Destination"
+
+            destination = event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id6 = destination.id
+
+            # cloud functions
             cf_config_params = {
                 "url": "https://www.ibmcfendpoint.com/",
                 "api_key": "wewelkndliejoiewe898"
@@ -389,16 +476,69 @@ class TestEventNotificationsV1Examples():
             typeVal = "ibmcf"
             description = "This is a Cloud Functions Destination for actions"
 
-            create_destination_response = event_notifications_service.create_destination(
+            destination = event_notifications_service.create_destination(
                 instance_id,
                 name,
                 type=typeVal,
                 description=description,
                 config=destination_config_model
             ).get_result()
-
-            destination = DestinationResponse.from_dict(create_destination_response)
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
             destination_id7 = destination.id
+
+            # chrome
+            chrome_config_params = {
+                "website_url": "https://www.ibmcfendpoint.com/",
+                "api_key": "wedleknlwenwern9832jhde",
+                "public_key": "",
+                "pre_prod": False
+            }
+
+            destination_config_model = {
+                'params': chrome_config_params,
+            }
+            name = "Chrome_destination"
+            typeval = "push_chrome"
+            description = "This is a Chrome Destination"
+
+            destination = event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id8 = destination.id
+
+            # Firefox
+            fire_config_params = {
+                "website_url": "https://cloud.ibm.com",
+                "public_key": "ksddkasjdaksd",
+                "pre_prod": False
+            }
+
+            destination_config_model = {
+                'params': fire_config_params,
+            }
+            name = "Firefox_destination"
+            typeval = "push_firefox"
+            description = "This is a Firefox Destination"
+
+            destination = event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id9 = destination.id
+            # end-create_destination
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -466,6 +606,7 @@ class TestEventNotificationsV1Examples():
             print('\nupdate_destination() result:')
             # begin-update_destination
 
+            # FCM
             destination_config_params_model = {
                 "server_key": fcmServerKey,
                 "sender_id": fcmSenderId
@@ -487,6 +628,54 @@ class TestEventNotificationsV1Examples():
 
             print(json.dumps(destination, indent=2))
 
+            # webhook
+            destination_config_params_model = {
+                'url': 'https://cloud.ibm.com/nhwebhook/sendwebhook',
+                'verb': 'post',
+                'custom_headers': {'authorization': 'authorization token'},
+                'sensitive_headers': ['authorization'],
+            }
+
+            # Construct a dict representation of a DestinationConfig model
+            destination_config_model = {
+                'params': destination_config_params_model,
+            }
+
+            name = "Admin GCM Compliance"
+            description = "This destination is for creating admin GCM webhook to receive compliance notifications"
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id3,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            # Slack
+            slack_config_params = {
+                'url': 'https://api.slack.com/myslack',
+            }
+
+            destination_config_model = {
+                'params': slack_config_params,
+            }
+
+            name = "Slack_destination_update"
+            description = "Slack Destination update"
+
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id4,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            # Safari
             safari_destination_config_params_model = {
                 'cert_type': 'p12',
                 'password': 'safari',
@@ -515,6 +704,29 @@ class TestEventNotificationsV1Examples():
 
             print(json.dumps(update_destination_response, indent=2))
 
+            # MSTeams
+            msteams_config_params = {
+                'url': 'https://teams.microsoft.com',
+            }
+
+            destination_config_model = {
+                'params': msteams_config_params,
+            }
+
+            name = "MSTeams_destination_update"
+            description = "MSteams Destination update"
+
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id6,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            # Cloud Functions
             destination_config_params_model = {
                 "url": "https://www.ibmcfendpoint.com/",
                 "api_key": "wqowieqwoieqsfsdfs899eoqwieu"
@@ -535,6 +747,53 @@ class TestEventNotificationsV1Examples():
             ).get_result()
 
             print(json.dumps(update_destination_response, indent=2))
+
+            # Chrome
+            chrome_config_params = {
+                "website_url": "https://www.ibmcfendpoint.com/",
+                "api_key": "wedleknlwenwern9832jhde",
+                "public_key": "",
+                "pre_prod": False
+            }
+
+            destination_config_model = {
+                'params': chrome_config_params,
+            }
+            name = "Chrome_destination_update"
+            description = "This is a Chrome Destination update"
+
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id8,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            # Firefox
+            fire_config_params = {
+                "website_url": "https://cloud.ibm.com",
+                "public_key": "ksddkasjdaksd",
+                "pre_prod": False
+            }
+
+            destination_config_model = {
+                'params': fire_config_params,
+            }
+            name = "Firefox_destination_update"
+            description = "This is a Firefox Destination update"
+
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id9,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
             # end-update_destination
 
         except ApiException as e:
@@ -545,11 +804,12 @@ class TestEventNotificationsV1Examples():
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id2
+        global subscription_id, subscription_id2, subscription_id3
         try:
             print('\ncreate_subscription() result:')
             # begin-create_subscription
 
+            # FCM
             name = 'FCM subscription'
             description = 'Subscription for the FCM'
             subscription = event_notifications_service.create_subscription(
@@ -562,35 +822,56 @@ class TestEventNotificationsV1Examples():
 
             print(json.dumps(subscription, indent=2))
 
-            # end-create_subscription
-
             subscription_id = subscription.get('id')
+
+            # Email
+            subscription_create_attributes_model = {
+                'invited': ["tester1@gmail.com", "tester3@ibm.com"],
+                'add_notification_payload': True,
+                "reply_to_mail": "reply_to_mail@us.com",
+                "reply_to_name": "US News",
+                "from_name": "IBM"
+            }
+
+            name = 'subscription_email'
+            description = 'Subscription for email'
+            subscription = event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id2,
+                topic_id=topic_id,
+                attributes=subscription_create_attributes_model,
+                description=description
+            ).get_result()
+
+            print(json.dumps(subscription, indent=2))
+
+            subscription_id2 = subscription.get('id')
+
+            # webhook
+            subscription_create_attributes_model = {
+                'signing_enabled': False,
+            }
+
+            name = 'subscription_web'
+            description = 'Subscription for web'
+            subscription = event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id3,
+                topic_id,
+                attributes=subscription_create_attributes_model,
+                description=description
+            ).get_result()
+
+            print(json.dumps(subscription, indent=2))
+
+            subscription_id3 = subscription.get('id')
 
         except ApiException as e:
             pytest.fail(str(e))
 
-        subscription_create_attributes_model = {
-            'invited': ["tester1@gmail.com", "tester3@ibm.com"],
-            'add_notification_payload': True,
-            "reply_to_mail": "reply_to_mail@us.com",
-            "reply_to_name": "US News",
-            "from_name": "IBM"
-        }
-
-        name = 'subscription_email'
-        description = 'Subscription for email'
-        create_subscription_response = event_notifications_service.create_subscription(
-            instance_id,
-            name,
-            destination_id=destination_id2,
-            topic_id=topic_id,
-            attributes=subscription_create_attributes_model,
-            description=description
-        )
-
-        assert create_subscription_response.get_status_code() == 201
-        subscription_response = create_subscription_response.get_result()
-        subscription_id2 = subscription_response.get('id')
+        # end-create_subscription
 
     @needscredentials
     def test_list_subscriptions_example(self):
@@ -642,6 +923,7 @@ class TestEventNotificationsV1Examples():
             print('\nupdate_subscription() result:')
             # begin-update_subscription
 
+            # FCM
             name = 'Update_FCM_subscription'
             description = 'Update FCM subscription'
             subscription = event_notifications_service.update_subscription(
@@ -653,20 +935,19 @@ class TestEventNotificationsV1Examples():
 
             print(json.dumps(subscription, indent=2))
 
-            sms_update_attributes_invite_model = {}
-            sms_update_attributes_invite_model['add'] = ['tester4@ibm.com']
+            # Email
+            email_update_attributes_invite_model = {'add': ['tester4@ibm.com']}
 
-            sms_update_attributes_toremove_model = {}
-            sms_update_attributes_toremove_model['remove'] = ['tester3@ibm.com']
+            email_update_attributes_toremove_model = {'remove': ['tester3@ibm.com']}
 
             subscription_update_attributes_model = {
-                'invited': sms_update_attributes_invite_model,
+                'invited': email_update_attributes_invite_model,
                 'add_notification_payload': True,
                 "reply_to_mail": "reply_to_mail@us.com",
                 "reply_to_name": "US News",
                 "from_name": "IBM",
-                "subscribed": sms_update_attributes_toremove_model,
-                "unsubscribed": sms_update_attributes_toremove_model
+                "subscribed": email_update_attributes_toremove_model,
+                "unsubscribed": email_update_attributes_toremove_model
             }
 
             name = 'subscription_email update'
@@ -680,10 +961,26 @@ class TestEventNotificationsV1Examples():
             )
 
             subscription_response = update_subscription_response.get_result()
-            # end-update_subscription
-
             print(json.dumps(subscription_response, indent=2))
 
+            # webhook
+            subscription_update_attributes_model = {
+                'signing_enabled': True,
+            }
+
+            name = 'Webhook_sub_updated'
+            description = 'Update Webhook subscription'
+            update_subscription_response = event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id3,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+            # end-update_subscription
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -774,7 +1071,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_subscription
             print('\ndelete_subscription() response status code: ', response.get_status_code())
 
-            for id in [subscription_id2]:
+            for id in [subscription_id2, subscription_id3]:
                 delete_subscription_response = event_notifications_service.delete_subscription(
                     instance_id,
                     id
@@ -819,8 +1116,8 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            for id in [destination_id5, destination_id7]:
-                delete_destination_response = self.event_notifications_service.delete_destination(
+            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9]:
+                delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id
                 )
