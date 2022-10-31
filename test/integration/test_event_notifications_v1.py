@@ -33,6 +33,7 @@ topic_id = ''
 topic_id2 = ''
 topic_id3 = ''
 destination_id = ''
+destination_id1 = ''
 destination_id2 = ''
 destination_id3 = ''
 destination_id4 = ''
@@ -43,6 +44,7 @@ destination_id8 = ''
 destination_id9 = ''
 safariCertificatePath = ''
 subscription_id = ''
+subscription_id1 = ''
 subscription_id2 = ''
 subscription_id3 = ''
 subscription_id4 = ''
@@ -692,7 +694,7 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_list_destinations(self):
 
-        global destination_id2
+        global destination_id2, destination_id1
         more_results = True
         limit = 1
         offset = 0
@@ -716,6 +718,12 @@ class TestEventNotificationsV1():
                 destination = destinations.destinations[i]
                 if destination.id != destination_id and destination.type == 'smtp_ibm':
                     destination_id2 = destination.id
+                    if destination_id1 != '':
+                        break
+                if destination.type == 'sms_ibm':
+                    destination_id1 = destination.id
+                    if destination_id2 != '':
+                        break
             if destinations.total_count <= offset:
                 more_results = False
             offset += 1
@@ -1030,7 +1038,7 @@ class TestEventNotificationsV1():
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9
         subscription_create_attributes_model = {
             'signing_enabled': False,
         }
@@ -1053,6 +1061,32 @@ class TestEventNotificationsV1():
         subscription_name = subscription_response.get('name')
         subscription_description = subscription_response.get('description')
         subscription_id = subscription_response.get('id')
+        assert subscription_name == name
+        assert subscription_description == description
+
+        subscription_create_attributes_model = {
+            'invited': ["+12064512559", "+12064512559"],
+        }
+
+        name = 'subscription_sms'
+        description = 'Subscription for sms'
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id1,
+            topic_id=topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id1 = subscription_response.get('id')
+
         assert subscription_name == name
         assert subscription_description == description
 
@@ -1086,8 +1120,7 @@ class TestEventNotificationsV1():
         assert subscription_name == name
         assert subscription_description == description
 
-        # SMS
-
+        # FCM
         name = "FCM subscription"
         description = "Subscription for the FCM"
 
@@ -1335,18 +1368,48 @@ class TestEventNotificationsV1():
         assert subscription_new_id == subscription_id
         assert subscription_description == description
 
-        sms_update_attributes_invite_model = {'add': ['tester4@ibm.com']}
+        sms_update_attributes_invite_model = {'add': ['+12064512559']}
 
-        sms_update_attributes_toremove_model = {'remove': ['tester3@ibm.com']}
+        sms_update_attributes_toremove_model = {'remove': ['+12064512559']}
 
         subscription_update_attributes_model = {
             'invited': sms_update_attributes_invite_model,
+            "subscribed": sms_update_attributes_toremove_model,
+            "unsubscribed": sms_update_attributes_toremove_model
+        }
+
+        name = 'subscription_sms update'
+        description = 'Subscription for sms updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id1,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        email_update_attributes_invite_model = {'add': ['tester4@ibm.com']}
+
+        email_update_attributes_toremove_model = {'remove': ['tester3@ibm.com']}
+
+        subscription_update_attributes_model = {
+            'invited': email_update_attributes_invite_model,
             'add_notification_payload': True,
             "reply_to_mail": "reply_to_mail@us.com",
             "reply_to_name": "US News",
             "from_name": "IBM",
-            "subscribed": sms_update_attributes_toremove_model,
-            "unsubscribed": sms_update_attributes_toremove_model
+            "subscribed": email_update_attributes_toremove_model,
+            "unsubscribed": email_update_attributes_toremove_model
         }
 
         name = 'subscription_email update'
@@ -1827,7 +1890,7 @@ class TestEventNotificationsV1():
 
     @needscredentials
     def test_delete_subscription(self):
-        for id in [subscription_id, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9]:
+        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(
                 instance_id,
                 id

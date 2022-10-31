@@ -2820,7 +2820,7 @@ class TestCreateSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2829,7 +2829,7 @@ class TestCreateSubscription():
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
         subscription_create_attributes_model = {}
-        subscription_create_attributes_model['to'] = ['testString']
+        subscription_create_attributes_model['invited'] = ['testString']
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2877,7 +2877,7 @@ class TestCreateSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
         responses.add(responses.POST,
                       url,
                       body=mock_response,
@@ -2886,7 +2886,7 @@ class TestCreateSubscription():
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
         subscription_create_attributes_model = {}
-        subscription_create_attributes_model['to'] = ['testString']
+        subscription_create_attributes_model['invited'] = ['testString']
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3118,7 +3118,7 @@ class TestGetSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -3156,7 +3156,7 @@ class TestGetSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
         responses.add(responses.GET,
                       url,
                       body=mock_response,
@@ -3272,17 +3272,21 @@ class TestUpdateSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a SMSupdateAttributesTo model
-        sm_supdate_attributes_to_model = {}
-        sm_supdate_attributes_to_model['add'] = ['testString']
-        sm_supdate_attributes_to_model['remove'] = ['testString']
+        # Construct a dict representation of a UpdateAttributesInvited model
+        update_attributes_invited_model = {}
+        update_attributes_invited_model['add'] = ['testString']
+        update_attributes_invited_model['remove'] = ['testString']
+
+        # Construct a dict representation of a UpdateAttributesSubscribed model
+        update_attributes_subscribed_model = {}
+        update_attributes_subscribed_model['remove'] = ['testString']
 
         # Construct a dict representation of a UpdateAttributesUnsubscribed model
         update_attributes_unsubscribed_model = {}
@@ -3290,7 +3294,8 @@ class TestUpdateSubscription():
 
         # Construct a dict representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_model = {}
-        subscription_update_attributes_model['to'] = sm_supdate_attributes_to_model
+        subscription_update_attributes_model['invited'] = update_attributes_invited_model
+        subscription_update_attributes_model['subscribed'] = update_attributes_subscribed_model
         subscription_update_attributes_model['unsubscribed'] = update_attributes_unsubscribed_model
 
         # Set up parameter values
@@ -3335,17 +3340,21 @@ class TestUpdateSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"to": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "time": "2019-01-01T12:00:00.000Z"}]}}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
         responses.add(responses.PATCH,
                       url,
                       body=mock_response,
                       content_type='application/json',
                       status=200)
 
-        # Construct a dict representation of a SMSupdateAttributesTo model
-        sm_supdate_attributes_to_model = {}
-        sm_supdate_attributes_to_model['add'] = ['testString']
-        sm_supdate_attributes_to_model['remove'] = ['testString']
+        # Construct a dict representation of a UpdateAttributesInvited model
+        update_attributes_invited_model = {}
+        update_attributes_invited_model['add'] = ['testString']
+        update_attributes_invited_model['remove'] = ['testString']
+
+        # Construct a dict representation of a UpdateAttributesSubscribed model
+        update_attributes_subscribed_model = {}
+        update_attributes_subscribed_model['remove'] = ['testString']
 
         # Construct a dict representation of a UpdateAttributesUnsubscribed model
         update_attributes_unsubscribed_model = {}
@@ -3353,7 +3362,8 @@ class TestUpdateSubscription():
 
         # Construct a dict representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_model = {}
-        subscription_update_attributes_model['to'] = sm_supdate_attributes_to_model
+        subscription_update_attributes_model['invited'] = update_attributes_invited_model
+        subscription_update_attributes_model['subscribed'] = update_attributes_subscribed_model
         subscription_update_attributes_model['unsubscribed'] = update_attributes_unsubscribed_model
 
         # Set up parameter values
@@ -3911,65 +3921,66 @@ class TestModel_RulesGet():
         rules_get_model_json2 = rules_get_model.to_dict()
         assert rules_get_model_json2 == rules_get_model_json
 
-class TestModel_SMAttributesItems():
+class TestModel_SMSAttributesItems():
     """
-    Test Class for SMAttributesItems
+    Test Class for SMSAttributesItems
     """
 
-    def test_sm_attributes_items_serialization(self):
+    def test_sms_attributes_items_serialization(self):
         """
-        Test serialization/deserialization for SMAttributesItems
+        Test serialization/deserialization for SMSAttributesItems
         """
 
-        # Construct a json representation of a SMAttributesItems model
-        sm_attributes_items_model_json = {}
-        sm_attributes_items_model_json['phone_number'] = 'testString'
-        sm_attributes_items_model_json['time'] = '2019-01-01T12:00:00Z'
+        # Construct a json representation of a SMSAttributesItems model
+        sms_attributes_items_model_json = {}
+        sms_attributes_items_model_json['phone_number'] = 'testString'
+        sms_attributes_items_model_json['updated_at'] = '2019-01-01T12:00:00Z'
 
-        # Construct a model instance of SMAttributesItems by calling from_dict on the json representation
-        sm_attributes_items_model = SMAttributesItems.from_dict(sm_attributes_items_model_json)
-        assert sm_attributes_items_model != False
+        # Construct a model instance of SMSAttributesItems by calling from_dict on the json representation
+        sms_attributes_items_model = SMSAttributesItems.from_dict(sms_attributes_items_model_json)
+        assert sms_attributes_items_model != False
 
-        # Construct a model instance of SMAttributesItems by calling from_dict on the json representation
-        sm_attributes_items_model_dict = SMAttributesItems.from_dict(sm_attributes_items_model_json).__dict__
-        sm_attributes_items_model2 = SMAttributesItems(**sm_attributes_items_model_dict)
+        # Construct a model instance of SMSAttributesItems by calling from_dict on the json representation
+        sms_attributes_items_model_dict = SMSAttributesItems.from_dict(sms_attributes_items_model_json).__dict__
+        sms_attributes_items_model2 = SMSAttributesItems(**sms_attributes_items_model_dict)
 
         # Verify the model instances are equivalent
-        assert sm_attributes_items_model == sm_attributes_items_model2
+        assert sms_attributes_items_model == sms_attributes_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        sm_attributes_items_model_json2 = sm_attributes_items_model.to_dict()
-        assert sm_attributes_items_model_json2 == sm_attributes_items_model_json
+        sms_attributes_items_model_json2 = sms_attributes_items_model.to_dict()
+        assert sms_attributes_items_model_json2 == sms_attributes_items_model_json
 
-class TestModel_SMSupdateAttributesTo():
+class TestModel_SMSInviteAttributesItems():
     """
-    Test Class for SMSupdateAttributesTo
+    Test Class for SMSInviteAttributesItems
     """
 
-    def test_sm_supdate_attributes_to_serialization(self):
+    def test_sms_invite_attributes_items_serialization(self):
         """
-        Test serialization/deserialization for SMSupdateAttributesTo
+        Test serialization/deserialization for SMSInviteAttributesItems
         """
 
-        # Construct a json representation of a SMSupdateAttributesTo model
-        sm_supdate_attributes_to_model_json = {}
-        sm_supdate_attributes_to_model_json['add'] = ['testString']
-        sm_supdate_attributes_to_model_json['remove'] = ['testString']
+        # Construct a json representation of a SMSInviteAttributesItems model
+        sms_invite_attributes_items_model_json = {}
+        sms_invite_attributes_items_model_json['phone_number'] = 'testString'
+        sms_invite_attributes_items_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        sms_invite_attributes_items_model_json['expires_at'] = '2019-01-01T12:00:00Z'
 
-        # Construct a model instance of SMSupdateAttributesTo by calling from_dict on the json representation
-        sm_supdate_attributes_to_model = SMSupdateAttributesTo.from_dict(sm_supdate_attributes_to_model_json)
-        assert sm_supdate_attributes_to_model != False
+        # Construct a model instance of SMSInviteAttributesItems by calling from_dict on the json representation
+        sms_invite_attributes_items_model = SMSInviteAttributesItems.from_dict(sms_invite_attributes_items_model_json)
+        assert sms_invite_attributes_items_model != False
 
-        # Construct a model instance of SMSupdateAttributesTo by calling from_dict on the json representation
-        sm_supdate_attributes_to_model_dict = SMSupdateAttributesTo.from_dict(sm_supdate_attributes_to_model_json).__dict__
-        sm_supdate_attributes_to_model2 = SMSupdateAttributesTo(**sm_supdate_attributes_to_model_dict)
+        # Construct a model instance of SMSInviteAttributesItems by calling from_dict on the json representation
+        sms_invite_attributes_items_model_dict = SMSInviteAttributesItems.from_dict(sms_invite_attributes_items_model_json).__dict__
+        sms_invite_attributes_items_model2 = SMSInviteAttributesItems(**sms_invite_attributes_items_model_dict)
 
         # Verify the model instances are equivalent
-        assert sm_supdate_attributes_to_model == sm_supdate_attributes_to_model2
+        assert sms_invite_attributes_items_model == sms_invite_attributes_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        sm_supdate_attributes_to_model_json2 = sm_supdate_attributes_to_model.to_dict()
-        assert sm_supdate_attributes_to_model_json2 == sm_supdate_attributes_to_model_json
+        sms_invite_attributes_items_model_json2 = sms_invite_attributes_items_model.to_dict()
+        assert sms_invite_attributes_items_model_json2 == sms_invite_attributes_items_model_json
 
 class TestModel_Source():
     """
@@ -5042,15 +5053,20 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        sm_attributes_items_model = {} # SMAttributesItems
-        sm_attributes_items_model['phone_number'] = 'testString'
-        sm_attributes_items_model['time'] = '2019-01-01T12:00:00Z'
+        sms_attributes_items_model = {} # SMSAttributesItems
+        sms_attributes_items_model['phone_number'] = 'testString'
+        sms_attributes_items_model['updated_at'] = '2019-01-01T12:00:00Z'
+
+        sms_invite_attributes_items_model = {} # SMSInviteAttributesItems
+        sms_invite_attributes_items_model['phone_number'] = 'testString'
+        sms_invite_attributes_items_model['updated_at'] = '2019-01-01T12:00:00Z'
+        sms_invite_attributes_items_model['expires_at'] = '2019-01-01T12:00:00Z'
 
         # Construct a json representation of a SubscriptionAttributesSMSAttributesResponse model
         subscription_attributes_sms_attributes_response_model_json = {}
-        subscription_attributes_sms_attributes_response_model_json['to'] = [sm_attributes_items_model]
-        subscription_attributes_sms_attributes_response_model_json['unsubscribed'] = [sm_attributes_items_model]
-        subscription_attributes_sms_attributes_response_model_json['invited'] = [sm_attributes_items_model]
+        subscription_attributes_sms_attributes_response_model_json['subscribed'] = [sms_attributes_items_model]
+        subscription_attributes_sms_attributes_response_model_json['unsubscribed'] = [sms_attributes_items_model]
+        subscription_attributes_sms_attributes_response_model_json['invited'] = [sms_invite_attributes_items_model]
         subscription_attributes_sms_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesSMSAttributesResponse by calling from_dict on the json representation
@@ -5232,7 +5248,7 @@ class TestModel_SubscriptionCreateAttributesSMSAttributes():
 
         # Construct a json representation of a SubscriptionCreateAttributesSMSAttributes model
         subscription_create_attributes_sms_attributes_model_json = {}
-        subscription_create_attributes_sms_attributes_model_json['to'] = ['testString']
+        subscription_create_attributes_sms_attributes_model_json['invited'] = ['testString']
 
         # Construct a model instance of SubscriptionCreateAttributesSMSAttributes by calling from_dict on the json representation
         subscription_create_attributes_sms_attributes_model = SubscriptionCreateAttributesSMSAttributes.from_dict(subscription_create_attributes_sms_attributes_model_json)
@@ -5366,16 +5382,20 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        sm_supdate_attributes_to_model = {} # SMSupdateAttributesTo
-        sm_supdate_attributes_to_model['add'] = ['testString']
-        sm_supdate_attributes_to_model['remove'] = ['testString']
+        update_attributes_invited_model = {} # UpdateAttributesInvited
+        update_attributes_invited_model['add'] = ['testString']
+        update_attributes_invited_model['remove'] = ['testString']
+
+        update_attributes_subscribed_model = {} # UpdateAttributesSubscribed
+        update_attributes_subscribed_model['remove'] = ['testString']
 
         update_attributes_unsubscribed_model = {} # UpdateAttributesUnsubscribed
         update_attributes_unsubscribed_model['remove'] = ['testString']
 
         # Construct a json representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_sms_update_attributes_model_json = {}
-        subscription_update_attributes_sms_update_attributes_model_json['to'] = sm_supdate_attributes_to_model
+        subscription_update_attributes_sms_update_attributes_model_json['invited'] = update_attributes_invited_model
+        subscription_update_attributes_sms_update_attributes_model_json['subscribed'] = update_attributes_subscribed_model
         subscription_update_attributes_sms_update_attributes_model_json['unsubscribed'] = update_attributes_unsubscribed_model
 
         # Construct a model instance of SubscriptionUpdateAttributesSMSUpdateAttributes by calling from_dict on the json representation
