@@ -1120,7 +1120,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_subscription
             print('\ndelete_subscription() response status code: ', response.get_status_code())
 
-            for id in [subscription_id2, subscription_id3]:
+            for id in [subscription_id1, subscription_id2, subscription_id3]:
                 delete_subscription_response = event_notifications_service.delete_subscription(
                     instance_id,
                     id
