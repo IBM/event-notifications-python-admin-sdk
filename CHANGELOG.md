@@ -1,3 +1,10 @@
+## [0.1.6](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.5...v0.1.6) (2022-10-31)
+
+
+### Bug Fixes
+
+* sms opt in changes ([58ae68a](https://github.com/IBM/event-notifications-python-admin-sdk/commit/58ae68a6fac2756bbc94ff4d231e590bf4d0dd36))
+
 ## [0.1.5](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.4...v0.1.5) (2022-08-30)
 
 
