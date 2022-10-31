@@ -3045,40 +3045,40 @@ class RulesGet():
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SMAttributesItems():
+class SMSAttributesItems():
     """
     The sms attributes.
 
     :attr str phone_number: (optional) Phone number.
-    :attr datetime time: (optional) last updated time.
+    :attr datetime updated_at: (optional) last updated time.
     """
 
     def __init__(self,
                  *,
                  phone_number: str = None,
-                 time: datetime = None) -> None:
+                 updated_at: datetime = None) -> None:
         """
-        Initialize a SMAttributesItems object.
+        Initialize a SMSAttributesItems object.
 
         :param str phone_number: (optional) Phone number.
-        :param datetime time: (optional) last updated time.
+        :param datetime updated_at: (optional) last updated time.
         """
         self.phone_number = phone_number
-        self.time = time
+        self.updated_at = updated_at
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SMAttributesItems':
-        """Initialize a SMAttributesItems object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'SMSAttributesItems':
+        """Initialize a SMSAttributesItems object from a json dictionary."""
         args = {}
         if 'phone_number' in _dict:
             args['phone_number'] = _dict.get('phone_number')
-        if 'time' in _dict:
-            args['time'] = string_to_datetime(_dict.get('time'))
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a SMAttributesItems object from a json dictionary."""
+        """Initialize a SMSAttributesItems object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
@@ -3086,8 +3086,8 @@ class SMAttributesItems():
         _dict = {}
         if hasattr(self, 'phone_number') and self.phone_number is not None:
             _dict['phone_number'] = self.phone_number
-        if hasattr(self, 'time') and self.time is not None:
-            _dict['time'] = datetime_to_string(self.time)
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
         return _dict
 
     def _to_dict(self):
@@ -3095,62 +3095,70 @@ class SMAttributesItems():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this SMAttributesItems object."""
+        """Return a `str` version of this SMSAttributesItems object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'SMAttributesItems') -> bool:
+    def __eq__(self, other: 'SMSAttributesItems') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'SMAttributesItems') -> bool:
+    def __ne__(self, other: 'SMSAttributesItems') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
-class SMSupdateAttributesTo():
+class SMSInviteAttributesItems():
     """
-    The phone number to send the SMS to.
+    The sms attributes.
 
-    :attr List[str] add: (optional) array to add new items.
-    :attr List[str] remove: (optional) array to add new items.
+    :attr str phone_number: (optional) Phone number.
+    :attr datetime updated_at: (optional) last updated time.
+    :attr datetime expires_at: (optional) time of expiration.
     """
 
     def __init__(self,
                  *,
-                 add: List[str] = None,
-                 remove: List[str] = None) -> None:
+                 phone_number: str = None,
+                 updated_at: datetime = None,
+                 expires_at: datetime = None) -> None:
         """
-        Initialize a SMSupdateAttributesTo object.
+        Initialize a SMSInviteAttributesItems object.
 
-        :param List[str] add: (optional) array to add new items.
-        :param List[str] remove: (optional) array to add new items.
+        :param str phone_number: (optional) Phone number.
+        :param datetime updated_at: (optional) last updated time.
+        :param datetime expires_at: (optional) time of expiration.
         """
-        self.add = add
-        self.remove = remove
+        self.phone_number = phone_number
+        self.updated_at = updated_at
+        self.expires_at = expires_at
 
     @classmethod
-    def from_dict(cls, _dict: Dict) -> 'SMSupdateAttributesTo':
-        """Initialize a SMSupdateAttributesTo object from a json dictionary."""
+    def from_dict(cls, _dict: Dict) -> 'SMSInviteAttributesItems':
+        """Initialize a SMSInviteAttributesItems object from a json dictionary."""
         args = {}
-        if 'add' in _dict:
-            args['add'] = _dict.get('add')
-        if 'remove' in _dict:
-            args['remove'] = _dict.get('remove')
+        if 'phone_number' in _dict:
+            args['phone_number'] = _dict.get('phone_number')
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        if 'expires_at' in _dict:
+            args['expires_at'] = string_to_datetime(_dict.get('expires_at'))
         return cls(**args)
 
     @classmethod
     def _from_dict(cls, _dict):
-        """Initialize a SMSupdateAttributesTo object from a json dictionary."""
+        """Initialize a SMSInviteAttributesItems object from a json dictionary."""
         return cls.from_dict(_dict)
 
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'add') and self.add is not None:
-            _dict['add'] = self.add
-        if hasattr(self, 'remove') and self.remove is not None:
-            _dict['remove'] = self.remove
+        if hasattr(self, 'phone_number') and self.phone_number is not None:
+            _dict['phone_number'] = self.phone_number
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        if hasattr(self, 'expires_at') and self.expires_at is not None:
+            _dict['expires_at'] = datetime_to_string(self.expires_at)
         return _dict
 
     def _to_dict(self):
@@ -3158,16 +3166,16 @@ class SMSupdateAttributesTo():
         return self.to_dict()
 
     def __str__(self) -> str:
-        """Return a `str` version of this SMSupdateAttributesTo object."""
+        """Return a `str` version of this SMSInviteAttributesItems object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(self, other: 'SMSupdateAttributesTo') -> bool:
+    def __eq__(self, other: 'SMSInviteAttributesItems') -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(self, other: 'SMSupdateAttributesTo') -> bool:
+    def __ne__(self, other: 'SMSInviteAttributesItems') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -4917,8 +4925,8 @@ class UpdateAttributesInvited():
     """
     The email ids or phone numbers.
 
-    :attr List[str] add: (optional) The email ids or phone numbers.
-    :attr List[str] remove: (optional) The email ids for removal.
+    :attr List[str] add: (optional) The email ids or phone numbers to be invited.
+    :attr List[str] remove: (optional) The email ids or phone numbers for removal.
     """
 
     def __init__(self,
@@ -4928,8 +4936,10 @@ class UpdateAttributesInvited():
         """
         Initialize a UpdateAttributesInvited object.
 
-        :param List[str] add: (optional) The email ids or phone numbers.
-        :param List[str] remove: (optional) The email ids for removal.
+        :param List[str] add: (optional) The email ids or phone numbers to be
+               invited.
+        :param List[str] remove: (optional) The email ids or phone numbers for
+               removal.
         """
         self.add = add
         self.remove = remove
@@ -4978,9 +4988,10 @@ class UpdateAttributesInvited():
 
 class UpdateAttributesSubscribed():
     """
-    The email ids or phone number.
+    The email ids or phone numbers.
 
-    :attr List[str] remove: (optional) The email ids or phone number unsubscribed.
+    :attr List[str] remove: (optional) The email ids or phone numbers to be
+          unsubscribed.
     """
 
     def __init__(self,
@@ -4989,7 +5000,7 @@ class UpdateAttributesSubscribed():
         """
         Initialize a UpdateAttributesSubscribed object.
 
-        :param List[str] remove: (optional) The email ids or phone number
+        :param List[str] remove: (optional) The email ids or phone numbers to be
                unsubscribed.
         """
         self.remove = remove
@@ -5034,9 +5045,10 @@ class UpdateAttributesSubscribed():
 
 class UpdateAttributesUnsubscribed():
     """
-    The phone number or Email id to send the SMS/email to.
+    The email ids or phone numbers.
 
-    :attr List[str] remove: (optional) array to add new items.
+    :attr List[str] remove: (optional) The email ids or phone numbers to be
+          unsubscribed.
     """
 
     def __init__(self,
@@ -5045,7 +5057,8 @@ class UpdateAttributesUnsubscribed():
         """
         Initialize a UpdateAttributesUnsubscribed object.
 
-        :param List[str] remove: (optional) array to add new items.
+        :param List[str] remove: (optional) The email ids or phone numbers to be
+               unsubscribed.
         """
         self.remove = remove
 
@@ -5982,31 +5995,32 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
     """
     SMS attributes object.
 
-    :attr List[SMAttributesItems] to: The subscribed list.
-    :attr List[SMAttributesItems] unsubscribed: (optional) The unsubscribe list.
-    :attr List[SMAttributesItems] invited: (optional) The email id string.
+    :attr List[SMSAttributesItems] subscribed: (optional) The subscribed list.
+    :attr List[SMSAttributesItems] unsubscribed: (optional) The unsubscribe list.
+    :attr List[SMSInviteAttributesItems] invited: (optional) The email id string.
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['to', 'unsubscribed', 'invited'])
+    _properties = frozenset(['subscribed', 'unsubscribed', 'invited'])
 
     def __init__(self,
-                 to: List['SMAttributesItems'],
                  *,
-                 unsubscribed: List['SMAttributesItems'] = None,
-                 invited: List['SMAttributesItems'] = None,
+                 subscribed: List['SMSAttributesItems'] = None,
+                 unsubscribed: List['SMSAttributesItems'] = None,
+                 invited: List['SMSInviteAttributesItems'] = None,
                  **kwargs) -> None:
         """
         Initialize a SubscriptionAttributesSMSAttributesResponse object.
 
-        :param List[SMAttributesItems] to: The subscribed list.
-        :param List[SMAttributesItems] unsubscribed: (optional) The unsubscribe
+        :param List[SMSAttributesItems] subscribed: (optional) The subscribed list.
+        :param List[SMSAttributesItems] unsubscribed: (optional) The unsubscribe
                list.
-        :param List[SMAttributesItems] invited: (optional) The email id string.
+        :param List[SMSInviteAttributesItems] invited: (optional) The email id
+               string.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
-        self.to = to
+        self.subscribed = subscribed
         self.unsubscribed = unsubscribed
         self.invited = invited
         for _key, _value in kwargs.items():
@@ -6016,14 +6030,12 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
     def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesSMSAttributesResponse':
         """Initialize a SubscriptionAttributesSMSAttributesResponse object from a json dictionary."""
         args = {}
-        if 'to' in _dict:
-            args['to'] = [SMAttributesItems.from_dict(x) for x in _dict.get('to')]
-        else:
-            raise ValueError('Required property \'to\' not present in SubscriptionAttributesSMSAttributesResponse JSON')
+        if 'subscribed' in _dict:
+            args['subscribed'] = [SMSAttributesItems.from_dict(x) for x in _dict.get('subscribed')]
         if 'unsubscribed' in _dict:
-            args['unsubscribed'] = [SMAttributesItems.from_dict(x) for x in _dict.get('unsubscribed')]
+            args['unsubscribed'] = [SMSAttributesItems.from_dict(x) for x in _dict.get('unsubscribed')]
         if 'invited' in _dict:
-            args['invited'] = [SMAttributesItems.from_dict(x) for x in _dict.get('invited')]
+            args['invited'] = [SMSInviteAttributesItems.from_dict(x) for x in _dict.get('invited')]
         args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -6035,8 +6047,8 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'to') and self.to is not None:
-            _dict['to'] = [x.to_dict() for x in self.to]
+        if hasattr(self, 'subscribed') and self.subscribed is not None:
+            _dict['subscribed'] = [x.to_dict() for x in self.subscribed]
         if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
             _dict['unsubscribed'] = [x.to_dict() for x in self.unsubscribed]
         if hasattr(self, 'invited') and self.invited is not None:
@@ -6411,27 +6423,27 @@ class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
     """
     The attributes for an sms notification.
 
-    :attr List[str] to: The sms id string.
+    :attr List[str] invited: The sms id string.
     """
 
     def __init__(self,
-                 to: List[str]) -> None:
+                 invited: List[str]) -> None:
         """
         Initialize a SubscriptionCreateAttributesSMSAttributes object.
 
-        :param List[str] to: The sms id string.
+        :param List[str] invited: The sms id string.
         """
         # pylint: disable=super-init-not-called
-        self.to = to
+        self.invited = invited
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesSMSAttributes':
         """Initialize a SubscriptionCreateAttributesSMSAttributes object from a json dictionary."""
         args = {}
-        if 'to' in _dict:
-            args['to'] = _dict.get('to')
+        if 'invited' in _dict:
+            args['invited'] = _dict.get('invited')
         else:
-            raise ValueError('Required property \'to\' not present in SubscriptionCreateAttributesSMSAttributes JSON')
+            raise ValueError('Required property \'invited\' not present in SubscriptionCreateAttributesSMSAttributes JSON')
         return cls(**args)
 
     @classmethod
@@ -6442,8 +6454,8 @@ class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'to') and self.to is not None:
-            _dict['to'] = self.to
+        if hasattr(self, 'invited') and self.invited is not None:
+            _dict['invited'] = self.invited
         return _dict
 
     def _to_dict(self):
@@ -6590,9 +6602,9 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
     :attr str reply_to_name: The email name to reply to.
     :attr str from_name: The email name of From.
     :attr UpdateAttributesSubscribed subscribed: (optional) The email ids or phone
-          number.
-    :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The phone number or
-          Email id to send the SMS/email to.
+          numbers.
+    :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids or
+          phone numbers.
     """
 
     def __init__(self,
@@ -6615,9 +6627,9 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
         :param UpdateAttributesInvited invited: (optional) The email ids or phone
                numbers.
         :param UpdateAttributesSubscribed subscribed: (optional) The email ids or
-               phone number.
-        :param UpdateAttributesUnsubscribed unsubscribed: (optional) The phone
-               number or Email id to send the SMS/email to.
+               phone numbers.
+        :param UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids
+               or phone numbers.
         """
         # pylint: disable=super-init-not-called
         self.invited = invited
@@ -6702,33 +6714,42 @@ class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttribut
     """
     SMS attributes object.
 
-    :attr SMSupdateAttributesTo to: (optional) The phone number to send the SMS to.
-    :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The phone number or
-          Email id to send the SMS/email to.
+    :attr UpdateAttributesInvited invited: (optional) The email ids or phone
+          numbers.
+    :attr UpdateAttributesSubscribed subscribed: (optional) The email ids or phone
+          numbers.
+    :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids or
+          phone numbers.
     """
 
     def __init__(self,
                  *,
-                 to: 'SMSupdateAttributesTo' = None,
+                 invited: 'UpdateAttributesInvited' = None,
+                 subscribed: 'UpdateAttributesSubscribed' = None,
                  unsubscribed: 'UpdateAttributesUnsubscribed' = None) -> None:
         """
         Initialize a SubscriptionUpdateAttributesSMSUpdateAttributes object.
 
-        :param SMSupdateAttributesTo to: (optional) The phone number to send the
-               SMS to.
-        :param UpdateAttributesUnsubscribed unsubscribed: (optional) The phone
-               number or Email id to send the SMS/email to.
+        :param UpdateAttributesInvited invited: (optional) The email ids or phone
+               numbers.
+        :param UpdateAttributesSubscribed subscribed: (optional) The email ids or
+               phone numbers.
+        :param UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids
+               or phone numbers.
         """
         # pylint: disable=super-init-not-called
-        self.to = to
+        self.invited = invited
+        self.subscribed = subscribed
         self.unsubscribed = unsubscribed
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesSMSUpdateAttributes':
         """Initialize a SubscriptionUpdateAttributesSMSUpdateAttributes object from a json dictionary."""
         args = {}
-        if 'to' in _dict:
-            args['to'] = SMSupdateAttributesTo.from_dict(_dict.get('to'))
+        if 'invited' in _dict:
+            args['invited'] = UpdateAttributesInvited.from_dict(_dict.get('invited'))
+        if 'subscribed' in _dict:
+            args['subscribed'] = UpdateAttributesSubscribed.from_dict(_dict.get('subscribed'))
         if 'unsubscribed' in _dict:
             args['unsubscribed'] = UpdateAttributesUnsubscribed.from_dict(_dict.get('unsubscribed'))
         return cls(**args)
@@ -6741,8 +6762,10 @@ class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttribut
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if hasattr(self, 'to') and self.to is not None:
-            _dict['to'] = self.to.to_dict()
+        if hasattr(self, 'invited') and self.invited is not None:
+            _dict['invited'] = self.invited.to_dict()
+        if hasattr(self, 'subscribed') and self.subscribed is not None:
+            _dict['subscribed'] = self.subscribed.to_dict()
         if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
             _dict['unsubscribed'] = self.unsubscribed.to_dict()
         return _dict

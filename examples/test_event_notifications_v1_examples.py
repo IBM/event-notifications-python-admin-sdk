@@ -49,6 +49,7 @@ topic_name = 'Admin Topic Compliance'
 source_id = ''
 topic_id = ''
 destination_id = ''
+destination_id1 = ''
 destination_id2 = ''
 destination_id3 = ''
 destination_id4 = ''
@@ -59,6 +60,7 @@ destination_id8 = ''
 destination_id9 = ''
 safariCertificatePath = ''
 subscription_id = ''
+subscription_id1 = ''
 subscription_id2 = ''
 subscription_id3 = ''
 fcmServerKey = ''
@@ -548,7 +550,7 @@ class TestEventNotificationsV1Examples():
         """
         list_destinations request example
         """
-        global destination_id2
+        global destination_id1, destination_id2
         more_results = True
         limit = 1
         offset = 0
@@ -570,6 +572,12 @@ class TestEventNotificationsV1Examples():
                 destination = destinations.destinations[i]
                 if destination.id != destination_id and destination.type == 'smtp_ibm':
                     destination_id2 = destination.id
+                    if destination_id1 != '':
+                        break
+                if destination.type == 'sms_ibm':
+                    destination_id1 = destination.id
+                    if destination_id2 != '':
+                        break
             if destinations.total_count <= offset:
                 more_results = False
             offset += 1
@@ -804,7 +812,7 @@ class TestEventNotificationsV1Examples():
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id2, subscription_id3
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3
         try:
             print('\ncreate_subscription() result:')
             # begin-create_subscription
@@ -823,6 +831,25 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(subscription, indent=2))
 
             subscription_id = subscription.get('id')
+
+            subscription_create_attributes_model = {
+                'invited': ["+12064512559", "+12064512559"],
+            }
+
+            name = 'subscription_sms'
+            description = 'Subscription for sms'
+            subscription = event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id1,
+                topic_id=topic_id,
+                attributes=subscription_create_attributes_model,
+                description=description
+            ).get_result()
+
+            print(json.dumps(subscription, indent=2))
+
+            subscription_id1 = subscription.get('id')
 
             # Email
             subscription_create_attributes_model = {
@@ -933,6 +960,28 @@ class TestEventNotificationsV1Examples():
                 description=description,
             ).get_result()
 
+            print(json.dumps(subscription, indent=2))
+
+            # SMS
+            sms_update_attributes_invite_model = {'add': ['+12064512559']}
+
+            sms_update_attributes_toremove_model = {'remove': ['+12064512559']}
+
+            subscription_update_attributes_model = {
+                'invited': sms_update_attributes_invite_model,
+                "subscribed": sms_update_attributes_toremove_model,
+                "unsubscribed": sms_update_attributes_toremove_model
+            }
+
+            name = 'subscription_sms update'
+            description = 'Subscription for sms updated'
+            subscription = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id1,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            ).get_result()
             print(json.dumps(subscription, indent=2))
 
             # Email
