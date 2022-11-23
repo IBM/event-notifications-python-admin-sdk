@@ -1602,6 +1602,7 @@ class CreateDestinationEnums:
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -1682,7 +1683,7 @@ class Destination():
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1707,7 +1708,7 @@ class Destination():
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -1805,7 +1806,7 @@ class Destination():
 
     class TypeEnum(str, Enum):
         """
-        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -1814,6 +1815,7 @@ class Destination():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -1889,7 +1891,7 @@ class DestinationConfigOneOf():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig']))
+                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig']))
         raise Exception(msg)
 
 class DestinationList():
@@ -2131,6 +2133,7 @@ class DestinationListItem():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -2253,6 +2256,7 @@ class DestinationResponse():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -3969,6 +3973,7 @@ class Subscription():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -4263,6 +4268,7 @@ class SubscriptionListItem():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -5570,6 +5576,73 @@ class DestinationConfigOneOfMSTeamsDestinationConfig(DestinationConfigOneOf):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigOneOfMSTeamsDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a PagerDuty destination configuration.
+
+    :attr str api_key: API Key for the pagerduty account.
+    :attr str routing_key: Routing Key for the pagerduty account.
+    """
+
+    def __init__(self,
+                 api_key: str,
+                 routing_key: str) -> None:
+        """
+        Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object.
+
+        :param str api_key: API Key for the pagerduty account.
+        :param str routing_key: Routing Key for the pagerduty account.
+        """
+        # pylint: disable=super-init-not-called
+        self.api_key = api_key
+        self.routing_key = routing_key
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfPagerDutyDestinationConfig':
+        """Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'api_key' in _dict:
+            args['api_key'] = _dict.get('api_key')
+        else:
+            raise ValueError('Required property \'api_key\' not present in DestinationConfigOneOfPagerDutyDestinationConfig JSON')
+        if 'routing_key' in _dict:
+            args['routing_key'] = _dict.get('routing_key')
+        else:
+            raise ValueError('Required property \'routing_key\' not present in DestinationConfigOneOfPagerDutyDestinationConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'api_key') and self.api_key is not None:
+            _dict['api_key'] = self.api_key
+        if hasattr(self, 'routing_key') and self.routing_key is not None:
+            _dict['routing_key'] = self.routing_key
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfPagerDutyDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfPagerDutyDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfPagerDutyDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

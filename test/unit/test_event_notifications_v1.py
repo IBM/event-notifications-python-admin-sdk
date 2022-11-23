@@ -4888,6 +4888,36 @@ class TestModel_DestinationConfigOneOfMSTeamsDestinationConfig():
         destination_config_one_of_ms_teams_destination_config_model_json2 = destination_config_one_of_ms_teams_destination_config_model.to_dict()
         assert destination_config_one_of_ms_teams_destination_config_model_json2 == destination_config_one_of_ms_teams_destination_config_model_json
 
+class TestModel_DestinationConfigOneOfPagerDutyDestinationConfig():
+    """
+    Test Class for DestinationConfigOneOfPagerDutyDestinationConfig
+    """
+
+    def test_destination_config_one_of_pager_duty_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfPagerDutyDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfPagerDutyDestinationConfig model
+        destination_config_one_of_pager_duty_destination_config_model_json = {}
+        destination_config_one_of_pager_duty_destination_config_model_json['api_key'] = 'testString'
+        destination_config_one_of_pager_duty_destination_config_model_json['routing_key'] = 'testString'
+
+        # Construct a model instance of DestinationConfigOneOfPagerDutyDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_pager_duty_destination_config_model = DestinationConfigOneOfPagerDutyDestinationConfig.from_dict(destination_config_one_of_pager_duty_destination_config_model_json)
+        assert destination_config_one_of_pager_duty_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfPagerDutyDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_pager_duty_destination_config_model_dict = DestinationConfigOneOfPagerDutyDestinationConfig.from_dict(destination_config_one_of_pager_duty_destination_config_model_json).__dict__
+        destination_config_one_of_pager_duty_destination_config_model2 = DestinationConfigOneOfPagerDutyDestinationConfig(**destination_config_one_of_pager_duty_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_pager_duty_destination_config_model == destination_config_one_of_pager_duty_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_pager_duty_destination_config_model_json2 = destination_config_one_of_pager_duty_destination_config_model.to_dict()
+        assert destination_config_one_of_pager_duty_destination_config_model_json2 == destination_config_one_of_pager_duty_destination_config_model_json
+
 class TestModel_DestinationConfigOneOfSafariDestinationConfig():
     """
     Test Class for DestinationConfigOneOfSafariDestinationConfig

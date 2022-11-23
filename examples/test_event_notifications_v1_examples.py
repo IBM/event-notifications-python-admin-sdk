@@ -58,6 +58,7 @@ destination_id6 = ''
 destination_id7 = ''
 destination_id8 = ''
 destination_id9 = ''
+destination_id10 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -323,7 +324,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -540,6 +541,32 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(destination, indent=2))
             destination = DestinationResponse.from_dict(destination)
             destination_id9 = destination.id
+
+            pd_config_params = {
+                "api_key": "akdnaklsdawioeqowi",
+                "routing_key": "ksddkasjdakssdsd"
+            }
+
+            destination_config_model = {
+                'params': pd_config_params,
+            }
+            name = "Pager_Duty_destination"
+            typeval = "pagerduty"
+            description = "This is a PagerDuty Destination"
+
+            destination = event_notifications_service.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            destination = DestinationResponse.from_dict(destination)
+
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id10 = destination.id
             # end-create_destination
 
         except ApiException as e:
@@ -796,6 +823,27 @@ class TestEventNotificationsV1Examples():
             destination = event_notifications_service.update_destination(
                 instance_id,
                 id=destination_id9,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            pd_config_params = {
+                "api_key": "sdskndlsndflsklskdf",
+                "routing_key": "ksddkasjdaksdsdsd"
+            }
+
+            destination_config_model = {
+                'params': pd_config_params,
+            }
+            name = "PagerDuty_destination_update"
+            description = "This is a PagerDuty Destination update"
+
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id10,
                 name=name,
                 description=description,
                 config=destination_config_model
@@ -1165,7 +1213,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9]:
+            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10]:
                 delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id
