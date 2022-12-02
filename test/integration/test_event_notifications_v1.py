@@ -57,6 +57,7 @@ subscription_id9 = ''
 subscription_id10 = ''
 fcmServerKey = ''
 fcmSenderId = ''
+integration_id = ''
 
 class TestEventNotificationsV1():
     """
@@ -92,6 +93,54 @@ class TestEventNotificationsV1():
     needscredentials = pytest.mark.skipif(
         not os.path.exists(config_file), reason="External configuration not available, skipping..."
     )
+
+    @needscredentials
+    def test_list_integrations(self):
+
+        global integration_id
+        list_integrations_response = self.event_notifications_service.list_integrations(
+            instance_id,
+            limit=1,
+            offset=0,
+            search=search
+        )
+
+        assert list_integrations_response.get_status_code() == 200
+        integration_response = list_integrations_response.get_result()
+        integrations = integration_response.get('integrations')
+        assert integrations[0] is not None
+        integration_id = integrations[0].get('id')
+
+    @needscredentials
+    def test_get_integration(self):
+        get_integration_response = self.event_notifications_service.get_integration(
+            instance_id,
+            id=integration_id
+        )
+
+        assert get_integration_response.get_status_code() == 200
+        integration_response = get_integration_response.get_result()
+        assert integration_response is not None
+
+    @needscredentials
+    def test_update_integration(self):
+
+        integration_metadata = {
+            'endpoint': 'https://private.us-south.kms.cloud.ibm.com',
+            'crn': 'crn:v1:staging:public:kms:us-south:a/****:****::',
+            'root_key_id': 'sddsds-f326-4688-baaf-611750e79b61'
+        }
+
+        update_integration_response = self.event_notifications_service.replace_integration(
+            instance_id,
+            id=integration_id,
+            type='kms',
+            metadata=integration_metadata
+        )
+
+        assert update_integration_response.get_status_code() == 200
+        integration_response = update_integration_response.get_result()
+        assert integration_response is not None
 
     @needscredentials
     def test_create_sources(self):
@@ -444,7 +493,7 @@ class TestEventNotificationsV1():
 
         fcm_config_params = {
             "server_key": fcmServerKey,
-            "sender_id" : fcmSenderId
+            "sender_id": fcmSenderId
         }
 
         destination_config_model = {
@@ -1730,7 +1779,6 @@ class TestEventNotificationsV1():
             'en_data': notification_fcm_body_message_data_model,
         }
 
-        
         # Construct a dict representation of a NotificationAPNSBodyMessageData model
         notification_apns_body_message_data_model = {
             'alert': 'Alert message',
@@ -1789,7 +1837,7 @@ class TestEventNotificationsV1():
 
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
-            body = notification_create_model
+            body=notification_create_model
         )
 
         assert send_notifications_response.get_status_code() == 202
@@ -1978,7 +2026,7 @@ class TestEventNotificationsV1():
 
         send_bulk_notifications_response = self.event_notifications_service.send_bulk_notifications(
             instance_id=instance_id,
-            bulk_messages=[notification_create_model,notification_create_model1]
+            bulk_messages=[notification_create_model, notification_create_model1]
         )
 
         assert send_bulk_notifications_response.get_status_code() == 202

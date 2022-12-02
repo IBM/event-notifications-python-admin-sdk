@@ -3397,6 +3397,416 @@ class TestUpdateSubscription():
 # End of Service: Subscriptions
 ##############################################################################
 
+##############################################################################
+# Start of Service: KMSIntegrations
+##############################################################################
+# region
+
+class TestNewInstance():
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+class TestListIntegrations():
+    """
+    Test Class for list_integrations
+    """
+
+    @responses.activate
+    def test_list_integrations_all_params(self):
+        """
+        list_integrations()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/integrations')
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        offset = 0
+        limit = 1
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_integrations(
+            instance_id,
+            offset=offset,
+            limit=limit,
+            search=search,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'offset={}'.format(offset) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_integrations_all_params_with_retries(self):
+        # Enable retries and run test_list_integrations_all_params.
+        _service.enable_retries()
+        self.test_list_integrations_all_params()
+
+        # Disable retries and run test_list_integrations_all_params.
+        _service.disable_retries()
+        self.test_list_integrations_all_params()
+
+    @responses.activate
+    def test_list_integrations_required_params(self):
+        """
+        test_list_integrations_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/integrations')
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Invoke method
+        response = _service.list_integrations(
+            instance_id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_integrations_required_params_with_retries(self):
+        # Enable retries and run test_list_integrations_required_params.
+        _service.enable_retries()
+        self.test_list_integrations_required_params()
+
+        # Disable retries and run test_list_integrations_required_params.
+        _service.disable_retries()
+        self.test_list_integrations_required_params()
+
+    @responses.activate
+    def test_list_integrations_value_error(self):
+        """
+        test_list_integrations_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/integrations')
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_integrations(**req_copy)
+
+    def test_list_integrations_value_error_with_retries(self):
+        # Enable retries and run test_list_integrations_value_error.
+        _service.enable_retries()
+        self.test_list_integrations_value_error()
+
+        # Disable retries and run test_list_integrations_value_error.
+        _service.disable_retries()
+        self.test_list_integrations_value_error()
+
+    @responses.activate
+    def test_list_integrations_with_pager_get_next(self):
+        """
+        test_list_integrations_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/integrations')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = IntegrationsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_integrations_with_pager_get_all(self):
+        """
+        test_list_integrations_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/integrations')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response1,
+                      content_type='application/json',
+                      status=200)
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response2,
+                      content_type='application/json',
+                      status=200)
+
+        # Exercise the pager class for this operation
+        pager = IntegrationsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+class TestGetIntegration():
+    """
+    Test Class for get_integration
+    """
+
+    @responses.activate
+    def test_get_integration_all_params(self):
+        """
+        get_integration()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/integrations/testString')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_integration(
+            instance_id,
+            id,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_integration_all_params_with_retries(self):
+        # Enable retries and run test_get_integration_all_params.
+        _service.enable_retries()
+        self.test_get_integration_all_params()
+
+        # Disable retries and run test_get_integration_all_params.
+        _service.disable_retries()
+        self.test_get_integration_all_params()
+
+    @responses.activate
+    def test_get_integration_value_error(self):
+        """
+        test_get_integration_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/integrations/testString')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.GET,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_integration(**req_copy)
+
+    def test_get_integration_value_error_with_retries(self):
+        # Enable retries and run test_get_integration_value_error.
+        _service.enable_retries()
+        self.test_get_integration_value_error()
+
+        # Disable retries and run test_get_integration_value_error.
+        _service.disable_retries()
+        self.test_get_integration_value_error()
+
+class TestReplaceIntegration():
+    """
+    Test Class for replace_integration
+    """
+
+    @responses.activate
+    def test_replace_integration_all_params(self):
+        """
+        replace_integration()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/integrations/testString')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Construct a dict representation of a IntegrationMetadata model
+        integration_metadata_model = {}
+        integration_metadata_model['endpoint'] = 'testString'
+        integration_metadata_model['crn'] = 'testString'
+        integration_metadata_model['root_key_id'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        type = 'testString'
+        metadata = integration_metadata_model
+
+        # Invoke method
+        response = _service.replace_integration(
+            instance_id,
+            id,
+            type,
+            metadata,
+            headers={}
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['type'] == 'testString'
+        assert req_body['metadata'] == integration_metadata_model
+
+    def test_replace_integration_all_params_with_retries(self):
+        # Enable retries and run test_replace_integration_all_params.
+        _service.enable_retries()
+        self.test_replace_integration_all_params()
+
+        # Disable retries and run test_replace_integration_all_params.
+        _service.disable_retries()
+        self.test_replace_integration_all_params()
+
+    @responses.activate
+    def test_replace_integration_value_error(self):
+        """
+        test_replace_integration_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/integrations/testString')
+        mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(responses.PUT,
+                      url,
+                      body=mock_response,
+                      content_type='application/json',
+                      status=200)
+
+        # Construct a dict representation of a IntegrationMetadata model
+        integration_metadata_model = {}
+        integration_metadata_model['endpoint'] = 'testString'
+        integration_metadata_model['crn'] = 'testString'
+        integration_metadata_model['root_key_id'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        type = 'testString'
+        metadata = integration_metadata_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "type": type,
+            "metadata": metadata,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.replace_integration(**req_copy)
+
+    def test_replace_integration_value_error_with_retries(self):
+        # Enable retries and run test_replace_integration_value_error.
+        _service.enable_retries()
+        self.test_replace_integration_value_error()
+
+        # Disable retries and run test_replace_integration_value_error.
+        _service.disable_retries()
+        self.test_replace_integration_value_error()
+
+# endregion
+##############################################################################
+# End of Service: KMSIntegrations
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
@@ -3738,6 +4148,169 @@ class TestModel_EmailAttributesResponseSubscribedUnsubscribedItems():
         # Convert model instance back to dict and verify no loss of data
         email_attributes_response_subscribed_unsubscribed_items_model_json2 = email_attributes_response_subscribed_unsubscribed_items_model.to_dict()
         assert email_attributes_response_subscribed_unsubscribed_items_model_json2 == email_attributes_response_subscribed_unsubscribed_items_model_json
+
+class TestModel_IntegrationGetResponse():
+    """
+    Test Class for IntegrationGetResponse
+    """
+
+    def test_integration_get_response_serialization(self):
+        """
+        Test serialization/deserialization for IntegrationGetResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        integration_metadata_model = {} # IntegrationMetadata
+        integration_metadata_model['endpoint'] = 'https://private.us-south.kms.cloud.ibm.com'
+        integration_metadata_model['crn'] = 'crn:v1:staging:public:kms:us-south:a/****:****::'
+        integration_metadata_model['root_key_id'] = 'cf49847c-bd3e-4fda-853f-2bcf0575a895'
+
+        # Construct a json representation of a IntegrationGetResponse model
+        integration_get_response_model_json = {}
+        integration_get_response_model_json['id'] = '9fab83da-98cb-4f18-a7ba-b6f0435c9673'
+        integration_get_response_model_json['type'] = 'testString'
+        integration_get_response_model_json['metadata'] = integration_metadata_model
+        integration_get_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        integration_get_response_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of IntegrationGetResponse by calling from_dict on the json representation
+        integration_get_response_model = IntegrationGetResponse.from_dict(integration_get_response_model_json)
+        assert integration_get_response_model != False
+
+        # Construct a model instance of IntegrationGetResponse by calling from_dict on the json representation
+        integration_get_response_model_dict = IntegrationGetResponse.from_dict(integration_get_response_model_json).__dict__
+        integration_get_response_model2 = IntegrationGetResponse(**integration_get_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert integration_get_response_model == integration_get_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        integration_get_response_model_json2 = integration_get_response_model.to_dict()
+        assert integration_get_response_model_json2 == integration_get_response_model_json
+
+class TestModel_IntegrationList():
+    """
+    Test Class for IntegrationList
+    """
+
+    def test_integration_list_serialization(self):
+        """
+        Test serialization/deserialization for IntegrationList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        integration_metadata_model = {} # IntegrationMetadata
+        integration_metadata_model['endpoint'] = 'https://private.us-south.kms.cloud.ibm.com'
+        integration_metadata_model['crn'] = 'crn:v1:staging:public:kms:us-south:a/****:****::'
+        integration_metadata_model['root_key_id'] = 'cf49847c-bd3e-4fda-853f-2bcf0575a895'
+
+        integration_list_item_model = {} # IntegrationListItem
+        integration_list_item_model['id'] = 'bc0cb555-bf6d-444f-b8f3-069199b04a77'
+        integration_list_item_model['type'] = 'kms'
+        integration_list_item_model['metadata'] = integration_metadata_model
+        integration_list_item_model['created_at'] = '2021-08-18T09:50:32.133000Z'
+        integration_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
+
+        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+
+        # Construct a json representation of a IntegrationList model
+        integration_list_model_json = {}
+        integration_list_model_json['total_count'] = 0
+        integration_list_model_json['offset'] = 38
+        integration_list_model_json['limit'] = 38
+        integration_list_model_json['integrations'] = [integration_list_item_model]
+        integration_list_model_json['first'] = page_href_response_model
+        integration_list_model_json['previous'] = page_href_response_model
+        integration_list_model_json['next'] = page_href_response_model
+
+        # Construct a model instance of IntegrationList by calling from_dict on the json representation
+        integration_list_model = IntegrationList.from_dict(integration_list_model_json)
+        assert integration_list_model != False
+
+        # Construct a model instance of IntegrationList by calling from_dict on the json representation
+        integration_list_model_dict = IntegrationList.from_dict(integration_list_model_json).__dict__
+        integration_list_model2 = IntegrationList(**integration_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert integration_list_model == integration_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        integration_list_model_json2 = integration_list_model.to_dict()
+        assert integration_list_model_json2 == integration_list_model_json
+
+class TestModel_IntegrationListItem():
+    """
+    Test Class for IntegrationListItem
+    """
+
+    def test_integration_list_item_serialization(self):
+        """
+        Test serialization/deserialization for IntegrationListItem
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        integration_metadata_model = {} # IntegrationMetadata
+        integration_metadata_model['endpoint'] = 'https://private.us-south.kms.cloud.ibm.com'
+        integration_metadata_model['crn'] = 'crn:v1:staging:public:kms:us-south:a/****:****::'
+        integration_metadata_model['root_key_id'] = 'cf49847c-bd3e-4fda-853f-2bcf0575a895'
+
+        # Construct a json representation of a IntegrationListItem model
+        integration_list_item_model_json = {}
+        integration_list_item_model_json['id'] = '9fab83da-98cb-4f18-a7ba-b6f0435c9673'
+        integration_list_item_model_json['type'] = 'testString'
+        integration_list_item_model_json['metadata'] = integration_metadata_model
+        integration_list_item_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        integration_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of IntegrationListItem by calling from_dict on the json representation
+        integration_list_item_model = IntegrationListItem.from_dict(integration_list_item_model_json)
+        assert integration_list_item_model != False
+
+        # Construct a model instance of IntegrationListItem by calling from_dict on the json representation
+        integration_list_item_model_dict = IntegrationListItem.from_dict(integration_list_item_model_json).__dict__
+        integration_list_item_model2 = IntegrationListItem(**integration_list_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert integration_list_item_model == integration_list_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        integration_list_item_model_json2 = integration_list_item_model.to_dict()
+        assert integration_list_item_model_json2 == integration_list_item_model_json
+
+class TestModel_IntegrationMetadata():
+    """
+    Test Class for IntegrationMetadata
+    """
+
+    def test_integration_metadata_serialization(self):
+        """
+        Test serialization/deserialization for IntegrationMetadata
+        """
+
+        # Construct a json representation of a IntegrationMetadata model
+        integration_metadata_model_json = {}
+        integration_metadata_model_json['endpoint'] = 'testString'
+        integration_metadata_model_json['crn'] = 'testString'
+        integration_metadata_model_json['root_key_id'] = 'testString'
+
+        # Construct a model instance of IntegrationMetadata by calling from_dict on the json representation
+        integration_metadata_model = IntegrationMetadata.from_dict(integration_metadata_model_json)
+        assert integration_metadata_model != False
+
+        # Construct a model instance of IntegrationMetadata by calling from_dict on the json representation
+        integration_metadata_model_dict = IntegrationMetadata.from_dict(integration_metadata_model_json).__dict__
+        integration_metadata_model2 = IntegrationMetadata(**integration_metadata_model_dict)
+
+        # Verify the model instances are equivalent
+        assert integration_metadata_model == integration_metadata_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        integration_metadata_model_json2 = integration_metadata_model.to_dict()
+        assert integration_metadata_model_json2 == integration_metadata_model_json
 
 class TestModel_NotificationCreate():
     """

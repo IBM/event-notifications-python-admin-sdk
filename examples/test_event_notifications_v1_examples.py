@@ -66,6 +66,7 @@ subscription_id2 = ''
 subscription_id3 = ''
 fcmServerKey = ''
 fcmSenderId = ''
+integration_id = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -1094,7 +1095,6 @@ class TestEventNotificationsV1Examples():
             type_value = "com.acme.offer:new"
             date = '2019-01-01T12:00:00.000Z'
             notifications_source = "1234-1234-sdfs-234:test"
-            
             # begin-send_notifications
 
             notification_devices_model = {
@@ -1242,6 +1242,66 @@ class TestEventNotificationsV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
+    @needscredentials
+    def test_list_integrations_example(self):
+        global integration_id
+        try:
+            # begin-list_integrations
+
+            list_integrations_response = event_notifications_service.list_integrations(
+                instance_id,
+                limit=1,
+                offset=0,
+                search=search
+            )
+
+            integration_response = list_integrations_response.get_result()
+            integrations = integration_response.get('integrations')
+            integration_id = integrations[0].get('id')
+            # end-get_integration
+            print('\nlist_integrations() response status code: ', list_integrations_response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_integration_example(self):
+        try:
+            # begin-get_integration
+            get_integration_response = event_notifications_service.get_integration(
+                instance_id,
+                id=integration_id
+            )
+
+            # end-get_integrations
+            print('\nget_integration() response status code: ', get_integration_response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_integration_example(self):
+        try:
+            # begin-update_integration
+
+            integration_metadata = {
+                'endpoint': 'https://private.us-south.kms.cloud.ibm.com',
+                'crn': 'crn:v1:staging:public:kms:us-south:a/****:****::',
+                'root_key_id': 'sddsds-f326-4688-baaf-611750e79b61'
+            }
+
+            update_integration_response = event_notifications_service.replace_integration(
+                instance_id,
+                type='kms',
+                id=integration_id,
+                metadata=integration_metadata
+            )
+
+            # end-update_integrations
+            print('\nupdate_integration() response status code: ', update_integration_response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
 # endregion
 ##############################################################################
 # End of Examples for Service: EventNotificationsV1
