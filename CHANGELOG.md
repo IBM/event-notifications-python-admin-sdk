@@ -1,3 +1,10 @@
+## [0.1.7](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.6...v0.1.7) (2022-12-05)
+
+
+### Bug Fixes
+
+* add PagerDuty destination and KMS integration ([fce5601](https://github.com/IBM/event-notifications-python-admin-sdk/commit/fce5601996b1928120dc607ae6609e23a327e5a7))
+
 ## [0.1.6](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.5...v0.1.6) (2022-10-31)
 
 
