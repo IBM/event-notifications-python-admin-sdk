@@ -544,8 +544,8 @@ class TestEventNotificationsV1Examples():
             destination_id9 = destination.id
 
             pd_config_params = {
-                "api_key": "akdnaklsdawioeqowi",
-                "routing_key": "ksddkasjdakssdsd"
+                "api_key": "insert API Key here",
+                "routing_key": "insert Routing Key here"
             }
 
             destination_config_model = {
@@ -832,8 +832,8 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(destination, indent=2))
 
             pd_config_params = {
-                "api_key": "sdskndlsndflsklskdf",
-                "routing_key": "ksddkasjdaksdsdsd"
+                "api_key": "insert API Key here",
+                "routing_key": "insert Routing Key here"
             }
 
             destination_config_model = {
