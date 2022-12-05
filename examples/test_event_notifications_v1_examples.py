@@ -1258,7 +1258,7 @@ class TestEventNotificationsV1Examples():
             integration_response = list_integrations_response.get_result()
             integrations = integration_response.get('integrations')
             integration_id = integrations[0].get('id')
-            # end-get_integration
+            # end-list_integrations
             print('\nlist_integrations() response status code: ', list_integrations_response.get_status_code())
 
         except ApiException as e:
@@ -1273,7 +1273,7 @@ class TestEventNotificationsV1Examples():
                 id=integration_id
             )
 
-            # end-get_integrations
+            # end-get_integration
             print('\nget_integration() response status code: ', get_integration_response.get_status_code())
 
         except ApiException as e:
@@ -1282,22 +1282,22 @@ class TestEventNotificationsV1Examples():
     @needscredentials
     def test_update_integration_example(self):
         try:
-            # begin-update_integration
+            # begin-replace_integration
 
             integration_metadata = {
                 'endpoint': 'https://private.us-south.kms.cloud.ibm.com',
-                'crn': 'crn:v1:staging:public:kms:us-south:a/****:****::',
-                'root_key_id': 'sddsds-f326-4688-baaf-611750e79b61'
+                'crn': 'insert crn',
+                'root_key_id': 'insert root key id'
             }
 
             update_integration_response = event_notifications_service.replace_integration(
                 instance_id,
-                type='kms',
+                type='kms/hs-crypto',
                 id=integration_id,
                 metadata=integration_metadata
             )
 
-            # end-update_integrations
+            # end-replace_integration
             print('\nupdate_integration() response status code: ', update_integration_response.get_status_code())
 
         except ApiException as e:
