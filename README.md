@@ -120,6 +120,10 @@ SDK Methods to consume
     - [Get Subscription](#get-subscription)
     - [Update Subscription](#update-subscription)
     - [Delete Subscription](#delete-subscription)
+- [Integration](#integration)
+  - [List Integrations](#list-integrations)
+  - [Get Integrations](#get-integration)
+  - [Update Integration](#update-integration)  
 - [Send Notifications](#send-notifications)
 
 ## Source 
@@ -465,6 +469,52 @@ response = event_notifications_service.delete_subscription(
      id=<subscription-id>,	# Event notifications service instance Subscriptions ID
  )
 ```
+
+# Integration
+
+### List Integrations
+
+```py
+list_integrations_response = event_notifications_service.list_integrations(
+    <instance-id>,
+    <limit>,
+    <offset>,
+    <search>,
+)
+
+integration_response = list_integrations_response.get_result()
+
+```
+### Get Integration
+
+```py
+get_integration_response = event_notifications_service.get_integration(
+  <instance_id>,
+  id=<integration_id>
+)
+
+integration_response = get_integration_response.get_result()
+```
+
+### Update Integration
+```py
+
+integration_metadata = {
+  'endpoint': '<end-point>',
+  'crn': '<crn>',
+  'root_key_id': '<root-key-id>'
+}
+
+update_integration_response = event_notifications_service.replace_integration(
+  <instance_id>,
+  type=<integration-type>,
+  id=<integration_id>,
+  metadata=integration_metadata
+)
+
+integration_response = update_integration_response.get_result()
+```
+
 ### Send Notifications
 
 

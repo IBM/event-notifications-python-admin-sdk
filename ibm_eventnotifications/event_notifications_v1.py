@@ -1585,6 +1585,173 @@ class EventNotificationsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # KMS Integrations
+    #########################
+
+
+    def list_integrations(self,
+        instance_id: str,
+        *,
+        offset: int = None,
+        limit: int = None,
+        search: str = None,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        List all Integrations.
+
+        List of all KMS Integrations.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int offset: (optional) offset for paginated results.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IntegrationList` object
+        """
+
+        if instance_id is None:
+            raise ValueError('instance_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='list_integrations')
+        headers.update(sdk_headers)
+
+        params = {
+            'offset': offset,
+            'limit': limit,
+            'search': search
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/integrations'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers,
+                                       params=params)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def get_integration(self,
+        instance_id: str,
+        id: str,
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Get a single Integrations.
+
+        Get a single KMS Integrations.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for integration.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IntegrationGetResponse` object
+        """
+
+        if instance_id is None:
+            raise ValueError('instance_id must be provided')
+        if id is None:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='get_integration')
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/integrations/{id}'.format(**path_param_dict)
+        request = self.prepare_request(method='GET',
+                                       url=url,
+                                       headers=headers)
+
+        response = self.send(request, **kwargs)
+        return response
+
+
+    def replace_integration(self,
+        instance_id: str,
+        id: str,
+        type: str,
+        metadata: 'IntegrationMetadata',
+        **kwargs
+    ) -> DetailedResponse:
+        """
+        Update an exisitng Integration.
+
+        Update an exisitng KMS Integration.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for integration.
+        :param str type: Integration type. Allowed values are kms and hs-crypto.
+        :param IntegrationMetadata metadata: Integration Metadata object.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `IntegrationGetResponse` object
+        """
+
+        if instance_id is None:
+            raise ValueError('instance_id must be provided')
+        if id is None:
+            raise ValueError('id must be provided')
+        if type is None:
+            raise ValueError('type must be provided')
+        if metadata is None:
+            raise ValueError('metadata must be provided')
+        metadata = convert_model(metadata)
+        headers = {}
+        sdk_headers = get_sdk_headers(service_name=self.DEFAULT_SERVICE_NAME,
+                                      service_version='V1',
+                                      operation_id='replace_integration')
+        headers.update(sdk_headers)
+
+        data = {
+            'type': type,
+            'metadata': metadata
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/integrations/{id}'.format(**path_param_dict)
+        request = self.prepare_request(method='PUT',
+                                       url=url,
+                                       headers=headers,
+                                       data=data)
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class CreateDestinationEnums:
     """
@@ -1602,6 +1769,7 @@ class CreateDestinationEnums:
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -1682,7 +1850,7 @@ class Destination():
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1707,7 +1875,7 @@ class Destination():
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -1805,7 +1973,7 @@ class Destination():
 
     class TypeEnum(str, Enum):
         """
-        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/IBMCloudFunctions.
+        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -1814,6 +1982,7 @@ class Destination():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -1889,7 +2058,7 @@ class DestinationConfigOneOf():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig']))
+                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig']))
         raise Exception(msg)
 
 class DestinationList():
@@ -2131,6 +2300,7 @@ class DestinationListItem():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -2253,6 +2423,7 @@ class DestinationResponse():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -2485,6 +2656,386 @@ class EmailAttributesResponseSubscribedUnsubscribedItems():
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'EmailAttributesResponseSubscribedUnsubscribedItems') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class IntegrationGetResponse():
+    """
+    Integration response object.
+
+    :attr str id: ID of the integration.
+    :attr str type: Integration type. Allowed values are kms and hs-crypto.
+    :attr IntegrationMetadata metadata: Integration Metadata object.
+    :attr datetime created_at: Creation time of an integration.
+    :attr datetime updated_at: Last Update time of an integration.
+    """
+
+    def __init__(self,
+                 id: str,
+                 type: str,
+                 metadata: 'IntegrationMetadata',
+                 created_at: datetime,
+                 updated_at: datetime) -> None:
+        """
+        Initialize a IntegrationGetResponse object.
+
+        :param str id: ID of the integration.
+        :param str type: Integration type. Allowed values are kms and hs-crypto.
+        :param IntegrationMetadata metadata: Integration Metadata object.
+        :param datetime created_at: Creation time of an integration.
+        :param datetime updated_at: Last Update time of an integration.
+        """
+        self.id = id
+        self.type = type
+        self.metadata = metadata
+        self.created_at = created_at
+        self.updated_at = updated_at
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IntegrationGetResponse':
+        """Initialize a IntegrationGetResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in IntegrationGetResponse JSON')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in IntegrationGetResponse JSON')
+        if 'metadata' in _dict:
+            args['metadata'] = IntegrationMetadata.from_dict(_dict.get('metadata'))
+        else:
+            raise ValueError('Required property \'metadata\' not present in IntegrationGetResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in IntegrationGetResponse JSON')
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        else:
+            raise ValueError('Required property \'updated_at\' not present in IntegrationGetResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IntegrationGetResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'metadata') and self.metadata is not None:
+            _dict['metadata'] = self.metadata.to_dict()
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IntegrationGetResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IntegrationGetResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IntegrationGetResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class IntegrationList():
+    """
+    all Integrations response object.
+
+    :attr int total_count: Number of integrations.
+    :attr int offset: Current offset.
+    :attr int limit: limit to show integrations.
+    :attr List[IntegrationListItem] integrations: List of integrations.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
+    """
+
+    def __init__(self,
+                 total_count: int,
+                 offset: int,
+                 limit: int,
+                 integrations: List['IntegrationListItem'],
+                 *,
+                 first: 'PageHrefResponse' = None,
+                 previous: 'PageHrefResponse' = None,
+                 next: 'PageHrefResponse' = None) -> None:
+        """
+        Initialize a IntegrationList object.
+
+        :param int total_count: Number of integrations.
+        :param int offset: Current offset.
+        :param int limit: limit to show integrations.
+        :param List[IntegrationListItem] integrations: List of integrations.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
+        """
+        self.total_count = total_count
+        self.offset = offset
+        self.limit = limit
+        self.integrations = integrations
+        self.first = first
+        self.previous = previous
+        self.next = next
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IntegrationList':
+        """Initialize a IntegrationList object from a json dictionary."""
+        args = {}
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in IntegrationList JSON')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in IntegrationList JSON')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in IntegrationList JSON')
+        if 'integrations' in _dict:
+            args['integrations'] = [IntegrationListItem.from_dict(x) for x in _dict.get('integrations')]
+        else:
+            raise ValueError('Required property \'integrations\' not present in IntegrationList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IntegrationList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'integrations') and self.integrations is not None:
+            _dict['integrations'] = [x.to_dict() for x in self.integrations]
+        if hasattr(self, 'first') and self.first is not None:
+            _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            _dict['next'] = self.next.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IntegrationList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IntegrationList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IntegrationList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class IntegrationListItem():
+    """
+    all Integrations response object.
+
+    :attr str id: ID of the integration.
+    :attr str type: Integration type. Allowed values are kms and hs-crypto.
+    :attr IntegrationMetadata metadata: Integration Metadata object.
+    :attr datetime created_at: Creation time of an integration.
+    :attr datetime updated_at: Update time of an integration.
+    """
+
+    def __init__(self,
+                 id: str,
+                 type: str,
+                 metadata: 'IntegrationMetadata',
+                 created_at: datetime,
+                 updated_at: datetime) -> None:
+        """
+        Initialize a IntegrationListItem object.
+
+        :param str id: ID of the integration.
+        :param str type: Integration type. Allowed values are kms and hs-crypto.
+        :param IntegrationMetadata metadata: Integration Metadata object.
+        :param datetime created_at: Creation time of an integration.
+        :param datetime updated_at: Update time of an integration.
+        """
+        self.id = id
+        self.type = type
+        self.metadata = metadata
+        self.created_at = created_at
+        self.updated_at = updated_at
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IntegrationListItem':
+        """Initialize a IntegrationListItem object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in IntegrationListItem JSON')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in IntegrationListItem JSON')
+        if 'metadata' in _dict:
+            args['metadata'] = IntegrationMetadata.from_dict(_dict.get('metadata'))
+        else:
+            raise ValueError('Required property \'metadata\' not present in IntegrationListItem JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in IntegrationListItem JSON')
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        else:
+            raise ValueError('Required property \'updated_at\' not present in IntegrationListItem JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IntegrationListItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'metadata') and self.metadata is not None:
+            _dict['metadata'] = self.metadata.to_dict()
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IntegrationListItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IntegrationListItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IntegrationListItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class IntegrationMetadata():
+    """
+    Integration Metadata object.
+
+    :attr str endpoint: KMS url for key management.
+    :attr str crn: CRN of the KMS instance.
+    :attr str root_key_id: Root Key id of KMS.
+    """
+
+    def __init__(self,
+                 endpoint: str,
+                 crn: str,
+                 root_key_id: str) -> None:
+        """
+        Initialize a IntegrationMetadata object.
+
+        :param str endpoint: KMS url for key management.
+        :param str crn: CRN of the KMS instance.
+        :param str root_key_id: Root Key id of KMS.
+        """
+        self.endpoint = endpoint
+        self.crn = crn
+        self.root_key_id = root_key_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'IntegrationMetadata':
+        """Initialize a IntegrationMetadata object from a json dictionary."""
+        args = {}
+        if 'endpoint' in _dict:
+            args['endpoint'] = _dict.get('endpoint')
+        else:
+            raise ValueError('Required property \'endpoint\' not present in IntegrationMetadata JSON')
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError('Required property \'crn\' not present in IntegrationMetadata JSON')
+        if 'root_key_id' in _dict:
+            args['root_key_id'] = _dict.get('root_key_id')
+        else:
+            raise ValueError('Required property \'root_key_id\' not present in IntegrationMetadata JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a IntegrationMetadata object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'endpoint') and self.endpoint is not None:
+            _dict['endpoint'] = self.endpoint
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'root_key_id') and self.root_key_id is not None:
+            _dict['root_key_id'] = self.root_key_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this IntegrationMetadata object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'IntegrationMetadata') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'IntegrationMetadata') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3969,6 +4520,7 @@ class Subscription():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -4263,6 +4815,7 @@ class SubscriptionListItem():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
 
@@ -5570,6 +6123,75 @@ class DestinationConfigOneOfMSTeamsDestinationConfig(DestinationConfigOneOf):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigOneOfMSTeamsDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a PagerDuty destination configuration.
+
+    :attr str api_key: API Key for the pagerduty account.
+    :attr str routing_key: Routing Key(Integration Key) for the team in pagerduty
+          account.
+    """
+
+    def __init__(self,
+                 api_key: str,
+                 routing_key: str) -> None:
+        """
+        Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object.
+
+        :param str api_key: API Key for the pagerduty account.
+        :param str routing_key: Routing Key(Integration Key) for the team in
+               pagerduty account.
+        """
+        # pylint: disable=super-init-not-called
+        self.api_key = api_key
+        self.routing_key = routing_key
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfPagerDutyDestinationConfig':
+        """Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'api_key' in _dict:
+            args['api_key'] = _dict.get('api_key')
+        else:
+            raise ValueError('Required property \'api_key\' not present in DestinationConfigOneOfPagerDutyDestinationConfig JSON')
+        if 'routing_key' in _dict:
+            args['routing_key'] = _dict.get('routing_key')
+        else:
+            raise ValueError('Required property \'routing_key\' not present in DestinationConfigOneOfPagerDutyDestinationConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'api_key') and self.api_key is not None:
+            _dict['api_key'] = self.api_key
+        if hasattr(self, 'routing_key') and self.routing_key is not None:
+            _dict['routing_key'] = self.routing_key
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfPagerDutyDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfPagerDutyDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfPagerDutyDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -7270,6 +7892,77 @@ class SubscriptionsPager():
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of SubscriptionListItem.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+class IntegrationsPager():
+    """
+    IntegrationsPager can be used to simplify the use of the "list_integrations" method.
+    """
+
+    def __init__(self,
+                 *,
+                 client: EventNotificationsV1,
+                 instance_id: str,
+                 limit: int = None,
+                 search: str = None,
+    ) -> None:
+        """
+        Initialize a IntegrationsPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = { 'next': None }
+        self._instance_id = instance_id
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of IntegrationListItem.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_integrations(
+            instance_id=self._instance_id,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('integrations')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of IntegrationListItem.
         :rtype: List[dict]
         """
         results = []

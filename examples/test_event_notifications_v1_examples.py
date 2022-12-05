@@ -58,6 +58,7 @@ destination_id6 = ''
 destination_id7 = ''
 destination_id8 = ''
 destination_id9 = ''
+destination_id10 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -65,6 +66,7 @@ subscription_id2 = ''
 subscription_id3 = ''
 fcmServerKey = ''
 fcmSenderId = ''
+integration_id = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -323,7 +325,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -540,6 +542,32 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(destination, indent=2))
             destination = DestinationResponse.from_dict(destination)
             destination_id9 = destination.id
+
+            pd_config_params = {
+                "api_key": "insert API Key here",
+                "routing_key": "insert Routing Key here"
+            }
+
+            destination_config_model = {
+                'params': pd_config_params,
+            }
+            name = "Pager_Duty_destination"
+            typeval = "pagerduty"
+            description = "This is a PagerDuty Destination"
+
+            destination = event_notifications_service.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            destination = DestinationResponse.from_dict(destination)
+
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id10 = destination.id
             # end-create_destination
 
         except ApiException as e:
@@ -802,6 +830,27 @@ class TestEventNotificationsV1Examples():
             ).get_result()
 
             print(json.dumps(destination, indent=2))
+
+            pd_config_params = {
+                "api_key": "insert API Key here",
+                "routing_key": "insert Routing Key here"
+            }
+
+            destination_config_model = {
+                'params': pd_config_params,
+            }
+            name = "PagerDuty_destination_update"
+            description = "This is a PagerDuty Destination update"
+
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id10,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
             # end-update_destination
 
         except ApiException as e:
@@ -1046,7 +1095,6 @@ class TestEventNotificationsV1Examples():
             type_value = "com.acme.offer:new"
             date = '2019-01-01T12:00:00.000Z'
             notifications_source = "1234-1234-sdfs-234:test"
-            
             # begin-send_notifications
 
             notification_devices_model = {
@@ -1165,7 +1213,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9]:
+            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10]:
                 delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id
@@ -1194,6 +1242,66 @@ class TestEventNotificationsV1Examples():
         except ApiException as e:
             pytest.fail(str(e))
 
+    @needscredentials
+    def test_list_integrations_example(self):
+        global integration_id
+        try:
+            # begin-list_integrations
+
+            list_integrations_response = event_notifications_service.list_integrations(
+                instance_id,
+                limit=1,
+                offset=0,
+                search=search
+            )
+
+            integration_response = list_integrations_response.get_result()
+            integrations = integration_response.get('integrations')
+            integration_id = integrations[0].get('id')
+            # end-list_integrations
+            print('\nlist_integrations() response status code: ', list_integrations_response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_integration_example(self):
+        try:
+            # begin-get_integration
+            get_integration_response = event_notifications_service.get_integration(
+                instance_id,
+                id=integration_id
+            )
+
+            # end-get_integration
+            print('\nget_integration() response status code: ', get_integration_response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_integration_example(self):
+        try:
+            # begin-replace_integration
+
+            integration_metadata = {
+                'endpoint': 'https://private.us-south.kms.cloud.ibm.com',
+                'crn': 'insert crn',
+                'root_key_id': 'insert root key id'
+            }
+
+            update_integration_response = event_notifications_service.replace_integration(
+                instance_id,
+                type='kms/hs-crypto',
+                id=integration_id,
+                metadata=integration_metadata
+            )
+
+            # end-replace_integration
+            print('\nupdate_integration() response status code: ', update_integration_response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
 # endregion
 ##############################################################################
 # End of Examples for Service: EventNotificationsV1

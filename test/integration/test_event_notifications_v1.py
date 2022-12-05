@@ -42,6 +42,7 @@ destination_id6 = ''
 destination_id7 = ''
 destination_id8 = ''
 destination_id9 = ''
+destination_id10 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -53,8 +54,10 @@ subscription_id6 = ''
 subscription_id7 = ''
 subscription_id8 = ''
 subscription_id9 = ''
+subscription_id10 = ''
 fcmServerKey = ''
 fcmSenderId = ''
+integration_id = ''
 
 class TestEventNotificationsV1():
     """
@@ -90,6 +93,54 @@ class TestEventNotificationsV1():
     needscredentials = pytest.mark.skipif(
         not os.path.exists(config_file), reason="External configuration not available, skipping..."
     )
+
+    @needscredentials
+    def test_list_integrations(self):
+
+        global integration_id
+        list_integrations_response = self.event_notifications_service.list_integrations(
+            instance_id,
+            limit=1,
+            offset=0,
+            search=search
+        )
+
+        assert list_integrations_response.get_status_code() == 200
+        integration_response = list_integrations_response.get_result()
+        integrations = integration_response.get('integrations')
+        assert integrations[0] is not None
+        integration_id = integrations[0].get('id')
+
+    @needscredentials
+    def test_get_integration(self):
+        get_integration_response = self.event_notifications_service.get_integration(
+            instance_id,
+            id=integration_id
+        )
+
+        assert get_integration_response.get_status_code() == 200
+        integration_response = get_integration_response.get_result()
+        assert integration_response is not None
+
+    @needscredentials
+    def test_update_integration(self):
+
+        integration_metadata = {
+            'endpoint': 'https://private.us-south.kms.cloud.ibm.com',
+            'crn': 'crn:v1:staging:public:kms:us-south:a/****:****::',
+            'root_key_id': 'sddsds-f326-4688-baaf-611750e79b61'
+        }
+
+        update_integration_response = self.event_notifications_service.replace_integration(
+            instance_id,
+            id=integration_id,
+            type='kms',
+            metadata=integration_metadata
+        )
+
+        assert update_integration_response.get_status_code() == 200
+        integration_response = update_integration_response.get_result()
+        assert integration_response is not None
 
     @needscredentials
     def test_create_sources(self):
@@ -402,7 +453,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -442,7 +493,7 @@ class TestEventNotificationsV1():
 
         fcm_config_params = {
             "server_key": fcmServerKey,
-            "sender_id" : fcmSenderId
+            "sender_id": fcmSenderId
         }
 
         destination_config_model = {
@@ -680,6 +731,39 @@ class TestEventNotificationsV1():
         assert destination.type == typeval
 
         destination_id9 = destination.id
+
+        pd_config_params = {
+            "api_key": "akdnaklsdawioeqowi",
+            "routing_key": "ksddkasjdakssdsd"
+        }
+
+        destination_config_model = {
+            'params': pd_config_params,
+        }
+        name = "Pager_Duty_destination"
+        typeval = "pagerduty"
+        description = "This is a PagerDuty Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id10 = destination.id
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1022,6 +1106,37 @@ class TestEventNotificationsV1():
         assert res_name == name
         assert res_description == description
 
+        pd_config_params = {
+            "api_key": "sdskndlsndflsklskdf",
+            "routing_key": "ksddkasjdaksdsdsd"
+        }
+
+        destination_config_model = {
+            'params': pd_config_params,
+        }
+        name = "PagerDuty_destination_update"
+        description = "This is a PagerDuty Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id10,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id10
+        assert res_name == name
+        assert res_description == description
+
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1038,7 +1153,7 @@ class TestEventNotificationsV1():
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10
         subscription_create_attributes_model = {
             'signing_enabled': False,
         }
@@ -1271,6 +1386,28 @@ class TestEventNotificationsV1():
         subscription_name = subscription_response.get('name')
         subscription_description = subscription_response.get('description')
         subscription_id9 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "PagerDuty subscription"
+        description = "Subscription for the PagerDuty"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id10,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id10 = subscription_response.get('id')
 
         assert subscription_name == name
         assert subscription_description == description
@@ -1564,6 +1701,25 @@ class TestEventNotificationsV1():
 
         assert subscription_name == name
         assert subscription_description == description
+
+        name = 'PagerDuty update'
+        description = 'Subscription for PagerDuty updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id10,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1623,7 +1779,6 @@ class TestEventNotificationsV1():
             'en_data': notification_fcm_body_message_data_model,
         }
 
-        
         # Construct a dict representation of a NotificationAPNSBodyMessageData model
         notification_apns_body_message_data_model = {
             'alert': 'Alert message',
@@ -1682,7 +1837,7 @@ class TestEventNotificationsV1():
 
         send_notifications_response = self.event_notifications_service.send_notifications(
             instance_id,
-            body = notification_create_model
+            body=notification_create_model
         )
 
         assert send_notifications_response.get_status_code() == 202
@@ -1871,7 +2026,7 @@ class TestEventNotificationsV1():
 
         send_bulk_notifications_response = self.event_notifications_service.send_bulk_notifications(
             instance_id=instance_id,
-            bulk_messages=[notification_create_model,notification_create_model1]
+            bulk_messages=[notification_create_model, notification_create_model1]
         )
 
         assert send_bulk_notifications_response.get_status_code() == 202
@@ -1890,7 +2045,7 @@ class TestEventNotificationsV1():
 
     @needscredentials
     def test_delete_subscription(self):
-        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9]:
+        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(
                 instance_id,
                 id
@@ -1930,7 +2085,7 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_delete_destination(self):
 
-        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9]:
+        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10]:
             delete_destination_response = self.event_notifications_service.delete_destination(
                 instance_id,
                 id
