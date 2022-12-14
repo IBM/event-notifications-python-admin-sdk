@@ -414,7 +414,7 @@ class TestEventNotificationsV1Examples():
             # Safari
             safari_config_params = {
                 'cert_type': 'p12',
-                'password': 'safari',
+                'password': 'password',
                 'website_url': 'https://ensafaripush.mybluemix.net',
                 'website_name': 'NodeJS Starter Application',
                 'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
@@ -470,7 +470,7 @@ class TestEventNotificationsV1Examples():
             # cloud functions
             cf_config_params = {
                 "url": "https://www.ibmcfendpoint.com/",
-                "api_key": "wewelkndliejoiewe898"
+                "api_key": "apikey"
             }
 
             destination_config_model = {
@@ -494,7 +494,7 @@ class TestEventNotificationsV1Examples():
             # chrome
             chrome_config_params = {
                 "website_url": "https://www.ibmcfendpoint.com/",
-                "api_key": "wedleknlwenwern9832jhde",
+                "api_key": "apikey",
                 "public_key": "",
                 "pre_prod": False
             }
@@ -714,7 +714,7 @@ class TestEventNotificationsV1Examples():
             # Safari
             safari_destination_config_params_model = {
                 'cert_type': 'p12',
-                'password': 'safari',
+                'password': 'password',
                 'website_url': 'https://ensafaripush.mybluemix.net',
                 'website_name': 'NodeJS Starter Application',
                 'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
@@ -765,7 +765,7 @@ class TestEventNotificationsV1Examples():
             # Cloud Functions
             destination_config_params_model = {
                 "url": "https://www.ibmcfendpoint.com/",
-                "api_key": "wqowieqwoieqsfsdfs899eoqwieu"
+                "api_key": "apikey"
             }
 
             destination_config_model = {
@@ -787,7 +787,7 @@ class TestEventNotificationsV1Examples():
             # Chrome
             chrome_config_params = {
                 "website_url": "https://www.ibmcfendpoint.com/",
-                "api_key": "wedleknlwenwern9832jhde",
+                "api_key": "apikey",
                 "public_key": "",
                 "pre_prod": False
             }

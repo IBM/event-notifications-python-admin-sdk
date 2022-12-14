@@ -559,7 +559,7 @@ class TestEventNotificationsV1():
 
         safari_config_params = {
             'cert_type': 'p12',
-            'password': 'safari',
+            'password': 'password',
             'website_url': 'https://ensafaripush.mybluemix.net',
             'website_name': 'NodeJS Starter Application',
             'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
@@ -632,7 +632,7 @@ class TestEventNotificationsV1():
 
         cf_config_params = {
             "url": "https://www.ibmcfendpoint.com/",
-            "api_key": "wedleknlwenwern9832jhde"
+            "api_key": "apikey"
         }
 
         destination_config_model = {
@@ -665,7 +665,7 @@ class TestEventNotificationsV1():
 
         chrome_config_params = {
             "website_url": "https://www.ibmcfendpoint.com/",
-            "api_key": "wedleknlwenwern9832jhde",
+            "api_key": "apikey",
             "public_key": "",
             "pre_prod": False
         }
@@ -733,8 +733,8 @@ class TestEventNotificationsV1():
         destination_id9 = destination.id
 
         pd_config_params = {
-            "api_key": "akdnaklsdawioeqowi",
-            "routing_key": "ksddkasjdakssdsd"
+            "api_key": "apikey",
+            "routing_key": "routingkey"
         }
 
         destination_config_model = {
@@ -943,7 +943,7 @@ class TestEventNotificationsV1():
 
         safari_destination_config_params_model = {
             'cert_type': 'p12',
-            'password': 'safari',
+            'password': 'password',
             'website_url': 'https://ensafaripush.mybluemix.net',
             'website_name': 'NodeJS Starter Application',
             'url_format_string': 'https://ensafaripush.mybluemix.net/%@/?flight=%@',
@@ -1012,7 +1012,7 @@ class TestEventNotificationsV1():
 
         destination_config_params_model = {
             "url": "https://www.ibmcfendpoint.com/",
-            "api_key": "jjkkawdkashda89qw8ek"
+            "api_key": "apikey"
         }
 
         destination_config_model = {
@@ -1043,7 +1043,7 @@ class TestEventNotificationsV1():
 
         chrome_config_params = {
             "website_url": "https://www.ibmcfendpoint.com/",
-            "api_key": "wedleknlwenwern9832jhde",
+            "api_key": "apikey",
             "public_key": "",
             "pre_prod": False
         }
@@ -1107,7 +1107,7 @@ class TestEventNotificationsV1():
         assert res_description == description
 
         pd_config_params = {
-            "api_key": "sdskndlsndflsklskdf",
+            "api_key": "apikey",
             "routing_key": "ksddkasjdaksdsdsd"
         }
 
