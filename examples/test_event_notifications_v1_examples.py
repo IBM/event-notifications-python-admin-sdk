@@ -511,9 +511,7 @@ class TestEventNotificationsV1Examples():
             # chrome
             chrome_config_params = {
                 "website_url": "https://www.ibmcfendpoint.com/",
-                "api_key": "apikey",
-                "public_key": "",
-                "pre_prod": False
+                "api_key": "apikey"
             }
 
             destination_config_model = {
@@ -536,9 +534,7 @@ class TestEventNotificationsV1Examples():
 
             # Firefox
             fire_config_params = {
-                "website_url": "https://cloud.ibm.com",
-                "public_key": "ksddkasjdaksd",
-                "pre_prod": False
+                "website_url": "https://cloud.ibm.com"
             }
 
             destination_config_model = {
@@ -830,9 +826,7 @@ class TestEventNotificationsV1Examples():
             # Chrome
             chrome_config_params = {
                 "website_url": "https://www.ibmcfendpoint.com/",
-                "api_key": "apikey",
-                "public_key": "",
-                "pre_prod": False
+                "api_key": "apikey"
             }
 
             destination_config_model = {
@@ -853,9 +847,7 @@ class TestEventNotificationsV1Examples():
 
             # Firefox
             fire_config_params = {
-                "website_url": "https://cloud.ibm.com",
-                "public_key": "ksddkasjdaksd",
-                "pre_prod": False
+                "website_url": "https://cloud.ibm.com"
             }
 
             destination_config_model = {

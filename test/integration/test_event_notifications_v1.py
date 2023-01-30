@@ -681,10 +681,8 @@ class TestEventNotificationsV1():
         destination_id7 = destination.id
 
         chrome_config_params = {
-            "website_url": "https://www.ibmcfendpoint.com/",
-            "api_key": "apikey",
-            "public_key": "",
-            "pre_prod": False
+            "website_url": "https://www.xyz.pqr",
+            "api_key": "AAxxxxxxxxxxxxxxxxx4z"
         }
 
         destination_config_model = {
@@ -716,9 +714,7 @@ class TestEventNotificationsV1():
         destination_id8 = destination.id
 
         fire_config_params = {
-            "website_url": "https://cloud.ibm.com",
-            "public_key": "ksddkasjdaksd",
-            "pre_prod": False
+            "website_url": "https://cloud.ibm.com"
         }
 
         destination_config_model = {
@@ -1095,10 +1091,8 @@ class TestEventNotificationsV1():
         assert res_description == description
 
         chrome_config_params = {
-            "website_url": "https://www.ibmcfendpoint.com/",
-            "api_key": "apikey",
-            "public_key": "",
-            "pre_prod": False
+            "website_url": "https://www.xyz.pqr",
+            "api_key": "AAxxxxxxxxxxxxxxxxx4z"
         }
 
         destination_config_model = {
@@ -1128,9 +1122,7 @@ class TestEventNotificationsV1():
         assert res_description == description
 
         fire_config_params = {
-            "website_url": "https://cloud.ibm.com",
-            "public_key": "ksddkasjdaksd",
-            "pre_prod": False
+            "website_url": "https://cloud.ibm.com"
         }
 
         destination_config_model = {
