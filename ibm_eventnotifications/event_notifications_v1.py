@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -89,8 +89,8 @@ class EventNotificationsV1(BaseService):
         """
         Send a notification.
 
-        Send Notifications body from the instance. For more information on Event
-        notifications payload, see
+        Send Notifications body from the instance. For more information about Event
+        Notifications payload, see
         [here](https://cloud.ibm.com/docs/event-notifications?topic=event-notifications-en-spec-payload).
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
@@ -314,7 +314,7 @@ class EventNotificationsV1(BaseService):
         """
         Get a Source.
 
-        Get a Sources.
+        Get a Source.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -773,7 +773,7 @@ class EventNotificationsV1(BaseService):
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
-        :param str name: The Destintion name.
+        :param str name: The Destination name.
         :param str type: The type of Destination Webhook.
         :param str description: (optional) The Destination description.
         :param DestinationConfig config: (optional) Payload describing a
@@ -1197,7 +1197,7 @@ class EventNotificationsV1(BaseService):
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str id: Unique identifier for Destination.
-        :param str device_id: (optional) DeviceID of the destination
+        :param str device_id: (optional) Device ID of the destination
                tagsubscription.
         :param str user_id: (optional) UserID of the destination.
         :param str tag_name: (optional) TagName of the subscription.
@@ -1262,7 +1262,7 @@ class EventNotificationsV1(BaseService):
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str id: Unique identifier for Destination.
-        :param str device_id: (optional) DeviceID of the destination
+        :param str device_id: (optional) Device ID of the destination
                tagsubscription.
         :param str tag_name: (optional) TagName of the subscription.
         :param dict headers: A `dict` containing the request headers
@@ -1651,9 +1651,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Get a single Integrations.
+        Get a single Integration.
 
-        Get a single KMS Integrations.
+        Get a single KMS Integration.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -1698,9 +1698,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Update an exisitng Integration.
+        Update an existing Integration.
 
-        Update an exisitng KMS Integration.
+        Update an existing KMS Integration.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -1772,6 +1772,7 @@ class CreateDestinationEnums:
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
+        SERVICENOW = 'servicenow'
 
 
 ##############################################################################
@@ -1850,7 +1851,7 @@ class Destination():
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1875,7 +1876,7 @@ class Destination():
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -1973,7 +1974,8 @@ class Destination():
 
     class TypeEnum(str, Enum):
         """
-        Destination type Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions.
+        Destination type
+        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -1985,6 +1987,7 @@ class Destination():
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
+        SERVICENOW = 'servicenow'
 
 
 class DestinationConfig():
@@ -2058,7 +2061,7 @@ class DestinationConfigOneOf():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig']))
+                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig', 'DestinationConfigOneOfServiceNowDestinationConfig']))
         raise Exception(msg)
 
 class DestinationList():
@@ -2303,6 +2306,7 @@ class DestinationListItem():
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
+        SERVICENOW = 'servicenow'
 
 
 class DestinationResponse():
@@ -2426,6 +2430,7 @@ class DestinationResponse():
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
+        SERVICENOW = 'servicenow'
 
 
 class DestinationTagsSubscriptionResponse():
@@ -2435,8 +2440,7 @@ class DestinationTagsSubscriptionResponse():
     :attr str id: Subscription Tag ID.
     :attr str device_id: Unique identifier of the device.
     :attr str tag_name: The name of the tag its subscribed.
-    :attr str user_id: (optional) The user identifier for the the device
-          registration.
+    :attr str user_id: (optional) The user identifier for the device registration.
     :attr datetime created_at: Last updated time.
     """
 
@@ -2454,7 +2458,7 @@ class DestinationTagsSubscriptionResponse():
         :param str device_id: Unique identifier of the device.
         :param str tag_name: The name of the tag its subscribed.
         :param datetime created_at: Last updated time.
-        :param str user_id: (optional) The user identifier for the the device
+        :param str user_id: (optional) The user identifier for the device
                registration.
         """
         self.id = id
@@ -2667,7 +2671,7 @@ class IntegrationGetResponse():
     :attr str type: Integration type. Allowed values are kms and hs-crypto.
     :attr IntegrationMetadata metadata: Integration Metadata object.
     :attr datetime created_at: Creation time of an integration.
-    :attr datetime updated_at: Last Update time of an integration.
+    :attr datetime updated_at: Last update time of an integration.
     """
 
     def __init__(self,
@@ -2683,7 +2687,7 @@ class IntegrationGetResponse():
         :param str type: Integration type. Allowed values are kms and hs-crypto.
         :param IntegrationMetadata metadata: Integration Metadata object.
         :param datetime created_at: Creation time of an integration.
-        :param datetime updated_at: Last Update time of an integration.
+        :param datetime updated_at: Last update time of an integration.
         """
         self.id = id
         self.type = type
@@ -2969,7 +2973,7 @@ class IntegrationMetadata():
 
     :attr str endpoint: KMS url for key management.
     :attr str crn: CRN of the KMS instance.
-    :attr str root_key_id: Root Key id of KMS.
+    :attr str root_key_id: Root Key ID of KMS.
     """
 
     def __init__(self,
@@ -2981,7 +2985,7 @@ class IntegrationMetadata():
 
         :param str endpoint: KMS url for key management.
         :param str crn: CRN of the KMS instance.
-        :param str root_key_id: Root Key id of KMS.
+        :param str root_key_id: Root Key ID of KMS.
         """
         self.endpoint = endpoint
         self.crn = crn
@@ -4523,6 +4527,7 @@ class Subscription():
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
+        SERVICENOW = 'servicenow'
 
 
 class SubscriptionAttributes():
@@ -4539,7 +4544,7 @@ class SubscriptionAttributes():
         :param **kwargs: (optional) Any additional properties.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['SubscriptionAttributesSMSAttributesResponse', 'SubscriptionAttributesEmailAttributesResponse', 'SubscriptionAttributesWebhookAttributesResponse', 'SubscriptionAttributesSlackAttributesResponse']))
+                  ", ".join(['SubscriptionAttributesSMSAttributesResponse', 'SubscriptionAttributesEmailAttributesResponse', 'SubscriptionAttributesWebhookAttributesResponse', 'SubscriptionAttributesSlackAttributesResponse', 'SubscriptionAttributesServiceNowAttributesResponse']))
         raise Exception(msg)
 
 class SubscriptionCreateAttributes():
@@ -4554,7 +4559,7 @@ class SubscriptionCreateAttributes():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['SubscriptionCreateAttributesSMSAttributes', 'SubscriptionCreateAttributesEmailAttributes', 'SubscriptionCreateAttributesWebhookAttributes', 'SubscriptionCreateAttributesFCMAttributes', 'SubscriptionCreateAttributesSlackAttributes']))
+                  ", ".join(['SubscriptionCreateAttributesSMSAttributes', 'SubscriptionCreateAttributesEmailAttributes', 'SubscriptionCreateAttributesWebhookAttributes', 'SubscriptionCreateAttributesFCMAttributes', 'SubscriptionCreateAttributesSlackAttributes', 'SubscriptionCreateAttributesServiceNowAttributes']))
         raise Exception(msg)
 
 class SubscriptionList():
@@ -4818,6 +4823,7 @@ class SubscriptionListItem():
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
+        SERVICENOW = 'servicenow'
 
 
 class SubscriptionUpdateAttributes():
@@ -4832,7 +4838,7 @@ class SubscriptionUpdateAttributes():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['SubscriptionUpdateAttributesSMSUpdateAttributes', 'SubscriptionUpdateAttributesEmailUpdateAttributes', 'SubscriptionUpdateAttributesWebhookAttributes', 'SubscriptionUpdateAttributesSlackAttributes']))
+                  ", ".join(['SubscriptionUpdateAttributesSMSUpdateAttributes', 'SubscriptionUpdateAttributesEmailUpdateAttributes', 'SubscriptionUpdateAttributesWebhookAttributes', 'SubscriptionUpdateAttributesSlackAttributes', 'SubscriptionUpdateAttributesServiceNowAttributes']))
         raise Exception(msg)
 
 class TagsSubscriptionList():
@@ -4954,8 +4960,7 @@ class TagsSubscriptionListItem():
     :attr str id: Subscription Tag ID.
     :attr str device_id: Unique identifier of the device.
     :attr str tag_name: The name of the tag its subscribed.
-    :attr str user_id: (optional) The user identifier for the the device
-          registration.
+    :attr str user_id: (optional) The user identifier for the device registration.
     :attr datetime updated_at: Updated at.
     """
 
@@ -4973,7 +4978,7 @@ class TagsSubscriptionListItem():
         :param str device_id: Unique identifier of the device.
         :param str tag_name: The name of the tag its subscribed.
         :param datetime updated_at: Updated at.
-        :param str user_id: (optional) The user identifier for the the device
+        :param str user_id: (optional) The user identifier for the device
                registration.
         """
         self.id = id
@@ -5739,7 +5744,7 @@ class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
 
 class DestinationConfigOneOfFCMDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing a FCM destination configuration.
+    Payload describing an FCM destination configuration.
 
     :attr str server_key: FCM server_key.
     :attr str sender_id: FCM sender_id.
@@ -5889,10 +5894,10 @@ class DestinationConfigOneOfFirefoxDestinationConfig(DestinationConfigOneOf):
 
 class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing a IBM Cloud Functions destination configuration.
+    Payload describing an IBM Cloud Functions destination configuration.
 
     :attr str url: URL of IBM Cloud Functions Trigger EndPoint.
-    :attr str api_key: (optional) APIKey with access of IBM Cloud Functions IAM
+    :attr str api_key: (optional) API Key with access of IBM Cloud Functions IAM
           Namespace.
     """
 
@@ -5904,7 +5909,7 @@ class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfig
         Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object.
 
         :param str url: URL of IBM Cloud Functions Trigger EndPoint.
-        :param str api_key: (optional) APIKey with access of IBM Cloud Functions
+        :param str api_key: (optional) API Key with access of IBM Cloud Functions
                IAM Namespace.
         """
         # pylint: disable=super-init-not-called
@@ -5957,10 +5962,10 @@ class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfig
 
 class DestinationConfigOneOfIOSDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing a IOS destination configuration.
+    Payload describing an iOS destination configuration.
 
     :attr str cert_type: Authentication type (p8 or p12).
-    :attr bool is_sandbox: Sandbox mode for IOS destinations.
+    :attr bool is_sandbox: Sandbox mode for iOS destinations.
     :attr str password: (optional) Password for certificate (Required when cert_type
           is p12).
     :attr str key_id: (optional) Key ID for token (Required when cert_type is p8).
@@ -5983,7 +5988,7 @@ class DestinationConfigOneOfIOSDestinationConfig(DestinationConfigOneOf):
         Initialize a DestinationConfigOneOfIOSDestinationConfig object.
 
         :param str cert_type: Authentication type (p8 or p12).
-        :param bool is_sandbox: Sandbox mode for IOS destinations.
+        :param bool is_sandbox: Sandbox mode for iOS destinations.
         :param str password: (optional) Password for certificate (Required when
                cert_type is p12).
         :param str key_id: (optional) Key ID for token (Required when cert_type is
@@ -6130,8 +6135,8 @@ class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a PagerDuty destination configuration.
 
-    :attr str api_key: API Key for the pagerduty account.
-    :attr str routing_key: Routing Key(Integration Key) for the team in pagerduty
+    :attr str api_key: API Key for the PagerDuty account.
+    :attr str routing_key: Routing Key (Integration Key) for the team in PagerDuty
           account.
     """
 
@@ -6141,9 +6146,9 @@ class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
         """
         Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object.
 
-        :param str api_key: API Key for the pagerduty account.
-        :param str routing_key: Routing Key(Integration Key) for the team in
-               pagerduty account.
+        :param str api_key: API Key for the PagerDuty account.
+        :param str routing_key: Routing Key (Integration Key) for the team in
+               PagerDuty account.
         """
         # pylint: disable=super-init-not-called
         self.api_key = api_key
@@ -6197,14 +6202,14 @@ class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
 
 class DestinationConfigOneOfSafariDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing a safari destination configuration.
+    Payload describing a Safari destination configuration.
 
     :attr str cert_type: Authentication type p12.
     :attr str password: Password for certificate (Required when cert_type is p12).
-    :attr str website_url: Websire url.
-    :attr str website_name: Websire url.
-    :attr str url_format_string: Websire url.
-    :attr str website_push_id: Websire url.
+    :attr str website_url: Website url.
+    :attr str website_name: Website url.
+    :attr str url_format_string: Website url.
+    :attr str website_push_id: Website url.
     :attr bool pre_prod: (optional) If pre prod enabled.
     """
 
@@ -6223,10 +6228,10 @@ class DestinationConfigOneOfSafariDestinationConfig(DestinationConfigOneOf):
         :param str cert_type: Authentication type p12.
         :param str password: Password for certificate (Required when cert_type is
                p12).
-        :param str website_url: Websire url.
-        :param str website_name: Websire url.
-        :param str url_format_string: Websire url.
-        :param str website_push_id: Websire url.
+        :param str website_url: Website url.
+        :param str website_name: Website url.
+        :param str url_format_string: Website url.
+        :param str website_push_id: Website url.
         :param bool pre_prod: (optional) If pre prod enabled.
         """
         # pylint: disable=super-init-not-called
@@ -6312,9 +6317,106 @@ class DestinationConfigOneOfSafariDestinationConfig(DestinationConfigOneOf):
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class DestinationConfigOneOfServiceNowDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a ServiceNow destination configuration.
+
+    :attr str client_id: ClientID for the ServiceNow account oauth.
+    :attr str client_secret: ClientSecret for the ServiceNow account oauth.
+    :attr str username: Username for ServiceNow account REST API.
+    :attr str password: Password for ServiceNow account REST API.
+    :attr str instance_name: Instance name for ServiceNow account.
+    """
+
+    def __init__(self,
+                 client_id: str,
+                 client_secret: str,
+                 username: str,
+                 password: str,
+                 instance_name: str) -> None:
+        """
+        Initialize a DestinationConfigOneOfServiceNowDestinationConfig object.
+
+        :param str client_id: ClientID for the ServiceNow account oauth.
+        :param str client_secret: ClientSecret for the ServiceNow account oauth.
+        :param str username: Username for ServiceNow account REST API.
+        :param str password: Password for ServiceNow account REST API.
+        :param str instance_name: Instance name for ServiceNow account.
+        """
+        # pylint: disable=super-init-not-called
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.username = username
+        self.password = password
+        self.instance_name = instance_name
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfServiceNowDestinationConfig':
+        """Initialize a DestinationConfigOneOfServiceNowDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'client_id' in _dict:
+            args['client_id'] = _dict.get('client_id')
+        else:
+            raise ValueError('Required property \'client_id\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
+        if 'client_secret' in _dict:
+            args['client_secret'] = _dict.get('client_secret')
+        else:
+            raise ValueError('Required property \'client_secret\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
+        if 'username' in _dict:
+            args['username'] = _dict.get('username')
+        else:
+            raise ValueError('Required property \'username\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
+        if 'password' in _dict:
+            args['password'] = _dict.get('password')
+        else:
+            raise ValueError('Required property \'password\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
+        if 'instance_name' in _dict:
+            args['instance_name'] = _dict.get('instance_name')
+        else:
+            raise ValueError('Required property \'instance_name\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfServiceNowDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'client_id') and self.client_id is not None:
+            _dict['client_id'] = self.client_id
+        if hasattr(self, 'client_secret') and self.client_secret is not None:
+            _dict['client_secret'] = self.client_secret
+        if hasattr(self, 'username') and self.username is not None:
+            _dict['username'] = self.username
+        if hasattr(self, 'password') and self.password is not None:
+            _dict['password'] = self.password
+        if hasattr(self, 'instance_name') and self.instance_name is not None:
+            _dict['instance_name'] = self.instance_name
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfServiceNowDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfServiceNowDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfServiceNowDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing a slack destination configuration.
+    Payload describing a Slack destination configuration.
 
     :attr str url: URL of Slack Incoming Webhook.
     """
@@ -6715,9 +6817,103 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class SubscriptionAttributesServiceNowAttributesResponse(SubscriptionAttributes):
+    """
+    The attributes for a ServiceNow notification.
+
+    :attr str assigned_to: (optional) Assigned name from ServiceNow account.
+    :attr str assignment_group: (optional) Assigned group name from ServiceNow
+          account.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['assigned_to', 'assignment_group'])
+
+    def __init__(self,
+                 *,
+                 assigned_to: str = None,
+                 assignment_group: str = None,
+                 **kwargs) -> None:
+        """
+        Initialize a SubscriptionAttributesServiceNowAttributesResponse object.
+
+        :param str assigned_to: (optional) Assigned name from ServiceNow account.
+        :param str assignment_group: (optional) Assigned group name from ServiceNow
+               account.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        # pylint: disable=super-init-not-called
+        self.assigned_to = assigned_to
+        self.assignment_group = assignment_group
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesServiceNowAttributesResponse':
+        """Initialize a SubscriptionAttributesServiceNowAttributesResponse object from a json dictionary."""
+        args = {}
+        if 'assigned_to' in _dict:
+            args['assigned_to'] = _dict.get('assigned_to')
+        if 'assignment_group' in _dict:
+            args['assignment_group'] = _dict.get('assignment_group')
+        args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionAttributesServiceNowAttributesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'assigned_to') and self.assigned_to is not None:
+            _dict['assigned_to'] = self.assigned_to
+        if hasattr(self, 'assignment_group') and self.assignment_group is not None:
+            _dict['assignment_group'] = self.assignment_group
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties]:
+            if getattr(self, _key, None) is not None:
+                _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesServiceNowAttributesResponse"""
+        _dict = {}
+
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesServiceNowAttributesResponse"""
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in SubscriptionAttributesServiceNowAttributesResponse._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionAttributesServiceNowAttributesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionAttributesServiceNowAttributesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionAttributesServiceNowAttributesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
     """
-    The attributes for a slack notification.
+    The attributes for a Slack notification.
 
     :attr str attachment_color: Attachment Color for Slack Notification.
     """
@@ -7098,6 +7294,74 @@ class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
+class SubscriptionCreateAttributesServiceNowAttributes(SubscriptionCreateAttributes):
+    """
+    The attributes for a ServiceNow notification.
+
+    :attr str assigned_to: (optional) Name of user ServiceNow incident will be
+          assigned to.
+    :attr str assignment_group: (optional) Group Name to which incident will be
+          assigned to.
+    """
+
+    def __init__(self,
+                 *,
+                 assigned_to: str = None,
+                 assignment_group: str = None) -> None:
+        """
+        Initialize a SubscriptionCreateAttributesServiceNowAttributes object.
+
+        :param str assigned_to: (optional) Name of user ServiceNow incident will be
+               assigned to.
+        :param str assignment_group: (optional) Group Name to which incident will
+               be assigned to.
+        """
+        # pylint: disable=super-init-not-called
+        self.assigned_to = assigned_to
+        self.assignment_group = assignment_group
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesServiceNowAttributes':
+        """Initialize a SubscriptionCreateAttributesServiceNowAttributes object from a json dictionary."""
+        args = {}
+        if 'assigned_to' in _dict:
+            args['assigned_to'] = _dict.get('assigned_to')
+        if 'assignment_group' in _dict:
+            args['assignment_group'] = _dict.get('assignment_group')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionCreateAttributesServiceNowAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'assigned_to') and self.assigned_to is not None:
+            _dict['assigned_to'] = self.assigned_to
+        if hasattr(self, 'assignment_group') and self.assignment_group is not None:
+            _dict['assignment_group'] = self.assignment_group
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionCreateAttributesServiceNowAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionCreateAttributesServiceNowAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionCreateAttributesServiceNowAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
 class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
     """
     The attributes for a slack notification.
@@ -7407,6 +7671,74 @@ class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttribut
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionUpdateAttributesSMSUpdateAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class SubscriptionUpdateAttributesServiceNowAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for a ServiceNow notification.
+
+    :attr str assigned_to: (optional) Name of user ServiceNow incident will be
+          assigned to.
+    :attr str assignment_group: (optional) Group Name to which incident will be
+          assigned to.
+    """
+
+    def __init__(self,
+                 *,
+                 assigned_to: str = None,
+                 assignment_group: str = None) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesServiceNowAttributes object.
+
+        :param str assigned_to: (optional) Name of user ServiceNow incident will be
+               assigned to.
+        :param str assignment_group: (optional) Group Name to which incident will
+               be assigned to.
+        """
+        # pylint: disable=super-init-not-called
+        self.assigned_to = assigned_to
+        self.assignment_group = assignment_group
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesServiceNowAttributes':
+        """Initialize a SubscriptionUpdateAttributesServiceNowAttributes object from a json dictionary."""
+        args = {}
+        if 'assigned_to' in _dict:
+            args['assigned_to'] = _dict.get('assigned_to')
+        if 'assignment_group' in _dict:
+            args['assignment_group'] = _dict.get('assignment_group')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesServiceNowAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'assigned_to') and self.assigned_to is not None:
+            _dict['assigned_to'] = self.assigned_to
+        if hasattr(self, 'assignment_group') and self.assignment_group is not None:
+            _dict['assignment_group'] = self.assignment_group
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesServiceNowAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesServiceNowAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesServiceNowAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -7762,7 +8094,7 @@ class TagsSubscriptionPager():
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str id: Unique identifier for Destination.
-        :param str device_id: (optional) DeviceID of the destination
+        :param str device_id: (optional) Device ID of the destination
                tagsubscription.
         :param str user_id: (optional) UserID of the destination.
         :param str tag_name: (optional) TagName of the subscription.

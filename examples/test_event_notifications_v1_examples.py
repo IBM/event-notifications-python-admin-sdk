@@ -59,14 +59,21 @@ destination_id7 = ''
 destination_id8 = ''
 destination_id9 = ''
 destination_id10 = ''
+destination_id11 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
 subscription_id2 = ''
 subscription_id3 = ''
+subscription_id4 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 integration_id = ''
+snow_client_id = ''
+snow_client_secret = ''
+snow_user_name = ''
+snow_password = ''
+snow_instance_name = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -100,9 +107,19 @@ class TestEventNotificationsV1Examples():
             fcmServerKey = config['FCM_KEY']
             fcmSenderId = config['FCM_ID']
             safariCertificatePath = config['SAFARI_CERTIFICATE']
+            snow_client_id = cls.config['SNOW_CLIENT_ID']
+            snow_client_secret = cls.config['SNOW_CLIENT_SECRET']
+            snow_user_name = cls.config['SNOW_USER_NAME']
+            snow_password = cls.config['SNOW_PASSWORD']
+            snow_instance_name = cls.config['SNOW_INSTANCE_NAME']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
+            assert snow_client_id is not None
+            assert snow_client_secret is not None
+            assert snow_user_name is not None
+            assert snow_password is not None
+            assert snow_instance_name is not None
 
         print('Setup complete.')
 
@@ -325,7 +342,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -494,9 +511,7 @@ class TestEventNotificationsV1Examples():
             # chrome
             chrome_config_params = {
                 "website_url": "https://www.ibmcfendpoint.com/",
-                "api_key": "apikey",
-                "public_key": "",
-                "pre_prod": False
+                "api_key": "apikey"
             }
 
             destination_config_model = {
@@ -519,9 +534,7 @@ class TestEventNotificationsV1Examples():
 
             # Firefox
             fire_config_params = {
-                "website_url": "https://cloud.ibm.com",
-                "public_key": "ksddkasjdaksd",
-                "pre_prod": False
+                "website_url": "https://cloud.ibm.com"
             }
 
             destination_config_model = {
@@ -566,8 +579,34 @@ class TestEventNotificationsV1Examples():
             destination = DestinationResponse.from_dict(destination)
 
             print(json.dumps(destination, indent=2))
-            destination = DestinationResponse.from_dict(destination)
             destination_id10 = destination.id
+
+            snow_config_params = {
+                "client_id": snow_client_id,
+                "client_secret": snow_client_secret,
+                "username": snow_user_name,
+                "password": snow_password,
+                "instance_name": snow_password
+            }
+
+            destination_config_model = {
+                'params': snow_config_params,
+            }
+            name = "Service_Now_destination"
+            typeval = "servicenow"
+            description = "This is a ServiceNow Destination"
+
+            destination = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            destination = DestinationResponse.from_dict(destination)
+            print(json.dumps(destination, indent=2))
+            destination_id11 = destination.id
             # end-create_destination
 
         except ApiException as e:
@@ -787,9 +826,7 @@ class TestEventNotificationsV1Examples():
             # Chrome
             chrome_config_params = {
                 "website_url": "https://www.ibmcfendpoint.com/",
-                "api_key": "apikey",
-                "public_key": "",
-                "pre_prod": False
+                "api_key": "apikey"
             }
 
             destination_config_model = {
@@ -810,9 +847,7 @@ class TestEventNotificationsV1Examples():
 
             # Firefox
             fire_config_params = {
-                "website_url": "https://cloud.ibm.com",
-                "public_key": "ksddkasjdaksd",
-                "pre_prod": False
+                "website_url": "https://cloud.ibm.com"
             }
 
             destination_config_model = {
@@ -851,6 +886,31 @@ class TestEventNotificationsV1Examples():
             ).get_result()
 
             print(json.dumps(destination, indent=2))
+
+            snow_config_params = {
+                "client_id": snow_client_id,
+                "client_secret": snow_client_secret,
+                "username": snow_user_name,
+                "password": snow_password,
+                "instance_name": snow_password
+            }
+
+            destination_config_model = {
+                'params': snow_config_params,
+            }
+
+            name = "Service_Now_destination_update"
+            description = "This is a ServiceNow Destination update"
+
+            destination = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id11,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
             # end-update_destination
 
         except ApiException as e:
@@ -861,7 +921,7 @@ class TestEventNotificationsV1Examples():
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4
         try:
             print('\ncreate_subscription() result:')
             # begin-create_subscription
@@ -944,6 +1004,26 @@ class TestEventNotificationsV1Examples():
 
             subscription_id3 = subscription.get('id')
 
+            name = "ServiceNow subscription"
+            description = "Subscription for the ServiceNow"
+
+            subscription_create_attributes_model = {
+                'assigned_to': 'user',
+                'assignment_group': 'group',
+            }
+
+            subscription = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id11,
+                topic_id=topic_id,
+                description=description,
+                attributes=subscription_create_attributes_model
+            ).get_result()
+
+            print(json.dumps(subscription, indent=2))
+
+            subscription_id4 = subscription.get('id')
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1078,6 +1158,24 @@ class TestEventNotificationsV1Examples():
 
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
+
+            subscription_update_attributes_model = {
+                'assigned_to': 'user',
+                'assignment_group': 'group',
+            }
+
+            name = 'ServiceNow update'
+            description = 'Subscription for ServiceNow updated'
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id4,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
             # end-update_subscription
         except ApiException as e:
             pytest.fail(str(e))
@@ -1168,7 +1266,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_subscription
             print('\ndelete_subscription() response status code: ', response.get_status_code())
 
-            for id in [subscription_id1, subscription_id2, subscription_id3]:
+            for id in [subscription_id1, subscription_id2, subscription_id3, subscription_id4]:
                 delete_subscription_response = event_notifications_service.delete_subscription(
                     instance_id,
                     id
@@ -1213,7 +1311,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10]:
+            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11]:
                 delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2022.
+# (C) Copyright IBM Corp. 2023.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -4214,7 +4214,7 @@ class TestModel_IntegrationList():
         integration_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         page_href_response_model = {} # PageHrefResponse
-        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
 
         # Construct a json representation of a IntegrationList model
         integration_list_model_json = {}
@@ -5526,6 +5526,39 @@ class TestModel_DestinationConfigOneOfSafariDestinationConfig():
         destination_config_one_of_safari_destination_config_model_json2 = destination_config_one_of_safari_destination_config_model.to_dict()
         assert destination_config_one_of_safari_destination_config_model_json2 == destination_config_one_of_safari_destination_config_model_json
 
+class TestModel_DestinationConfigOneOfServiceNowDestinationConfig():
+    """
+    Test Class for DestinationConfigOneOfServiceNowDestinationConfig
+    """
+
+    def test_destination_config_one_of_service_now_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfServiceNowDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfServiceNowDestinationConfig model
+        destination_config_one_of_service_now_destination_config_model_json = {}
+        destination_config_one_of_service_now_destination_config_model_json['client_id'] = 'testString'
+        destination_config_one_of_service_now_destination_config_model_json['client_secret'] = 'testString'
+        destination_config_one_of_service_now_destination_config_model_json['username'] = 'testString'
+        destination_config_one_of_service_now_destination_config_model_json['password'] = 'testString'
+        destination_config_one_of_service_now_destination_config_model_json['instance_name'] = 'testString'
+
+        # Construct a model instance of DestinationConfigOneOfServiceNowDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_service_now_destination_config_model = DestinationConfigOneOfServiceNowDestinationConfig.from_dict(destination_config_one_of_service_now_destination_config_model_json)
+        assert destination_config_one_of_service_now_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfServiceNowDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_service_now_destination_config_model_dict = DestinationConfigOneOfServiceNowDestinationConfig.from_dict(destination_config_one_of_service_now_destination_config_model_json).__dict__
+        destination_config_one_of_service_now_destination_config_model2 = DestinationConfigOneOfServiceNowDestinationConfig(**destination_config_one_of_service_now_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_service_now_destination_config_model == destination_config_one_of_service_now_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_service_now_destination_config_model_json2 = destination_config_one_of_service_now_destination_config_model.to_dict()
+        assert destination_config_one_of_service_now_destination_config_model_json2 == destination_config_one_of_service_now_destination_config_model_json
+
 class TestModel_DestinationConfigOneOfSlackDestinationConfig():
     """
     Test Class for DestinationConfigOneOfSlackDestinationConfig
@@ -5695,6 +5728,47 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
         expected_dict = {'foo': 'testString'}
         subscription_attributes_sms_attributes_response_model.set_properties(expected_dict)
         actual_dict = subscription_attributes_sms_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
+class TestModel_SubscriptionAttributesServiceNowAttributesResponse():
+    """
+    Test Class for SubscriptionAttributesServiceNowAttributesResponse
+    """
+
+    def test_subscription_attributes_service_now_attributes_response_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionAttributesServiceNowAttributesResponse
+        """
+
+        # Construct a json representation of a SubscriptionAttributesServiceNowAttributesResponse model
+        subscription_attributes_service_now_attributes_response_model_json = {}
+        subscription_attributes_service_now_attributes_response_model_json['assigned_to'] = 'testString'
+        subscription_attributes_service_now_attributes_response_model_json['assignment_group'] = 'testString'
+        subscription_attributes_service_now_attributes_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of SubscriptionAttributesServiceNowAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_service_now_attributes_response_model = SubscriptionAttributesServiceNowAttributesResponse.from_dict(subscription_attributes_service_now_attributes_response_model_json)
+        assert subscription_attributes_service_now_attributes_response_model != False
+
+        # Construct a model instance of SubscriptionAttributesServiceNowAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_service_now_attributes_response_model_dict = SubscriptionAttributesServiceNowAttributesResponse.from_dict(subscription_attributes_service_now_attributes_response_model_json).__dict__
+        subscription_attributes_service_now_attributes_response_model2 = SubscriptionAttributesServiceNowAttributesResponse(**subscription_attributes_service_now_attributes_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_attributes_service_now_attributes_response_model == subscription_attributes_service_now_attributes_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_attributes_service_now_attributes_response_model_json2 = subscription_attributes_service_now_attributes_response_model.to_dict()
+        assert subscription_attributes_service_now_attributes_response_model_json2 == subscription_attributes_service_now_attributes_response_model_json
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_service_now_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_service_now_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_service_now_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_service_now_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 class TestModel_SubscriptionAttributesSlackAttributesResponse():
@@ -5868,6 +5942,36 @@ class TestModel_SubscriptionCreateAttributesSMSAttributes():
         subscription_create_attributes_sms_attributes_model_json2 = subscription_create_attributes_sms_attributes_model.to_dict()
         assert subscription_create_attributes_sms_attributes_model_json2 == subscription_create_attributes_sms_attributes_model_json
 
+class TestModel_SubscriptionCreateAttributesServiceNowAttributes():
+    """
+    Test Class for SubscriptionCreateAttributesServiceNowAttributes
+    """
+
+    def test_subscription_create_attributes_service_now_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesServiceNowAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesServiceNowAttributes model
+        subscription_create_attributes_service_now_attributes_model_json = {}
+        subscription_create_attributes_service_now_attributes_model_json['assigned_to'] = 'testString'
+        subscription_create_attributes_service_now_attributes_model_json['assignment_group'] = 'testString'
+
+        # Construct a model instance of SubscriptionCreateAttributesServiceNowAttributes by calling from_dict on the json representation
+        subscription_create_attributes_service_now_attributes_model = SubscriptionCreateAttributesServiceNowAttributes.from_dict(subscription_create_attributes_service_now_attributes_model_json)
+        assert subscription_create_attributes_service_now_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesServiceNowAttributes by calling from_dict on the json representation
+        subscription_create_attributes_service_now_attributes_model_dict = SubscriptionCreateAttributesServiceNowAttributes.from_dict(subscription_create_attributes_service_now_attributes_model_json).__dict__
+        subscription_create_attributes_service_now_attributes_model2 = SubscriptionCreateAttributesServiceNowAttributes(**subscription_create_attributes_service_now_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_create_attributes_service_now_attributes_model == subscription_create_attributes_service_now_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_service_now_attributes_model_json2 = subscription_create_attributes_service_now_attributes_model.to_dict()
+        assert subscription_create_attributes_service_now_attributes_model_json2 == subscription_create_attributes_service_now_attributes_model_json
+
 class TestModel_SubscriptionCreateAttributesSlackAttributes():
     """
     Test Class for SubscriptionCreateAttributesSlackAttributes
@@ -6015,6 +6119,36 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes():
         # Convert model instance back to dict and verify no loss of data
         subscription_update_attributes_sms_update_attributes_model_json2 = subscription_update_attributes_sms_update_attributes_model.to_dict()
         assert subscription_update_attributes_sms_update_attributes_model_json2 == subscription_update_attributes_sms_update_attributes_model_json
+
+class TestModel_SubscriptionUpdateAttributesServiceNowAttributes():
+    """
+    Test Class for SubscriptionUpdateAttributesServiceNowAttributes
+    """
+
+    def test_subscription_update_attributes_service_now_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesServiceNowAttributes
+        """
+
+        # Construct a json representation of a SubscriptionUpdateAttributesServiceNowAttributes model
+        subscription_update_attributes_service_now_attributes_model_json = {}
+        subscription_update_attributes_service_now_attributes_model_json['assigned_to'] = 'testString'
+        subscription_update_attributes_service_now_attributes_model_json['assignment_group'] = 'testString'
+
+        # Construct a model instance of SubscriptionUpdateAttributesServiceNowAttributes by calling from_dict on the json representation
+        subscription_update_attributes_service_now_attributes_model = SubscriptionUpdateAttributesServiceNowAttributes.from_dict(subscription_update_attributes_service_now_attributes_model_json)
+        assert subscription_update_attributes_service_now_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesServiceNowAttributes by calling from_dict on the json representation
+        subscription_update_attributes_service_now_attributes_model_dict = SubscriptionUpdateAttributesServiceNowAttributes.from_dict(subscription_update_attributes_service_now_attributes_model_json).__dict__
+        subscription_update_attributes_service_now_attributes_model2 = SubscriptionUpdateAttributesServiceNowAttributes(**subscription_update_attributes_service_now_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_update_attributes_service_now_attributes_model == subscription_update_attributes_service_now_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_service_now_attributes_model_json2 = subscription_update_attributes_service_now_attributes_model.to_dict()
+        assert subscription_update_attributes_service_now_attributes_model_json2 == subscription_update_attributes_service_now_attributes_model_json
 
 class TestModel_SubscriptionUpdateAttributesSlackAttributes():
     """
