@@ -24,11 +24,7 @@ script:
 
 before_deploy:
 - nvm install 14
-- npm install npm@latest -g
-- npm install @semantic-release/changelog
-- npm install @semantic-release/exec
-- npm install @semantic-release/git
-- npm install @semantic-release/github
+- npm install
 - pip install bump2version
 
 before_script:
@@ -36,7 +32,7 @@ before_script:
 
 deploy:
 - provider: script
-  script: npx semantic-release
+  script: npm run semantic-release
   skip_cleanup: true
   on:
     python: '3.7'
