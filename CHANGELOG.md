@@ -1,3 +1,11 @@
+## [0.1.8](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.7...v0.1.8) (2023-02-01)
+
+
+### Bug Fixes
+
+* add service now destination support ([ad27ee7](https://github.com/IBM/event-notifications-python-admin-sdk/commit/ad27ee77dc165bb85210d983fd712bcaacf2b058))
+* add service now destination support ([cea75a6](https://github.com/IBM/event-notifications-python-admin-sdk/commit/cea75a6973bddad88d41a318097d6e689c370676))
+
 ## [0.1.7](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.6...v0.1.7) (2022-12-05)
 
 
