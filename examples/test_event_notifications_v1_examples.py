@@ -60,6 +60,7 @@ destination_id8 = ''
 destination_id9 = ''
 destination_id10 = ''
 destination_id11 = ''
+destination_id12 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -74,6 +75,9 @@ snow_client_secret = ''
 snow_user_name = ''
 snow_password = ''
 snow_instance_name = ''
+fcm_private_key = ''
+fcm_project_id = ''
+fcm_client_email = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -86,7 +90,7 @@ class TestEventNotificationsV1Examples():
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
@@ -112,6 +116,9 @@ class TestEventNotificationsV1Examples():
             snow_user_name = cls.config['SNOW_USER_NAME']
             snow_password = cls.config['SNOW_PASSWORD']
             snow_instance_name = cls.config['SNOW_INSTANCE_NAME']
+            fcm_client_email = cls.config['FCM_CLIENT_EMAIL']
+            fcm_project_id = cls.config['FCM_PROJECT_ID']
+            fcm_private_key = cls.config['FCM_PRIVATE_KEY']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -342,7 +349,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -607,6 +614,34 @@ class TestEventNotificationsV1Examples():
             destination = DestinationResponse.from_dict(destination)
             print(json.dumps(destination, indent=2))
             destination_id11 = destination.id
+
+            fcm_config_params = {
+                "project_id": fcm_project_id,
+                "private_key": fcm_private_key,
+                "client_email": fcm_client_email,
+            }
+
+            destination_config_model = {
+                'params': fcm_config_params,
+            }
+            name = "FCM_V1_destination"
+            typeval = "push_android"
+            description = "FCM V1 Destination"
+
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            )
+
+            assert create_destination_response.get_status_code() == 201
+            destination_response = create_destination_response.get_result()
+
+            destination = DestinationResponse.from_dict(destination_response)
+
+            destination_id12 = destination.id
             # end-create_destination
 
         except ApiException as e:
@@ -905,6 +940,29 @@ class TestEventNotificationsV1Examples():
             destination = self.event_notifications_service.update_destination(
                 instance_id,
                 id=destination_id11,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            # FCM
+            destination_config_params_model = {
+                "project_id": fcm_project_id,
+                "private_key": fcm_private_key,
+                "client_email": fcm_client_email
+            }
+
+            destination_config_model = {
+                'params': destination_config_params_model,
+            }
+            name = "Admin FCM Compliance"
+            description = "This destination is for creating admin FCM to receive compliance notifications"
+
+            destination = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id12,
                 name=name,
                 description=description,
                 config=destination_config_model
@@ -1311,7 +1369,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11]:
+            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12]:
                 delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id

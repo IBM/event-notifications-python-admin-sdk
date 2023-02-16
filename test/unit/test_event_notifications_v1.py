@@ -5320,6 +5320,9 @@ class TestModel_DestinationConfigOneOfFCMDestinationConfig():
         destination_config_one_of_fcm_destination_config_model_json['server_key'] = 'testString'
         destination_config_one_of_fcm_destination_config_model_json['sender_id'] = 'testString'
         destination_config_one_of_fcm_destination_config_model_json['pre_prod'] = False
+        destination_config_one_of_fcm_destination_config_model_json['project_id'] = 'testString'
+        destination_config_one_of_fcm_destination_config_model_json['private_key'] = 'testString'
+        destination_config_one_of_fcm_destination_config_model_json['client_email'] = 'testString'
 
         # Construct a model instance of DestinationConfigOneOfFCMDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_fcm_destination_config_model = DestinationConfigOneOfFCMDestinationConfig.from_dict(destination_config_one_of_fcm_destination_config_model_json)
