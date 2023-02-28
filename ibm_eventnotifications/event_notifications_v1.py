@@ -1123,9 +1123,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Create a new Tag subscription.
+        Create a new tag subscription.
 
-        Create a new Tag subscription.
+        Create a new tag subscription.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -1190,9 +1190,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        List all Tag Subscriptions.
+        List all tag subscriptions.
 
-        List all Tag Subscriptions.
+        List all tag subscriptions.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -1255,9 +1255,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete a Tag subcription.
+        Delete a tag subscription.
 
-        Delete a Tag subcription.
+        Delete a tag subscription.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -5744,10 +5744,11 @@ class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
 
 class DestinationConfigOneOfFCMDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing an FCM destination configuration.
+    Payload describing an FCM destination configuration. project_id, private_key and
+    client_email for FCM HTTP v1 APIs.
 
-    :attr str server_key: (optional) FCM server_key(deprecated-FCM legacy HTTP API).
-    :attr str sender_id: (optional) FCM sender_id(deprecated-FCM legacy HTTP API).
+    :attr str server_key: (optional) FCM server_key.
+    :attr str sender_id: (optional) FCM sender_id.
     :attr bool pre_prod: (optional) If pre prod enabled.
     :attr str project_id: (optional) FCM project_id.
     :attr str private_key: (optional) FCM private_key.
@@ -5765,10 +5766,8 @@ class DestinationConfigOneOfFCMDestinationConfig(DestinationConfigOneOf):
         """
         Initialize a DestinationConfigOneOfFCMDestinationConfig object.
 
-        :param str server_key: (optional) FCM server_key(deprecated-FCM legacy HTTP
-               API).
-        :param str sender_id: (optional) FCM sender_id(deprecated-FCM legacy HTTP
-               API).
+        :param str server_key: (optional) FCM server_key.
+        :param str sender_id: (optional) FCM sender_id.
         :param bool pre_prod: (optional) If pre prod enabled.
         :param str project_id: (optional) FCM project_id.
         :param str private_key: (optional) FCM private_key.
