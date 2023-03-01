@@ -1,3 +1,10 @@
+## [0.1.9](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.8...v0.1.9) (2023-03-01)
+
+
+### Bug Fixes
+
+* add FCM V1 destination support ([76b030b](https://github.com/IBM/event-notifications-python-admin-sdk/commit/76b030b5f261d53751c9e3caee5a6aa9f22689b0))
+
 ## [0.1.8](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.7...v0.1.8) (2023-02-01)
 
 
