@@ -520,36 +520,44 @@ integration_response = update_integration_response.get_result()
 
 ```py
 notification_devices_model = {
-            'fcm_devices': ['<fcm-device-ids>'],
-            'apns_devices': ['<apns-device-ids>'],
-            'user_ids': ['<user-ids>'],
-            'tags': ['<tag-names>'],
-            'platforms': ['<device-platforms>'],
-          }
+  'fcm_devices': ['<fcm-device-ids>'],
+  'apns_devices': ['<apns-device-ids>'],
+  'user_ids': ['<user-ids>'],
+  'tags': ['<tag-names>'],
+  'platforms': ['<device-platforms>'],
+}
 
 notification_apns_body_model = {
-                "aps": {
-                    "alert": "<notification-message>",
-                    "badge": 5,
-                },
-            }
+    "aps": {
+        "alert": "<notification-message>",
+        "badge": 5,
+    },
+}
 notification_fcm_body_model = {
-                "notification": {
-                    "title": "<notification-title>",
-                    "body": "<notification-message>",
-                },
-            }
+    'message': {
+        'android': {
+            'notification': {
+                'title': '<notification-title>', 
+                'body': '<notification-message>',
+            },
+            'data': {
+                'name': 'Robert',
+                'description': 'notification for the Poker',
+            },
+        },
+    },
+}
 
 message_apns_headers = {
-                "apns-collapse-id": "<apns-apns-collapse-id-value>",
-            }
+    "apns-collapse-id": "<apns-apns-collapse-id-value>",
+}
 
 notificationSafariBodymodel = {
-            'saf': {
-                'alert': 'Game Request',
-                'badge': 5,
-            },
-        }
+    'saf': {
+        'alert': 'Game Request',
+        'badge': 5,
+    },
+}
 
 notification_id := "<notification-id>"
 notification_severity := "<notification-severity>"

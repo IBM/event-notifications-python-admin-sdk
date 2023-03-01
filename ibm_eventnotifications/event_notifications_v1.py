@@ -1123,9 +1123,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Create a new Tag subscription.
+        Create a new tag subscription.
 
-        Create a new Tag subscription.
+        Create a new tag subscription.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -1190,9 +1190,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        List all Tag Subscriptions.
+        List all tag subscriptions.
 
-        List all Tag Subscriptions.
+        List all tag subscriptions.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -1255,9 +1255,9 @@ class EventNotificationsV1(BaseService):
         **kwargs
     ) -> DetailedResponse:
         """
-        Delete a Tag subcription.
+        Delete a tag subscription.
 
-        Delete a Tag subcription.
+        Delete a tag subscription.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -5744,29 +5744,42 @@ class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
 
 class DestinationConfigOneOfFCMDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing an FCM destination configuration.
+    Payload describing an FCM destination configuration. project_id, private_key and
+    client_email for FCM HTTP v1 APIs.
 
-    :attr str server_key: FCM server_key.
-    :attr str sender_id: FCM sender_id.
+    :attr str server_key: (optional) FCM server_key.
+    :attr str sender_id: (optional) FCM sender_id.
     :attr bool pre_prod: (optional) If pre prod enabled.
+    :attr str project_id: (optional) FCM project_id.
+    :attr str private_key: (optional) FCM private_key.
+    :attr str client_email: (optional) FCM client_email.
     """
 
     def __init__(self,
-                 server_key: str,
-                 sender_id: str,
                  *,
-                 pre_prod: bool = None) -> None:
+                 server_key: str = None,
+                 sender_id: str = None,
+                 pre_prod: bool = None,
+                 project_id: str = None,
+                 private_key: str = None,
+                 client_email: str = None) -> None:
         """
         Initialize a DestinationConfigOneOfFCMDestinationConfig object.
 
-        :param str server_key: FCM server_key.
-        :param str sender_id: FCM sender_id.
+        :param str server_key: (optional) FCM server_key.
+        :param str sender_id: (optional) FCM sender_id.
         :param bool pre_prod: (optional) If pre prod enabled.
+        :param str project_id: (optional) FCM project_id.
+        :param str private_key: (optional) FCM private_key.
+        :param str client_email: (optional) FCM client_email.
         """
         # pylint: disable=super-init-not-called
         self.server_key = server_key
         self.sender_id = sender_id
         self.pre_prod = pre_prod
+        self.project_id = project_id
+        self.private_key = private_key
+        self.client_email = client_email
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfFCMDestinationConfig':
@@ -5774,14 +5787,16 @@ class DestinationConfigOneOfFCMDestinationConfig(DestinationConfigOneOf):
         args = {}
         if 'server_key' in _dict:
             args['server_key'] = _dict.get('server_key')
-        else:
-            raise ValueError('Required property \'server_key\' not present in DestinationConfigOneOfFCMDestinationConfig JSON')
         if 'sender_id' in _dict:
             args['sender_id'] = _dict.get('sender_id')
-        else:
-            raise ValueError('Required property \'sender_id\' not present in DestinationConfigOneOfFCMDestinationConfig JSON')
         if 'pre_prod' in _dict:
             args['pre_prod'] = _dict.get('pre_prod')
+        if 'project_id' in _dict:
+            args['project_id'] = _dict.get('project_id')
+        if 'private_key' in _dict:
+            args['private_key'] = _dict.get('private_key')
+        if 'client_email' in _dict:
+            args['client_email'] = _dict.get('client_email')
         return cls(**args)
 
     @classmethod
@@ -5798,6 +5813,12 @@ class DestinationConfigOneOfFCMDestinationConfig(DestinationConfigOneOf):
             _dict['sender_id'] = self.sender_id
         if hasattr(self, 'pre_prod') and self.pre_prod is not None:
             _dict['pre_prod'] = self.pre_prod
+        if hasattr(self, 'project_id') and self.project_id is not None:
+            _dict['project_id'] = self.project_id
+        if hasattr(self, 'private_key') and self.private_key is not None:
+            _dict['private_key'] = self.private_key
+        if hasattr(self, 'client_email') and self.client_email is not None:
+            _dict['client_email'] = self.client_email
         return _dict
 
     def _to_dict(self):
