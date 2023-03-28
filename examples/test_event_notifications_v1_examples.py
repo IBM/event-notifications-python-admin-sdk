@@ -61,6 +61,7 @@ destination_id9 = ''
 destination_id10 = ''
 destination_id11 = ''
 destination_id12 = ''
+destination_id13 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -78,6 +79,7 @@ snow_instance_name = ''
 fcm_private_key = ''
 fcm_project_id = ''
 fcm_client_email = ''
+code_engine_URL = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -119,6 +121,7 @@ class TestEventNotificationsV1Examples():
             fcm_client_email = cls.config['FCM_CLIENT_EMAIL']
             fcm_project_id = cls.config['FCM_PROJECT_ID']
             fcm_private_key = cls.config['FCM_PRIVATE_KEY']
+            code_engine_URL = cls.config['CODE_ENGINE_URL']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -349,7 +352,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -642,6 +645,34 @@ class TestEventNotificationsV1Examples():
             destination = DestinationResponse.from_dict(destination_response)
 
             destination_id12 = destination.id
+
+            destination_config_params_model = {
+                'url': code_engine_URL,
+                'verb': 'get',
+                'custom_headers': {'authorization': 'apikey'},
+                'sensitive_headers': ['authorization'],
+            }
+
+            # Construct a dict representation of a DestinationConfig model
+            destination_config_model = {
+                'params': destination_config_params_model,
+            }
+
+            name = "code_engine_destination"
+            typeval = "ibmce"
+            description = "code engine Destination"
+
+            destination = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id13 = destination.id
             # end-create_destination
 
         except ApiException as e:
@@ -963,6 +994,30 @@ class TestEventNotificationsV1Examples():
             destination = event_notifications_service.update_destination(
                 instance_id,
                 id=destination_id12,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            destination_config_params_model = {
+                'url': code_engine_URL,
+                'verb': 'post',
+                'custom_headers': {'authorization': 'authorization token'},
+                'sensitive_headers': ['authorization'],
+            }
+
+            # Construct a dict representation of a DestinationConfig model
+            destination_config_model = {
+                'params': destination_config_params_model,
+            }
+
+            name = "code engine updated"
+            description = "This destination is updated for code engine notifications"
+            destination = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id13,
                 name=name,
                 description=description,
                 config=destination_config_model

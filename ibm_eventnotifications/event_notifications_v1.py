@@ -1769,6 +1769,7 @@ class CreateDestinationEnums:
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
@@ -1851,7 +1852,7 @@ class Destination():
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1876,7 +1877,7 @@ class Destination():
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -1975,7 +1976,7 @@ class Destination():
     class TypeEnum(str, Enum):
         """
         Destination type
-        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/ServiceNow.
+        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -1984,6 +1985,7 @@ class Destination():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
@@ -2303,6 +2305,7 @@ class DestinationListItem():
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
@@ -2427,6 +2430,7 @@ class DestinationResponse():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
@@ -4524,6 +4528,7 @@ class Subscription():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
@@ -4820,6 +4825,7 @@ class SubscriptionListItem():
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
         IBMCF = 'ibmcf'
+        IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
@@ -6099,7 +6105,7 @@ class DestinationConfigOneOfMSTeamsDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a MS Teams destination configuration.
 
-    :attr str url: URL of MS Teams Incoming Webhook.
+    :attr str url: URL of MS Teams Incoming Notifications.
     """
 
     def __init__(self,
@@ -6107,7 +6113,7 @@ class DestinationConfigOneOfMSTeamsDestinationConfig(DestinationConfigOneOf):
         """
         Initialize a DestinationConfigOneOfMSTeamsDestinationConfig object.
 
-        :param str url: URL of MS Teams Incoming Webhook.
+        :param str url: URL of MS Teams Incoming Notifications.
         """
         # pylint: disable=super-init-not-called
         self.url = url
@@ -6439,7 +6445,7 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a Slack destination configuration.
 
-    :attr str url: URL of Slack Incoming Webhook.
+    :attr str url: URL of Slack Incoming Notifications.
     """
 
     def __init__(self,
@@ -6447,7 +6453,7 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
         """
         Initialize a DestinationConfigOneOfSlackDestinationConfig object.
 
-        :param str url: URL of Slack Incoming Webhook.
+        :param str url: URL of Slack Incoming Notifications.
         """
         # pylint: disable=super-init-not-called
         self.url = url

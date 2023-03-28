@@ -3940,7 +3940,7 @@ class TestModel_DestinationList():
 
         destination_list_item_model = {} # DestinationListItem
         destination_list_item_model['id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
-        destination_list_item_model['name'] = 'Slack Webhook'
+        destination_list_item_model['name'] = 'SL Web'
         destination_list_item_model['description'] = 'This destination is for webhook purpose new'
         destination_list_item_model['type'] = 'webhook'
         destination_list_item_model['subscription_count'] = 2
@@ -4945,7 +4945,7 @@ class TestModel_TagsSubscriptionList():
         tags_subscription_list_item_model = {} # TagsSubscriptionListItem
         tags_subscription_list_item_model['id'] = '330cfdf8-7ae6-4afb-aac1-458243877d00'
         tags_subscription_list_item_model['device_id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
-        tags_subscription_list_item_model['tag_name'] = 'Slack_Webhook'
+        tags_subscription_list_item_model['tag_name'] = 'sl_web'
         tags_subscription_list_item_model['user_id'] = 'fcm_id_123'
         tags_subscription_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
