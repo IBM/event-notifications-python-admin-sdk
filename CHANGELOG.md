@@ -1,3 +1,10 @@
+## [0.1.10](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.9...v0.1.10) (2023-03-28)
+
+
+### Bug Fixes
+
+* add code engine destination support ([4edbd13](https://github.com/IBM/event-notifications-python-admin-sdk/commit/4edbd13d880fe17591324925c1fb42799524bbd6))
+
 ## [0.1.9](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.8...v0.1.9) (2023-03-01)
 
 
