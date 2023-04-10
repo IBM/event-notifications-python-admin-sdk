@@ -6942,19 +6942,21 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
     """
     The attributes for a Slack notification.
 
-    :attr str attachment_color: Attachment Color for Slack Notification.
+    :attr str attachment_color: (optional) Attachment Color for Slack Notification.
     """
 
     # The set of defined properties for the class
     _properties = frozenset(['attachment_color'])
 
     def __init__(self,
-                 attachment_color: str,
+                 *,
+                 attachment_color: str = None,
                  **kwargs) -> None:
         """
         Initialize a SubscriptionAttributesSlackAttributesResponse object.
 
-        :param str attachment_color: Attachment Color for Slack Notification.
+        :param str attachment_color: (optional) Attachment Color for Slack
+               Notification.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
@@ -6968,8 +6970,6 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
         args = {}
         if 'attachment_color' in _dict:
             args['attachment_color'] = _dict.get('attachment_color')
-        else:
-            raise ValueError('Required property \'attachment_color\' not present in SubscriptionAttributesSlackAttributesResponse JSON')
         args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -7393,15 +7393,17 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
     """
     The attributes for a slack notification.
 
-    :attr str attachment_color: Attachment Color for the slack message.
+    :attr str attachment_color: (optional) Attachment Color for the slack message.
     """
 
     def __init__(self,
-                 attachment_color: str) -> None:
+                 *,
+                 attachment_color: str = None) -> None:
         """
         Initialize a SubscriptionCreateAttributesSlackAttributes object.
 
-        :param str attachment_color: Attachment Color for the slack message.
+        :param str attachment_color: (optional) Attachment Color for the slack
+               message.
         """
         # pylint: disable=super-init-not-called
         self.attachment_color = attachment_color
@@ -7412,8 +7414,6 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
         args = {}
         if 'attachment_color' in _dict:
             args['attachment_color'] = _dict.get('attachment_color')
-        else:
-            raise ValueError('Required property \'attachment_color\' not present in SubscriptionCreateAttributesSlackAttributes JSON')
         return cls(**args)
 
     @classmethod
@@ -7773,15 +7773,17 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
     """
     The attributes for a slack notification.
 
-    :attr str attachment_color: Attachment Color for the slack message.
+    :attr str attachment_color: (optional) Attachment Color for the slack message.
     """
 
     def __init__(self,
-                 attachment_color: str) -> None:
+                 *,
+                 attachment_color: str = None) -> None:
         """
         Initialize a SubscriptionUpdateAttributesSlackAttributes object.
 
-        :param str attachment_color: Attachment Color for the slack message.
+        :param str attachment_color: (optional) Attachment Color for the slack
+               message.
         """
         # pylint: disable=super-init-not-called
         self.attachment_color = attachment_color
@@ -7792,8 +7794,6 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
         args = {}
         if 'attachment_color' in _dict:
             args['attachment_color'] = _dict.get('attachment_color')
-        else:
-            raise ValueError('Required property \'attachment_color\' not present in SubscriptionUpdateAttributesSlackAttributes JSON')
         return cls(**args)
 
     @classmethod

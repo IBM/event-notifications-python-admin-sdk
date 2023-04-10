@@ -68,6 +68,7 @@ subscription_id1 = ''
 subscription_id2 = ''
 subscription_id3 = ''
 subscription_id4 = ''
+subscription_id5 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 integration_id = ''
@@ -1034,7 +1035,7 @@ class TestEventNotificationsV1Examples():
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5
         try:
             print('\ncreate_subscription() result:')
             # begin-create_subscription
@@ -1137,6 +1138,27 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(subscription, indent=2))
 
             subscription_id4 = subscription.get('id')
+
+            name = "slack subscription"
+            description = "Subscription for the slack"
+
+            subscription_create_attributes_model = {
+                'attachment_color': '#0000FF',
+            }
+
+            subscription = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id4,
+                topic_id=topic_id,
+                description=description,
+                attributes=subscription_create_attributes_model
+            ).get_result()
+
+            print(json.dumps(subscription, indent=2))
+
+            subscription_id5 = subscription.get('id')
+
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1289,6 +1311,22 @@ class TestEventNotificationsV1Examples():
 
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
+
+            name = 'Slack update'
+            description = 'Subscription for slack updated'
+            subscription_update_attributes_model = {
+                'attachment_color': '#0000FF',
+            }
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id5,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
             # end-update_subscription
         except ApiException as e:
             pytest.fail(str(e))
@@ -1379,7 +1417,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_subscription
             print('\ndelete_subscription() response status code: ', response.get_status_code())
 
-            for id in [subscription_id1, subscription_id2, subscription_id3, subscription_id4]:
+            for id in [subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5]:
                 delete_subscription_response = event_notifications_service.delete_subscription(
                     instance_id,
                     id

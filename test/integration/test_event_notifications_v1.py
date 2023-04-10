@@ -1492,12 +1492,17 @@ class TestEventNotificationsV1():
         name = "slack subscription"
         description = "Subscription for the slack"
 
+        subscription_create_attributes_model = {
+            'attachment_color': '#0000FF',
+        }
+
         create_subscription_response = self.event_notifications_service.create_subscription(
             instance_id,
             name,
             destination_id=destination_id4,
             topic_id=topic_id,
-            description=description
+            description=description,
+            attributes=subscription_create_attributes_model
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1897,11 +1902,15 @@ class TestEventNotificationsV1():
 
         name = 'Slack update'
         description = 'Subscription for slack updated'
+        subscription_update_attributes_model = {
+            'attachment_color': '#0000FF',
+        }
         update_subscription_response = self.event_notifications_service.update_subscription(
             instance_id,
             id=subscription_id4,
             name=name,
             description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
