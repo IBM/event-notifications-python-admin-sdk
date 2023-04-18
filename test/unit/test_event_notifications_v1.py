@@ -5400,6 +5400,37 @@ class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig():
         destination_config_one_of_ibm_cloud_functions_destination_config_model_json2 = destination_config_one_of_ibm_cloud_functions_destination_config_model.to_dict()
         assert destination_config_one_of_ibm_cloud_functions_destination_config_model_json2 == destination_config_one_of_ibm_cloud_functions_destination_config_model_json
 
+class TestModel_DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig():
+    """
+    Test Class for DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
+    """
+
+    def test_destination_config_one_of_ibm_cloud_object_storage_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig model
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json = {}
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json['bucket_name'] = 'testString'
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json['instance_id'] = 'testString'
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json['endpoint'] = 'testString'
+
+        # Construct a model instance of DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model = DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig.from_dict(destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json)
+        assert destination_config_one_of_ibm_cloud_object_storage_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_dict = DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig.from_dict(destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json).__dict__
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model2 = DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(**destination_config_one_of_ibm_cloud_object_storage_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_ibm_cloud_object_storage_destination_config_model == destination_config_one_of_ibm_cloud_object_storage_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json2 = destination_config_one_of_ibm_cloud_object_storage_destination_config_model.to_dict()
+        assert destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json2 == destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json
+
 class TestModel_DestinationConfigOneOfIOSDestinationConfig():
     """
     Test Class for DestinationConfigOneOfIOSDestinationConfig
