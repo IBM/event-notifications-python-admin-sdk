@@ -1774,6 +1774,7 @@ class CreateDestinationEnums:
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
+        IBMCOS = 'ibmcos'
 
 
 ##############################################################################
@@ -1852,7 +1853,7 @@ class Destination():
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1877,7 +1878,7 @@ class Destination():
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -1976,7 +1977,7 @@ class Destination():
     class TypeEnum(str, Enum):
         """
         Destination type
-        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow.
+        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -1990,6 +1991,7 @@ class Destination():
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
+        IBMCOS = 'ibmcos'
 
 
 class DestinationConfig():
@@ -2063,7 +2065,7 @@ class DestinationConfigOneOf():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig', 'DestinationConfigOneOfServiceNowDestinationConfig']))
+                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig', 'DestinationConfigOneOfServiceNowDestinationConfig', 'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig']))
         raise Exception(msg)
 
 class DestinationList():
@@ -2310,6 +2312,7 @@ class DestinationListItem():
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
+        IBMCOS = 'ibmcos'
 
 
 class DestinationResponse():
@@ -2435,6 +2438,7 @@ class DestinationResponse():
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
+        IBMCOS = 'ibmcos'
 
 
 class DestinationTagsSubscriptionResponse():
@@ -4533,6 +4537,7 @@ class Subscription():
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
+        IBMCOS = 'ibmcos'
 
 
 class SubscriptionAttributes():
@@ -4830,6 +4835,7 @@ class SubscriptionListItem():
         PUSH_SAFARI = 'push_safari'
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
+        IBMCOS = 'ibmcos'
 
 
 class SubscriptionUpdateAttributes():
@@ -5984,6 +5990,83 @@ class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfig
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a Cloud Object Storage destination configuration.
+
+    :attr str bucket_name: Bucket Name for Cloud Object Storage.
+    :attr str instance_id: Instance Id of Cloud Object Storage.
+    :attr str endpoint: End Point of Cloud Object Storage.
+    """
+
+    def __init__(self,
+                 bucket_name: str,
+                 instance_id: str,
+                 endpoint: str) -> None:
+        """
+        Initialize a DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig object.
+
+        :param str bucket_name: Bucket Name for Cloud Object Storage.
+        :param str instance_id: Instance Id of Cloud Object Storage.
+        :param str endpoint: End Point of Cloud Object Storage.
+        """
+        # pylint: disable=super-init-not-called
+        self.bucket_name = bucket_name
+        self.instance_id = instance_id
+        self.endpoint = endpoint
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig':
+        """Initialize a DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'bucket_name' in _dict:
+            args['bucket_name'] = _dict.get('bucket_name')
+        else:
+            raise ValueError('Required property \'bucket_name\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON')
+        if 'instance_id' in _dict:
+            args['instance_id'] = _dict.get('instance_id')
+        else:
+            raise ValueError('Required property \'instance_id\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON')
+        if 'endpoint' in _dict:
+            args['endpoint'] = _dict.get('endpoint')
+        else:
+            raise ValueError('Required property \'endpoint\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'bucket_name') and self.bucket_name is not None:
+            _dict['bucket_name'] = self.bucket_name
+        if hasattr(self, 'instance_id') and self.instance_id is not None:
+            _dict['instance_id'] = self.instance_id
+        if hasattr(self, 'endpoint') and self.endpoint is not None:
+            _dict['endpoint'] = self.endpoint
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

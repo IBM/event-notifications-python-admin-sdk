@@ -62,6 +62,7 @@ destination_id10 = ''
 destination_id11 = ''
 destination_id12 = ''
 destination_id13 = ''
+destination_id14 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -353,7 +354,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -674,6 +675,31 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(destination, indent=2))
             destination = DestinationResponse.from_dict(destination)
             destination_id13 = destination.id
+
+            destination_config_model = {
+                'params': {
+                    'bucket_name': 'encosbucket',
+                    'instance_id': 'e8a6b5a3-3ff4-xxxx-xxxx-ea86a4d4a3b6',
+                    'endpoint': 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
+                }
+            }
+
+            name = "COS_destination"
+            typeval = "ibmcos"
+            description = "COS Destination"
+
+            destination = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id14 = destination.id
+
             # end-create_destination
 
         except ApiException as e:
@@ -1019,6 +1045,27 @@ class TestEventNotificationsV1Examples():
             destination = self.event_notifications_service.update_destination(
                 instance_id,
                 id=destination_id13,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            destination_config_model = {
+                'params': {
+                    'bucket_name': 'encosbucket',
+                    'instance_id': 'e8a6b5a3-3ff4-xxxx-xxxx-ea86a4d4a3b6',
+                    'endpoint': 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
+                }
+            }
+
+            name = "COS_destination_update"
+            description = "COS Destination update"
+
+            destination = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id14,
                 name=name,
                 description=description,
                 config=destination_config_model

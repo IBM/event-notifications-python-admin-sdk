@@ -46,6 +46,7 @@ destination_id10 = ''
 destination_id11 = ''
 destination_id12 = ''
 destination_id13 = ''
+destination_id14 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -61,6 +62,7 @@ subscription_id10 = ''
 subscription_id11 = ''
 subscription_id12 = ''
 subscription_id13 = ''
+subscription_id14 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 integration_id = ''
@@ -486,7 +488,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -898,6 +900,39 @@ class TestEventNotificationsV1():
         assert destination.type == typeval
 
         destination_id13 = destination.id
+
+        destination_config_model = {
+            'params': {
+                'bucket_name': 'encosbucket',
+                'instance_id': 'e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6',
+                'endpoint': 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
+            }
+        }
+
+        name = "COS_destination"
+        typeval = "ibmcos"
+        description = "COS Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id14 = destination.id
 
         #
         # The following status codes aren't covered by tests.
@@ -1368,6 +1403,36 @@ class TestEventNotificationsV1():
         assert res_name == name
         assert res_description == description
 
+        destination_config_model = {
+            'params': {
+                'bucket_name': 'encosbucket',
+                'instance_id': 'e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6',
+                'endpoint': 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
+            }
+        }
+
+        name = "COS_destination_update"
+        description = "COS Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id14,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id14
+        assert res_name == name
+        assert res_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1384,7 +1449,7 @@ class TestEventNotificationsV1():
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14
         subscription_create_attributes_model = {
             'signing_enabled': False,
         }
@@ -1720,6 +1785,28 @@ class TestEventNotificationsV1():
         subscription_name = subscription_response.get('name')
         subscription_description = subscription_response.get('description')
         subscription_id13 = subscription_response.get('id')
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "COS destination subscription"
+        description = "Subscription for the COS destination"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id14,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id14 = subscription_response.get('id')
+
         assert subscription_name == name
         assert subscription_description == description
 
@@ -2105,6 +2192,25 @@ class TestEventNotificationsV1():
         assert subscription_name == name
         assert subscription_new_id == subscription_id13
         assert subscription_description == description
+
+        name = 'COS subscription update'
+        description = 'Subscription for COS updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id14,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -2423,7 +2529,7 @@ class TestEventNotificationsV1():
 
     @needscredentials
     def test_delete_subscription(self):
-        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13]:
+        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(
                 instance_id,
                 id
@@ -2463,7 +2569,7 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_delete_destination(self):
 
-        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13]:
+        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14]:
             delete_destination_response = self.event_notifications_service.delete_destination(
                 instance_id,
                 id
