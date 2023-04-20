@@ -1,3 +1,10 @@
+## [0.1.11](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.10...v0.1.11) (2023-04-20)
+
+
+### Bug Fixes
+
+* adds COS destination support ([d1183fa](https://github.com/IBM/event-notifications-python-admin-sdk/commit/d1183fa4810c7c37096a9b2dc3385efff9ec4531))
+
 ## [0.1.10](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.9...v0.1.10) (2023-03-28)
 
 
