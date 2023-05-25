@@ -63,6 +63,7 @@ destination_id11 = ''
 destination_id12 = ''
 destination_id13 = ''
 destination_id14 = ''
+destination_id15 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -82,6 +83,8 @@ fcm_private_key = ''
 fcm_project_id = ''
 fcm_client_email = ''
 code_engine_URL = ''
+huawei_client_id = ''
+huawei_client_secret = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -94,7 +97,7 @@ class TestEventNotificationsV1Examples():
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
@@ -124,6 +127,8 @@ class TestEventNotificationsV1Examples():
             fcm_project_id = cls.config['FCM_PROJECT_ID']
             fcm_private_key = cls.config['FCM_PRIVATE_KEY']
             code_engine_URL = cls.config['CODE_ENGINE_URL']
+            huawei_client_id = cls.config['HUAWEI_CLIENT_ID']
+            huawei_client_secret = cls.config['HUAWEI_CLIENT_SECRET']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -354,7 +359,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -699,6 +704,30 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(destination, indent=2))
             destination = DestinationResponse.from_dict(destination)
             destination_id14 = destination.id
+
+            destination_config_model = {
+                'params': {
+                    'client_id': huawei_client_id,
+                    'client_secret': huawei_client_secret,
+                    'pre_prod': False,
+                }
+            }
+
+            name = "Huawei_destination"
+            typeval = "push_huawei"
+            description = "Huawei Destination"
+
+            destination = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id15 = destination.id
 
             # end-create_destination
 
@@ -1066,6 +1095,27 @@ class TestEventNotificationsV1Examples():
             destination = self.event_notifications_service.update_destination(
                 instance_id,
                 id=destination_id14,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            destination_config_model = {
+                'params': {
+                    'client_id': huawei_client_id,
+                    'client_secret': huawei_client_secret,
+                    'pre_prod': False,
+                }
+            }
+
+            name = "Huawei_destination_update"
+            description = "Huawei Destination update"
+
+            update_destination_response = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id15,
                 name=name,
                 description=description,
                 config=destination_config_model
@@ -1509,7 +1559,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12]:
+            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15]:
                 delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id

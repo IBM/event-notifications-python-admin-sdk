@@ -1775,6 +1775,7 @@ class CreateDestinationEnums:
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
         IBMCOS = 'ibmcos'
+        PUSH_HUAWEI = 'push_huawei'
 
 
 ##############################################################################
@@ -1992,6 +1993,7 @@ class Destination():
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
         IBMCOS = 'ibmcos'
+        PUSH_HUAWEI = 'push_huawei'
 
 
 class DestinationConfig():
@@ -2065,7 +2067,7 @@ class DestinationConfigOneOf():
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig', 'DestinationConfigOneOfServiceNowDestinationConfig', 'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig']))
+                  ", ".join(['DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig', 'DestinationConfigOneOfServiceNowDestinationConfig', 'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig', 'DestinationConfigOneOfHuaweiDestinationConfig']))
         raise Exception(msg)
 
 class DestinationList():
@@ -2313,6 +2315,7 @@ class DestinationListItem():
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
         IBMCOS = 'ibmcos'
+        PUSH_HUAWEI = 'push_huawei'
 
 
 class DestinationResponse():
@@ -2439,6 +2442,7 @@ class DestinationResponse():
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
         IBMCOS = 'ibmcos'
+        PUSH_HUAWEI = 'push_huawei'
 
 
 class DestinationTagsSubscriptionResponse():
@@ -4538,6 +4542,7 @@ class Subscription():
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
         IBMCOS = 'ibmcos'
+        PUSH_HUAWEI = 'push_huawei'
 
 
 class SubscriptionAttributes():
@@ -4836,6 +4841,7 @@ class SubscriptionListItem():
         MSTEAMS = 'msteams'
         SERVICENOW = 'servicenow'
         IBMCOS = 'ibmcos'
+        PUSH_HUAWEI = 'push_huawei'
 
 
 class SubscriptionUpdateAttributes():
@@ -5922,6 +5928,82 @@ class DestinationConfigOneOfFirefoxDestinationConfig(DestinationConfigOneOf):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigOneOfFirefoxDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+class DestinationConfigOneOfHuaweiDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a Huawei destination configuration.
+
+    :attr str client_id: ClientID for the Huawei account oauth.
+    :attr str client_secret: ClientSecret for the Huawei account oauth.
+    :attr bool pre_prod: (optional) If pre prod enabled.
+    """
+
+    def __init__(self,
+                 client_id: str,
+                 client_secret: str,
+                 *,
+                 pre_prod: bool = None) -> None:
+        """
+        Initialize a DestinationConfigOneOfHuaweiDestinationConfig object.
+
+        :param str client_id: ClientID for the Huawei account oauth.
+        :param str client_secret: ClientSecret for the Huawei account oauth.
+        :param bool pre_prod: (optional) If pre prod enabled.
+        """
+        # pylint: disable=super-init-not-called
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.pre_prod = pre_prod
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfHuaweiDestinationConfig':
+        """Initialize a DestinationConfigOneOfHuaweiDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'client_id' in _dict:
+            args['client_id'] = _dict.get('client_id')
+        else:
+            raise ValueError('Required property \'client_id\' not present in DestinationConfigOneOfHuaweiDestinationConfig JSON')
+        if 'client_secret' in _dict:
+            args['client_secret'] = _dict.get('client_secret')
+        else:
+            raise ValueError('Required property \'client_secret\' not present in DestinationConfigOneOfHuaweiDestinationConfig JSON')
+        if 'pre_prod' in _dict:
+            args['pre_prod'] = _dict.get('pre_prod')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfHuaweiDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'client_id') and self.client_id is not None:
+            _dict['client_id'] = self.client_id
+        if hasattr(self, 'client_secret') and self.client_secret is not None:
+            _dict['client_secret'] = self.client_secret
+        if hasattr(self, 'pre_prod') and self.pre_prod is not None:
+            _dict['pre_prod'] = self.pre_prod
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfHuaweiDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfHuaweiDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfHuaweiDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

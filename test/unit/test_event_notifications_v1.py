@@ -5370,6 +5370,37 @@ class TestModel_DestinationConfigOneOfFirefoxDestinationConfig():
         destination_config_one_of_firefox_destination_config_model_json2 = destination_config_one_of_firefox_destination_config_model.to_dict()
         assert destination_config_one_of_firefox_destination_config_model_json2 == destination_config_one_of_firefox_destination_config_model_json
 
+class TestModel_DestinationConfigOneOfHuaweiDestinationConfig():
+    """
+    Test Class for DestinationConfigOneOfHuaweiDestinationConfig
+    """
+
+    def test_destination_config_one_of_huawei_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfHuaweiDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfHuaweiDestinationConfig model
+        destination_config_one_of_huawei_destination_config_model_json = {}
+        destination_config_one_of_huawei_destination_config_model_json['client_id'] = 'testString'
+        destination_config_one_of_huawei_destination_config_model_json['client_secret'] = 'testString'
+        destination_config_one_of_huawei_destination_config_model_json['pre_prod'] = False
+
+        # Construct a model instance of DestinationConfigOneOfHuaweiDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_huawei_destination_config_model = DestinationConfigOneOfHuaweiDestinationConfig.from_dict(destination_config_one_of_huawei_destination_config_model_json)
+        assert destination_config_one_of_huawei_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfHuaweiDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_huawei_destination_config_model_dict = DestinationConfigOneOfHuaweiDestinationConfig.from_dict(destination_config_one_of_huawei_destination_config_model_json).__dict__
+        destination_config_one_of_huawei_destination_config_model2 = DestinationConfigOneOfHuaweiDestinationConfig(**destination_config_one_of_huawei_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_huawei_destination_config_model == destination_config_one_of_huawei_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_huawei_destination_config_model_json2 = destination_config_one_of_huawei_destination_config_model.to_dict()
+        assert destination_config_one_of_huawei_destination_config_model_json2 == destination_config_one_of_huawei_destination_config_model_json
+
 class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig():
     """
     Test Class for DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
