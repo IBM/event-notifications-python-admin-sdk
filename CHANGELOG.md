@@ -1,3 +1,10 @@
+## [0.1.12](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.11...v0.1.12) (2023-06-13)
+
+
+### Bug Fixes
+
+* add huawei destination support ([565c967](https://github.com/IBM/event-notifications-python-admin-sdk/commit/565c967e05971868bc623c7ab0c99d291f4958e2))
+
 ## [0.1.11](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.10...v0.1.11) (2023-04-20)
 
 
