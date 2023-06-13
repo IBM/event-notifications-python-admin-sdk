@@ -47,6 +47,7 @@ destination_id11 = ''
 destination_id12 = ''
 destination_id13 = ''
 destination_id14 = ''
+destination_id15 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -63,6 +64,7 @@ subscription_id11 = ''
 subscription_id12 = ''
 subscription_id13 = ''
 subscription_id14 = ''
+subscription_id15 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 integration_id = ''
@@ -75,6 +77,8 @@ fcm_private_key = ''
 fcm_project_id = ''
 fcm_client_email = ''
 code_engine_URL = ''
+huawei_client_id = ''
+huawei_client_secret = ''
 
 class TestEventNotificationsV1():
     """
@@ -83,7 +87,7 @@ class TestEventNotificationsV1():
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
@@ -110,6 +114,8 @@ class TestEventNotificationsV1():
             fcm_project_id = cls.config['FCM_PROJECT_ID']
             fcm_private_key = cls.config['FCM_PRIVATE_KEY']
             code_engine_URL = cls.config['CODE_ENGINE_URL']
+            huawei_client_id = cls.config['HUAWEI_CLIENT_ID']
+            huawei_client_secret = cls.config['HUAWEI_CLIENT_SECRET']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -488,7 +494,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -933,6 +939,39 @@ class TestEventNotificationsV1():
         assert destination.type == typeval
 
         destination_id14 = destination.id
+
+        destination_config_model = {
+            'params': {
+                'client_id': huawei_client_id,
+                'client_secret': huawei_client_secret,
+                'pre_prod': False,
+            }
+        }
+
+        name = "Huawei_destination"
+        typeval = "push_huawei"
+        description = "Huawei Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id15 = destination.id
 
         #
         # The following status codes aren't covered by tests.
@@ -1433,6 +1472,37 @@ class TestEventNotificationsV1():
         assert res_id == destination_id14
         assert res_name == name
         assert res_description == description
+
+        destination_config_model = {
+            'params': {
+                'client_id': huawei_client_id,
+                'client_secret': huawei_client_secret,
+                'pre_prod': False,
+            }
+        }
+
+        name = "Huawei_destination_update"
+        description = "Huawei Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id15,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id15
+        assert res_name == name
+        assert res_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1449,7 +1519,7 @@ class TestEventNotificationsV1():
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15
         subscription_create_attributes_model = {
             'signing_enabled': False,
         }
@@ -1806,6 +1876,28 @@ class TestEventNotificationsV1():
         subscription_name = subscription_response.get('name')
         subscription_description = subscription_response.get('description')
         subscription_id14 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        name = "Huawei destination subscription"
+        description = "Subscription for the Huawei destination"
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id15,
+            topic_id=topic_id,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id15 = subscription_response.get('id')
 
         assert subscription_name == name
         assert subscription_description == description
@@ -2211,6 +2303,25 @@ class TestEventNotificationsV1():
 
         assert subscription_name == name
         assert subscription_description == description
+
+        name = 'Huawei subscription update'
+        description = 'Subscription for Huawei updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id15,
+            name=name,
+            description=description,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -2529,7 +2640,7 @@ class TestEventNotificationsV1():
 
     @needscredentials
     def test_delete_subscription(self):
-        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14]:
+        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(
                 instance_id,
                 id
@@ -2569,7 +2680,7 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_delete_destination(self):
 
-        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14]:
+        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15]:
             delete_destination_response = self.event_notifications_service.delete_destination(
                 instance_id,
                 id
