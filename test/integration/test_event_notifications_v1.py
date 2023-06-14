@@ -79,6 +79,9 @@ fcm_client_email = ''
 code_engine_URL = ''
 huawei_client_id = ''
 huawei_client_secret = ''
+cos_bucket_name = ''
+cos_instance_id = ''
+cos_end_point = ''
 
 class TestEventNotificationsV1():
     """
@@ -87,7 +90,7 @@ class TestEventNotificationsV1():
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
@@ -116,6 +119,9 @@ class TestEventNotificationsV1():
             code_engine_URL = cls.config['CODE_ENGINE_URL']
             huawei_client_id = cls.config['HUAWEI_CLIENT_ID']
             huawei_client_secret = cls.config['HUAWEI_CLIENT_SECRET']
+            cos_instance_id = cls.config['COS_INSTANCE']
+            cos_bucket_name = cls.config['COS_BUCKET_NAME']
+            cos_end_point = cls.config['COS_ENDPOINT']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -128,6 +134,9 @@ class TestEventNotificationsV1():
             assert snow_password is not None
             assert snow_instance_name is not None
             assert code_engine_URL is not None
+            assert cos_end_point is not None
+            assert cos_instance_id is not None
+            assert cos_bucket_name is not None
 
         print('Setup complete.')
 
@@ -909,9 +918,9 @@ class TestEventNotificationsV1():
 
         destination_config_model = {
             'params': {
-                'bucket_name': 'encosbucket',
-                'instance_id': 'e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6',
-                'endpoint': 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
+                'bucket_name': cos_bucket_name,
+                'instance_id': cos_instance_id,
+                'endpoint': cos_end_point
             }
         }
 
@@ -1444,9 +1453,9 @@ class TestEventNotificationsV1():
 
         destination_config_model = {
             'params': {
-                'bucket_name': 'encosbucket',
-                'instance_id': 'e8a6b5a3-3ff4-48ef-ad88-ea86a4d4a3b6',
-                'endpoint': 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
+                'bucket_name': cos_bucket_name,
+                'instance_id': cos_instance_id,
+                'endpoint': cos_end_point
             }
         }
 
@@ -2338,7 +2347,7 @@ class TestEventNotificationsV1():
     def test_send_notifications(self):
         # Construct a dict representation of a NotificationDevices model
         notification_devices_model = {
-            'user_ids': ['userId'],
+            'platforms': ['push_huawei', 'push_android', 'push_ios', 'push_chrome', 'push_firefox']
         }
 
         # Construct a dict representation of a Lights model
@@ -2369,9 +2378,26 @@ class TestEventNotificationsV1():
             },
         }
 
+        notification_huawei_body_message_data_model = {
+            'android': {
+                'notification': {
+                    'title': 'Alert message',
+                    'body': 'Bob wants to play Poker',
+                },
+                'data': {
+                    'name': 'Robert',
+                    'description': 'notification for the Poker',
+                },
+            },
+        }
+
         # Construct a dict representation of a NotificationFCMBodyMessageENData model
         notification_fcm_body_model = {
             'message': notification_fcm_body_message_data_model,
+        }
+
+        notification_huawei_body_model = {
+            'message': notification_huawei_body_message_data_model,
         }
 
         # Construct a dict representation of a NotificationAPNSBodyMessageData model
@@ -2419,6 +2445,7 @@ class TestEventNotificationsV1():
             'ibmenfcmbody': json.dumps(notification_fcm_body_model),
             'ibmenpushto': json.dumps(notification_devices_model),
             'ibmenapnsbody': json.dumps(notification_apns_body_model),
+            'ibmenhuaweibody': json.dumps(notification_huawei_body_model),
             'ibmensourceid': source_id,
             'ibmendefaultshort': 'Alert Message',
             'ibmendefaultlong': 'Alert for closing offers',

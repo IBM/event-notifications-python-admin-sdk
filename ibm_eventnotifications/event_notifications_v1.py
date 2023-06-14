@@ -1854,7 +1854,7 @@ class Destination():
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
     :attr DestinationConfig config: (optional) Payload describing a destination
           configuration.
     :attr datetime updated_at: Last updated time.
@@ -1879,7 +1879,7 @@ class Destination():
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -1978,7 +1978,7 @@ class Destination():
     class TypeEnum(str, Enum):
         """
         Destination type
-        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage.
+        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
         """
         WEBHOOK = 'webhook'
         SMTP_IBM = 'smtp_ibm'
@@ -3088,12 +3088,14 @@ class NotificationCreate():
           should be stringified.
     :attr str ibmenfirefoxheaders: (optional) Headers for a Firefox notification.
           Value should be stringified.
+    :attr str ibmenhuaweibody: (optional) Payload describing a notification Huawei
+          body. Value should be stringified.
     :attr str ibmensafaribody: (optional) Payload describing a notification Safari
           body. Value should be stringified.
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['specversion', 'time', 'id', 'source', 'type', 'ibmenseverity', 'ibmensourceid', 'ibmendefaultshort', 'ibmendefaultlong', 'subject', 'data', 'datacontenttype', 'ibmenpushto', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmenapnsheaders', 'ibmenchromebody', 'ibmenchromeheaders', 'ibmenfirefoxbody', 'ibmenfirefoxheaders', 'ibmensafaribody'])
+    _properties = frozenset(['specversion', 'time', 'id', 'source', 'type', 'ibmenseverity', 'ibmensourceid', 'ibmendefaultshort', 'ibmendefaultlong', 'subject', 'data', 'datacontenttype', 'ibmenpushto', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmenapnsheaders', 'ibmenchromebody', 'ibmenchromeheaders', 'ibmenfirefoxbody', 'ibmenfirefoxheaders', 'ibmenhuaweibody', 'ibmensafaribody'])
 
     def __init__(self,
                  specversion: str,
@@ -3117,6 +3119,7 @@ class NotificationCreate():
                  ibmenchromeheaders: str = None,
                  ibmenfirefoxbody: str = None,
                  ibmenfirefoxheaders: str = None,
+                 ibmenhuaweibody: str = None,
                  ibmensafaribody: str = None,
                  **kwargs) -> None:
         """
@@ -3151,6 +3154,8 @@ class NotificationCreate():
                Value should be stringified.
         :param str ibmenfirefoxheaders: (optional) Headers for a Firefox
                notification. Value should be stringified.
+        :param str ibmenhuaweibody: (optional) Payload describing a notification
+               Huawei body. Value should be stringified.
         :param str ibmensafaribody: (optional) Payload describing a notification
                Safari body. Value should be stringified.
         :param **kwargs: (optional) Any additional properties.
@@ -3175,6 +3180,7 @@ class NotificationCreate():
         self.ibmenchromeheaders = ibmenchromeheaders
         self.ibmenfirefoxbody = ibmenfirefoxbody
         self.ibmenfirefoxheaders = ibmenfirefoxheaders
+        self.ibmenhuaweibody = ibmenhuaweibody
         self.ibmensafaribody = ibmensafaribody
         for _key, _value in kwargs.items():
             setattr(self, _key, _value)
@@ -3237,6 +3243,8 @@ class NotificationCreate():
             args['ibmenfirefoxbody'] = _dict.get('ibmenfirefoxbody')
         if 'ibmenfirefoxheaders' in _dict:
             args['ibmenfirefoxheaders'] = _dict.get('ibmenfirefoxheaders')
+        if 'ibmenhuaweibody' in _dict:
+            args['ibmenhuaweibody'] = _dict.get('ibmenhuaweibody')
         if 'ibmensafaribody' in _dict:
             args['ibmensafaribody'] = _dict.get('ibmensafaribody')
         args.update({k:v for (k, v) in _dict.items() if k not in cls._properties})
@@ -3290,6 +3298,8 @@ class NotificationCreate():
             _dict['ibmenfirefoxbody'] = self.ibmenfirefoxbody
         if hasattr(self, 'ibmenfirefoxheaders') and self.ibmenfirefoxheaders is not None:
             _dict['ibmenfirefoxheaders'] = self.ibmenfirefoxheaders
+        if hasattr(self, 'ibmenhuaweibody') and self.ibmenhuaweibody is not None:
+            _dict['ibmenhuaweibody'] = self.ibmenhuaweibody
         if hasattr(self, 'ibmensafaribody') and self.ibmensafaribody is not None:
             _dict['ibmensafaribody'] = self.ibmensafaribody
         for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:

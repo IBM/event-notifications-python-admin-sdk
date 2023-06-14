@@ -140,6 +140,7 @@ class TestSendNotifications():
         notification_create_model['ibmenchromeheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model['ibmenfirefoxbody'] = 'testString'
         notification_create_model['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model['ibmenhuaweibody'] = 'testString'
         notification_create_model['ibmensafaribody'] = 'testString'
         notification_create_model['foo'] = 'testString'
 
@@ -282,6 +283,7 @@ class TestSendBulkNotifications():
         notification_create_model['ibmenchromeheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model['ibmenfirefoxbody'] = 'testString'
         notification_create_model['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model['ibmenhuaweibody'] = 'testString'
         notification_create_model['ibmensafaribody'] = 'testString'
         notification_create_model['foo'] = 'testString'
 
@@ -4344,6 +4346,7 @@ class TestModel_NotificationCreate():
         notification_create_model_json['ibmenchromeheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model_json['ibmenfirefoxbody'] = 'testString'
         notification_create_model_json['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model_json['ibmenhuaweibody'] = 'testString'
         notification_create_model_json['ibmensafaribody'] = 'testString'
         notification_create_model_json['foo'] = 'testString'
 
