@@ -1,3 +1,10 @@
+## [0.1.13](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.12...v0.1.13) (2023-06-15)
+
+
+### Bug Fixes
+
+* update notification payload for huawei ([d2656d9](https://github.com/IBM/event-notifications-python-admin-sdk/commit/d2656d937fc923dae7f51f89e86e4bc057556869))
+
 ## [0.1.12](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.11...v0.1.12) (2023-06-13)
 
 
