@@ -72,7 +72,8 @@ def preprocess_url(operation_path: str):
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -99,7 +100,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestSendNotifications():
+
+class TestSendNotifications:
     """
     Test Class for send_notifications
     """
@@ -112,11 +114,13 @@ class TestSendNotifications():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications')
         mock_response = '{"notification_id": "notification_id"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Construct a dict representation of a NotificationCreate model
         notification_create_model = {}
@@ -130,7 +134,7 @@ class TestSendNotifications():
         notification_create_model['ibmendefaultshort'] = 'testString'
         notification_create_model['ibmendefaultlong'] = 'testString'
         notification_create_model['subject'] = 'testString'
-        notification_create_model['data'] = {'key1': 'testString'}
+        notification_create_model['data'] = {'foo': 'bar'}
         notification_create_model['datacontenttype'] = 'application/json'
         notification_create_model['ibmenpushto'] = '{"platforms":["push_android"]}'
         notification_create_model['ibmenfcmbody'] = 'testString'
@@ -152,7 +156,7 @@ class TestSendNotifications():
         response = _service.send_notifications(
             instance_id,
             body=body,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -179,11 +183,13 @@ class TestSendNotifications():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications')
         mock_response = '{"notification_id": "notification_id"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -191,7 +197,7 @@ class TestSendNotifications():
         # Invoke method
         response = _service.send_notifications(
             instance_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -215,11 +221,13 @@ class TestSendNotifications():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications')
         mock_response = '{"notification_id": "notification_id"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -229,7 +237,7 @@ class TestSendNotifications():
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.send_notifications(**req_copy)
 
@@ -242,7 +250,8 @@ class TestSendNotifications():
         _service.disable_retries()
         self.test_send_notifications_value_error()
 
-class TestSendBulkNotifications():
+
+class TestSendBulkNotifications:
     """
     Test Class for send_bulk_notifications
     """
@@ -255,11 +264,13 @@ class TestSendBulkNotifications():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications/bulk')
         mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Construct a dict representation of a NotificationCreate model
         notification_create_model = {}
@@ -273,7 +284,7 @@ class TestSendBulkNotifications():
         notification_create_model['ibmendefaultshort'] = 'testString'
         notification_create_model['ibmendefaultlong'] = 'testString'
         notification_create_model['subject'] = 'testString'
-        notification_create_model['data'] = {'key1': 'testString'}
+        notification_create_model['data'] = {'foo': 'bar'}
         notification_create_model['datacontenttype'] = 'application/json'
         notification_create_model['ibmenpushto'] = '{"platforms":["push_android"]}'
         notification_create_model['ibmenfcmbody'] = 'testString'
@@ -295,7 +306,7 @@ class TestSendBulkNotifications():
         response = _service.send_bulk_notifications(
             instance_id,
             bulk_messages=bulk_messages,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -322,11 +333,13 @@ class TestSendBulkNotifications():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications/bulk')
         mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -334,7 +347,7 @@ class TestSendBulkNotifications():
         # Invoke method
         response = _service.send_bulk_notifications(
             instance_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -358,11 +371,13 @@ class TestSendBulkNotifications():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications/bulk')
         mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=202)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=202,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -372,7 +387,7 @@ class TestSendBulkNotifications():
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.send_bulk_notifications(**req_copy)
 
@@ -385,6 +400,7 @@ class TestSendBulkNotifications():
         _service.disable_retries()
         self.test_send_bulk_notifications_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: SendNotifications
@@ -395,7 +411,8 @@ class TestSendBulkNotifications():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -422,7 +439,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestCreateSources():
+
+class TestCreateSources:
     """
     Test Class for create_sources
     """
@@ -435,11 +453,13 @@ class TestCreateSources():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -453,7 +473,7 @@ class TestCreateSources():
             name,
             description,
             enabled=enabled,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -482,11 +502,13 @@ class TestCreateSources():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -501,7 +523,7 @@ class TestCreateSources():
             "description": description,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_sources(**req_copy)
 
@@ -514,7 +536,8 @@ class TestCreateSources():
         _service.disable_retries()
         self.test_create_sources_value_error()
 
-class TestListSources():
+
+class TestListSources:
     """
     Test Class for list_sources
     """
@@ -527,11 +550,13 @@ class TestListSources():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -545,14 +570,14 @@ class TestListSources():
             limit=limit,
             offset=offset,
             search=search,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
@@ -575,11 +600,13 @@ class TestListSources():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -587,7 +614,7 @@ class TestListSources():
         # Invoke method
         response = _service.list_sources(
             instance_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -611,11 +638,13 @@ class TestListSources():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -625,7 +654,7 @@ class TestListSources():
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_sources(**req_copy)
 
@@ -647,16 +676,20 @@ class TestListSources():
         url = preprocess_url('/v1/instances/testString/sources')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
         mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -681,16 +714,20 @@ class TestListSources():
         url = preprocess_url('/v1/instances/testString/sources')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
         mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = SourcesPager(
@@ -703,7 +740,8 @@ class TestListSources():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestGetSource():
+
+class TestGetSource:
     """
     Test Class for get_source
     """
@@ -716,11 +754,13 @@ class TestGetSource():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -730,7 +770,7 @@ class TestGetSource():
         response = _service.get_source(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -754,11 +794,13 @@ class TestGetSource():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -770,7 +812,7 @@ class TestGetSource():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_source(**req_copy)
 
@@ -783,7 +825,8 @@ class TestGetSource():
         _service.disable_retries()
         self.test_get_source_value_error()
 
-class TestDeleteSource():
+
+class TestDeleteSource:
     """
     Test Class for delete_source
     """
@@ -795,9 +838,11 @@ class TestDeleteSource():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -807,7 +852,7 @@ class TestDeleteSource():
         response = _service.delete_source(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -830,9 +875,11 @@ class TestDeleteSource():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -844,7 +891,7 @@ class TestDeleteSource():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_source(**req_copy)
 
@@ -857,7 +904,8 @@ class TestDeleteSource():
         _service.disable_retries()
         self.test_delete_source_value_error()
 
-class TestUpdateSource():
+
+class TestUpdateSource:
     """
     Test Class for update_source
     """
@@ -870,11 +918,13 @@ class TestUpdateSource():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -890,7 +940,7 @@ class TestUpdateSource():
             name=name,
             description=description,
             enabled=enabled,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -919,11 +969,13 @@ class TestUpdateSource():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -938,7 +990,7 @@ class TestUpdateSource():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_source(**req_copy)
 
@@ -951,6 +1003,7 @@ class TestUpdateSource():
         _service.disable_retries()
         self.test_update_source_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: Sources
@@ -961,7 +1014,8 @@ class TestUpdateSource():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -988,7 +1042,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestCreateTopic():
+
+class TestCreateTopic:
     """
     Test Class for create_topic
     """
@@ -1001,11 +1056,13 @@ class TestCreateTopic():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"id": "id", "name": "name", "description": "description", "created_at": "created_at"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a Rules model
         rules_model = {}
@@ -1030,7 +1087,7 @@ class TestCreateTopic():
             name,
             description=description,
             sources=sources,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1059,11 +1116,13 @@ class TestCreateTopic():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"id": "id", "name": "name", "description": "description", "created_at": "created_at"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a Rules model
         rules_model = {}
@@ -1088,7 +1147,7 @@ class TestCreateTopic():
             "name": name,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_topic(**req_copy)
 
@@ -1101,7 +1160,8 @@ class TestCreateTopic():
         _service.disable_retries()
         self.test_create_topic_value_error()
 
-class TestListTopics():
+
+class TestListTopics:
     """
     Test Class for list_topics
     """
@@ -1114,11 +1174,13 @@ class TestListTopics():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1132,14 +1194,14 @@ class TestListTopics():
             limit=limit,
             offset=offset,
             search=search,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
@@ -1162,11 +1224,13 @@ class TestListTopics():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1174,7 +1238,7 @@ class TestListTopics():
         # Invoke method
         response = _service.list_topics(
             instance_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1198,11 +1262,13 @@ class TestListTopics():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "topics": [{"id": "id", "name": "name", "description": "description", "source_count": 0, "sources_names": ["sources_names"], "subscription_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1212,7 +1278,7 @@ class TestListTopics():
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_topics(**req_copy)
 
@@ -1234,16 +1300,20 @@ class TestListTopics():
         url = preprocess_url('/v1/instances/testString/topics')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
         mock_response2 = '{"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -1268,16 +1338,20 @@ class TestListTopics():
         url = preprocess_url('/v1/instances/testString/topics')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
         mock_response2 = '{"total_count":2,"topics":[{"id":"id","name":"name","description":"description","source_count":0,"sources_names":["sources_names"],"subscription_count":0}],"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = TopicsPager(
@@ -1290,7 +1364,8 @@ class TestListTopics():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestGetTopic():
+
+class TestGetTopic:
     """
     Test Class for get_topic
     """
@@ -1303,11 +1378,13 @@ class TestGetTopic():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1319,14 +1396,14 @@ class TestGetTopic():
             instance_id,
             id,
             include=include,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'include={}'.format(include) in query_string
 
@@ -1347,11 +1424,13 @@ class TestGetTopic():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1361,7 +1440,7 @@ class TestGetTopic():
         response = _service.get_topic(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1385,11 +1464,13 @@ class TestGetTopic():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1401,7 +1482,7 @@ class TestGetTopic():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_topic(**req_copy)
 
@@ -1414,7 +1495,8 @@ class TestGetTopic():
         _service.disable_retries()
         self.test_get_topic_value_error()
 
-class TestReplaceTopic():
+
+class TestReplaceTopic:
     """
     Test Class for replace_topic
     """
@@ -1427,11 +1509,13 @@ class TestReplaceTopic():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Rules model
         rules_model = {}
@@ -1458,7 +1542,7 @@ class TestReplaceTopic():
             name=name,
             description=description,
             sources=sources,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1487,11 +1571,13 @@ class TestReplaceTopic():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
         mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a Rules model
         rules_model = {}
@@ -1517,7 +1603,7 @@ class TestReplaceTopic():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_topic(**req_copy)
 
@@ -1530,7 +1616,8 @@ class TestReplaceTopic():
         _service.disable_retries()
         self.test_replace_topic_value_error()
 
-class TestDeleteTopic():
+
+class TestDeleteTopic:
     """
     Test Class for delete_topic
     """
@@ -1542,9 +1629,11 @@ class TestDeleteTopic():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1554,7 +1643,7 @@ class TestDeleteTopic():
         response = _service.delete_topic(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1577,9 +1666,11 @@ class TestDeleteTopic():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1591,7 +1682,7 @@ class TestDeleteTopic():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_topic(**req_copy)
 
@@ -1604,6 +1695,7 @@ class TestDeleteTopic():
         _service.disable_retries()
         self.test_delete_topic_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: Topics
@@ -1614,7 +1706,8 @@ class TestDeleteTopic():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -1641,7 +1734,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestCreateDestination():
+
+class TestCreateDestination:
     """
     Test Class for create_destination
     """
@@ -1653,19 +1747,32 @@ class TestCreateDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
-        # Construct a dict representation of a DestinationConfigOneOfWebhookDestinationConfig model
+        # Construct a dict representation of a DKIMAttributes model
+        dkim_attributes_model = {}
+        dkim_attributes_model['public_key'] = 'testString'
+        dkim_attributes_model['selector'] = 'testString'
+        dkim_attributes_model['verification'] = 'testString'
+
+        # Construct a dict representation of a SPFAttributes model
+        spf_attributes_model = {}
+        spf_attributes_model['txt_name'] = 'testString'
+        spf_attributes_model['txt_value'] = 'testString'
+        spf_attributes_model['verification'] = 'testString'
+
+        # Construct a dict representation of a DestinationConfigOneOfCustomDomainEmailDestinationConfig model
         destination_config_one_of_model = {}
-        destination_config_one_of_model['url'] = 'testString'
-        destination_config_one_of_model['verb'] = 'get'
-        destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
-        destination_config_one_of_model['sensitive_headers'] = ['testString']
+        destination_config_one_of_model['domain'] = 'testString'
+        destination_config_one_of_model['dkim'] = dkim_attributes_model
+        destination_config_one_of_model['spf'] = spf_attributes_model
 
         # Construct a dict representation of a DestinationConfig model
         destination_config_model = {}
@@ -1713,7 +1820,7 @@ class TestCreateDestination():
             icon_128x128_content_type=icon_128x128_content_type,
             icon_128x128_2x=icon_128x128_2x,
             icon_128x128_2x_content_type=icon_128x128_2x_content_type,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1736,12 +1843,14 @@ class TestCreateDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1753,7 +1862,7 @@ class TestCreateDestination():
             instance_id,
             name,
             type,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1776,12 +1885,14 @@ class TestCreateDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1795,7 +1906,7 @@ class TestCreateDestination():
             "type": type,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_destination(**req_copy)
 
@@ -1808,7 +1919,8 @@ class TestCreateDestination():
         _service.disable_retries()
         self.test_create_destination_value_error()
 
-class TestListDestinations():
+
+class TestListDestinations:
     """
     Test Class for list_destinations
     """
@@ -1821,11 +1933,13 @@ class TestListDestinations():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1839,14 +1953,14 @@ class TestListDestinations():
             limit=limit,
             offset=offset,
             search=search,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'limit={}'.format(limit) in query_string
         assert 'offset={}'.format(offset) in query_string
@@ -1869,11 +1983,13 @@ class TestListDestinations():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1881,7 +1997,7 @@ class TestListDestinations():
         # Invoke method
         response = _service.list_destinations(
             instance_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -1905,11 +2021,13 @@ class TestListDestinations():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "destinations": [{"id": "id", "name": "name", "description": "description", "type": "webhook", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -1919,7 +2037,7 @@ class TestListDestinations():
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_destinations(**req_copy)
 
@@ -1941,16 +2059,20 @@ class TestListDestinations():
         url = preprocess_url('/v1/instances/testString/destinations')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
         mock_response2 = '{"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -1975,16 +2097,20 @@ class TestListDestinations():
         url = preprocess_url('/v1/instances/testString/destinations')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
         mock_response2 = '{"total_count":2,"destinations":[{"id":"id","name":"name","description":"description","type":"webhook","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = DestinationsPager(
@@ -1997,7 +2123,8 @@ class TestListDestinations():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestGetDestination():
+
+class TestGetDestination:
     """
     Test Class for get_destination
     """
@@ -2009,12 +2136,14 @@ class TestGetDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2024,7 +2153,7 @@ class TestGetDestination():
         response = _service.get_destination(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2047,12 +2176,14 @@ class TestGetDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2064,7 +2195,7 @@ class TestGetDestination():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_destination(**req_copy)
 
@@ -2077,7 +2208,8 @@ class TestGetDestination():
         _service.disable_retries()
         self.test_get_destination_value_error()
 
-class TestUpdateDestination():
+
+class TestUpdateDestination:
     """
     Test Class for update_destination
     """
@@ -2089,19 +2221,32 @@ class TestUpdateDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
-        # Construct a dict representation of a DestinationConfigOneOfWebhookDestinationConfig model
+        # Construct a dict representation of a DKIMAttributes model
+        dkim_attributes_model = {}
+        dkim_attributes_model['public_key'] = 'testString'
+        dkim_attributes_model['selector'] = 'testString'
+        dkim_attributes_model['verification'] = 'testString'
+
+        # Construct a dict representation of a SPFAttributes model
+        spf_attributes_model = {}
+        spf_attributes_model['txt_name'] = 'testString'
+        spf_attributes_model['txt_value'] = 'testString'
+        spf_attributes_model['verification'] = 'testString'
+
+        # Construct a dict representation of a DestinationConfigOneOfCustomDomainEmailDestinationConfig model
         destination_config_one_of_model = {}
-        destination_config_one_of_model['url'] = 'testString'
-        destination_config_one_of_model['verb'] = 'get'
-        destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
-        destination_config_one_of_model['sensitive_headers'] = ['testString']
+        destination_config_one_of_model['domain'] = 'testString'
+        destination_config_one_of_model['dkim'] = dkim_attributes_model
+        destination_config_one_of_model['spf'] = spf_attributes_model
 
         # Construct a dict representation of a DestinationConfig model
         destination_config_model = {}
@@ -2149,7 +2294,7 @@ class TestUpdateDestination():
             icon_128x128_content_type=icon_128x128_content_type,
             icon_128x128_2x=icon_128x128_2x,
             icon_128x128_2x_content_type=icon_128x128_2x_content_type,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2172,12 +2317,14 @@ class TestUpdateDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2187,7 +2334,7 @@ class TestUpdateDestination():
         response = _service.update_destination(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2210,12 +2357,14 @@ class TestUpdateDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"url": "url", "verb": "get", "custom_headers": {"mapKey": "inner"}, "sensitive_headers": ["sensitive_headers"]}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "updated_at": "2019-01-01T12:00:00.000Z", "subscription_count": 0, "subscription_names": ["subscription_names"]}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2227,7 +2376,7 @@ class TestUpdateDestination():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_destination(**req_copy)
 
@@ -2240,7 +2389,8 @@ class TestUpdateDestination():
         _service.disable_retries()
         self.test_update_destination_value_error()
 
-class TestDeleteDestination():
+
+class TestDeleteDestination:
     """
     Test Class for delete_destination
     """
@@ -2252,9 +2402,11 @@ class TestDeleteDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2264,7 +2416,7 @@ class TestDeleteDestination():
         response = _service.delete_destination(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2287,9 +2439,11 @@ class TestDeleteDestination():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2301,7 +2455,7 @@ class TestDeleteDestination():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_destination(**req_copy)
 
@@ -2314,6 +2468,7 @@ class TestDeleteDestination():
         _service.disable_retries()
         self.test_delete_destination_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: Destinations
@@ -2324,7 +2479,8 @@ class TestDeleteDestination():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -2351,7 +2507,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestCreateTagsSubscription():
+
+class TestCreateTagsSubscription:
     """
     Test Class for create_tags_subscription
     """
@@ -2364,11 +2521,13 @@ class TestCreateTagsSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
         mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2382,7 +2541,7 @@ class TestCreateTagsSubscription():
             id,
             device_id,
             tag_name,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2410,11 +2569,13 @@ class TestCreateTagsSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
         mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2430,7 +2591,7 @@ class TestCreateTagsSubscription():
             "tag_name": tag_name,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_tags_subscription(**req_copy)
 
@@ -2443,7 +2604,8 @@ class TestCreateTagsSubscription():
         _service.disable_retries()
         self.test_create_tags_subscription_value_error()
 
-class TestListTagsSubscription():
+
+class TestListTagsSubscription:
     """
     Test Class for list_tags_subscription
     """
@@ -2456,11 +2618,13 @@ class TestListTagsSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2482,14 +2646,14 @@ class TestListTagsSubscription():
             limit=limit,
             offset=offset,
             search=search,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'device_id={}'.format(device_id) in query_string
         assert 'user_id={}'.format(user_id) in query_string
@@ -2515,11 +2679,13 @@ class TestListTagsSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2529,7 +2695,7 @@ class TestListTagsSubscription():
         response = _service.list_tags_subscription(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2553,11 +2719,13 @@ class TestListTagsSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2569,7 +2737,7 @@ class TestListTagsSubscription():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_tags_subscription(**req_copy)
 
@@ -2591,16 +2759,20 @@ class TestListTagsSubscription():
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -2629,16 +2801,20 @@ class TestListTagsSubscription():
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = TagsSubscriptionPager(
@@ -2655,7 +2831,8 @@ class TestListTagsSubscription():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestDeleteTagsSubscription():
+
+class TestDeleteTagsSubscription:
     """
     Test Class for delete_tags_subscription
     """
@@ -2667,9 +2844,11 @@ class TestDeleteTagsSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2683,14 +2862,14 @@ class TestDeleteTagsSubscription():
             id,
             device_id=device_id,
             tag_name=tag_name,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 204
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'device_id={}'.format(device_id) in query_string
         assert 'tag_name={}'.format(tag_name) in query_string
@@ -2711,9 +2890,11 @@ class TestDeleteTagsSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2723,7 +2904,7 @@ class TestDeleteTagsSubscription():
         response = _service.delete_tags_subscription(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2746,9 +2927,11 @@ class TestDeleteTagsSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/tag_subscriptions')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2760,7 +2943,7 @@ class TestDeleteTagsSubscription():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_tags_subscription(**req_copy)
 
@@ -2773,6 +2956,7 @@ class TestDeleteTagsSubscription():
         _service.disable_retries()
         self.test_delete_tags_subscription_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: PushDestinationAPIs
@@ -2783,7 +2967,8 @@ class TestDeleteTagsSubscription():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -2810,7 +2995,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestCreateSubscription():
+
+class TestCreateSubscription:
     """
     Test Class for create_subscription
     """
@@ -2823,11 +3009,13 @@ class TestCreateSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
         subscription_create_attributes_model = {}
@@ -2849,7 +3037,7 @@ class TestCreateSubscription():
             topic_id,
             description=description,
             attributes=attributes,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -2880,11 +3068,13 @@ class TestCreateSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
-        responses.add(responses.POST,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=201)
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
         subscription_create_attributes_model = {}
@@ -2906,7 +3096,7 @@ class TestCreateSubscription():
             "topic_id": topic_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_subscription(**req_copy)
 
@@ -2919,7 +3109,8 @@ class TestCreateSubscription():
         _service.disable_retries()
         self.test_create_subscription_value_error()
 
-class TestListSubscriptions():
+
+class TestListSubscriptions:
     """
     Test Class for list_subscriptions
     """
@@ -2932,11 +3123,13 @@ class TestListSubscriptions():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2950,14 +3143,14 @@ class TestListSubscriptions():
             offset=offset,
             limit=limit,
             search=search,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'offset={}'.format(offset) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -2980,11 +3173,13 @@ class TestListSubscriptions():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2992,7 +3187,7 @@ class TestListSubscriptions():
         # Invoke method
         response = _service.list_subscriptions(
             instance_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -3016,11 +3211,13 @@ class TestListSubscriptions():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3030,7 +3227,7 @@ class TestListSubscriptions():
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_subscriptions(**req_copy)
 
@@ -3052,16 +3249,20 @@ class TestListSubscriptions():
         url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
         mock_response2 = '{"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -3086,16 +3287,20 @@ class TestListSubscriptions():
         url = preprocess_url('/v1/instances/testString/subscriptions')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
         mock_response2 = '{"subscriptions":[{"id":"id","name":"name","description":"description","destination_id":"destination_id","destination_name":"destination_name","destination_type":"sms_ibm","topic_id":"topic_id","topic_name":"topic_name","updated_at":"2019-01-01T12:00:00.000Z"}],"total_count":2,"limit":1}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = SubscriptionsPager(
@@ -3108,7 +3313,8 @@ class TestListSubscriptions():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestGetSubscription():
+
+class TestGetSubscription:
     """
     Test Class for get_subscription
     """
@@ -3121,11 +3327,13 @@ class TestGetSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3135,7 +3343,7 @@ class TestGetSubscription():
         response = _service.get_subscription(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -3159,11 +3367,13 @@ class TestGetSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3175,7 +3385,7 @@ class TestGetSubscription():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_subscription(**req_copy)
 
@@ -3188,7 +3398,8 @@ class TestGetSubscription():
         _service.disable_retries()
         self.test_get_subscription_value_error()
 
-class TestDeleteSubscription():
+
+class TestDeleteSubscription:
     """
     Test Class for delete_subscription
     """
@@ -3200,9 +3411,11 @@ class TestDeleteSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3212,7 +3425,7 @@ class TestDeleteSubscription():
         response = _service.delete_subscription(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -3235,9 +3448,11 @@ class TestDeleteSubscription():
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
-        responses.add(responses.DELETE,
-                      url,
-                      status=204)
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3249,7 +3464,7 @@ class TestDeleteSubscription():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_subscription(**req_copy)
 
@@ -3262,7 +3477,8 @@ class TestDeleteSubscription():
         _service.disable_retries()
         self.test_delete_subscription_value_error()
 
-class TestUpdateSubscription():
+
+class TestUpdateSubscription:
     """
     Test Class for update_subscription
     """
@@ -3275,11 +3491,13 @@ class TestUpdateSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a UpdateAttributesInvited model
         update_attributes_invited_model = {}
@@ -3314,7 +3532,7 @@ class TestUpdateSubscription():
             name=name,
             description=description,
             attributes=attributes,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -3343,11 +3561,13 @@ class TestUpdateSubscription():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/subscriptions/testString')
         mock_response = '{"id": "id", "name": "name", "description": "description", "updated_at": "updated_at", "from": "from_", "destination_type": "sms_ibm", "destination_id": "destination_id", "destination_name": "destination_name", "topic_id": "topic_id", "topic_name": "topic_name", "attributes": {"subscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "unsubscribed": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z"}], "invited": [{"phone_number": "phone_number", "updated_at": "2019-01-01T12:00:00.000Z", "expires_at": "2019-01-01T12:00:00.000Z"}]}}'
-        responses.add(responses.PATCH,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a UpdateAttributesInvited model
         update_attributes_invited_model = {}
@@ -3381,7 +3601,7 @@ class TestUpdateSubscription():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_subscription(**req_copy)
 
@@ -3394,6 +3614,7 @@ class TestUpdateSubscription():
         _service.disable_retries()
         self.test_update_subscription_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: Subscriptions
@@ -3404,7 +3625,8 @@ class TestUpdateSubscription():
 ##############################################################################
 # region
 
-class TestNewInstance():
+
+class TestNewInstance:
     """
     Test Class for new_instance
     """
@@ -3431,7 +3653,8 @@ class TestNewInstance():
                 service_name='TEST_SERVICE_NOT_FOUND',
             )
 
-class TestListIntegrations():
+
+class TestListIntegrations:
     """
     Test Class for list_integrations
     """
@@ -3444,11 +3667,13 @@ class TestListIntegrations():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/integrations')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3462,14 +3687,14 @@ class TestListIntegrations():
             offset=offset,
             limit=limit,
             search=search,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
         # Validate query params
-        query_string = responses.calls[0].request.url.split('?',1)[1]
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
         assert 'offset={}'.format(offset) in query_string
         assert 'limit={}'.format(limit) in query_string
@@ -3492,11 +3717,13 @@ class TestListIntegrations():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/integrations')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3504,7 +3731,7 @@ class TestListIntegrations():
         # Invoke method
         response = _service.list_integrations(
             instance_id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -3528,11 +3755,13 @@ class TestListIntegrations():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/integrations')
         mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "integrations": [{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3542,7 +3771,7 @@ class TestListIntegrations():
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_integrations(**req_copy)
 
@@ -3564,16 +3793,20 @@ class TestListIntegrations():
         url = preprocess_url('/v1/instances/testString/integrations')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         all_results = []
@@ -3598,16 +3831,20 @@ class TestListIntegrations():
         url = preprocess_url('/v1/instances/testString/integrations')
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"integrations":[{"id":"9fab83da-98cb-4f18-a7ba-b6f0435c9673","type":"type","metadata":{"endpoint":"endpoint","crn":"crn","root_key_id":"root_key_id"},"created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response1,
-                      content_type='application/json',
-                      status=200)
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response2,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
 
         # Exercise the pager class for this operation
         pager = IntegrationsPager(
@@ -3620,7 +3857,8 @@ class TestListIntegrations():
         assert all_results is not None
         assert len(all_results) == 2
 
-class TestGetIntegration():
+
+class TestGetIntegration:
     """
     Test Class for get_integration
     """
@@ -3633,11 +3871,13 @@ class TestGetIntegration():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/integrations/testString')
         mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3647,7 +3887,7 @@ class TestGetIntegration():
         response = _service.get_integration(
             instance_id,
             id,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -3671,11 +3911,13 @@ class TestGetIntegration():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/integrations/testString')
         mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.GET,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Set up parameter values
         instance_id = 'testString'
@@ -3687,7 +3929,7 @@ class TestGetIntegration():
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_integration(**req_copy)
 
@@ -3700,7 +3942,8 @@ class TestGetIntegration():
         _service.disable_retries()
         self.test_get_integration_value_error()
 
-class TestReplaceIntegration():
+
+class TestReplaceIntegration:
     """
     Test Class for replace_integration
     """
@@ -3713,11 +3956,13 @@ class TestReplaceIntegration():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/integrations/testString')
         mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a IntegrationMetadata model
         integration_metadata_model = {}
@@ -3737,7 +3982,7 @@ class TestReplaceIntegration():
             id,
             type,
             metadata,
-            headers={}
+            headers={},
         )
 
         # Check for correct operation
@@ -3765,11 +4010,13 @@ class TestReplaceIntegration():
         # Set up mock
         url = preprocess_url('/v1/instances/testString/integrations/testString')
         mock_response = '{"id": "9fab83da-98cb-4f18-a7ba-b6f0435c9673", "type": "type", "metadata": {"endpoint": "endpoint", "crn": "crn", "root_key_id": "root_key_id"}, "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(responses.PUT,
-                      url,
-                      body=mock_response,
-                      content_type='application/json',
-                      status=200)
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
 
         # Construct a dict representation of a IntegrationMetadata model
         integration_metadata_model = {}
@@ -3791,7 +4038,7 @@ class TestReplaceIntegration():
             "metadata": metadata,
         }
         for param in req_param_dict.keys():
-            req_copy = {key:val if key is not param else None for (key,val) in req_param_dict.items()}
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_integration(**req_copy)
 
@@ -3804,6 +4051,7 @@ class TestReplaceIntegration():
         _service.disable_retries()
         self.test_replace_integration_value_error()
 
+
 # endregion
 ##############################################################################
 # End of Service: KMSIntegrations
@@ -3814,7 +4062,9 @@ class TestReplaceIntegration():
 # Start of Model Tests
 ##############################################################################
 # region
-class TestModel_BulkNotificationResponse():
+
+
+class TestModel_BulkNotificationResponse:
     """
     Test Class for BulkNotificationResponse
     """
@@ -3844,7 +4094,40 @@ class TestModel_BulkNotificationResponse():
         bulk_notification_response_model_json2 = bulk_notification_response_model.to_dict()
         assert bulk_notification_response_model_json2 == bulk_notification_response_model_json
 
-class TestModel_Destination():
+
+class TestModel_DKIMAttributes:
+    """
+    Test Class for DKIMAttributes
+    """
+
+    def test_dkim_attributes_serialization(self):
+        """
+        Test serialization/deserialization for DKIMAttributes
+        """
+
+        # Construct a json representation of a DKIMAttributes model
+        dkim_attributes_model_json = {}
+        dkim_attributes_model_json['public_key'] = 'testString'
+        dkim_attributes_model_json['selector'] = 'testString'
+        dkim_attributes_model_json['verification'] = 'testString'
+
+        # Construct a model instance of DKIMAttributes by calling from_dict on the json representation
+        dkim_attributes_model = DKIMAttributes.from_dict(dkim_attributes_model_json)
+        assert dkim_attributes_model != False
+
+        # Construct a model instance of DKIMAttributes by calling from_dict on the json representation
+        dkim_attributes_model_dict = DKIMAttributes.from_dict(dkim_attributes_model_json).__dict__
+        dkim_attributes_model2 = DKIMAttributes(**dkim_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert dkim_attributes_model == dkim_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        dkim_attributes_model_json2 = dkim_attributes_model.to_dict()
+        assert dkim_attributes_model_json2 == dkim_attributes_model_json
+
+
+class TestModel_Destination:
     """
     Test Class for Destination
     """
@@ -3856,13 +4139,13 @@ class TestModel_Destination():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_one_of_model = {} # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model = {}  # DestinationConfigOneOfWebhookDestinationConfig
         destination_config_one_of_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
         destination_config_one_of_model['verb'] = 'post'
         destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
         destination_config_one_of_model['sensitive_headers'] = ['authorization']
 
-        destination_config_model = {} # DestinationConfig
+        destination_config_model = {}  # DestinationConfig
         destination_config_model['params'] = destination_config_one_of_model
 
         # Construct a json representation of a Destination model
@@ -3891,7 +4174,8 @@ class TestModel_Destination():
         destination_model_json2 = destination_model.to_dict()
         assert destination_model_json2 == destination_model_json
 
-class TestModel_DestinationConfig():
+
+class TestModel_DestinationConfig:
     """
     Test Class for DestinationConfig
     """
@@ -3903,7 +4187,7 @@ class TestModel_DestinationConfig():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_one_of_model = {} # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model = {}  # DestinationConfigOneOfWebhookDestinationConfig
         destination_config_one_of_model['url'] = 'https://1ea472c0.us-south.apigw.appdomain.cloud/nhwebhook/sendwebhook'
         destination_config_one_of_model['verb'] = 'post'
         destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
@@ -3928,7 +4212,8 @@ class TestModel_DestinationConfig():
         destination_config_model_json2 = destination_config_model.to_dict()
         assert destination_config_model_json2 == destination_config_model_json
 
-class TestModel_DestinationList():
+
+class TestModel_DestinationList:
     """
     Test Class for DestinationList
     """
@@ -3940,7 +4225,7 @@ class TestModel_DestinationList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_list_item_model = {} # DestinationListItem
+        destination_list_item_model = {}  # DestinationListItem
         destination_list_item_model['id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
         destination_list_item_model['name'] = 'SL Web'
         destination_list_item_model['description'] = 'This destination is for webhook purpose new'
@@ -3949,7 +4234,7 @@ class TestModel_DestinationList():
         destination_list_item_model['subscription_names'] = ['Webhook Sub for new change']
         destination_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
-        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model = {}  # PageHrefResponse
         page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
 
         # Construct a json representation of a DestinationList model
@@ -3977,7 +4262,8 @@ class TestModel_DestinationList():
         destination_list_model_json2 = destination_list_model.to_dict()
         assert destination_list_model_json2 == destination_list_model_json
 
-class TestModel_DestinationListItem():
+
+class TestModel_DestinationListItem:
     """
     Test Class for DestinationListItem
     """
@@ -4012,7 +4298,8 @@ class TestModel_DestinationListItem():
         destination_list_item_model_json2 = destination_list_item_model.to_dict()
         assert destination_list_item_model_json2 == destination_list_item_model_json
 
-class TestModel_DestinationResponse():
+
+class TestModel_DestinationResponse:
     """
     Test Class for DestinationResponse
     """
@@ -4024,13 +4311,13 @@ class TestModel_DestinationResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_one_of_model = {} # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model = {}  # DestinationConfigOneOfWebhookDestinationConfig
         destination_config_one_of_model['url'] = 'https://cloud.ibm.com/nhwebhook/sendwebhook'
         destination_config_one_of_model['verb'] = 'post'
         destination_config_one_of_model['custom_headers'] = {'key1': 'testString'}
         destination_config_one_of_model['sensitive_headers'] = ['authorization']
 
-        destination_config_model = {} # DestinationConfig
+        destination_config_model = {}  # DestinationConfig
         destination_config_model['params'] = destination_config_one_of_model
 
         # Construct a json representation of a DestinationResponse model
@@ -4057,7 +4344,8 @@ class TestModel_DestinationResponse():
         destination_response_model_json2 = destination_response_model.to_dict()
         assert destination_response_model_json2 == destination_response_model_json
 
-class TestModel_DestinationTagsSubscriptionResponse():
+
+class TestModel_DestinationTagsSubscriptionResponse:
     """
     Test Class for DestinationTagsSubscriptionResponse
     """
@@ -4090,7 +4378,8 @@ class TestModel_DestinationTagsSubscriptionResponse():
         destination_tags_subscription_response_model_json2 = destination_tags_subscription_response_model.to_dict()
         assert destination_tags_subscription_response_model_json2 == destination_tags_subscription_response_model_json
 
-class TestModel_EmailAttributesResponseInvitedItems():
+
+class TestModel_EmailAttributesResponseInvitedItems:
     """
     Test Class for EmailAttributesResponseInvitedItems
     """
@@ -4121,7 +4410,8 @@ class TestModel_EmailAttributesResponseInvitedItems():
         email_attributes_response_invited_items_model_json2 = email_attributes_response_invited_items_model.to_dict()
         assert email_attributes_response_invited_items_model_json2 == email_attributes_response_invited_items_model_json
 
-class TestModel_EmailAttributesResponseSubscribedUnsubscribedItems():
+
+class TestModel_EmailAttributesResponseSubscribedUnsubscribedItems:
     """
     Test Class for EmailAttributesResponseSubscribedUnsubscribedItems
     """
@@ -4151,7 +4441,8 @@ class TestModel_EmailAttributesResponseSubscribedUnsubscribedItems():
         email_attributes_response_subscribed_unsubscribed_items_model_json2 = email_attributes_response_subscribed_unsubscribed_items_model.to_dict()
         assert email_attributes_response_subscribed_unsubscribed_items_model_json2 == email_attributes_response_subscribed_unsubscribed_items_model_json
 
-class TestModel_IntegrationGetResponse():
+
+class TestModel_IntegrationGetResponse:
     """
     Test Class for IntegrationGetResponse
     """
@@ -4163,7 +4454,7 @@ class TestModel_IntegrationGetResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        integration_metadata_model = {} # IntegrationMetadata
+        integration_metadata_model = {}  # IntegrationMetadata
         integration_metadata_model['endpoint'] = 'https://private.us-south.kms.cloud.ibm.com'
         integration_metadata_model['crn'] = 'crn:v1:staging:public:kms:us-south:a/****:****::'
         integration_metadata_model['root_key_id'] = 'cf49847c-bd3e-4fda-853f-2bcf0575a895'
@@ -4191,7 +4482,8 @@ class TestModel_IntegrationGetResponse():
         integration_get_response_model_json2 = integration_get_response_model.to_dict()
         assert integration_get_response_model_json2 == integration_get_response_model_json
 
-class TestModel_IntegrationList():
+
+class TestModel_IntegrationList:
     """
     Test Class for IntegrationList
     """
@@ -4203,19 +4495,19 @@ class TestModel_IntegrationList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        integration_metadata_model = {} # IntegrationMetadata
+        integration_metadata_model = {}  # IntegrationMetadata
         integration_metadata_model['endpoint'] = 'https://private.us-south.kms.cloud.ibm.com'
         integration_metadata_model['crn'] = 'crn:v1:staging:public:kms:us-south:a/****:****::'
         integration_metadata_model['root_key_id'] = 'cf49847c-bd3e-4fda-853f-2bcf0575a895'
 
-        integration_list_item_model = {} # IntegrationListItem
+        integration_list_item_model = {}  # IntegrationListItem
         integration_list_item_model['id'] = 'bc0cb555-bf6d-444f-b8f3-069199b04a77'
         integration_list_item_model['type'] = 'kms'
         integration_list_item_model['metadata'] = integration_metadata_model
         integration_list_item_model['created_at'] = '2021-08-18T09:50:32.133000Z'
         integration_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
-        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model = {}  # PageHrefResponse
         page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
 
         # Construct a json representation of a IntegrationList model
@@ -4243,7 +4535,8 @@ class TestModel_IntegrationList():
         integration_list_model_json2 = integration_list_model.to_dict()
         assert integration_list_model_json2 == integration_list_model_json
 
-class TestModel_IntegrationListItem():
+
+class TestModel_IntegrationListItem:
     """
     Test Class for IntegrationListItem
     """
@@ -4255,7 +4548,7 @@ class TestModel_IntegrationListItem():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        integration_metadata_model = {} # IntegrationMetadata
+        integration_metadata_model = {}  # IntegrationMetadata
         integration_metadata_model['endpoint'] = 'https://private.us-south.kms.cloud.ibm.com'
         integration_metadata_model['crn'] = 'crn:v1:staging:public:kms:us-south:a/****:****::'
         integration_metadata_model['root_key_id'] = 'cf49847c-bd3e-4fda-853f-2bcf0575a895'
@@ -4283,7 +4576,8 @@ class TestModel_IntegrationListItem():
         integration_list_item_model_json2 = integration_list_item_model.to_dict()
         assert integration_list_item_model_json2 == integration_list_item_model_json
 
-class TestModel_IntegrationMetadata():
+
+class TestModel_IntegrationMetadata:
     """
     Test Class for IntegrationMetadata
     """
@@ -4314,7 +4608,8 @@ class TestModel_IntegrationMetadata():
         integration_metadata_model_json2 = integration_metadata_model.to_dict()
         assert integration_metadata_model_json2 == integration_metadata_model_json
 
-class TestModel_NotificationCreate():
+
+class TestModel_NotificationCreate:
     """
     Test Class for NotificationCreate
     """
@@ -4336,7 +4631,7 @@ class TestModel_NotificationCreate():
         notification_create_model_json['ibmendefaultshort'] = 'testString'
         notification_create_model_json['ibmendefaultlong'] = 'testString'
         notification_create_model_json['subject'] = 'testString'
-        notification_create_model_json['data'] = {'key1': 'testString'}
+        notification_create_model_json['data'] = {'foo': 'bar'}
         notification_create_model_json['datacontenttype'] = 'application/json'
         notification_create_model_json['ibmenpushto'] = '{"platforms":["push_android"]}'
         notification_create_model_json['ibmenfcmbody'] = 'testString'
@@ -4375,7 +4670,8 @@ class TestModel_NotificationCreate():
         actual_dict = notification_create_model.get_properties()
         assert actual_dict == expected_dict
 
-class TestModel_NotificationResponse():
+
+class TestModel_NotificationResponse:
     """
     Test Class for NotificationResponse
     """
@@ -4404,7 +4700,8 @@ class TestModel_NotificationResponse():
         notification_response_model_json2 = notification_response_model.to_dict()
         assert notification_response_model_json2 == notification_response_model_json
 
-class TestModel_PageHrefResponse():
+
+class TestModel_PageHrefResponse:
     """
     Test Class for PageHrefResponse
     """
@@ -4433,7 +4730,8 @@ class TestModel_PageHrefResponse():
         page_href_response_model_json2 = page_href_response_model.to_dict()
         assert page_href_response_model_json2 == page_href_response_model_json
 
-class TestModel_Rules():
+
+class TestModel_Rules:
     """
     Test Class for Rules
     """
@@ -4464,7 +4762,8 @@ class TestModel_Rules():
         rules_model_json2 = rules_model.to_dict()
         assert rules_model_json2 == rules_model_json
 
-class TestModel_RulesGet():
+
+class TestModel_RulesGet:
     """
     Test Class for RulesGet
     """
@@ -4497,7 +4796,8 @@ class TestModel_RulesGet():
         rules_get_model_json2 = rules_get_model.to_dict()
         assert rules_get_model_json2 == rules_get_model_json
 
-class TestModel_SMSAttributesItems():
+
+class TestModel_SMSAttributesItems:
     """
     Test Class for SMSAttributesItems
     """
@@ -4527,7 +4827,8 @@ class TestModel_SMSAttributesItems():
         sms_attributes_items_model_json2 = sms_attributes_items_model.to_dict()
         assert sms_attributes_items_model_json2 == sms_attributes_items_model_json
 
-class TestModel_SMSInviteAttributesItems():
+
+class TestModel_SMSInviteAttributesItems:
     """
     Test Class for SMSInviteAttributesItems
     """
@@ -4558,7 +4859,40 @@ class TestModel_SMSInviteAttributesItems():
         sms_invite_attributes_items_model_json2 = sms_invite_attributes_items_model.to_dict()
         assert sms_invite_attributes_items_model_json2 == sms_invite_attributes_items_model_json
 
-class TestModel_Source():
+
+class TestModel_SPFAttributes:
+    """
+    Test Class for SPFAttributes
+    """
+
+    def test_spf_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SPFAttributes
+        """
+
+        # Construct a json representation of a SPFAttributes model
+        spf_attributes_model_json = {}
+        spf_attributes_model_json['txt_name'] = 'testString'
+        spf_attributes_model_json['txt_value'] = 'testString'
+        spf_attributes_model_json['verification'] = 'testString'
+
+        # Construct a model instance of SPFAttributes by calling from_dict on the json representation
+        spf_attributes_model = SPFAttributes.from_dict(spf_attributes_model_json)
+        assert spf_attributes_model != False
+
+        # Construct a model instance of SPFAttributes by calling from_dict on the json representation
+        spf_attributes_model_dict = SPFAttributes.from_dict(spf_attributes_model_json).__dict__
+        spf_attributes_model2 = SPFAttributes(**spf_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert spf_attributes_model == spf_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        spf_attributes_model_json2 = spf_attributes_model.to_dict()
+        assert spf_attributes_model_json2 == spf_attributes_model_json
+
+
+class TestModel_Source:
     """
     Test Class for Source
     """
@@ -4594,7 +4928,8 @@ class TestModel_Source():
         source_model_json2 = source_model.to_dict()
         assert source_model_json2 == source_model_json
 
-class TestModel_SourceList():
+
+class TestModel_SourceList:
     """
     Test Class for SourceList
     """
@@ -4606,7 +4941,7 @@ class TestModel_SourceList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        source_list_item_model = {} # SourceListItem
+        source_list_item_model = {}  # SourceListItem
         source_list_item_model['id'] = '00bb34e5-b8c1-4159-af15-8bc6980c3ab2:api'
         source_list_item_model['name'] = 'CloudEvents Source'
         source_list_item_model['description'] = 'This source is related cloud events'
@@ -4615,7 +4950,7 @@ class TestModel_SourceList():
         source_list_item_model['updated_at'] = '2021-08-19T05:30:03.696000Z'
         source_list_item_model['topic_count'] = 0
 
-        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model = {}  # PageHrefResponse
         page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
 
         # Construct a json representation of a SourceList model
@@ -4643,7 +4978,8 @@ class TestModel_SourceList():
         source_list_model_json2 = source_list_model.to_dict()
         assert source_list_model_json2 == source_list_model_json
 
-class TestModel_SourceListItem():
+
+class TestModel_SourceListItem:
     """
     Test Class for SourceListItem
     """
@@ -4678,7 +5014,8 @@ class TestModel_SourceListItem():
         source_list_item_model_json2 = source_list_item_model.to_dict()
         assert source_list_item_model_json2 == source_list_item_model_json
 
-class TestModel_SourceResponse():
+
+class TestModel_SourceResponse:
     """
     Test Class for SourceResponse
     """
@@ -4711,7 +5048,8 @@ class TestModel_SourceResponse():
         source_response_model_json2 = source_response_model.to_dict()
         assert source_response_model_json2 == source_response_model_json
 
-class TestModel_SourcesItems():
+
+class TestModel_SourcesItems:
     """
     Test Class for SourcesItems
     """
@@ -4723,7 +5061,7 @@ class TestModel_SourcesItems():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rules_model = {} # Rules
+        rules_model = {}  # Rules
         rules_model['enabled'] = True
         rules_model['event_type_filter'] = '$.*'
         rules_model['notification_filter'] = 'testString'
@@ -4748,7 +5086,8 @@ class TestModel_SourcesItems():
         sources_items_model_json2 = sources_items_model.to_dict()
         assert sources_items_model_json2 == sources_items_model_json
 
-class TestModel_SourcesListItems():
+
+class TestModel_SourcesListItems:
     """
     Test Class for SourcesListItems
     """
@@ -4760,7 +5099,7 @@ class TestModel_SourcesListItems():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rules_get_model = {} # RulesGet
+        rules_get_model = {}  # RulesGet
         rules_get_model['enabled'] = True
         rules_get_model['event_type_filter'] = '$.notification_event_info.event_type == \'test\''
         rules_get_model['notification_filter'] = '$.notification.findings[0].severity == \'LOW\''
@@ -4788,7 +5127,8 @@ class TestModel_SourcesListItems():
         sources_list_items_model_json2 = sources_list_items_model.to_dict()
         assert sources_list_items_model_json2 == sources_list_items_model_json
 
-class TestModel_Subscription():
+
+class TestModel_Subscription:
     """
     Test Class for Subscription
     """
@@ -4800,7 +5140,7 @@ class TestModel_Subscription():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_attributes_model = {} # SubscriptionAttributesWebhookAttributesResponse
+        subscription_attributes_model = {}  # SubscriptionAttributesWebhookAttributesResponse
         subscription_attributes_model['signing_enabled'] = True
         subscription_attributes_model['add_notification_payload'] = True
         subscription_attributes_model['foo'] = 'testString'
@@ -4845,7 +5185,8 @@ class TestModel_Subscription():
         actual_dict = subscription_model.get_properties()
         assert actual_dict == expected_dict
 
-class TestModel_SubscriptionList():
+
+class TestModel_SubscriptionList:
     """
     Test Class for SubscriptionList
     """
@@ -4857,7 +5198,7 @@ class TestModel_SubscriptionList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_list_item_model = {} # SubscriptionListItem
+        subscription_list_item_model = {}  # SubscriptionListItem
         subscription_list_item_model['id'] = '60502ac0-5748-40b1-84b8-938b77f1c8d1'
         subscription_list_item_model['name'] = 'Test subscription'
         subscription_list_item_model['description'] = 'Developers of EN'
@@ -4868,7 +5209,7 @@ class TestModel_SubscriptionList():
         subscription_list_item_model['topic_name'] = 'Developers topic'
         subscription_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
-        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model = {}  # PageHrefResponse
         page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
 
         # Construct a json representation of a SubscriptionList model
@@ -4896,7 +5237,8 @@ class TestModel_SubscriptionList():
         subscription_list_model_json2 = subscription_list_model.to_dict()
         assert subscription_list_model_json2 == subscription_list_model_json
 
-class TestModel_SubscriptionListItem():
+
+class TestModel_SubscriptionListItem:
     """
     Test Class for SubscriptionListItem
     """
@@ -4933,7 +5275,8 @@ class TestModel_SubscriptionListItem():
         subscription_list_item_model_json2 = subscription_list_item_model.to_dict()
         assert subscription_list_item_model_json2 == subscription_list_item_model_json
 
-class TestModel_TagsSubscriptionList():
+
+class TestModel_TagsSubscriptionList:
     """
     Test Class for TagsSubscriptionList
     """
@@ -4945,14 +5288,14 @@ class TestModel_TagsSubscriptionList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        tags_subscription_list_item_model = {} # TagsSubscriptionListItem
+        tags_subscription_list_item_model = {}  # TagsSubscriptionListItem
         tags_subscription_list_item_model['id'] = '330cfdf8-7ae6-4afb-aac1-458243877d00'
         tags_subscription_list_item_model['device_id'] = '11fe18ba-d0c8-4108-9f07-355e8052a813'
         tags_subscription_list_item_model['tag_name'] = 'sl_web'
         tags_subscription_list_item_model['user_id'] = 'fcm_id_123'
         tags_subscription_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
-        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model = {}  # PageHrefResponse
         page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
 
         # Construct a json representation of a TagsSubscriptionList model
@@ -4980,7 +5323,8 @@ class TestModel_TagsSubscriptionList():
         tags_subscription_list_model_json2 = tags_subscription_list_model.to_dict()
         assert tags_subscription_list_model_json2 == tags_subscription_list_model_json
 
-class TestModel_TagsSubscriptionListItem():
+
+class TestModel_TagsSubscriptionListItem:
     """
     Test Class for TagsSubscriptionListItem
     """
@@ -5013,7 +5357,8 @@ class TestModel_TagsSubscriptionListItem():
         tags_subscription_list_item_model_json2 = tags_subscription_list_item_model.to_dict()
         assert tags_subscription_list_item_model_json2 == tags_subscription_list_item_model_json
 
-class TestModel_Topic():
+
+class TestModel_Topic:
     """
     Test Class for Topic
     """
@@ -5025,19 +5370,19 @@ class TestModel_Topic():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        rules_get_model = {} # RulesGet
+        rules_get_model = {}  # RulesGet
         rules_get_model['enabled'] = True
         rules_get_model['event_type_filter'] = '$.notification_event_info.event_type == \'test\''
         rules_get_model['notification_filter'] = '$.notification.findings[0].severity == \'LOW\''
         rules_get_model['updated_at'] = '2021-09-08T13:25:20.523533Z'
         rules_get_model['id'] = '218f4e30-9af2-4f70-b38b-738f923b0c4b'
 
-        sources_list_items_model = {} # SourcesListItems
+        sources_list_items_model = {}  # SourcesListItems
         sources_list_items_model['id'] = '96dbf538-9fa7-4745-b9e4-32bb6f1dc47a:api'
         sources_list_items_model['name'] = 'Compliance source'
         sources_list_items_model['rules'] = [rules_get_model]
 
-        subscription_list_item_model = {} # SubscriptionListItem
+        subscription_list_item_model = {}  # SubscriptionListItem
         subscription_list_item_model['id'] = '87bef75e-f826-4aa9-b64d-91af9be5e12b'
         subscription_list_item_model['name'] = 'SMS Subscription on new change'
         subscription_list_item_model['description'] = 'This subscription is to send events from SCC to EN Admins via sms'
@@ -5074,7 +5419,8 @@ class TestModel_Topic():
         topic_model_json2 = topic_model.to_dict()
         assert topic_model_json2 == topic_model_json
 
-class TestModel_TopicList():
+
+class TestModel_TopicList:
     """
     Test Class for TopicList
     """
@@ -5086,7 +5432,7 @@ class TestModel_TopicList():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        topics_list_item_model = {} # TopicsListItem
+        topics_list_item_model = {}  # TopicsListItem
         topics_list_item_model['id'] = '33d2b8d5-8ab8-46c7-97b9-c508afbf0701'
         topics_list_item_model['name'] = 'Developers topic'
         topics_list_item_model['description'] = 'To send events to all EN developers'
@@ -5094,7 +5440,7 @@ class TestModel_TopicList():
         topics_list_item_model['sources_names'] = ['Push Source', 'Custom source']
         topics_list_item_model['subscription_count'] = 3
 
-        page_href_response_model = {} # PageHrefResponse
+        page_href_response_model = {}  # PageHrefResponse
         page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
 
         # Construct a json representation of a TopicList model
@@ -5122,7 +5468,8 @@ class TestModel_TopicList():
         topic_list_model_json2 = topic_list_model.to_dict()
         assert topic_list_model_json2 == topic_list_model_json
 
-class TestModel_TopicResponse():
+
+class TestModel_TopicResponse:
     """
     Test Class for TopicResponse
     """
@@ -5154,7 +5501,8 @@ class TestModel_TopicResponse():
         topic_response_model_json2 = topic_response_model.to_dict()
         assert topic_response_model_json2 == topic_response_model_json
 
-class TestModel_TopicsListItem():
+
+class TestModel_TopicsListItem:
     """
     Test Class for TopicsListItem
     """
@@ -5188,7 +5536,8 @@ class TestModel_TopicsListItem():
         topics_list_item_model_json2 = topics_list_item_model.to_dict()
         assert topics_list_item_model_json2 == topics_list_item_model_json
 
-class TestModel_UpdateAttributesInvited():
+
+class TestModel_UpdateAttributesInvited:
     """
     Test Class for UpdateAttributesInvited
     """
@@ -5218,7 +5567,8 @@ class TestModel_UpdateAttributesInvited():
         update_attributes_invited_model_json2 = update_attributes_invited_model.to_dict()
         assert update_attributes_invited_model_json2 == update_attributes_invited_model_json
 
-class TestModel_UpdateAttributesSubscribed():
+
+class TestModel_UpdateAttributesSubscribed:
     """
     Test Class for UpdateAttributesSubscribed
     """
@@ -5247,7 +5597,8 @@ class TestModel_UpdateAttributesSubscribed():
         update_attributes_subscribed_model_json2 = update_attributes_subscribed_model.to_dict()
         assert update_attributes_subscribed_model_json2 == update_attributes_subscribed_model_json
 
-class TestModel_UpdateAttributesUnsubscribed():
+
+class TestModel_UpdateAttributesUnsubscribed:
     """
     Test Class for UpdateAttributesUnsubscribed
     """
@@ -5276,7 +5627,8 @@ class TestModel_UpdateAttributesUnsubscribed():
         update_attributes_unsubscribed_model_json2 = update_attributes_unsubscribed_model.to_dict()
         assert update_attributes_unsubscribed_model_json2 == update_attributes_unsubscribed_model_json
 
-class TestModel_DestinationConfigOneOfChromeDestinationConfig():
+
+class TestModel_DestinationConfigOneOfChromeDestinationConfig:
     """
     Test Class for DestinationConfigOneOfChromeDestinationConfig
     """
@@ -5308,7 +5660,52 @@ class TestModel_DestinationConfigOneOfChromeDestinationConfig():
         destination_config_one_of_chrome_destination_config_model_json2 = destination_config_one_of_chrome_destination_config_model.to_dict()
         assert destination_config_one_of_chrome_destination_config_model_json2 == destination_config_one_of_chrome_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfFCMDestinationConfig():
+
+class TestModel_DestinationConfigOneOfCustomDomainEmailDestinationConfig:
+    """
+    Test Class for DestinationConfigOneOfCustomDomainEmailDestinationConfig
+    """
+
+    def test_destination_config_one_of_custom_domain_email_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfCustomDomainEmailDestinationConfig
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        dkim_attributes_model = {}  # DKIMAttributes
+        dkim_attributes_model['public_key'] = 'testString'
+        dkim_attributes_model['selector'] = 'testString'
+        dkim_attributes_model['verification'] = 'testString'
+
+        spf_attributes_model = {}  # SPFAttributes
+        spf_attributes_model['txt_name'] = 'testString'
+        spf_attributes_model['txt_value'] = 'testString'
+        spf_attributes_model['verification'] = 'testString'
+
+        # Construct a json representation of a DestinationConfigOneOfCustomDomainEmailDestinationConfig model
+        destination_config_one_of_custom_domain_email_destination_config_model_json = {}
+        destination_config_one_of_custom_domain_email_destination_config_model_json['domain'] = 'testString'
+        destination_config_one_of_custom_domain_email_destination_config_model_json['dkim'] = dkim_attributes_model
+        destination_config_one_of_custom_domain_email_destination_config_model_json['spf'] = spf_attributes_model
+
+        # Construct a model instance of DestinationConfigOneOfCustomDomainEmailDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_custom_domain_email_destination_config_model = DestinationConfigOneOfCustomDomainEmailDestinationConfig.from_dict(destination_config_one_of_custom_domain_email_destination_config_model_json)
+        assert destination_config_one_of_custom_domain_email_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfCustomDomainEmailDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_custom_domain_email_destination_config_model_dict = DestinationConfigOneOfCustomDomainEmailDestinationConfig.from_dict(destination_config_one_of_custom_domain_email_destination_config_model_json).__dict__
+        destination_config_one_of_custom_domain_email_destination_config_model2 = DestinationConfigOneOfCustomDomainEmailDestinationConfig(**destination_config_one_of_custom_domain_email_destination_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert destination_config_one_of_custom_domain_email_destination_config_model == destination_config_one_of_custom_domain_email_destination_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_custom_domain_email_destination_config_model_json2 = destination_config_one_of_custom_domain_email_destination_config_model.to_dict()
+        assert destination_config_one_of_custom_domain_email_destination_config_model_json2 == destination_config_one_of_custom_domain_email_destination_config_model_json
+
+
+class TestModel_DestinationConfigOneOfFCMDestinationConfig:
     """
     Test Class for DestinationConfigOneOfFCMDestinationConfig
     """
@@ -5342,7 +5739,8 @@ class TestModel_DestinationConfigOneOfFCMDestinationConfig():
         destination_config_one_of_fcm_destination_config_model_json2 = destination_config_one_of_fcm_destination_config_model.to_dict()
         assert destination_config_one_of_fcm_destination_config_model_json2 == destination_config_one_of_fcm_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfFirefoxDestinationConfig():
+
+class TestModel_DestinationConfigOneOfFirefoxDestinationConfig:
     """
     Test Class for DestinationConfigOneOfFirefoxDestinationConfig
     """
@@ -5373,7 +5771,8 @@ class TestModel_DestinationConfigOneOfFirefoxDestinationConfig():
         destination_config_one_of_firefox_destination_config_model_json2 = destination_config_one_of_firefox_destination_config_model.to_dict()
         assert destination_config_one_of_firefox_destination_config_model_json2 == destination_config_one_of_firefox_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfHuaweiDestinationConfig():
+
+class TestModel_DestinationConfigOneOfHuaweiDestinationConfig:
     """
     Test Class for DestinationConfigOneOfHuaweiDestinationConfig
     """
@@ -5404,7 +5803,8 @@ class TestModel_DestinationConfigOneOfHuaweiDestinationConfig():
         destination_config_one_of_huawei_destination_config_model_json2 = destination_config_one_of_huawei_destination_config_model.to_dict()
         assert destination_config_one_of_huawei_destination_config_model_json2 == destination_config_one_of_huawei_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig():
+
+class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig:
     """
     Test Class for DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
     """
@@ -5434,7 +5834,8 @@ class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig():
         destination_config_one_of_ibm_cloud_functions_destination_config_model_json2 = destination_config_one_of_ibm_cloud_functions_destination_config_model.to_dict()
         assert destination_config_one_of_ibm_cloud_functions_destination_config_model_json2 == destination_config_one_of_ibm_cloud_functions_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig():
+
+class TestModel_DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig:
     """
     Test Class for DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig
     """
@@ -5465,7 +5866,8 @@ class TestModel_DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig():
         destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json2 = destination_config_one_of_ibm_cloud_object_storage_destination_config_model.to_dict()
         assert destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json2 == destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfIOSDestinationConfig():
+
+class TestModel_DestinationConfigOneOfIOSDestinationConfig:
     """
     Test Class for DestinationConfigOneOfIOSDestinationConfig
     """
@@ -5500,7 +5902,8 @@ class TestModel_DestinationConfigOneOfIOSDestinationConfig():
         destination_config_one_of_ios_destination_config_model_json2 = destination_config_one_of_ios_destination_config_model.to_dict()
         assert destination_config_one_of_ios_destination_config_model_json2 == destination_config_one_of_ios_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfMSTeamsDestinationConfig():
+
+class TestModel_DestinationConfigOneOfMSTeamsDestinationConfig:
     """
     Test Class for DestinationConfigOneOfMSTeamsDestinationConfig
     """
@@ -5529,7 +5932,8 @@ class TestModel_DestinationConfigOneOfMSTeamsDestinationConfig():
         destination_config_one_of_ms_teams_destination_config_model_json2 = destination_config_one_of_ms_teams_destination_config_model.to_dict()
         assert destination_config_one_of_ms_teams_destination_config_model_json2 == destination_config_one_of_ms_teams_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfPagerDutyDestinationConfig():
+
+class TestModel_DestinationConfigOneOfPagerDutyDestinationConfig:
     """
     Test Class for DestinationConfigOneOfPagerDutyDestinationConfig
     """
@@ -5559,7 +5963,8 @@ class TestModel_DestinationConfigOneOfPagerDutyDestinationConfig():
         destination_config_one_of_pager_duty_destination_config_model_json2 = destination_config_one_of_pager_duty_destination_config_model.to_dict()
         assert destination_config_one_of_pager_duty_destination_config_model_json2 == destination_config_one_of_pager_duty_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfSafariDestinationConfig():
+
+class TestModel_DestinationConfigOneOfSafariDestinationConfig:
     """
     Test Class for DestinationConfigOneOfSafariDestinationConfig
     """
@@ -5594,7 +5999,8 @@ class TestModel_DestinationConfigOneOfSafariDestinationConfig():
         destination_config_one_of_safari_destination_config_model_json2 = destination_config_one_of_safari_destination_config_model.to_dict()
         assert destination_config_one_of_safari_destination_config_model_json2 == destination_config_one_of_safari_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfServiceNowDestinationConfig():
+
+class TestModel_DestinationConfigOneOfServiceNowDestinationConfig:
     """
     Test Class for DestinationConfigOneOfServiceNowDestinationConfig
     """
@@ -5627,7 +6033,8 @@ class TestModel_DestinationConfigOneOfServiceNowDestinationConfig():
         destination_config_one_of_service_now_destination_config_model_json2 = destination_config_one_of_service_now_destination_config_model.to_dict()
         assert destination_config_one_of_service_now_destination_config_model_json2 == destination_config_one_of_service_now_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfSlackDestinationConfig():
+
+class TestModel_DestinationConfigOneOfSlackDestinationConfig:
     """
     Test Class for DestinationConfigOneOfSlackDestinationConfig
     """
@@ -5656,7 +6063,8 @@ class TestModel_DestinationConfigOneOfSlackDestinationConfig():
         destination_config_one_of_slack_destination_config_model_json2 = destination_config_one_of_slack_destination_config_model.to_dict()
         assert destination_config_one_of_slack_destination_config_model_json2 == destination_config_one_of_slack_destination_config_model_json
 
-class TestModel_DestinationConfigOneOfWebhookDestinationConfig():
+
+class TestModel_DestinationConfigOneOfWebhookDestinationConfig:
     """
     Test Class for DestinationConfigOneOfWebhookDestinationConfig
     """
@@ -5688,7 +6096,67 @@ class TestModel_DestinationConfigOneOfWebhookDestinationConfig():
         destination_config_one_of_webhook_destination_config_model_json2 = destination_config_one_of_webhook_destination_config_model.to_dict()
         assert destination_config_one_of_webhook_destination_config_model_json2 == destination_config_one_of_webhook_destination_config_model_json
 
-class TestModel_SubscriptionAttributesEmailAttributesResponse():
+
+class TestModel_SubscriptionAttributesCustomEmailAttributesResponse:
+    """
+    Test Class for SubscriptionAttributesCustomEmailAttributesResponse
+    """
+
+    def test_subscription_attributes_custom_email_attributes_response_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionAttributesCustomEmailAttributesResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        email_attributes_response_invited_items_model = {}  # EmailAttributesResponseInvitedItems
+        email_attributes_response_invited_items_model['email'] = 'testString'
+        email_attributes_response_invited_items_model['updated_at'] = '2019-01-01T12:00:00Z'
+        email_attributes_response_invited_items_model['expires_at'] = '2019-01-01T12:00:00Z'
+
+        email_attributes_response_subscribed_unsubscribed_items_model = {}  # EmailAttributesResponseSubscribedUnsubscribedItems
+        email_attributes_response_subscribed_unsubscribed_items_model['email'] = 'testString'
+        email_attributes_response_subscribed_unsubscribed_items_model['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a json representation of a SubscriptionAttributesCustomEmailAttributesResponse model
+        subscription_attributes_custom_email_attributes_response_model_json = {}
+        subscription_attributes_custom_email_attributes_response_model_json['invited'] = [email_attributes_response_invited_items_model]
+        subscription_attributes_custom_email_attributes_response_model_json['subscribed'] = [email_attributes_response_subscribed_unsubscribed_items_model]
+        subscription_attributes_custom_email_attributes_response_model_json['unsubscribed'] = [email_attributes_response_subscribed_unsubscribed_items_model]
+        subscription_attributes_custom_email_attributes_response_model_json['add_notification_payload'] = False
+        subscription_attributes_custom_email_attributes_response_model_json['reply_to_mail'] = 'testString'
+        subscription_attributes_custom_email_attributes_response_model_json['reply_to_name'] = 'testString'
+        subscription_attributes_custom_email_attributes_response_model_json['from_name'] = 'testString'
+        subscription_attributes_custom_email_attributes_response_model_json['from_email'] = 'testString'
+        subscription_attributes_custom_email_attributes_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of SubscriptionAttributesCustomEmailAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_custom_email_attributes_response_model = SubscriptionAttributesCustomEmailAttributesResponse.from_dict(subscription_attributes_custom_email_attributes_response_model_json)
+        assert subscription_attributes_custom_email_attributes_response_model != False
+
+        # Construct a model instance of SubscriptionAttributesCustomEmailAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_custom_email_attributes_response_model_dict = SubscriptionAttributesCustomEmailAttributesResponse.from_dict(subscription_attributes_custom_email_attributes_response_model_json).__dict__
+        subscription_attributes_custom_email_attributes_response_model2 = SubscriptionAttributesCustomEmailAttributesResponse(**subscription_attributes_custom_email_attributes_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_attributes_custom_email_attributes_response_model == subscription_attributes_custom_email_attributes_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_attributes_custom_email_attributes_response_model_json2 = subscription_attributes_custom_email_attributes_response_model.to_dict()
+        assert subscription_attributes_custom_email_attributes_response_model_json2 == subscription_attributes_custom_email_attributes_response_model_json
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_custom_email_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_custom_email_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_custom_email_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_custom_email_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
+
+class TestModel_SubscriptionAttributesEmailAttributesResponse:
     """
     Test Class for SubscriptionAttributesEmailAttributesResponse
     """
@@ -5700,12 +6168,12 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        email_attributes_response_invited_items_model = {} # EmailAttributesResponseInvitedItems
+        email_attributes_response_invited_items_model = {}  # EmailAttributesResponseInvitedItems
         email_attributes_response_invited_items_model['email'] = 'testString'
         email_attributes_response_invited_items_model['updated_at'] = '2019-01-01T12:00:00Z'
         email_attributes_response_invited_items_model['expires_at'] = '2019-01-01T12:00:00Z'
 
-        email_attributes_response_subscribed_unsubscribed_items_model = {} # EmailAttributesResponseSubscribedUnsubscribedItems
+        email_attributes_response_subscribed_unsubscribed_items_model = {}  # EmailAttributesResponseSubscribedUnsubscribedItems
         email_attributes_response_subscribed_unsubscribed_items_model['email'] = 'testString'
         email_attributes_response_subscribed_unsubscribed_items_model['updated_at'] = '2019-01-01T12:00:00Z'
 
@@ -5745,7 +6213,8 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse():
         actual_dict = subscription_attributes_email_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
-class TestModel_SubscriptionAttributesSMSAttributesResponse():
+
+class TestModel_SubscriptionAttributesSMSAttributesResponse:
     """
     Test Class for SubscriptionAttributesSMSAttributesResponse
     """
@@ -5757,11 +6226,11 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        sms_attributes_items_model = {} # SMSAttributesItems
+        sms_attributes_items_model = {}  # SMSAttributesItems
         sms_attributes_items_model['phone_number'] = 'testString'
         sms_attributes_items_model['updated_at'] = '2019-01-01T12:00:00Z'
 
-        sms_invite_attributes_items_model = {} # SMSInviteAttributesItems
+        sms_invite_attributes_items_model = {}  # SMSInviteAttributesItems
         sms_invite_attributes_items_model['phone_number'] = 'testString'
         sms_invite_attributes_items_model['updated_at'] = '2019-01-01T12:00:00Z'
         sms_invite_attributes_items_model['expires_at'] = '2019-01-01T12:00:00Z'
@@ -5798,7 +6267,8 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse():
         actual_dict = subscription_attributes_sms_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
-class TestModel_SubscriptionAttributesServiceNowAttributesResponse():
+
+class TestModel_SubscriptionAttributesServiceNowAttributesResponse:
     """
     Test Class for SubscriptionAttributesServiceNowAttributesResponse
     """
@@ -5839,7 +6309,8 @@ class TestModel_SubscriptionAttributesServiceNowAttributesResponse():
         actual_dict = subscription_attributes_service_now_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
-class TestModel_SubscriptionAttributesSlackAttributesResponse():
+
+class TestModel_SubscriptionAttributesSlackAttributesResponse:
     """
     Test Class for SubscriptionAttributesSlackAttributesResponse
     """
@@ -5879,7 +6350,8 @@ class TestModel_SubscriptionAttributesSlackAttributesResponse():
         actual_dict = subscription_attributes_slack_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
-class TestModel_SubscriptionAttributesWebhookAttributesResponse():
+
+class TestModel_SubscriptionAttributesWebhookAttributesResponse:
     """
     Test Class for SubscriptionAttributesWebhookAttributesResponse
     """
@@ -5920,7 +6392,43 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse():
         actual_dict = subscription_attributes_webhook_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
-class TestModel_SubscriptionCreateAttributesEmailAttributes():
+
+class TestModel_SubscriptionCreateAttributesCustomEmailAttributes:
+    """
+    Test Class for SubscriptionCreateAttributesCustomEmailAttributes
+    """
+
+    def test_subscription_create_attributes_custom_email_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesCustomEmailAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesCustomEmailAttributes model
+        subscription_create_attributes_custom_email_attributes_model_json = {}
+        subscription_create_attributes_custom_email_attributes_model_json['invited'] = ['testString']
+        subscription_create_attributes_custom_email_attributes_model_json['add_notification_payload'] = False
+        subscription_create_attributes_custom_email_attributes_model_json['reply_to_mail'] = 'testString'
+        subscription_create_attributes_custom_email_attributes_model_json['reply_to_name'] = 'testString'
+        subscription_create_attributes_custom_email_attributes_model_json['from_name'] = 'testString'
+        subscription_create_attributes_custom_email_attributes_model_json['from_email'] = 'testString'
+
+        # Construct a model instance of SubscriptionCreateAttributesCustomEmailAttributes by calling from_dict on the json representation
+        subscription_create_attributes_custom_email_attributes_model = SubscriptionCreateAttributesCustomEmailAttributes.from_dict(subscription_create_attributes_custom_email_attributes_model_json)
+        assert subscription_create_attributes_custom_email_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesCustomEmailAttributes by calling from_dict on the json representation
+        subscription_create_attributes_custom_email_attributes_model_dict = SubscriptionCreateAttributesCustomEmailAttributes.from_dict(subscription_create_attributes_custom_email_attributes_model_json).__dict__
+        subscription_create_attributes_custom_email_attributes_model2 = SubscriptionCreateAttributesCustomEmailAttributes(**subscription_create_attributes_custom_email_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_create_attributes_custom_email_attributes_model == subscription_create_attributes_custom_email_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_custom_email_attributes_model_json2 = subscription_create_attributes_custom_email_attributes_model.to_dict()
+        assert subscription_create_attributes_custom_email_attributes_model_json2 == subscription_create_attributes_custom_email_attributes_model_json
+
+
+class TestModel_SubscriptionCreateAttributesEmailAttributes:
     """
     Test Class for SubscriptionCreateAttributesEmailAttributes
     """
@@ -5953,7 +6461,8 @@ class TestModel_SubscriptionCreateAttributesEmailAttributes():
         subscription_create_attributes_email_attributes_model_json2 = subscription_create_attributes_email_attributes_model.to_dict()
         assert subscription_create_attributes_email_attributes_model_json2 == subscription_create_attributes_email_attributes_model_json
 
-class TestModel_SubscriptionCreateAttributesFCMAttributes():
+
+class TestModel_SubscriptionCreateAttributesFCMAttributes:
     """
     Test Class for SubscriptionCreateAttributesFCMAttributes
     """
@@ -5981,7 +6490,8 @@ class TestModel_SubscriptionCreateAttributesFCMAttributes():
         subscription_create_attributes_fcm_attributes_model_json2 = subscription_create_attributes_fcm_attributes_model.to_dict()
         assert subscription_create_attributes_fcm_attributes_model_json2 == subscription_create_attributes_fcm_attributes_model_json
 
-class TestModel_SubscriptionCreateAttributesSMSAttributes():
+
+class TestModel_SubscriptionCreateAttributesSMSAttributes:
     """
     Test Class for SubscriptionCreateAttributesSMSAttributes
     """
@@ -6010,7 +6520,8 @@ class TestModel_SubscriptionCreateAttributesSMSAttributes():
         subscription_create_attributes_sms_attributes_model_json2 = subscription_create_attributes_sms_attributes_model.to_dict()
         assert subscription_create_attributes_sms_attributes_model_json2 == subscription_create_attributes_sms_attributes_model_json
 
-class TestModel_SubscriptionCreateAttributesServiceNowAttributes():
+
+class TestModel_SubscriptionCreateAttributesServiceNowAttributes:
     """
     Test Class for SubscriptionCreateAttributesServiceNowAttributes
     """
@@ -6040,7 +6551,8 @@ class TestModel_SubscriptionCreateAttributesServiceNowAttributes():
         subscription_create_attributes_service_now_attributes_model_json2 = subscription_create_attributes_service_now_attributes_model.to_dict()
         assert subscription_create_attributes_service_now_attributes_model_json2 == subscription_create_attributes_service_now_attributes_model_json
 
-class TestModel_SubscriptionCreateAttributesSlackAttributes():
+
+class TestModel_SubscriptionCreateAttributesSlackAttributes:
     """
     Test Class for SubscriptionCreateAttributesSlackAttributes
     """
@@ -6069,7 +6581,8 @@ class TestModel_SubscriptionCreateAttributesSlackAttributes():
         subscription_create_attributes_slack_attributes_model_json2 = subscription_create_attributes_slack_attributes_model.to_dict()
         assert subscription_create_attributes_slack_attributes_model_json2 == subscription_create_attributes_slack_attributes_model_json
 
-class TestModel_SubscriptionCreateAttributesWebhookAttributes():
+
+class TestModel_SubscriptionCreateAttributesWebhookAttributes:
     """
     Test Class for SubscriptionCreateAttributesWebhookAttributes
     """
@@ -6098,7 +6611,57 @@ class TestModel_SubscriptionCreateAttributesWebhookAttributes():
         subscription_create_attributes_webhook_attributes_model_json2 = subscription_create_attributes_webhook_attributes_model.to_dict()
         assert subscription_create_attributes_webhook_attributes_model_json2 == subscription_create_attributes_webhook_attributes_model_json
 
-class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes():
+
+class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
+    """
+    Test Class for SubscriptionUpdateAttributesCustomEmailUpdateAttributes
+    """
+
+    def test_subscription_update_attributes_custom_email_update_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesCustomEmailUpdateAttributes
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        update_attributes_invited_model = {}  # UpdateAttributesInvited
+        update_attributes_invited_model['add'] = ['testString']
+        update_attributes_invited_model['remove'] = ['testString']
+
+        update_attributes_subscribed_model = {}  # UpdateAttributesSubscribed
+        update_attributes_subscribed_model['remove'] = ['testString']
+
+        update_attributes_unsubscribed_model = {}  # UpdateAttributesUnsubscribed
+        update_attributes_unsubscribed_model['remove'] = ['testString']
+
+        # Construct a json representation of a SubscriptionUpdateAttributesCustomEmailUpdateAttributes model
+        subscription_update_attributes_custom_email_update_attributes_model_json = {}
+        subscription_update_attributes_custom_email_update_attributes_model_json['invited'] = update_attributes_invited_model
+        subscription_update_attributes_custom_email_update_attributes_model_json['add_notification_payload'] = False
+        subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_mail'] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_name'] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['from_name'] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['from_email'] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['subscribed'] = update_attributes_subscribed_model
+        subscription_update_attributes_custom_email_update_attributes_model_json['unsubscribed'] = update_attributes_unsubscribed_model
+
+        # Construct a model instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_custom_email_update_attributes_model = SubscriptionUpdateAttributesCustomEmailUpdateAttributes.from_dict(subscription_update_attributes_custom_email_update_attributes_model_json)
+        assert subscription_update_attributes_custom_email_update_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_custom_email_update_attributes_model_dict = SubscriptionUpdateAttributesCustomEmailUpdateAttributes.from_dict(subscription_update_attributes_custom_email_update_attributes_model_json).__dict__
+        subscription_update_attributes_custom_email_update_attributes_model2 = SubscriptionUpdateAttributesCustomEmailUpdateAttributes(**subscription_update_attributes_custom_email_update_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert subscription_update_attributes_custom_email_update_attributes_model == subscription_update_attributes_custom_email_update_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_custom_email_update_attributes_model_json2 = subscription_update_attributes_custom_email_update_attributes_model.to_dict()
+        assert subscription_update_attributes_custom_email_update_attributes_model_json2 == subscription_update_attributes_custom_email_update_attributes_model_json
+
+
+class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes:
     """
     Test Class for SubscriptionUpdateAttributesEmailUpdateAttributes
     """
@@ -6110,14 +6673,14 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        update_attributes_invited_model = {} # UpdateAttributesInvited
+        update_attributes_invited_model = {}  # UpdateAttributesInvited
         update_attributes_invited_model['add'] = ['testString']
         update_attributes_invited_model['remove'] = ['testString']
 
-        update_attributes_subscribed_model = {} # UpdateAttributesSubscribed
+        update_attributes_subscribed_model = {}  # UpdateAttributesSubscribed
         update_attributes_subscribed_model['remove'] = ['testString']
 
-        update_attributes_unsubscribed_model = {} # UpdateAttributesUnsubscribed
+        update_attributes_unsubscribed_model = {}  # UpdateAttributesUnsubscribed
         update_attributes_unsubscribed_model['remove'] = ['testString']
 
         # Construct a json representation of a SubscriptionUpdateAttributesEmailUpdateAttributes model
@@ -6145,7 +6708,8 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes():
         subscription_update_attributes_email_update_attributes_model_json2 = subscription_update_attributes_email_update_attributes_model.to_dict()
         assert subscription_update_attributes_email_update_attributes_model_json2 == subscription_update_attributes_email_update_attributes_model_json
 
-class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes():
+
+class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes:
     """
     Test Class for SubscriptionUpdateAttributesSMSUpdateAttributes
     """
@@ -6157,14 +6721,14 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes():
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        update_attributes_invited_model = {} # UpdateAttributesInvited
+        update_attributes_invited_model = {}  # UpdateAttributesInvited
         update_attributes_invited_model['add'] = ['testString']
         update_attributes_invited_model['remove'] = ['testString']
 
-        update_attributes_subscribed_model = {} # UpdateAttributesSubscribed
+        update_attributes_subscribed_model = {}  # UpdateAttributesSubscribed
         update_attributes_subscribed_model['remove'] = ['testString']
 
-        update_attributes_unsubscribed_model = {} # UpdateAttributesUnsubscribed
+        update_attributes_unsubscribed_model = {}  # UpdateAttributesUnsubscribed
         update_attributes_unsubscribed_model['remove'] = ['testString']
 
         # Construct a json representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
@@ -6188,7 +6752,8 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes():
         subscription_update_attributes_sms_update_attributes_model_json2 = subscription_update_attributes_sms_update_attributes_model.to_dict()
         assert subscription_update_attributes_sms_update_attributes_model_json2 == subscription_update_attributes_sms_update_attributes_model_json
 
-class TestModel_SubscriptionUpdateAttributesServiceNowAttributes():
+
+class TestModel_SubscriptionUpdateAttributesServiceNowAttributes:
     """
     Test Class for SubscriptionUpdateAttributesServiceNowAttributes
     """
@@ -6218,7 +6783,8 @@ class TestModel_SubscriptionUpdateAttributesServiceNowAttributes():
         subscription_update_attributes_service_now_attributes_model_json2 = subscription_update_attributes_service_now_attributes_model.to_dict()
         assert subscription_update_attributes_service_now_attributes_model_json2 == subscription_update_attributes_service_now_attributes_model_json
 
-class TestModel_SubscriptionUpdateAttributesSlackAttributes():
+
+class TestModel_SubscriptionUpdateAttributesSlackAttributes:
     """
     Test Class for SubscriptionUpdateAttributesSlackAttributes
     """
@@ -6247,7 +6813,8 @@ class TestModel_SubscriptionUpdateAttributesSlackAttributes():
         subscription_update_attributes_slack_attributes_model_json2 = subscription_update_attributes_slack_attributes_model.to_dict()
         assert subscription_update_attributes_slack_attributes_model_json2 == subscription_update_attributes_slack_attributes_model_json
 
-class TestModel_SubscriptionUpdateAttributesWebhookAttributes():
+
+class TestModel_SubscriptionUpdateAttributesWebhookAttributes:
     """
     Test Class for SubscriptionUpdateAttributesWebhookAttributes
     """
