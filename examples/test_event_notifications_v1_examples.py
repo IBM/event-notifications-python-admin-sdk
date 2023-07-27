@@ -742,7 +742,7 @@ class TestEventNotificationsV1Examples():
 
             destination_config_model = {
                 'params': {
-                    'domain': 'ashwin.event-notifications.test.cloud.ibm.com',
+                    'domain': 'abc.event-notifications.test.cloud.ibm.com',
                 }
             }
 
@@ -1157,7 +1157,7 @@ class TestEventNotificationsV1Examples():
 
             destination_config_model = {
                 'params': {
-                    'domain': 'ashwin.event-notifications.test.cloud.ibm.com'
+                    'domain': 'abc.event-notifications.test.cloud.ibm.com'
                 }
             }
 
@@ -1308,12 +1308,12 @@ class TestEventNotificationsV1Examples():
             subscription_id5 = subscription.get('id')
 
             subscription_create_attributes_model = {
-                'invited': ["nitishkulkarni005@gmail.com", "tester3@ibm.com"],
+                'invited': ["abc@gmail.com", "tester3@ibm.com"],
                 'add_notification_payload': True,
                 "reply_to_mail": "reply_to_mail@us.com",
                 "reply_to_name": "US News",
                 "from_name": "IBM",
-                "from_email": "test@ashwin.event-notifications.test.cloud.ibm.com"
+                "from_email": "test@abc.event-notifications.test.cloud.ibm.com"
             }
 
             name = 'subscription_custom_email'
@@ -1499,7 +1499,7 @@ class TestEventNotificationsV1Examples():
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
 
-            custom_email_update_attributes_invite_model = {'add': ['tester4@ibm.com', 'nitishkulkarni005@gmail.com']}
+            custom_email_update_attributes_invite_model = {'add': ['tester4@ibm.com', 'abc@gmail.com']}
 
             custom_email_update_attributes_to_remove_model = {'remove': ['tester3@ibm.com']}
 
@@ -1509,7 +1509,7 @@ class TestEventNotificationsV1Examples():
                 "reply_to_mail": "reply_to_mail@us.com",
                 "reply_to_name": "US News",
                 "from_name": "IBM",
-                "from_email": "test@ashwin.event-notifications.test.cloud.ibm.com",
+                "from_email": "test@abc.event-notifications.test.cloud.ibm.com",
                 "subscribed": custom_email_update_attributes_to_remove_model,
                 "unsubscribed": custom_email_update_attributes_to_remove_model
             }
