@@ -1,3 +1,10 @@
+## [0.1.14](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.13...v0.1.14) (2023-08-02)
+
+
+### Bug Fixes
+
+* add custom domain email support ([9d0b4ed](https://github.com/IBM/event-notifications-python-admin-sdk/commit/9d0b4ede00fbf1bb1aee3cfcf2c01ebbd4884d8e))
+
 ## [0.1.13](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.12...v0.1.13) (2023-06-15)
 
 
