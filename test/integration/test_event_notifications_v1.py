@@ -986,7 +986,7 @@ class TestEventNotificationsV1():
 
         destination_config_model = {
             'params': {
-                'domain': 'ashwin.event-notifications.test.cloud.ibm.com',
+                'domain': 'test.event-notifications.test.cloud.ibm.com',
             }
         }
 
@@ -1548,7 +1548,7 @@ class TestEventNotificationsV1():
 
         destination_config_model = {
             'params': {
-                'domain': 'ashwin.event-notifications.test.cloud.ibm.com'
+                'domain': 'test.event-notifications.test.cloud.ibm.com'
             }
         }
 
@@ -1574,6 +1574,24 @@ class TestEventNotificationsV1():
         assert res_id == destination_id16
         assert res_name == name
         assert res_description == description
+
+        spf_response = self.event_notifications_service.update_verify_destination(
+            instance_id,
+            id=destination_id16,
+            type="spf",
+        )
+        assert spf_response.get_status_code() == 200
+        spf_verification_response = spf_response.get_result()
+        assert spf_verification_response is not None
+
+        dkim_response = self.event_notifications_service.update_verify_destination(
+            instance_id,
+            id=destination_id16,
+            type="dkim",
+        )
+        assert dkim_response.get_status_code() == 200
+        dkim_verification_response = dkim_response.get_result()
+        assert dkim_verification_response is not None
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1979,7 +1997,7 @@ class TestEventNotificationsV1():
             "reply_to_mail": "reply_to_mail@us.com",
             "reply_to_name": "US News",
             "from_name": "IBM",
-            "from_email": "test@ashwin.event-notifications.test.cloud.ibm.com"
+            "from_email": "test@test.event-notifications.test.cloud.ibm.com"
         }
 
         name = 'subscription_custom_email'
@@ -2435,7 +2453,7 @@ class TestEventNotificationsV1():
             "reply_to_mail": "reply_to_mail@us.com",
             "reply_to_name": "US News",
             "from_name": "IBM",
-            "from_email": "test@ashwin.event-notifications.test.cloud.ibm.com",
+            "from_email": "test@test.event-notifications.test.cloud.ibm.com",
             "subscribed": custom_email_update_attributes_to_remove_model,
             "unsubscribed": custom_email_update_attributes_to_remove_model
         }

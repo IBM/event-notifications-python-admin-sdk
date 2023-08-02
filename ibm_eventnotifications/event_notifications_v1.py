@@ -1178,6 +1178,64 @@ class EventNotificationsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    def update_verify_destination(
+        self,
+        instance_id: str,
+        id: str,
+        type: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Verify status of spf or dkim records of custom email.
+
+        Verify status of spf or dkim records of custom email.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Destination.
+        :param str type: Verification type.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `VerificationResponse` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        if not type:
+            raise ValueError('type must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_verify_destination',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'type': type,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/destinations/{id}/verify'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
     #########################
     # Push Destination APIs
     #########################
@@ -6208,6 +6266,75 @@ class UpdateAttributesUnsubscribed:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'UpdateAttributesUnsubscribed') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class VerificationResponse:
+    """
+    Destination verification object.
+
+    :attr str type: verification type.
+    :attr str verification: verification status.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        verification: str,
+    ) -> None:
+        """
+        Initialize a VerificationResponse object.
+
+        :param str type: verification type.
+        :param str verification: verification status.
+        """
+        self.type = type
+        self.verification = verification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'VerificationResponse':
+        """Initialize a VerificationResponse object from a json dictionary."""
+        args = {}
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in VerificationResponse JSON')
+        if 'verification' in _dict:
+            args['verification'] = _dict.get('verification')
+        else:
+            raise ValueError('Required property \'verification\' not present in VerificationResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a VerificationResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'verification') and self.verification is not None:
+            _dict['verification'] = self.verification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this VerificationResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'VerificationResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'VerificationResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

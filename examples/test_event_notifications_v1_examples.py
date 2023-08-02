@@ -1173,6 +1173,14 @@ class TestEventNotificationsV1Examples():
             ).get_result()
 
             print(json.dumps(destination, indent=2))
+
+            verification_response = self.event_notifications_service.update_verify_destination(
+                instance_id,
+                id=destination_id16,
+                type="spf/dkim",
+            ).get_result()
+
+            print(json.dumps(verification_response, indent=2))
             # end-update_destination
 
         except ApiException as e:

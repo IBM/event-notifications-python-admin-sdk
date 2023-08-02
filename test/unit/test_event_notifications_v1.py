@@ -2469,6 +2469,99 @@ class TestDeleteDestination:
         self.test_delete_destination_value_error()
 
 
+class TestUpdateVerifyDestination:
+    """
+    Test Class for update_verify_destination
+    """
+
+    @responses.activate
+    def test_update_verify_destination_all_params(self):
+        """
+        update_verify_destination()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/verify')
+        mock_response = '{"type": "type", "verification": "verification"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        type = 'testString'
+
+        # Invoke method
+        response = _service.update_verify_destination(
+            instance_id,
+            id,
+            type,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+
+    def test_update_verify_destination_all_params_with_retries(self):
+        # Enable retries and run test_update_verify_destination_all_params.
+        _service.enable_retries()
+        self.test_update_verify_destination_all_params()
+
+        # Disable retries and run test_update_verify_destination_all_params.
+        _service.disable_retries()
+        self.test_update_verify_destination_all_params()
+
+    @responses.activate
+    def test_update_verify_destination_value_error(self):
+        """
+        test_update_verify_destination_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/verify')
+        mock_response = '{"type": "type", "verification": "verification"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        type = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_verify_destination(**req_copy)
+
+    def test_update_verify_destination_value_error_with_retries(self):
+        # Enable retries and run test_update_verify_destination_value_error.
+        _service.enable_retries()
+        self.test_update_verify_destination_value_error()
+
+        # Disable retries and run test_update_verify_destination_value_error.
+        _service.disable_retries()
+        self.test_update_verify_destination_value_error()
+
+
 # endregion
 ##############################################################################
 # End of Service: Destinations
@@ -5626,6 +5719,37 @@ class TestModel_UpdateAttributesUnsubscribed:
         # Convert model instance back to dict and verify no loss of data
         update_attributes_unsubscribed_model_json2 = update_attributes_unsubscribed_model.to_dict()
         assert update_attributes_unsubscribed_model_json2 == update_attributes_unsubscribed_model_json
+
+
+class TestModel_VerificationResponse:
+    """
+    Test Class for VerificationResponse
+    """
+
+    def test_verification_response_serialization(self):
+        """
+        Test serialization/deserialization for VerificationResponse
+        """
+
+        # Construct a json representation of a VerificationResponse model
+        verification_response_model_json = {}
+        verification_response_model_json['type'] = 'testString'
+        verification_response_model_json['verification'] = 'testString'
+
+        # Construct a model instance of VerificationResponse by calling from_dict on the json representation
+        verification_response_model = VerificationResponse.from_dict(verification_response_model_json)
+        assert verification_response_model != False
+
+        # Construct a model instance of VerificationResponse by calling from_dict on the json representation
+        verification_response_model_dict = VerificationResponse.from_dict(verification_response_model_json).__dict__
+        verification_response_model2 = VerificationResponse(**verification_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert verification_response_model == verification_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        verification_response_model_json2 = verification_response_model.to_dict()
+        assert verification_response_model_json2 == verification_response_model_json
 
 
 class TestModel_DestinationConfigOneOfChromeDestinationConfig:

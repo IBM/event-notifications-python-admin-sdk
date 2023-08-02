@@ -110,6 +110,7 @@ SDK Methods to consume
     - [Get Destination](#get-destination)
     - [Update Destination](#update-destination)
     - [Delete Destination](#delete-destination)
+    - [Custom Domain_Name_verification](#custom-domain-name-verification)
 - [Push Destination APIs](#push-destination-apis)
   - [Create Destination tag subscription](#create-destination-tag-subscription)
   - [List Destination tag subscription](#list-destination-tag-subscription)
@@ -365,6 +366,21 @@ response = event_notifications_service.delete_destination(
       id=<destination-id>,	# Event notifications service instance Destination ID
   )
 ```
+### Custom Domain Name Verification
+
+After creation of the custom email destination with your domain name, make sure its validated for the right ownership.
+This can be done with SPF and DKIM verification.
+* Sender Policy Framework (SPF), which is used to authenticate the sender of an email. SPF specifies the mail servers that are allowed to send email for your domain.
+* DomainKeys Identified Mail (DKIM), which allows an organization to take responsibility for transmitting a message by signing it. DKIM allows
+  the receiver to check the email that claimed to have come from a specific domain, is authorized by the owner of that domain.
+```py
+verification_response = event_notifications_service.update_verify_destination(
+      <instance-id>,		    # Event notifications service instance GUID
+      id=<destination-id>,      # Event notifications service instance Destination ID
+      type=<verification-type>, # verification type spf/dkim
+  ).get_result()
+```
+
 ## Push Destination APIs
 
 ### Create Destination tag subscription
