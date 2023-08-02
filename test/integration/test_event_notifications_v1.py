@@ -48,6 +48,7 @@ destination_id12 = ''
 destination_id13 = ''
 destination_id14 = ''
 destination_id15 = ''
+destination_id16 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -65,6 +66,7 @@ subscription_id12 = ''
 subscription_id13 = ''
 subscription_id14 = ''
 subscription_id15 = ''
+subscription_id16 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 integration_id = ''
@@ -503,7 +505,7 @@ class TestEventNotificationsV1():
     def test_create_destination(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16
         destination_config_params_model = {
             'url': 'https://gcm.com',
             'verb': 'get',
@@ -981,6 +983,37 @@ class TestEventNotificationsV1():
         assert destination.type == typeval
 
         destination_id15 = destination.id
+
+        destination_config_model = {
+            'params': {
+                'domain': 'test.event-notifications.test.cloud.ibm.com',
+            }
+        }
+
+        name = "custom_email_destination"
+        typeval = "smtp_custom"
+        description = "Custom Email Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id16 = destination.id
 
         #
         # The following status codes aren't covered by tests.
@@ -1512,6 +1545,53 @@ class TestEventNotificationsV1():
         assert res_id == destination_id15
         assert res_name == name
         assert res_description == description
+
+        destination_config_model = {
+            'params': {
+                'domain': 'test.event-notifications.test.cloud.ibm.com'
+            }
+        }
+
+        name = "Custom_Email_destination_update"
+        description = "Custom Email Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id16,
+            name=name,
+            description=description,
+            config=destination_config_model
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get('id')
+        res_name = destination_response.get('name')
+        res_description = destination_response.get('description')
+
+        assert res_id == destination_id16
+        assert res_name == name
+        assert res_description == description
+
+        spf_response = self.event_notifications_service.update_verify_destination(
+            instance_id,
+            id=destination_id16,
+            type="spf",
+        )
+        assert spf_response.get_status_code() == 200
+        spf_verification_response = spf_response.get_result()
+        assert spf_verification_response is not None
+
+        dkim_response = self.event_notifications_service.update_verify_destination(
+            instance_id,
+            id=destination_id16,
+            type="dkim",
+        )
+        assert dkim_response.get_status_code() == 200
+        dkim_verification_response = dkim_response.get_result()
+        assert dkim_verification_response is not None
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1528,7 +1608,7 @@ class TestEventNotificationsV1():
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16
         subscription_create_attributes_model = {
             'signing_enabled': False,
         }
@@ -1907,6 +1987,37 @@ class TestEventNotificationsV1():
         subscription_name = subscription_response.get('name')
         subscription_description = subscription_response.get('description')
         subscription_id15 = subscription_response.get('id')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+        subscription_create_attributes_model = {
+            'invited': ["nitishkulkarni005@gmail.com", "tester3@ibm.com"],
+            'add_notification_payload': True,
+            "reply_to_mail": "reply_to_mail@us.com",
+            "reply_to_name": "US News",
+            "from_name": "IBM",
+            "from_email": "test@test.event-notifications.test.cloud.ibm.com"
+        }
+
+        name = 'subscription_custom_email'
+        description = 'Subscription for custom email'
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id16,
+            topic_id=topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+        subscription_id16 = subscription_response.get('id')
 
         assert subscription_name == name
         assert subscription_description == description
@@ -2331,7 +2442,43 @@ class TestEventNotificationsV1():
 
         assert subscription_name == name
         assert subscription_description == description
-        #
+
+        custom_email_update_attributes_invite_model = {'add': ['tester4@ibm.com', 'nitishkulkarni005@gmail.com']}
+
+        custom_email_update_attributes_to_remove_model = {'remove': ['tester3@ibm.com']}
+
+        subscription_update_attributes_model = {
+            'invited': custom_email_update_attributes_invite_model,
+            'add_notification_payload': True,
+            "reply_to_mail": "reply_to_mail@us.com",
+            "reply_to_name": "US News",
+            "from_name": "IBM",
+            "from_email": "test@test.event-notifications.test.cloud.ibm.com",
+            "subscribed": custom_email_update_attributes_to_remove_model,
+            "unsubscribed": custom_email_update_attributes_to_remove_model
+        }
+
+        name = 'subscription_custom_email update'
+        description = 'Subscription for custom email updated'
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id16,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get('name')
+        subscription_description = subscription_response.get('description')
+
+        assert subscription_name == name
+        assert subscription_description == description
+
+    #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
         #
@@ -2667,7 +2814,7 @@ class TestEventNotificationsV1():
 
     @needscredentials
     def test_delete_subscription(self):
-        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15]:
+        for id in [subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(
                 instance_id,
                 id
@@ -2707,7 +2854,7 @@ class TestEventNotificationsV1():
     @needscredentials
     def test_delete_destination(self):
 
-        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15]:
+        for id in [destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16]:
             delete_destination_response = self.event_notifications_service.delete_destination(
                 instance_id,
                 id

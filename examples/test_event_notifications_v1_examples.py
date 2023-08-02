@@ -64,6 +64,7 @@ destination_id12 = ''
 destination_id13 = ''
 destination_id14 = ''
 destination_id15 = ''
+destination_id16 = ''
 safariCertificatePath = ''
 subscription_id = ''
 subscription_id1 = ''
@@ -71,6 +72,7 @@ subscription_id2 = ''
 subscription_id3 = ''
 subscription_id4 = ''
 subscription_id5 = ''
+subscription_id6 = ''
 fcmServerKey = ''
 fcmSenderId = ''
 integration_id = ''
@@ -368,7 +370,7 @@ class TestEventNotificationsV1Examples():
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16
         try:
             print('\ncreate_destination() result:')
             # begin-create_destination
@@ -738,6 +740,27 @@ class TestEventNotificationsV1Examples():
             destination = DestinationResponse.from_dict(destination)
             destination_id15 = destination.id
 
+            destination_config_model = {
+                'params': {
+                    'domain': 'abc.event-notifications.test.cloud.ibm.com',
+                }
+            }
+
+            name = "custom_email_destination"
+            typeval = "smtp_custom"
+            description = "Custom Email Destination"
+
+            destination = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+            destination = DestinationResponse.from_dict(destination)
+            destination_id16 = destination.id
             # end-create_destination
 
         except ApiException as e:
@@ -1122,7 +1145,7 @@ class TestEventNotificationsV1Examples():
             name = "Huawei_destination_update"
             description = "Huawei Destination update"
 
-            update_destination_response = self.event_notifications_service.update_destination(
+            destination = self.event_notifications_service.update_destination(
                 instance_id,
                 id=destination_id15,
                 name=name,
@@ -1131,6 +1154,33 @@ class TestEventNotificationsV1Examples():
             ).get_result()
 
             print(json.dumps(destination, indent=2))
+
+            destination_config_model = {
+                'params': {
+                    'domain': 'abc.event-notifications.test.cloud.ibm.com'
+                }
+            }
+
+            name = "Custom_Email_destination_update"
+            description = "Custom Email Destination update"
+
+            destination = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id16,
+                name=name,
+                description=description,
+                config=destination_config_model
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
+            verification_response = self.event_notifications_service.update_verify_destination(
+                instance_id,
+                id=destination_id16,
+                type="spf/dkim",
+            ).get_result()
+
+            print(json.dumps(verification_response, indent=2))
             # end-update_destination
 
         except ApiException as e:
@@ -1141,7 +1191,7 @@ class TestEventNotificationsV1Examples():
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6
         try:
             print('\ncreate_subscription() result:')
             # begin-create_subscription
@@ -1264,6 +1314,29 @@ class TestEventNotificationsV1Examples():
             print(json.dumps(subscription, indent=2))
 
             subscription_id5 = subscription.get('id')
+
+            subscription_create_attributes_model = {
+                'invited': ["abc@gmail.com", "tester3@ibm.com"],
+                'add_notification_payload': True,
+                "reply_to_mail": "reply_to_mail@us.com",
+                "reply_to_name": "US News",
+                "from_name": "IBM",
+                "from_email": "test@abc.event-notifications.test.cloud.ibm.com"
+            }
+
+            name = 'subscription_custom_email'
+            description = 'Subscription for custom email'
+            subscription = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id16,
+                topic_id=topic_id,
+                attributes=subscription_create_attributes_model,
+                description=description
+            ).get_result()
+
+            print(json.dumps(subscription, indent=2))
+            subscription_id6 = subscription.get('id')
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1433,6 +1506,35 @@ class TestEventNotificationsV1Examples():
 
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
+
+            custom_email_update_attributes_invite_model = {'add': ['tester4@ibm.com', 'abc@gmail.com']}
+
+            custom_email_update_attributes_to_remove_model = {'remove': ['tester3@ibm.com']}
+
+            subscription_update_attributes_model = {
+                'invited': custom_email_update_attributes_invite_model,
+                'add_notification_payload': True,
+                "reply_to_mail": "reply_to_mail@us.com",
+                "reply_to_name": "US News",
+                "from_name": "IBM",
+                "from_email": "test@abc.event-notifications.test.cloud.ibm.com",
+                "subscribed": custom_email_update_attributes_to_remove_model,
+                "unsubscribed": custom_email_update_attributes_to_remove_model
+            }
+
+            name = 'subscription_custom_email update'
+            description = 'Subscription for custom email updated'
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id6,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+
             # end-update_subscription
         except ApiException as e:
             pytest.fail(str(e))
@@ -1541,7 +1643,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_subscription
             print('\ndelete_subscription() response status code: ', response.get_status_code())
 
-            for id in [subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5]:
+            for id in [subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6]:
                 delete_subscription_response = event_notifications_service.delete_subscription(
                     instance_id,
                     id
@@ -1586,7 +1688,7 @@ class TestEventNotificationsV1Examples():
             # end-delete_destination
             print('\ndelete_destination() response status code: ', response.get_status_code())
 
-            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15]:
+            for id in [destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16]:
                 delete_destination_response = event_notifications_service.delete_destination(
                     instance_id,
                     id
