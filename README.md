@@ -449,12 +449,10 @@ update_template_response = event_notifications_service.update_template(
 
 ### Delete Template
 ```py
-DeleteTemplateOptions deleteTemplateOptions = new DeleteTemplateOptions.Builder()
-      .instanceId(<instanceId>)
-      .id(<templateId>)
-      .build();
-
-Response<Void> response = eventNotificationsService.deleteTemplate(deleteTemplateOptions).execute();
+delete_template_response = event_notifications_service.delete_template(
+    instance_id,
+    id
+).get_result()
 ```
 
 ## Push Destination APIs
