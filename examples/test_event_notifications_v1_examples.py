@@ -90,6 +90,8 @@ huawei_client_secret = ''
 cos_bucket_name = ''
 cos_instance_id = ''
 cos_end_point = ''
+template_invitation_id = ''
+template_notification_id = ''
 
 ##############################################################################
 # Start of Examples for Service: EventNotificationsV1
@@ -767,6 +769,87 @@ class TestEventNotificationsV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
+    def test_create_template_example(self):
+        """
+        create_template request example
+        """
+        global template_notification_id, template_invitation_id
+        try:
+            print('\ncreate_template() result:')
+            # begin-create_template
+            template_config_model = {
+                'body': '<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>',
+                'subject': 'Hi this is invitation for invitation message',
+            }
+
+            name = "template_invitation"
+            typeval = "smtp_custom.invitation"
+            description = "invitation template"
+
+            create_template_response = event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=template_config_model,
+                description=description
+            ).get_result()
+
+            print(json.dumps(create_template_response, indent=2))
+            template = TemplateResponse.from_dict(create_template_response)
+            template_invitation_id = template.id
+
+            name = "template_notification"
+            typeval = "smtp_custom.notification"
+            description = "notification template"
+
+            create_template_response = event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=template_config_model,
+                description=description
+            ).get_result()
+
+            # end-create_template
+            print(json.dumps(create_template_response, indent=2))
+            template = TemplateResponse.from_dict(create_template_response)
+            template_notification_id = template.id
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_templates(self):
+        """
+        list_templates request example
+        """
+        more_results = True
+        limit = 1
+        offset = 0
+
+        while more_results:
+            print('\nlist_templates() result:')
+            # begin-list_templates
+            list_templates_response = self.event_notifications_service.list_templates(
+                instance_id,
+                limit=limit,
+                offset=offset,
+                search=search
+            )
+
+            templates_list = list_templates_response.get_result()
+            # end-list_templates
+            assert list_templates_response.get_status_code() == 200
+            assert templates_list is not None
+
+            templates = TemplateList.from_dict(templates_list)
+            assert templates is not None
+
+            if templates.total_count <= offset:
+                more_results = False
+            offset += 1
+
+    @needscredentials
     def test_list_destinations_example(self):
         """
         list_destinations request example
@@ -825,6 +908,21 @@ class TestEventNotificationsV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_template(self):
+        """
+        get_template request example
+        """
+        print('\nget_destination() result:')
+        # begin-get_template
+        get_template_response = event_notifications_service.get_template(
+            instance_id,
+            id=template_invitation_id
+        ).get_result()
+
+        print(json.dumps(get_template_response, indent=2))
+        # end-get_template
 
     @needscredentials
     def test_update_destination_example(self):
@@ -1187,6 +1285,55 @@ class TestEventNotificationsV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
+    def test_update_template_example(self):
+        """
+        update_template request example
+        """
+        global template_notification_id, template_invitation_id
+        try:
+            print('\nupdate_template() result:')
+            # begin-update_template
+
+            template_config_model = {
+                'body': '<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>',
+                'subject': 'Hi this is invitation for invitation message',
+            }
+
+            template_name = "template_invitation"
+            typeval = "smtp_custom.invitation"
+            description = "invitation template"
+
+            update_template_response = event_notifications_service.update_template(
+                instance_id,
+                id=template_invitation_id,
+                name=template_name,
+                type=typeval,
+                description=description,
+                params=template_config_model
+            ).get_result()
+
+            print(json.dumps(update_template_response, indent=2))
+
+            template_name = "template_notification"
+            typeval = "smtp_custom.notification"
+            description = "notification template"
+
+            update_template_response = event_notifications_service.update_template(
+                instance_id,
+                id=template_notification_id,
+                name=template_name,
+                type=typeval,
+                description=description,
+                params=template_config_model
+            ).get_result()
+
+            # end-update_template
+            print(json.dumps(update_template_response, indent=2))
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_create_subscription_example(self):
         """
         create_subscription request example
@@ -1321,7 +1468,9 @@ class TestEventNotificationsV1Examples():
                 "reply_to_mail": "reply_to_mail@us.com",
                 "reply_to_name": "US News",
                 "from_name": "IBM",
-                "from_email": "test@abc.event-notifications.test.cloud.ibm.com"
+                "from_email": "test@abc.event-notifications.test.cloud.ibm.com",
+                "template_id_invitation": template_invitation_id,
+                "template_id_notification": template_notification_id
             }
 
             name = 'subscription_custom_email'
@@ -1519,7 +1668,9 @@ class TestEventNotificationsV1Examples():
                 "from_name": "IBM",
                 "from_email": "test@abc.event-notifications.test.cloud.ibm.com",
                 "subscribed": custom_email_update_attributes_to_remove_model,
-                "unsubscribed": custom_email_update_attributes_to_remove_model
+                "unsubscribed": custom_email_update_attributes_to_remove_model,
+                "template_id_invitation": template_invitation_id,
+                "template_id_notification": template_notification_id
             }
 
             name = 'subscription_custom_email update'
@@ -1697,6 +1848,20 @@ class TestEventNotificationsV1Examples():
 
         except ApiException as e:
             pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_template_example(self):
+        """
+        delete_template request example
+        """
+        for id in [template_invitation_id, template_notification_id]:
+            # begin-delete_template
+            delete_template_response = event_notifications_service.delete_template(
+                instance_id,
+                id
+            ).get_result()
+            # end-delete_template
+        print('\ndelete_template() response status code: ', delete_template_response.get_status_code())
 
     @needscredentials
     def test_delete_source_example(self):

@@ -1702,6 +1702,638 @@ class TestDeleteTopic:
 ##############################################################################
 
 ##############################################################################
+# Start of Service: Templates
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestCreateTemplate:
+    """
+    Test Class for create_template
+    """
+
+    @responses.activate
+    def test_create_template_all_params(self):
+        """
+        create_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "params": {"body": "body", "subject": "subject"}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateConfig model
+        template_config_model = {}
+        template_config_model['body'] = 'testString'
+        template_config_model['subject'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        name = 'testString'
+        type = 'smtp_custom.notification'
+        params = template_config_model
+        description = 'testString'
+
+        # Invoke method
+        response = _service.create_template(
+            instance_id,
+            name,
+            type,
+            params,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['type'] == 'smtp_custom.notification'
+        assert req_body['params'] == template_config_model
+        assert req_body['description'] == 'testString'
+
+    def test_create_template_all_params_with_retries(self):
+        # Enable retries and run test_create_template_all_params.
+        _service.enable_retries()
+        self.test_create_template_all_params()
+
+        # Disable retries and run test_create_template_all_params.
+        _service.disable_retries()
+        self.test_create_template_all_params()
+
+    @responses.activate
+    def test_create_template_value_error(self):
+        """
+        test_create_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "params": {"body": "body", "subject": "subject"}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Construct a dict representation of a TemplateConfig model
+        template_config_model = {}
+        template_config_model['body'] = 'testString'
+        template_config_model['subject'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        name = 'testString'
+        type = 'smtp_custom.notification'
+        params = template_config_model
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "name": name,
+            "type": type,
+            "params": params,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_template(**req_copy)
+
+    def test_create_template_value_error_with_retries(self):
+        # Enable retries and run test_create_template_value_error.
+        _service.enable_retries()
+        self.test_create_template_value_error()
+
+        # Disable retries and run test_create_template_value_error.
+        _service.disable_retries()
+        self.test_create_template_value_error()
+
+
+class TestListTemplates:
+    """
+    Test Class for list_templates
+    """
+
+    @responses.activate
+    def test_list_templates_all_params(self):
+        """
+        list_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        limit = 1
+        offset = 0
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_templates(
+            instance_id,
+            limit=limit,
+            offset=offset,
+            search=search,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_templates_all_params.
+        _service.enable_retries()
+        self.test_list_templates_all_params()
+
+        # Disable retries and run test_list_templates_all_params.
+        _service.disable_retries()
+        self.test_list_templates_all_params()
+
+    @responses.activate
+    def test_list_templates_required_params(self):
+        """
+        test_list_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Invoke method
+        response = _service.list_templates(
+            instance_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_templates_required_params.
+        _service.enable_retries()
+        self.test_list_templates_required_params()
+
+        # Disable retries and run test_list_templates_required_params.
+        _service.disable_retries()
+        self.test_list_templates_required_params()
+
+    @responses.activate
+    def test_list_templates_value_error(self):
+        """
+        test_list_templates_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_templates(**req_copy)
+
+    def test_list_templates_value_error_with_retries(self):
+        # Enable retries and run test_list_templates_value_error.
+        _service.enable_retries()
+        self.test_list_templates_value_error()
+
+        # Disable retries and run test_list_templates_value_error.
+        _service.disable_retries()
+        self.test_list_templates_value_error()
+
+    @responses.activate
+    def test_list_templates_with_pager_get_next(self):
+        """
+        test_list_templates_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/templates')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = TemplatesPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_templates_with_pager_get_all(self):
+        """
+        test_list_templates_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/templates')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = TemplatesPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestGetTemplate:
+    """
+    Test Class for get_template
+    """
+
+    @responses.activate
+    def test_get_template_all_params(self):
+        """
+        get_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_template(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_template_all_params_with_retries(self):
+        # Enable retries and run test_get_template_all_params.
+        _service.enable_retries()
+        self.test_get_template_all_params()
+
+        # Disable retries and run test_get_template_all_params.
+        _service.disable_retries()
+        self.test_get_template_all_params()
+
+    @responses.activate
+    def test_get_template_value_error(self):
+        """
+        test_get_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_template(**req_copy)
+
+    def test_get_template_value_error_with_retries(self):
+        # Enable retries and run test_get_template_value_error.
+        _service.enable_retries()
+        self.test_get_template_value_error()
+
+        # Disable retries and run test_get_template_value_error.
+        _service.disable_retries()
+        self.test_get_template_value_error()
+
+
+class TestUpdateTemplate:
+    """
+    Test Class for update_template
+    """
+
+    @responses.activate
+    def test_update_template_all_params(self):
+        """
+        update_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a TemplateConfig model
+        template_config_model = {}
+        template_config_model['body'] = 'testString'
+        template_config_model['subject'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        type = 'smtp_custom.notification'
+        params = template_config_model
+
+        # Invoke method
+        response = _service.update_template(
+            instance_id,
+            id,
+            name=name,
+            description=description,
+            type=type,
+            params=params,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+        assert req_body['type'] == 'smtp_custom.notification'
+        assert req_body['params'] == template_config_model
+
+    def test_update_template_all_params_with_retries(self):
+        # Enable retries and run test_update_template_all_params.
+        _service.enable_retries()
+        self.test_update_template_all_params()
+
+        # Disable retries and run test_update_template_all_params.
+        _service.disable_retries()
+        self.test_update_template_all_params()
+
+    @responses.activate
+    def test_update_template_value_error(self):
+        """
+        test_update_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PUT,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Construct a dict representation of a TemplateConfig model
+        template_config_model = {}
+        template_config_model['body'] = 'testString'
+        template_config_model['subject'] = 'testString'
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        name = 'testString'
+        description = 'testString'
+        type = 'smtp_custom.notification'
+        params = template_config_model
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_template(**req_copy)
+
+    def test_update_template_value_error_with_retries(self):
+        # Enable retries and run test_update_template_value_error.
+        _service.enable_retries()
+        self.test_update_template_value_error()
+
+        # Disable retries and run test_update_template_value_error.
+        _service.disable_retries()
+        self.test_update_template_value_error()
+
+
+class TestDeleteTemplate:
+    """
+    Test Class for delete_template
+    """
+
+    @responses.activate
+    def test_delete_template_all_params(self):
+        """
+        delete_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.delete_template(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_template_all_params_with_retries(self):
+        # Enable retries and run test_delete_template_all_params.
+        _service.enable_retries()
+        self.test_delete_template_all_params()
+
+        # Disable retries and run test_delete_template_all_params.
+        _service.disable_retries()
+        self.test_delete_template_all_params()
+
+    @responses.activate
+    def test_delete_template_value_error(self):
+        """
+        test_delete_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/templates/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_template(**req_copy)
+
+    def test_delete_template_value_error_with_retries(self):
+        # Enable retries and run test_delete_template_value_error.
+        _service.enable_retries()
+        self.test_delete_template_value_error()
+
+        # Disable retries and run test_delete_template_value_error.
+        _service.disable_retries()
+        self.test_delete_template_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: Templates
+##############################################################################
+
+##############################################################################
 # Start of Service: Destinations
 ##############################################################################
 # region
@@ -5451,6 +6083,164 @@ class TestModel_TagsSubscriptionListItem:
         assert tags_subscription_list_item_model_json2 == tags_subscription_list_item_model_json
 
 
+class TestModel_Template:
+    """
+    Test Class for Template
+    """
+
+    def test_template_serialization(self):
+        """
+        Test serialization/deserialization for Template
+        """
+
+        # Construct a json representation of a Template model
+        template_model_json = {}
+        template_model_json['id'] = 'testString'
+        template_model_json['name'] = 'testString'
+        template_model_json['description'] = 'testString'
+        template_model_json['type'] = 'smtp_custom.notification'
+        template_model_json['subscription_count'] = 38
+        template_model_json['subscription_names'] = ['testString']
+        template_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of Template by calling from_dict on the json representation
+        template_model = Template.from_dict(template_model_json)
+        assert template_model != False
+
+        # Construct a model instance of Template by calling from_dict on the json representation
+        template_model_dict = Template.from_dict(template_model_json).__dict__
+        template_model2 = Template(**template_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_model == template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_model_json2 = template_model.to_dict()
+        assert template_model_json2 == template_model_json
+
+
+class TestModel_TemplateConfig:
+    """
+    Test Class for TemplateConfig
+    """
+
+    def test_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfig model
+        template_config_model_json = {}
+        template_config_model_json['body'] = 'testString'
+        template_config_model_json['subject'] = 'testString'
+
+        # Construct a model instance of TemplateConfig by calling from_dict on the json representation
+        template_config_model = TemplateConfig.from_dict(template_config_model_json)
+        assert template_config_model != False
+
+        # Construct a model instance of TemplateConfig by calling from_dict on the json representation
+        template_config_model_dict = TemplateConfig.from_dict(template_config_model_json).__dict__
+        template_config_model2 = TemplateConfig(**template_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_config_model == template_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_model_json2 = template_config_model.to_dict()
+        assert template_config_model_json2 == template_config_model_json
+
+
+class TestModel_TemplateList:
+    """
+    Test Class for TemplateList
+    """
+
+    def test_template_list_serialization(self):
+        """
+        Test serialization/deserialization for TemplateList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        template_model = {}  # Template
+        template_model['id'] = '11fe18ba-0000-0000-9f07-355e8052a813'
+        template_model['name'] = 'template name'
+        template_model['description'] = 'Template description'
+        template_model['type'] = 'smtp_custom.notification'
+        template_model['subscription_count'] = 2
+        template_model['subscription_names'] = ['abc', 'xyz']
+        template_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
+
+        page_href_response_model = {}  # PageHrefResponse
+        page_href_response_model['href'] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/templates?limit=10&offset=0'
+
+        # Construct a json representation of a TemplateList model
+        template_list_model_json = {}
+        template_list_model_json['total_count'] = 38
+        template_list_model_json['offset'] = 38
+        template_list_model_json['limit'] = 38
+        template_list_model_json['templates'] = [template_model]
+        template_list_model_json['first'] = page_href_response_model
+        template_list_model_json['previous'] = page_href_response_model
+        template_list_model_json['next'] = page_href_response_model
+
+        # Construct a model instance of TemplateList by calling from_dict on the json representation
+        template_list_model = TemplateList.from_dict(template_list_model_json)
+        assert template_list_model != False
+
+        # Construct a model instance of TemplateList by calling from_dict on the json representation
+        template_list_model_dict = TemplateList.from_dict(template_list_model_json).__dict__
+        template_list_model2 = TemplateList(**template_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_list_model == template_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_list_model_json2 = template_list_model.to_dict()
+        assert template_list_model_json2 == template_list_model_json
+
+
+class TestModel_TemplateResponse:
+    """
+    Test Class for TemplateResponse
+    """
+
+    def test_template_response_serialization(self):
+        """
+        Test serialization/deserialization for TemplateResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        template_config_model = {}  # TemplateConfig
+        template_config_model['body'] = '<!DOCTYPE html><html><head><title>Go To-Do list</title></head><body><p>To-Do list for user: {{ Data.issuer.p }}</p><table><tr><td>Task</td><td>Done</td></tr>{{#each Email}}<tr><td>{{ this }}</td></tr>{{/each}}</table></body></html>'
+        template_config_model['subject'] = 'This is the template subject'
+
+        # Construct a json representation of a TemplateResponse model
+        template_response_model_json = {}
+        template_response_model_json['id'] = 'testString'
+        template_response_model_json['name'] = 'testString'
+        template_response_model_json['description'] = 'testString'
+        template_response_model_json['type'] = 'smtp_custom.notification'
+        template_response_model_json['params'] = template_config_model
+        template_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of TemplateResponse by calling from_dict on the json representation
+        template_response_model = TemplateResponse.from_dict(template_response_model_json)
+        assert template_response_model != False
+
+        # Construct a model instance of TemplateResponse by calling from_dict on the json representation
+        template_response_model_dict = TemplateResponse.from_dict(template_response_model_json).__dict__
+        template_response_model2 = TemplateResponse(**template_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert template_response_model == template_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_response_model_json2 = template_response_model.to_dict()
+        assert template_response_model_json2 == template_response_model_json
+
+
 class TestModel_Topic:
     """
     Test Class for Topic
@@ -6252,6 +7042,8 @@ class TestModel_SubscriptionAttributesCustomEmailAttributesResponse:
         subscription_attributes_custom_email_attributes_response_model_json['reply_to_name'] = 'testString'
         subscription_attributes_custom_email_attributes_response_model_json['from_name'] = 'testString'
         subscription_attributes_custom_email_attributes_response_model_json['from_email'] = 'testString'
+        subscription_attributes_custom_email_attributes_response_model_json['template_id_notification'] = 'testString'
+        subscription_attributes_custom_email_attributes_response_model_json['template_id_invitation'] = 'testString'
         subscription_attributes_custom_email_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesCustomEmailAttributesResponse by calling from_dict on the json representation
@@ -6535,6 +7327,8 @@ class TestModel_SubscriptionCreateAttributesCustomEmailAttributes:
         subscription_create_attributes_custom_email_attributes_model_json['reply_to_name'] = 'testString'
         subscription_create_attributes_custom_email_attributes_model_json['from_name'] = 'testString'
         subscription_create_attributes_custom_email_attributes_model_json['from_email'] = 'testString'
+        subscription_create_attributes_custom_email_attributes_model_json['template_id_notification'] = 'testString'
+        subscription_create_attributes_custom_email_attributes_model_json['template_id_invitation'] = 'testString'
 
         # Construct a model instance of SubscriptionCreateAttributesCustomEmailAttributes by calling from_dict on the json representation
         subscription_create_attributes_custom_email_attributes_model = SubscriptionCreateAttributesCustomEmailAttributes.from_dict(subscription_create_attributes_custom_email_attributes_model_json)
@@ -6768,6 +7562,8 @@ class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
         subscription_update_attributes_custom_email_update_attributes_model_json['from_email'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['subscribed'] = update_attributes_subscribed_model
         subscription_update_attributes_custom_email_update_attributes_model_json['unsubscribed'] = update_attributes_unsubscribed_model
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_notification'] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_invitation'] = 'testString'
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_email_update_attributes_model = SubscriptionUpdateAttributesCustomEmailUpdateAttributes.from_dict(subscription_update_attributes_custom_email_update_attributes_model_json)

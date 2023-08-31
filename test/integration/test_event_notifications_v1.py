@@ -84,6 +84,8 @@ huawei_client_secret = ''
 cos_bucket_name = ''
 cos_instance_id = ''
 cos_end_point = ''
+template_invitation_id = ''
+template_notification_id = ''
 
 class TestEventNotificationsV1():
     """
@@ -1027,6 +1029,67 @@ class TestEventNotificationsV1():
         #
 
     @needscredentials
+    def test_create_template(self):
+
+        # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
+        global template_invitation_id, template_notification_id
+
+        template_config_model = {
+            'body': '<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>',
+            'subject': 'Hi this is invitation for invitation message',
+        }
+
+        name = "template_invitation"
+        typeval = "smtp_custom.invitation"
+        description = "invitation template"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=template_config_model,
+            description=description
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+
+        template_invitation_id = template.id
+
+        name = "template_notification"
+        typeval = "smtp_custom.notification"
+        description = "notification template"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=template_config_model,
+            description=description
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+
+        template_notification_id = template.id
+
+    @needscredentials
     def test_list_destinations(self):
 
         global destination_id2, destination_id1
@@ -1070,6 +1133,31 @@ class TestEventNotificationsV1():
         # 401
         # 500
         #
+    @needscredentials
+    def test_list_templates(self):
+
+        more_results = True
+        limit = 1
+        offset = 0
+
+        while more_results:
+            list_templates_response = self.event_notifications_service.list_templates(
+                instance_id,
+                limit=limit,
+                offset=offset,
+                search=search
+            )
+
+            assert list_templates_response.get_status_code() == 200
+            templates_list = list_templates_response.get_result()
+            assert templates_list is not None
+
+            templates = TemplateList.from_dict(templates_list)
+            assert templates is not None
+
+            if templates.total_count <= offset:
+                more_results = False
+            offset += 1
 
     @needscredentials
     def test_get_destination(self):
@@ -1091,6 +1179,18 @@ class TestEventNotificationsV1():
         # 404
         # 500
         #
+
+    @needscredentials
+    def test_get_template(self):
+
+        get_template_response = self.event_notifications_service.get_template(
+            instance_id,
+            id=template_invitation_id
+        )
+
+        assert get_template_response.get_status_code() == 200
+        template_response = get_template_response.get_result()
+        assert template_response is not None
 
     @needscredentials
     def test_update_destination(self):
@@ -1605,6 +1705,57 @@ class TestEventNotificationsV1():
         #
 
     @needscredentials
+    def test_update_template(self):
+
+        template_config_model = {
+            'body': '<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>',
+            'subject': 'Hi this is invitation for invitation message',
+        }
+
+        template_name = "template_invitation"
+        typeval = "smtp_custom.invitation"
+        description = "invitation template"
+
+        update_template_response = self.event_notifications_service.update_template(
+            instance_id,
+            id=template_invitation_id,
+            name=template_name,
+            type=typeval,
+            description=description,
+            params=template_config_model
+        )
+
+        assert update_template_response.get_status_code() == 200
+        template_response = update_template_response.get_result()
+
+        assert template_response is not None
+        assert template_response.get('name') == template_name
+        assert template_response.get('description') == description
+        assert template_response.get('type') == typeval
+        assert template_response.get('id') == template_invitation_id
+
+        template_name = "template_notification"
+        typeval = "smtp_custom.notification"
+        description = "notification template"
+
+        update_template_response = self.event_notifications_service.update_template(
+            instance_id,
+            id=template_notification_id,
+            name=template_name,
+            type=typeval,
+            description=description,
+            params=template_config_model
+        )
+
+        assert update_template_response.get_status_code() == 200
+        template_response = update_template_response.get_result()
+        assert template_response is not None
+        assert template_response.get('name') == template_name
+        assert template_response.get('description') == description
+        assert template_response.get('type') == typeval
+        assert template_response.get('id') == template_notification_id
+
+    @needscredentials
     def test_create_subscription(self):
 
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
@@ -1997,7 +2148,9 @@ class TestEventNotificationsV1():
             "reply_to_mail": "reply_to_mail@us.com",
             "reply_to_name": "US News",
             "from_name": "IBM",
-            "from_email": "test@test.event-notifications.test.cloud.ibm.com"
+            "from_email": "test@test.event-notifications.test.cloud.ibm.com",
+            "template_id_invitation": template_invitation_id,
+            "template_id_notification": template_notification_id
         }
 
         name = 'subscription_custom_email'
@@ -2455,7 +2608,9 @@ class TestEventNotificationsV1():
             "from_name": "IBM",
             "from_email": "test@test.event-notifications.test.cloud.ibm.com",
             "subscribed": custom_email_update_attributes_to_remove_model,
-            "unsubscribed": custom_email_update_attributes_to_remove_model
+            "unsubscribed": custom_email_update_attributes_to_remove_model,
+            "template_id_invitation": template_invitation_id,
+            "template_id_notification": template_notification_id
         }
 
         name = 'subscription_custom_email update'
@@ -2869,6 +3024,16 @@ class TestEventNotificationsV1():
         # 404
         # 500
         #
+
+    @needscredentials
+    def test_delete_template(self):
+
+        for id in [template_invitation_id, template_notification_id]:
+            delete_template_response = self.event_notifications_service.delete_template(
+                instance_id,
+                id
+            )
+        print('\ndelete_template() response status code: ', delete_template_response.get_status_code())
 
     @needscredentials
     def test_delete_source(self):

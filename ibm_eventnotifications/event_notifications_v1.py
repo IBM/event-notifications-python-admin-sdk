@@ -787,6 +787,310 @@ class EventNotificationsV1(BaseService):
         return response
 
     #########################
+    # Templates
+    #########################
+
+    def create_template(
+        self,
+        instance_id: str,
+        name: str,
+        type: str,
+        params: 'TemplateConfig',
+        *,
+        description: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Create a new Template.
+
+        Create a new Template.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str name: The Message Template.
+        :param str type: The type of template.
+        :param TemplateConfig params: Payload describing a template configuration.
+        :param str description: (optional) The Template description.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateResponse` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if name is None:
+            raise ValueError('name must be provided')
+        if type is None:
+            raise ValueError('type must be provided')
+        if params is None:
+            raise ValueError('params must be provided')
+        params = convert_model(params)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='create_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'type': type,
+            'params': params,
+            'description': description,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/templates'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_templates(
+        self,
+        instance_id: str,
+        *,
+        limit: int = None,
+        offset: int = None,
+        search: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List all templates.
+
+        List all Templates.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int limit: (optional) Page limit for paginated results.
+        :param int offset: (optional) offset for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TemplateList` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'limit': limit,
+            'offset': offset,
+            'search': search,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/templates'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_template(
+        self,
+        instance_id: str,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get details of a Template.
+
+        Get details of a Template.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Template` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/templates/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_template(
+        self,
+        instance_id: str,
+        id: str,
+        *,
+        name: str = None,
+        description: str = None,
+        type: str = None,
+        params: 'TemplateConfig' = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Update details of a Template.
+
+        Update details of a Template.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Template.
+        :param str name: (optional) Template name.
+        :param str description: (optional) Template description.
+        :param str type: (optional) The type of template.
+        :param TemplateConfig params: (optional) Payload describing a template
+               configuration.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Template` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        if params is not None:
+            params = convert_model(params)
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_template',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'name': name,
+            'description': description,
+            'type': type,
+            'params': params,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/templates/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PUT',
+            url=url,
+            headers=headers,
+            data=data,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def delete_template(
+        self,
+        instance_id: str,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Delete a Template.
+
+        Delete a Template.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='delete_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/templates/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
     # Destinations
     #########################
 
@@ -1186,9 +1490,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Verify status of spf or dkim records of custom email.
+        Verify SPF and DKIM records of custom domain.
 
-        Verify status of spf or dkim records of custom email.
+        Verify SPF and DKIM records of custom domain.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -5613,6 +5917,453 @@ class TagsSubscriptionListItem:
         return not self == other
 
 
+class Template:
+    """
+    Template object.
+
+    :attr str id: Template ID.
+    :attr str name: Template name.
+    :attr str description: Template description.
+    :attr str type: template type.
+    :attr int subscription_count: Subscription count.
+    :attr List[str] subscription_names: Names of subscriptions.
+    :attr datetime updated_at: Updated at.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        description: str,
+        type: str,
+        subscription_count: int,
+        subscription_names: List[str],
+        updated_at: datetime,
+    ) -> None:
+        """
+        Initialize a Template object.
+
+        :param str id: Template ID.
+        :param str name: Template name.
+        :param str description: Template description.
+        :param str type: template type.
+        :param int subscription_count: Subscription count.
+        :param List[str] subscription_names: Names of subscriptions.
+        :param datetime updated_at: Updated at.
+        """
+        self.id = id
+        self.name = name
+        self.description = description
+        self.type = type
+        self.subscription_count = subscription_count
+        self.subscription_names = subscription_names
+        self.updated_at = updated_at
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Template':
+        """Initialize a Template object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in Template JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in Template JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in Template JSON')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in Template JSON')
+        if 'subscription_count' in _dict:
+            args['subscription_count'] = _dict.get('subscription_count')
+        else:
+            raise ValueError('Required property \'subscription_count\' not present in Template JSON')
+        if 'subscription_names' in _dict:
+            args['subscription_names'] = _dict.get('subscription_names')
+        else:
+            raise ValueError('Required property \'subscription_names\' not present in Template JSON')
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        else:
+            raise ValueError('Required property \'updated_at\' not present in Template JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Template object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'subscription_count') and self.subscription_count is not None:
+            _dict['subscription_count'] = self.subscription_count
+        if hasattr(self, 'subscription_names') and self.subscription_names is not None:
+            _dict['subscription_names'] = self.subscription_names
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Template object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Template') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Template') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        template type.
+        """
+
+        SMTP_CUSTOM_NOTIFICATION = 'smtp_custom.notification'
+        SMTP_CUSTOM_INVITATION = 'smtp_custom.invitation'
+
+
+
+class TemplateConfig:
+    """
+    Payload describing a template configuration.
+
+    :attr str body: Template body.
+    :attr str subject: The template subject.
+    """
+
+    def __init__(
+        self,
+        body: str,
+        subject: str,
+    ) -> None:
+        """
+        Initialize a TemplateConfig object.
+
+        :param str body: Template body.
+        :param str subject: The template subject.
+        """
+        self.body = body
+        self.subject = subject
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateConfig':
+        """Initialize a TemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError('Required property \'body\' not present in TemplateConfig JSON')
+        if 'subject' in _dict:
+            args['subject'] = _dict.get('subject')
+        else:
+            raise ValueError('Required property \'subject\' not present in TemplateConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        if hasattr(self, 'subject') and self.subject is not None:
+            _dict['subject'] = self.subject
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateList:
+    """
+    Payload describing a template list request.
+
+    :attr int total_count: Total number of templates.
+    :attr int offset: Current offset.
+    :attr int limit: limit to show templates.
+    :attr List[Template] templates: List of templates.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
+    """
+
+    def __init__(
+        self,
+        total_count: int,
+        offset: int,
+        limit: int,
+        templates: List['Template'],
+        *,
+        first: 'PageHrefResponse' = None,
+        previous: 'PageHrefResponse' = None,
+        next: 'PageHrefResponse' = None,
+    ) -> None:
+        """
+        Initialize a TemplateList object.
+
+        :param int total_count: Total number of templates.
+        :param int offset: Current offset.
+        :param int limit: limit to show templates.
+        :param List[Template] templates: List of templates.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
+        """
+        self.total_count = total_count
+        self.offset = offset
+        self.limit = limit
+        self.templates = templates
+        self.first = first
+        self.previous = previous
+        self.next = next
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateList':
+        """Initialize a TemplateList object from a json dictionary."""
+        args = {}
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in TemplateList JSON')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in TemplateList JSON')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in TemplateList JSON')
+        if 'templates' in _dict:
+            args['templates'] = [Template.from_dict(v) for v in _dict.get('templates')]
+        else:
+            raise ValueError('Required property \'templates\' not present in TemplateList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'templates') and self.templates is not None:
+            templates_list = []
+            for v in self.templates:
+                if isinstance(v, dict):
+                    templates_list.append(v)
+                else:
+                    templates_list.append(v.to_dict())
+            _dict['templates'] = templates_list
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateList') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateResponse:
+    """
+    Payload describing a template get request.
+
+    :attr str id: Template ID.
+    :attr str name: Template name.
+    :attr str description: (optional) Template description.
+    :attr str type: Template type.
+    :attr TemplateConfig params: Payload describing a template configuration.
+    :attr datetime created_at: Created time.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        type: str,
+        params: 'TemplateConfig',
+        created_at: datetime,
+        *,
+        description: str = None,
+    ) -> None:
+        """
+        Initialize a TemplateResponse object.
+
+        :param str id: Template ID.
+        :param str name: Template name.
+        :param str type: Template type.
+        :param TemplateConfig params: Payload describing a template configuration.
+        :param datetime created_at: Created time.
+        :param str description: (optional) Template description.
+        """
+        self.id = id
+        self.name = name
+        self.description = description
+        self.type = type
+        self.params = params
+        self.created_at = created_at
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateResponse':
+        """Initialize a TemplateResponse object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in TemplateResponse JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in TemplateResponse JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in TemplateResponse JSON')
+        if 'params' in _dict:
+            args['params'] = TemplateConfig.from_dict(_dict.get('params'))
+        else:
+            raise ValueError('Required property \'params\' not present in TemplateResponse JSON')
+        if 'created_at' in _dict:
+            args['created_at'] = string_to_datetime(_dict.get('created_at'))
+        else:
+            raise ValueError('Required property \'created_at\' not present in TemplateResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'params') and self.params is not None:
+            if isinstance(self.params, dict):
+                _dict['params'] = self.params
+            else:
+                _dict['params'] = self.params.to_dict()
+        if hasattr(self, 'created_at') and self.created_at is not None:
+            _dict['created_at'] = datetime_to_string(self.created_at)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        Template type.
+        """
+
+        SMTP_CUSTOM_NOTIFICATION = 'smtp_custom.notification'
+        SMTP_CUSTOM_INVITATION = 'smtp_custom.invitation'
+
+
+
 class Topic:
     """
     Topic object.
@@ -7561,10 +8312,12 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
     :attr str reply_to_name: The email name to reply to.
     :attr str from_name: The email name of From.
     :attr str from_email: The email from.
+    :attr str template_id_notification: (optional) The templete id for notification.
+    :attr str template_id_invitation: (optional) The templete id for invitation.
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['invited', 'subscribed', 'unsubscribed', 'add_notification_payload', 'reply_to_mail', 'reply_to_name', 'from_name', 'from_email'])
+    _properties = frozenset(['invited', 'subscribed', 'unsubscribed', 'add_notification_payload', 'reply_to_mail', 'reply_to_name', 'from_name', 'from_email', 'template_id_notification', 'template_id_invitation'])
 
     def __init__(
         self,
@@ -7577,6 +8330,8 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
         invited: List['EmailAttributesResponseInvitedItems'] = None,
         subscribed: List['EmailAttributesResponseSubscribedUnsubscribedItems'] = None,
         unsubscribed: List['EmailAttributesResponseSubscribedUnsubscribedItems'] = None,
+        template_id_notification: str = None,
+        template_id_invitation: str = None,
         **kwargs,
     ) -> None:
         """
@@ -7594,6 +8349,10 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
                (optional) The unsubscribe list.
         :param List[EmailAttributesResponseSubscribedUnsubscribedItems]
                unsubscribed: (optional) The subscribed list.
+        :param str template_id_notification: (optional) The templete id for
+               notification.
+        :param str template_id_invitation: (optional) The templete id for
+               invitation.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
@@ -7605,6 +8364,8 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
         self.reply_to_name = reply_to_name
         self.from_name = from_name
         self.from_email = from_email
+        self.template_id_notification = template_id_notification
+        self.template_id_invitation = template_id_invitation
         for _key, _value in kwargs.items():
             setattr(self, _key, _value)
 
@@ -7638,6 +8399,10 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
             args['from_email'] = _dict.get('from_email')
         else:
             raise ValueError('Required property \'from_email\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON')
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'template_id_invitation' in _dict:
+            args['template_id_invitation'] = _dict.get('template_id_invitation')
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -7683,6 +8448,10 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
             _dict['from_name'] = self.from_name
         if hasattr(self, 'from_email') and self.from_email is not None:
             _dict['from_email'] = self.from_email
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'template_id_invitation') and self.template_id_invitation is not None:
+            _dict['template_id_invitation'] = self.template_id_invitation
         for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -8306,6 +9075,8 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
     :attr str reply_to_name: The email name to reply to.
     :attr str from_name: The email name of From.
     :attr str from_email: The email from.
+    :attr str template_id_notification: (optional) The templete id for notification.
+    :attr str template_id_invitation: (optional) The templete id for invitation.
     """
 
     def __init__(
@@ -8316,6 +9087,9 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         reply_to_name: str,
         from_name: str,
         from_email: str,
+        *,
+        template_id_notification: str = None,
+        template_id_invitation: str = None,
     ) -> None:
         """
         Initialize a SubscriptionCreateAttributesCustomEmailAttributes object.
@@ -8327,6 +9101,10 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         :param str reply_to_name: The email name to reply to.
         :param str from_name: The email name of From.
         :param str from_email: The email from.
+        :param str template_id_notification: (optional) The templete id for
+               notification.
+        :param str template_id_invitation: (optional) The templete id for
+               invitation.
         """
         # pylint: disable=super-init-not-called
         self.invited = invited
@@ -8335,6 +9113,8 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         self.reply_to_name = reply_to_name
         self.from_name = from_name
         self.from_email = from_email
+        self.template_id_notification = template_id_notification
+        self.template_id_invitation = template_id_invitation
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesCustomEmailAttributes':
@@ -8364,6 +9144,10 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
             args['from_email'] = _dict.get('from_email')
         else:
             raise ValueError('Required property \'from_email\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON')
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'template_id_invitation' in _dict:
+            args['template_id_invitation'] = _dict.get('template_id_invitation')
         return cls(**args)
 
     @classmethod
@@ -8386,6 +9170,10 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
             _dict['from_name'] = self.from_name
         if hasattr(self, 'from_email') and self.from_email is not None:
             _dict['from_email'] = self.from_email
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'template_id_invitation') and self.template_id_invitation is not None:
+            _dict['template_id_invitation'] = self.template_id_invitation
         return _dict
 
     def _to_dict(self):
@@ -8824,6 +9612,8 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdate
           numbers.
     :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids or
           phone numbers.
+    :attr str template_id_notification: (optional) The templete id for notification.
+    :attr str template_id_invitation: (optional) The templete id for invitation.
     """
 
     def __init__(
@@ -8837,6 +9627,8 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdate
         invited: 'UpdateAttributesInvited' = None,
         subscribed: 'UpdateAttributesSubscribed' = None,
         unsubscribed: 'UpdateAttributesUnsubscribed' = None,
+        template_id_notification: str = None,
+        template_id_invitation: str = None,
     ) -> None:
         """
         Initialize a SubscriptionUpdateAttributesCustomEmailUpdateAttributes object.
@@ -8853,6 +9645,10 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdate
                phone numbers.
         :param UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids
                or phone numbers.
+        :param str template_id_notification: (optional) The templete id for
+               notification.
+        :param str template_id_invitation: (optional) The templete id for
+               invitation.
         """
         # pylint: disable=super-init-not-called
         self.invited = invited
@@ -8863,6 +9659,8 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdate
         self.from_email = from_email
         self.subscribed = subscribed
         self.unsubscribed = unsubscribed
+        self.template_id_notification = template_id_notification
+        self.template_id_invitation = template_id_invitation
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesCustomEmailUpdateAttributes':
@@ -8894,6 +9692,10 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdate
             args['subscribed'] = UpdateAttributesSubscribed.from_dict(_dict.get('subscribed'))
         if 'unsubscribed' in _dict:
             args['unsubscribed'] = UpdateAttributesUnsubscribed.from_dict(_dict.get('unsubscribed'))
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'template_id_invitation' in _dict:
+            args['template_id_invitation'] = _dict.get('template_id_invitation')
         return cls(**args)
 
     @classmethod
@@ -8929,6 +9731,10 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdate
                 _dict['unsubscribed'] = self.unsubscribed
             else:
                 _dict['unsubscribed'] = self.unsubscribed.to_dict()
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'template_id_invitation') and self.template_id_invitation is not None:
+            _dict['template_id_invitation'] = self.template_id_invitation
         return _dict
 
     def _to_dict(self):
@@ -9504,6 +10310,79 @@ class TopicsPager:
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of TopicsListItem.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class TemplatesPager:
+    """
+    TemplatesPager can be used to simplify the use of the "list_templates" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: EventNotificationsV1,
+        instance_id: str,
+        limit: int = None,
+        search: str = None,
+    ) -> None:
+        """
+        Initialize a TemplatesPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._instance_id = instance_id
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of Template.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_templates(
+            instance_id=self._instance_id,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('templates')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of Template.
         :rtype: List[dict]
         """
         results = []
