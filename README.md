@@ -111,6 +111,12 @@ SDK Methods to consume
     - [Update Destination](#update-destination)
     - [Delete Destination](#delete-destination)
     - [Custom Domain_Name_verification](#custom-domain-name-verification)
+- [Templates](#templates)
+    - [Create Template](#create-template)
+    - [List Templates](#list-templates)
+    - [Get Template](#get-template)
+    - [Update Template](#update-template)
+    - [Delete Template](#delete-template)
 - [Push Destination APIs](#push-destination-apis)
   - [Create Destination tag subscription](#create-destination-tag-subscription)
   - [List Destination tag subscription](#list-destination-tag-subscription)
@@ -379,6 +385,76 @@ verification_response = event_notifications_service.update_verify_destination(
       id=<destination-id>,      # Event notifications service instance Destination ID
       type=<verification-type>, # verification type spf/dkim
   ).get_result()
+```
+
+## Templates
+
+Template is a pre-defined layout, that may include content like images, text and dynamic content based on event. Rather than creating a new content from scratch each time, you can use a template as a base and configure them in subscription. 
+supports the following templates:
+
+- Custom Email notification
+- Custom Email invitation
+
+### Create Template
+```py
+template_config_model = {
+    'body': '<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>',
+    'subject': 'Hi this is invitation for invitation message',
+}
+
+create_template_response = event_notifications_service.create_template(
+    instance_id=<instance-id>,
+    name=<template-name>,
+    type=<template-type>,
+    params=template_config_model,
+    description=<template-description>
+).get_result()
+```
+### List Templates
+```py
+list_templates_response = event_notifications_service.list_templates(
+    instance_id=<instance-id>,
+    limit=<limit>,
+    offset=<offset>,
+    search=<search>
+)
+
+templates_list = list_templates_response.get_result()
+```
+
+### Get Template
+```py
+get_template_response = event_notifications_service.get_template(
+    instance_id=<instance-id>,
+    id=<template_id>
+).get_result()
+```
+
+### Update Template
+```py
+template_config_model = {
+    'body': '<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>',
+    'subject': 'Hi this is invitation for invitation message',
+}
+
+update_template_response = event_notifications_service.update_template(
+    instance_id=<instance-id>,
+    id=<template_id>
+    name=<template_name>,
+    type=<template-type>,
+    description=<template-description>,
+    params=template_config_model
+).get_result()
+```
+
+### Delete Template
+```py
+DeleteTemplateOptions deleteTemplateOptions = new DeleteTemplateOptions.Builder()
+      .instanceId(<instanceId>)
+      .id(<templateId>)
+      .build();
+
+Response<Void> response = eventNotificationsService.deleteTemplate(deleteTemplateOptions).execute();
 ```
 
 ## Push Destination APIs
