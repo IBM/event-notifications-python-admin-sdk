@@ -1,3 +1,10 @@
+## [0.1.15](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.14...v0.1.15) (2023-08-31)
+
+
+### Bug Fixes
+
+* adds templates support ([#44](https://github.com/IBM/event-notifications-python-admin-sdk/issues/44)) ([3189a43](https://github.com/IBM/event-notifications-python-admin-sdk/commit/3189a436db10f15bf6141a8e05fed497b2db7036))
+
 ## [0.1.14](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.13...v0.1.14) (2023-08-02)
 
 
