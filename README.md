@@ -450,8 +450,8 @@ update_template_response = event_notifications_service.update_template(
 ### Delete Template
 ```py
 delete_template_response = event_notifications_service.delete_template(
-    instance_id,
-    id
+    instance_id=<instance-id>,
+    id=<template_id>
 ).get_result()
 ```
 
