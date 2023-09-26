@@ -649,10 +649,14 @@ notificationSafariBodymodel = {
     },
 }
 
-notification_id := "<notification-id>"
-notification_severity := "<notification-severity>"
-type_value := "<notification-type>"
-notifications_source := "<notification-source>"
+notification_id = "<notification-id>"
+notification_severity = "<notification-severity>"
+type_value = "<notification-type>"
+notifications_source = "<notification-source>"
+htmlbody = '"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to ' \
+           '<a href="https: //cloud.ibm.com/security-compliance/dashboard">' \
+           'Security and Complaince dashboard</a> to find more information<br/>"'
+mailto = '[\"abc@ibm.com\", \"def@us.ibm.com\"]'
 
 notification_create_model = {
     'ibmenseverity': notification_severity,
@@ -663,6 +667,9 @@ notification_create_model = {
     'ibmendefaultshort': 'short info',
     'ibmendefaultlong': 'long info',
     'ibmensafaribody': json.dumps(notificationSafariBodymodel),
+    'ibmenhtmlbody': htmlbody,
+    'ibmensubject': 'Findings on IBM Cloud Security Advisor',
+    'ibmenmailto': mailto,
     'id': notification_id,
     'source': notifications_source,
     'type': type_value,

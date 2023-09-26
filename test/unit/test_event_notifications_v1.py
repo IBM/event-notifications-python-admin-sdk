@@ -133,6 +133,9 @@ class TestSendNotifications:
         notification_create_model['ibmensourceid'] = 'testString'
         notification_create_model['ibmendefaultshort'] = 'testString'
         notification_create_model['ibmendefaultlong'] = 'testString'
+        notification_create_model['ibmensubject'] = 'testString'
+        notification_create_model['ibmenmailto'] = 'testString'
+        notification_create_model['ibmenhtmlbody'] = 'testString'
         notification_create_model['subject'] = 'testString'
         notification_create_model['data'] = {'foo': 'bar'}
         notification_create_model['datacontenttype'] = 'application/json'
@@ -283,6 +286,9 @@ class TestSendBulkNotifications:
         notification_create_model['ibmensourceid'] = 'testString'
         notification_create_model['ibmendefaultshort'] = 'testString'
         notification_create_model['ibmendefaultlong'] = 'testString'
+        notification_create_model['ibmensubject'] = 'testString'
+        notification_create_model['ibmenmailto'] = 'testString'
+        notification_create_model['ibmenhtmlbody'] = 'testString'
         notification_create_model['subject'] = 'testString'
         notification_create_model['data'] = {'foo': 'bar'}
         notification_create_model['datacontenttype'] = 'application/json'
@@ -1747,7 +1753,7 @@ class TestCreateTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "params": {"body": "body", "subject": "subject"}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "params": {"body": "body", "subject": "subject"}, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
             url,
@@ -1764,7 +1770,7 @@ class TestCreateTemplate:
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
-        type = 'smtp_custom.notification'
+        type = 'testString'
         params = template_config_model
         description = 'testString'
 
@@ -1784,7 +1790,7 @@ class TestCreateTemplate:
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
-        assert req_body['type'] == 'smtp_custom.notification'
+        assert req_body['type'] == 'testString'
         assert req_body['params'] == template_config_model
         assert req_body['description'] == 'testString'
 
@@ -1804,7 +1810,7 @@ class TestCreateTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "params": {"body": "body", "subject": "subject"}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "params": {"body": "body", "subject": "subject"}, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
             url,
@@ -1821,7 +1827,7 @@ class TestCreateTemplate:
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
-        type = 'smtp_custom.notification'
+        type = 'testString'
         params = template_config_model
         description = 'testString'
 
@@ -1859,7 +1865,7 @@ class TestListTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "type", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -1909,7 +1915,7 @@ class TestListTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "type", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -1947,7 +1953,7 @@ class TestListTemplates:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "type": "type", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -1984,8 +1990,8 @@ class TestListTemplates:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/instances/testString/templates')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"type","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"type","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -2022,8 +2028,8 @@ class TestListTemplates:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/instances/testString/templates')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"smtp_custom.notification","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"type","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","type":"type","subscription_count":18,"subscription_names":["subscription_names"],"updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -2063,7 +2069,7 @@ class TestGetTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.GET,
             url,
@@ -2103,7 +2109,7 @@ class TestGetTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.GET,
             url,
@@ -2148,7 +2154,7 @@ class TestUpdateTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.PUT,
             url,
@@ -2167,7 +2173,7 @@ class TestUpdateTemplate:
         id = 'testString'
         name = 'testString'
         description = 'testString'
-        type = 'smtp_custom.notification'
+        type = 'testString'
         params = template_config_model
 
         # Invoke method
@@ -2188,7 +2194,7 @@ class TestUpdateTemplate:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
-        assert req_body['type'] == 'smtp_custom.notification'
+        assert req_body['type'] == 'testString'
         assert req_body['params'] == template_config_model
 
     def test_update_template_all_params_with_retries(self):
@@ -2207,7 +2213,7 @@ class TestUpdateTemplate:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/templates/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "smtp_custom.notification", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "subscription_count": 18, "subscription_names": ["subscription_names"], "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.PUT,
             url,
@@ -2226,7 +2232,7 @@ class TestUpdateTemplate:
         id = 'testString'
         name = 'testString'
         description = 'testString'
-        type = 'smtp_custom.notification'
+        type = 'testString'
         params = template_config_model
 
         # Pass in all but one required param and check for a ValueError
@@ -5355,6 +5361,9 @@ class TestModel_NotificationCreate:
         notification_create_model_json['ibmensourceid'] = 'testString'
         notification_create_model_json['ibmendefaultshort'] = 'testString'
         notification_create_model_json['ibmendefaultlong'] = 'testString'
+        notification_create_model_json['ibmensubject'] = 'testString'
+        notification_create_model_json['ibmenmailto'] = 'testString'
+        notification_create_model_json['ibmenhtmlbody'] = 'testString'
         notification_create_model_json['subject'] = 'testString'
         notification_create_model_json['data'] = {'foo': 'bar'}
         notification_create_model_json['datacontenttype'] = 'application/json'
@@ -6098,7 +6107,7 @@ class TestModel_Template:
         template_model_json['id'] = 'testString'
         template_model_json['name'] = 'testString'
         template_model_json['description'] = 'testString'
-        template_model_json['type'] = 'smtp_custom.notification'
+        template_model_json['type'] = 'testString'
         template_model_json['subscription_count'] = 38
         template_model_json['subscription_names'] = ['testString']
         template_model_json['updated_at'] = '2019-01-01T12:00:00Z'
@@ -6221,7 +6230,7 @@ class TestModel_TemplateResponse:
         template_response_model_json['id'] = 'testString'
         template_response_model_json['name'] = 'testString'
         template_response_model_json['description'] = 'testString'
-        template_response_model_json['type'] = 'smtp_custom.notification'
+        template_response_model_json['type'] = 'testString'
         template_response_model_json['params'] = template_config_model
         template_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
 

@@ -2742,12 +2742,20 @@ class TestEventNotificationsV1():
             },
         }
 
+        htmlbody = '"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to ' \
+                   '<a href="https: //cloud.ibm.com/security-compliance/dashboard">' \
+                   'Security and Complaince dashboard</a> to find more information<br/>"'
+        mailto = '[\"abc@ibm.com\", \"def@us.ibm.com\"]'
+
         notification_create_model = {
             'ibmenseverity': notification_severity,
             'ibmenfcmbody': json.dumps(notification_fcm_body_model),
             'ibmenpushto': json.dumps(notification_devices_model),
             'ibmenapnsbody': json.dumps(notification_apns_body_model),
             'ibmenhuaweibody': json.dumps(notification_huawei_body_model),
+            'ibmenhtmlbody': htmlbody,
+            'ibmensubject': 'Findings on IBM Cloud Security Advisor',
+            'ibmenmailto': mailto,
             'ibmensourceid': source_id,
             'ibmendefaultshort': 'Alert Message',
             'ibmendefaultlong': 'Alert for closing offers',
