@@ -1,3 +1,10 @@
+## [0.1.16](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.15...v0.1.16) (2023-09-27)
+
+
+### Bug Fixes
+
+* custom email notification payload update ([#45](https://github.com/IBM/event-notifications-python-admin-sdk/issues/45)) ([146f480](https://github.com/IBM/event-notifications-python-admin-sdk/commit/146f480abb7a50d58628cde26302dfbe4df086cc))
+
 ## [0.1.15](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.14...v0.1.15) (2023-08-31)
 
 
