@@ -3709,6 +3709,9 @@ class NotificationCreate:
     :attr str ibmensourceid: The source id of the notification.
     :attr str ibmendefaultshort: Default short text for the message.
     :attr str ibmendefaultlong: Default long text for the message.
+    :attr str ibmensubject: (optional) The subject of the notification.
+    :attr str ibmenmailto: (optional) The email id string.
+    :attr str ibmenhtmlbody: (optional) The html body of notification.
     :attr str subject: (optional) The subject of the notification.
     :attr dict data: (optional) The payload for webhook notification.
     :attr str datacontenttype: (optional) The notification content type.
@@ -3736,7 +3739,7 @@ class NotificationCreate:
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['specversion', 'time', 'id', 'source', 'type', 'ibmenseverity', 'ibmensourceid', 'ibmendefaultshort', 'ibmendefaultlong', 'subject', 'data', 'datacontenttype', 'ibmenpushto', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmenapnsheaders', 'ibmenchromebody', 'ibmenchromeheaders', 'ibmenfirefoxbody', 'ibmenfirefoxheaders', 'ibmenhuaweibody', 'ibmensafaribody'])
+    _properties = frozenset(['specversion', 'time', 'id', 'source', 'type', 'ibmenseverity', 'ibmensourceid', 'ibmendefaultshort', 'ibmendefaultlong', 'ibmensubject', 'ibmenmailto', 'ibmenhtmlbody', 'subject', 'data', 'datacontenttype', 'ibmenpushto', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmenapnsheaders', 'ibmenchromebody', 'ibmenchromeheaders', 'ibmenfirefoxbody', 'ibmenfirefoxheaders', 'ibmenhuaweibody', 'ibmensafaribody'])
 
     def __init__(
         self,
@@ -3750,6 +3753,9 @@ class NotificationCreate:
         *,
         time: datetime = None,
         ibmenseverity: str = None,
+        ibmensubject: str = None,
+        ibmenmailto: str = None,
+        ibmenhtmlbody: str = None,
         subject: str = None,
         data: dict = None,
         datacontenttype: str = None,
@@ -3777,6 +3783,9 @@ class NotificationCreate:
         :param str ibmendefaultlong: Default long text for the message.
         :param datetime time: (optional) The time notification was created.
         :param str ibmenseverity: (optional) The severity of the notification.
+        :param str ibmensubject: (optional) The subject of the notification.
+        :param str ibmenmailto: (optional) The email id string.
+        :param str ibmenhtmlbody: (optional) The html body of notification.
         :param str subject: (optional) The subject of the notification.
         :param dict data: (optional) The payload for webhook notification.
         :param str datacontenttype: (optional) The notification content type.
@@ -3812,6 +3821,9 @@ class NotificationCreate:
         self.ibmensourceid = ibmensourceid
         self.ibmendefaultshort = ibmendefaultshort
         self.ibmendefaultlong = ibmendefaultlong
+        self.ibmensubject = ibmensubject
+        self.ibmenmailto = ibmenmailto
+        self.ibmenhtmlbody = ibmenhtmlbody
         self.subject = subject
         self.data = data
         self.datacontenttype = datacontenttype
@@ -3864,6 +3876,12 @@ class NotificationCreate:
             args['ibmendefaultlong'] = _dict.get('ibmendefaultlong')
         else:
             raise ValueError('Required property \'ibmendefaultlong\' not present in NotificationCreate JSON')
+        if 'ibmensubject' in _dict:
+            args['ibmensubject'] = _dict.get('ibmensubject')
+        if 'ibmenmailto' in _dict:
+            args['ibmenmailto'] = _dict.get('ibmenmailto')
+        if 'ibmenhtmlbody' in _dict:
+            args['ibmenhtmlbody'] = _dict.get('ibmenhtmlbody')
         if 'subject' in _dict:
             args['subject'] = _dict.get('subject')
         if 'data' in _dict:
@@ -3919,6 +3937,12 @@ class NotificationCreate:
             _dict['ibmendefaultshort'] = self.ibmendefaultshort
         if hasattr(self, 'ibmendefaultlong') and self.ibmendefaultlong is not None:
             _dict['ibmendefaultlong'] = self.ibmendefaultlong
+        if hasattr(self, 'ibmensubject') and self.ibmensubject is not None:
+            _dict['ibmensubject'] = self.ibmensubject
+        if hasattr(self, 'ibmenmailto') and self.ibmenmailto is not None:
+            _dict['ibmenmailto'] = self.ibmenmailto
+        if hasattr(self, 'ibmenhtmlbody') and self.ibmenhtmlbody is not None:
+            _dict['ibmenhtmlbody'] = self.ibmenhtmlbody
         if hasattr(self, 'subject') and self.subject is not None:
             _dict['subject'] = self.subject
         if hasattr(self, 'data') and self.data is not None:
@@ -5924,7 +5948,7 @@ class Template:
     :attr str id: Template ID.
     :attr str name: Template name.
     :attr str description: Template description.
-    :attr str type: template type.
+    :attr str type: The type of template.
     :attr int subscription_count: Subscription count.
     :attr List[str] subscription_names: Names of subscriptions.
     :attr datetime updated_at: Updated at.
@@ -5946,7 +5970,7 @@ class Template:
         :param str id: Template ID.
         :param str name: Template name.
         :param str description: Template description.
-        :param str type: template type.
+        :param str type: The type of template.
         :param int subscription_count: Subscription count.
         :param List[str] subscription_names: Names of subscriptions.
         :param datetime updated_at: Updated at.
@@ -6034,15 +6058,6 @@ class Template:
     def __ne__(self, other: 'Template') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
-    class TypeEnum(str, Enum):
-        """
-        template type.
-        """
-
-        SMTP_CUSTOM_NOTIFICATION = 'smtp_custom.notification'
-        SMTP_CUSTOM_INVITATION = 'smtp_custom.invitation'
-
 
 
 class TemplateConfig:
@@ -6251,7 +6266,7 @@ class TemplateResponse:
     :attr str id: Template ID.
     :attr str name: Template name.
     :attr str description: (optional) Template description.
-    :attr str type: Template type.
+    :attr str type: The type of template.
     :attr TemplateConfig params: Payload describing a template configuration.
     :attr datetime created_at: Created time.
     """
@@ -6271,7 +6286,7 @@ class TemplateResponse:
 
         :param str id: Template ID.
         :param str name: Template name.
-        :param str type: Template type.
+        :param str type: The type of template.
         :param TemplateConfig params: Payload describing a template configuration.
         :param datetime created_at: Created time.
         :param str description: (optional) Template description.
@@ -6353,15 +6368,6 @@ class TemplateResponse:
     def __ne__(self, other: 'TemplateResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
-
-    class TypeEnum(str, Enum):
-        """
-        Template type.
-        """
-
-        SMTP_CUSTOM_NOTIFICATION = 'smtp_custom.notification'
-        SMTP_CUSTOM_INVITATION = 'smtp_custom.invitation'
-
 
 
 class Topic:
