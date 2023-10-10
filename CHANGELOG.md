@@ -1,3 +1,10 @@
+# [0.2.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.16...v0.2.0) (2023-10-10)
+
+
+### Features
+
+* add test http destination support ([#46](https://github.com/IBM/event-notifications-python-admin-sdk/issues/46)) ([0f4c020](https://github.com/IBM/event-notifications-python-admin-sdk/commit/0f4c020479a0521417cd89f1c43d6a4d13e37628))
+
 ## [0.1.16](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.15...v0.1.16) (2023-09-27)
 
 
