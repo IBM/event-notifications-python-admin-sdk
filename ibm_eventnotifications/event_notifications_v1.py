@@ -1094,6 +1094,55 @@ class EventNotificationsV1(BaseService):
     # Destinations
     #########################
 
+    def test_destination(
+        self,
+        instance_id: str,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Test a destination.
+
+        Test a destination.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Destination.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `TestDestinationResponse` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='test_destination',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/destinations/{id}/test'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='POST',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
     def create_destination(
         self,
         instance_id: str,
@@ -6362,6 +6411,65 @@ class TemplateResponse:
         SMTP_CUSTOM_NOTIFICATION = 'smtp_custom.notification'
         SMTP_CUSTOM_INVITATION = 'smtp_custom.invitation'
 
+
+
+class TestDestinationResponse:
+    """
+    Destination test object.
+
+    :attr str status: test destiantion status.
+    """
+
+    def __init__(
+        self,
+        status: str,
+    ) -> None:
+        """
+        Initialize a TestDestinationResponse object.
+
+        :param str status: test destiantion status.
+        """
+        self.status = status
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TestDestinationResponse':
+        """Initialize a TestDestinationResponse object from a json dictionary."""
+        args = {}
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError('Required property \'status\' not present in TestDestinationResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TestDestinationResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TestDestinationResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TestDestinationResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TestDestinationResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class Topic:

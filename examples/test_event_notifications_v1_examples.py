@@ -769,6 +769,22 @@ class TestEventNotificationsV1Examples():
             pytest.fail(str(e))
 
     @needscredentials
+    def test_destination_example(self):
+        """
+        test_destination request example
+        """
+        # begin-test_destination
+        try:
+            test_destination_response = event_notifications_service.test_destination(
+                instance_id,
+                id=destination_id4
+            )
+
+        except ApiException as e:
+            pytest.fail(str(e))
+        # end-test_destination
+
+    @needscredentials
     def test_create_template_example(self):
         """
         create_template request example

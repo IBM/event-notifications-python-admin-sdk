@@ -2367,6 +2367,91 @@ class TestNewInstance:
             )
 
 
+class TestTestDestination:
+    """
+    Test Class for test_destination
+    """
+
+    @responses.activate
+    def test_test_destination_all_params(self):
+        """
+        test_destination()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/test')
+        mock_response = '{"status": "status"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.test_destination(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_test_destination_all_params_with_retries(self):
+        # Enable retries and run test_test_destination_all_params.
+        _service.enable_retries()
+        self.test_test_destination_all_params()
+
+        # Disable retries and run test_test_destination_all_params.
+        _service.disable_retries()
+        self.test_test_destination_all_params()
+
+    @responses.activate
+    def test_test_destination_value_error(self):
+        """
+        test_test_destination_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/test')
+        mock_response = '{"status": "status"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.test_destination(**req_copy)
+
+    def test_test_destination_value_error_with_retries(self):
+        # Enable retries and run test_test_destination_value_error.
+        _service.enable_retries()
+        self.test_test_destination_value_error()
+
+        # Disable retries and run test_test_destination_value_error.
+        _service.disable_retries()
+        self.test_test_destination_value_error()
+
+
 class TestCreateDestination:
     """
     Test Class for create_destination
@@ -6239,6 +6324,36 @@ class TestModel_TemplateResponse:
         # Convert model instance back to dict and verify no loss of data
         template_response_model_json2 = template_response_model.to_dict()
         assert template_response_model_json2 == template_response_model_json
+
+
+class TestModel_TestDestinationResponse:
+    """
+    Test Class for TestDestinationResponse
+    """
+
+    def test_test_destination_response_serialization(self):
+        """
+        Test serialization/deserialization for TestDestinationResponse
+        """
+
+        # Construct a json representation of a TestDestinationResponse model
+        test_destination_response_model_json = {}
+        test_destination_response_model_json['status'] = 'testString'
+
+        # Construct a model instance of TestDestinationResponse by calling from_dict on the json representation
+        test_destination_response_model = TestDestinationResponse.from_dict(test_destination_response_model_json)
+        assert test_destination_response_model != False
+
+        # Construct a model instance of TestDestinationResponse by calling from_dict on the json representation
+        test_destination_response_model_dict = TestDestinationResponse.from_dict(test_destination_response_model_json).__dict__
+        test_destination_response_model2 = TestDestinationResponse(**test_destination_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert test_destination_response_model == test_destination_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        test_destination_response_model_json2 = test_destination_response_model.to_dict()
+        assert test_destination_response_model_json2 == test_destination_response_model_json
 
 
 class TestModel_Topic:
