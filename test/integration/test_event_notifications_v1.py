@@ -86,6 +86,10 @@ cos_instance_id = ''
 cos_end_point = ''
 template_invitation_id = ''
 template_notification_id = ''
+slack_url = ''
+teams_url = ''
+pager_duty_api_key = ''
+pager_duty_routing_key = ''
 
 class TestEventNotificationsV1():
     """
@@ -94,7 +98,7 @@ class TestEventNotificationsV1():
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key
         if os.path.exists(config_file):
             os.environ['IBM_CREDENTIALS_FILE'] = config_file
 
@@ -126,6 +130,10 @@ class TestEventNotificationsV1():
             cos_instance_id = cls.config['COS_INSTANCE']
             cos_bucket_name = cls.config['COS_BUCKET_NAME']
             cos_end_point = cls.config['COS_ENDPOINT']
+            slack_url = cls.config['SLACK_URL']
+            teams_url = cls.config['MS_TEAMS_URL']
+            pager_duty_api_key = cls.config['PD_API_KEY']
+            pager_duty_routing_key = cls.config['PD_ROUTING_KEY']
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -141,6 +149,7 @@ class TestEventNotificationsV1():
             assert cos_end_point is not None
             assert cos_instance_id is not None
             assert cos_bucket_name is not None
+            assert slack_url is not None
 
         print('Setup complete.')
 
@@ -578,7 +587,7 @@ class TestEventNotificationsV1():
         destination_id3 = destination.id
 
         slack_config_params = {
-            'url': 'https://api.slack.com/myslack',
+            'url': slack_url,
         }
 
         destination_config_model = {
@@ -651,7 +660,7 @@ class TestEventNotificationsV1():
         destination_id5 = destination.id
 
         msteams_config_params = {
-            'url': 'https://teams.microsoft.com',
+            'url': teams_url,
         }
 
         destination_config_model = {
@@ -782,8 +791,8 @@ class TestEventNotificationsV1():
         destination_id9 = destination.id
 
         pd_config_params = {
-            "api_key": "apikey",
-            "routing_key": "routingkey"
+            "api_key": pager_duty_api_key,
+            "routing_key": pager_duty_routing_key
         }
 
         destination_config_model = {
@@ -1029,6 +1038,16 @@ class TestEventNotificationsV1():
         #
 
     @needscredentials
+    def test_destination(self):
+
+        test_destination_response = self.event_notifications_service.test_destination(
+            instance_id,
+            id=destination_id4
+        )
+
+        assert test_destination_response.get_status_code() == 200
+
+    @needscredentials
     def test_create_template(self):
 
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
@@ -1262,7 +1281,7 @@ class TestEventNotificationsV1():
         assert res_description == description
 
         slack_config_params = {
-            'url': 'https://api.slack.com/myslack',
+            'url': slack_url,
         }
 
         destination_config_model = {
@@ -1331,7 +1350,7 @@ class TestEventNotificationsV1():
         assert res_description == description
 
         msteams_config_params = {
-            'url': 'https://teams.microsoft.com',
+            'url': teams_url,
         }
 
         destination_config_model = {
@@ -1454,8 +1473,8 @@ class TestEventNotificationsV1():
         assert res_description == description
 
         pd_config_params = {
-            "api_key": "apikey",
-            "routing_key": "ksddkasjdaksdsdsd"
+            "api_key": pager_duty_api_key,
+            "routing_key": pager_duty_routing_key
         }
 
         destination_config_model = {
