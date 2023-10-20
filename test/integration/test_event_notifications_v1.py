@@ -157,49 +157,45 @@ class TestEventNotificationsV1:
         reason="External configuration not available, skipping...",
     )
 
-    # @needscredentials
-    # def test_list_integrations(self):
-    #     global integration_id
-    #     list_integrations_response = self.event_notifications_service.list_integrations(
-    #         instance_id, limit=1, offset=0, search=search
-    #     )
-    #
-    #     assert list_integrations_response.get_status_code() == 200
-    #     integration_response = list_integrations_response.get_result()
-    #     integrations = integration_response.get("integrations")
-    #     assert integrations[0] is not None
-    #     integration_id = integrations[0].get("id")
-    #
-    # @needscredentials
-    # def test_get_integration(self):
-    #     get_integration_response = self.event_notifications_service.get_integration(
-    #         instance_id, id=integration_id
-    #     )
-    #
-    #     assert get_integration_response.get_status_code() == 200
-    #     integration_response = get_integration_response.get_result()
-    #     assert integration_response is not None
-    #
-    # @needscredentials
-    # def test_update_integration(self):
-    #     integration_metadata = {
-    #         "endpoint": "https://private.us-south.kms.cloud.ibm.com",
-    #         "crn": "crn:v1:staging:public:kms:us-south:a/****:****::",
-    #         "root_key_id": "sddsds-f326-4688-baaf-611750e79b61",
-    #     }
-    #
-    #     update_integration_response = (
-    #         self.event_notifications_service.replace_integration(
-    #             instance_id,
-    #             id=integration_id,
-    #             type="kms",
-    #             metadata=integration_metadata,
-    #         )
-    #     )
-    #
-    #     assert update_integration_response.get_status_code() == 200
-    #     integration_response = update_integration_response.get_result()
-    #     assert integration_response is not None
+    @needscredentials
+    def test_list_integrations(self):
+        global integration_id
+        list_integrations_response = self.event_notifications_service.list_integrations(
+            instance_id, limit=1, offset=0, search=search
+        )
+
+        assert list_integrations_response.get_status_code() == 200
+        integration_response = list_integrations_response.get_result()
+        integrations = integration_response.get("integrations")
+        assert integrations[0] is not None
+        integration_id = integrations[0].get("id")
+
+    @needscredentials
+    def test_get_integration(self):
+        get_integration_response = self.event_notifications_service.get_integration(instance_id, id=integration_id)
+
+        assert get_integration_response.get_status_code() == 200
+        integration_response = get_integration_response.get_result()
+        assert integration_response is not None
+
+    @needscredentials
+    def test_update_integration(self):
+        integration_metadata = {
+            "endpoint": "https://private.us-south.kms.cloud.ibm.com",
+            "crn": "crn:v1:staging:public:kms:us-south:a/****:****::",
+            "root_key_id": "sddsds-f326-4688-baaf-611750e79b61",
+        }
+
+        update_integration_response = self.event_notifications_service.replace_integration(
+            instance_id,
+            id=integration_id,
+            type="kms",
+            metadata=integration_metadata,
+        )
+
+        assert update_integration_response.get_status_code() == 200
+        integration_response = update_integration_response.get_result()
+        assert integration_response is not None
 
     @needscredentials
     def test_create_sources(self):
