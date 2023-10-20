@@ -1,4 +1,5 @@
-dist: bionic
+dist: focal
+group: beta
 
 language: python
 
