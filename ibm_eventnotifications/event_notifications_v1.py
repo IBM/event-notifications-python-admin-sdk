@@ -47,9 +47,7 @@ from .common import get_sdk_headers
 class EventNotificationsV1(BaseService):
     """The Event Notifications V1 service."""
 
-    DEFAULT_SERVICE_URL = (
-        "https://us-south.event-notifications.cloud.ibm.com/event-notifications"
-    )
+    DEFAULT_SERVICE_URL = "https://us-south.event-notifications.cloud.ibm.com/event-notifications"
     DEFAULT_SERVICE_NAME = "event_notifications"
 
     @classmethod
@@ -77,9 +75,7 @@ class EventNotificationsV1(BaseService):
                Get up to date information from https://github.com/IBM/python-sdk-core/blob/main/README.md
                about initializing the authenticator of your choice.
         """
-        BaseService.__init__(
-            self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator
-        )
+        BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
     # Send Notifications
@@ -1139,9 +1135,7 @@ class EventNotificationsV1(BaseService):
         path_param_keys = ["instance_id", "id"]
         path_param_values = self.encode_path_vars(instance_id, id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = "/v1/instances/{instance_id}/destinations/{id}/test".format(
-            **path_param_dict
-        )
+        url = "/v1/instances/{instance_id}/destinations/{id}/test".format(**path_param_dict)
         request = self.prepare_request(
             method="POST",
             url=url,
@@ -1712,9 +1706,7 @@ class EventNotificationsV1(BaseService):
         path_param_keys = ["instance_id", "id"]
         path_param_values = self.encode_path_vars(instance_id, id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = "/v1/instances/{instance_id}/destinations/{id}/verify".format(
-            **path_param_dict
-        )
+        url = "/v1/instances/{instance_id}/destinations/{id}/verify".format(**path_param_dict)
         request = self.prepare_request(
             method="PATCH",
             url=url,
@@ -1784,9 +1776,7 @@ class EventNotificationsV1(BaseService):
         path_param_keys = ["instance_id", "id"]
         path_param_values = self.encode_path_vars(instance_id, id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = "/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions".format(
-            **path_param_dict
-        )
+        url = "/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions".format(**path_param_dict)
         request = self.prepare_request(
             method="POST",
             url=url,
@@ -1859,9 +1849,7 @@ class EventNotificationsV1(BaseService):
         path_param_keys = ["instance_id", "id"]
         path_param_values = self.encode_path_vars(instance_id, id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = "/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions".format(
-            **path_param_dict
-        )
+        url = "/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions".format(**path_param_dict)
         request = self.prepare_request(
             method="GET",
             url=url,
@@ -1921,9 +1909,7 @@ class EventNotificationsV1(BaseService):
         path_param_keys = ["instance_id", "id"]
         path_param_values = self.encode_path_vars(instance_id, id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = "/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions".format(
-            **path_param_dict
-        )
+        url = "/v1/instances/{instance_id}/destinations/{id}/tag_subscriptions".format(**path_param_dict)
         request = self.prepare_request(
             method="DELETE",
             url=url,
@@ -2491,10 +2477,7 @@ class BulkNotificationResponse:
     def to_dict(self) -> Dict:
         """Return a json dictionary representing this model."""
         _dict = {}
-        if (
-            hasattr(self, "bulk_notification_id")
-            and self.bulk_notification_id is not None
-        ):
+        if hasattr(self, "bulk_notification_id") and self.bulk_notification_id is not None:
             _dict["bulk_notification_id"] = self.bulk_notification_id
         if hasattr(self, "bulk_messages") and self.bulk_messages is not None:
             _dict["bulk_messages"] = self.bulk_messages
@@ -2659,9 +2642,7 @@ class Destination:
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in Destination JSON"
-            )
+            raise ValueError("Required property 'description' not present in Destination JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
@@ -2671,21 +2652,15 @@ class Destination:
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in Destination JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in Destination JSON")
         if "subscription_count" in _dict:
             args["subscription_count"] = _dict.get("subscription_count")
         else:
-            raise ValueError(
-                "Required property 'subscription_count' not present in Destination JSON"
-            )
+            raise ValueError("Required property 'subscription_count' not present in Destination JSON")
         if "subscription_names" in _dict:
             args["subscription_names"] = _dict.get("subscription_names")
         else:
-            raise ValueError(
-                "Required property 'subscription_names' not present in Destination JSON"
-            )
+            raise ValueError("Required property 'subscription_names' not present in Destination JSON")
         return cls(**args)
 
     @classmethod
@@ -2783,9 +2758,7 @@ class DestinationConfig:
         if "params" in _dict:
             args["params"] = _dict.get("params")
         else:
-            raise ValueError(
-                "Required property 'params' not present in DestinationConfig JSON"
-            )
+            raise ValueError("Required property 'params' not present in DestinationConfig JSON")
         return cls(**args)
 
     @classmethod
@@ -2909,29 +2882,19 @@ class DestinationList:
         if "total_count" in _dict:
             args["total_count"] = _dict.get("total_count")
         else:
-            raise ValueError(
-                "Required property 'total_count' not present in DestinationList JSON"
-            )
+            raise ValueError("Required property 'total_count' not present in DestinationList JSON")
         if "offset" in _dict:
             args["offset"] = _dict.get("offset")
         else:
-            raise ValueError(
-                "Required property 'offset' not present in DestinationList JSON"
-            )
+            raise ValueError("Required property 'offset' not present in DestinationList JSON")
         if "limit" in _dict:
             args["limit"] = _dict.get("limit")
         else:
-            raise ValueError(
-                "Required property 'limit' not present in DestinationList JSON"
-            )
+            raise ValueError("Required property 'limit' not present in DestinationList JSON")
         if "destinations" in _dict:
-            args["destinations"] = [
-                DestinationListItem.from_dict(v) for v in _dict.get("destinations")
-            ]
+            args["destinations"] = [DestinationListItem.from_dict(v) for v in _dict.get("destinations")]
         else:
-            raise ValueError(
-                "Required property 'destinations' not present in DestinationList JSON"
-            )
+            raise ValueError("Required property 'destinations' not present in DestinationList JSON")
         if "first" in _dict:
             args["first"] = PageHrefResponse.from_dict(_dict.get("first"))
         if "previous" in _dict:
@@ -3047,45 +3010,31 @@ class DestinationListItem:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in DestinationListItem JSON"
-            )
+            raise ValueError("Required property 'id' not present in DestinationListItem JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in DestinationListItem JSON"
-            )
+            raise ValueError("Required property 'name' not present in DestinationListItem JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in DestinationListItem JSON"
-            )
+            raise ValueError("Required property 'description' not present in DestinationListItem JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in DestinationListItem JSON"
-            )
+            raise ValueError("Required property 'type' not present in DestinationListItem JSON")
         if "subscription_count" in _dict:
             args["subscription_count"] = _dict.get("subscription_count")
         else:
-            raise ValueError(
-                "Required property 'subscription_count' not present in DestinationListItem JSON"
-            )
+            raise ValueError("Required property 'subscription_count' not present in DestinationListItem JSON")
         if "subscription_names" in _dict:
             args["subscription_names"] = _dict.get("subscription_names")
         else:
-            raise ValueError(
-                "Required property 'subscription_names' not present in DestinationListItem JSON"
-            )
+            raise ValueError("Required property 'subscription_names' not present in DestinationListItem JSON")
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in DestinationListItem JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in DestinationListItem JSON")
         return cls(**args)
 
     @classmethod
@@ -3198,39 +3147,27 @@ class DestinationResponse:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in DestinationResponse JSON"
-            )
+            raise ValueError("Required property 'id' not present in DestinationResponse JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in DestinationResponse JSON"
-            )
+            raise ValueError("Required property 'name' not present in DestinationResponse JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in DestinationResponse JSON"
-            )
+            raise ValueError("Required property 'description' not present in DestinationResponse JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in DestinationResponse JSON"
-            )
+            raise ValueError("Required property 'type' not present in DestinationResponse JSON")
         if "config" in _dict:
             args["config"] = DestinationConfig.from_dict(_dict.get("config"))
         else:
-            raise ValueError(
-                "Required property 'config' not present in DestinationResponse JSON"
-            )
+            raise ValueError("Required property 'config' not present in DestinationResponse JSON")
         if "created_at" in _dict:
             args["created_at"] = string_to_datetime(_dict.get("created_at"))
         else:
-            raise ValueError(
-                "Required property 'created_at' not present in DestinationResponse JSON"
-            )
+            raise ValueError("Required property 'created_at' not present in DestinationResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -3341,29 +3278,21 @@ class DestinationTagsSubscriptionResponse:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in DestinationTagsSubscriptionResponse JSON"
-            )
+            raise ValueError("Required property 'id' not present in DestinationTagsSubscriptionResponse JSON")
         if "device_id" in _dict:
             args["device_id"] = _dict.get("device_id")
         else:
-            raise ValueError(
-                "Required property 'device_id' not present in DestinationTagsSubscriptionResponse JSON"
-            )
+            raise ValueError("Required property 'device_id' not present in DestinationTagsSubscriptionResponse JSON")
         if "tag_name" in _dict:
             args["tag_name"] = _dict.get("tag_name")
         else:
-            raise ValueError(
-                "Required property 'tag_name' not present in DestinationTagsSubscriptionResponse JSON"
-            )
+            raise ValueError("Required property 'tag_name' not present in DestinationTagsSubscriptionResponse JSON")
         if "user_id" in _dict:
             args["user_id"] = _dict.get("user_id")
         if "created_at" in _dict:
             args["created_at"] = string_to_datetime(_dict.get("created_at"))
         else:
-            raise ValueError(
-                "Required property 'created_at' not present in DestinationTagsSubscriptionResponse JSON"
-            )
+            raise ValueError("Required property 'created_at' not present in DestinationTagsSubscriptionResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -3503,9 +3432,7 @@ class EmailAttributesResponseSubscribedUnsubscribedItems:
         self.updated_at = updated_at
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "EmailAttributesResponseSubscribedUnsubscribedItems":
+    def from_dict(cls, _dict: Dict) -> "EmailAttributesResponseSubscribedUnsubscribedItems":
         """Initialize a EmailAttributesResponseSubscribedUnsubscribedItems object from a json dictionary."""
         args = {}
         if "email" in _dict:
@@ -3536,17 +3463,13 @@ class EmailAttributesResponseSubscribedUnsubscribedItems:
         """Return a `str` version of this EmailAttributesResponseSubscribedUnsubscribedItems object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "EmailAttributesResponseSubscribedUnsubscribedItems"
-    ) -> bool:
+    def __eq__(self, other: "EmailAttributesResponseSubscribedUnsubscribedItems") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "EmailAttributesResponseSubscribedUnsubscribedItems"
-    ) -> bool:
+    def __ne__(self, other: "EmailAttributesResponseSubscribedUnsubscribedItems") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -3592,33 +3515,23 @@ class IntegrationGetResponse:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in IntegrationGetResponse JSON"
-            )
+            raise ValueError("Required property 'id' not present in IntegrationGetResponse JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in IntegrationGetResponse JSON"
-            )
+            raise ValueError("Required property 'type' not present in IntegrationGetResponse JSON")
         if "metadata" in _dict:
             args["metadata"] = IntegrationMetadata.from_dict(_dict.get("metadata"))
         else:
-            raise ValueError(
-                "Required property 'metadata' not present in IntegrationGetResponse JSON"
-            )
+            raise ValueError("Required property 'metadata' not present in IntegrationGetResponse JSON")
         if "created_at" in _dict:
             args["created_at"] = string_to_datetime(_dict.get("created_at"))
         else:
-            raise ValueError(
-                "Required property 'created_at' not present in IntegrationGetResponse JSON"
-            )
+            raise ValueError("Required property 'created_at' not present in IntegrationGetResponse JSON")
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in IntegrationGetResponse JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in IntegrationGetResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -3714,29 +3627,19 @@ class IntegrationList:
         if "total_count" in _dict:
             args["total_count"] = _dict.get("total_count")
         else:
-            raise ValueError(
-                "Required property 'total_count' not present in IntegrationList JSON"
-            )
+            raise ValueError("Required property 'total_count' not present in IntegrationList JSON")
         if "offset" in _dict:
             args["offset"] = _dict.get("offset")
         else:
-            raise ValueError(
-                "Required property 'offset' not present in IntegrationList JSON"
-            )
+            raise ValueError("Required property 'offset' not present in IntegrationList JSON")
         if "limit" in _dict:
             args["limit"] = _dict.get("limit")
         else:
-            raise ValueError(
-                "Required property 'limit' not present in IntegrationList JSON"
-            )
+            raise ValueError("Required property 'limit' not present in IntegrationList JSON")
         if "integrations" in _dict:
-            args["integrations"] = [
-                IntegrationListItem.from_dict(v) for v in _dict.get("integrations")
-            ]
+            args["integrations"] = [IntegrationListItem.from_dict(v) for v in _dict.get("integrations")]
         else:
-            raise ValueError(
-                "Required property 'integrations' not present in IntegrationList JSON"
-            )
+            raise ValueError("Required property 'integrations' not present in IntegrationList JSON")
         if "first" in _dict:
             args["first"] = PageHrefResponse.from_dict(_dict.get("first"))
         if "previous" in _dict:
@@ -3844,33 +3747,23 @@ class IntegrationListItem:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in IntegrationListItem JSON"
-            )
+            raise ValueError("Required property 'id' not present in IntegrationListItem JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in IntegrationListItem JSON"
-            )
+            raise ValueError("Required property 'type' not present in IntegrationListItem JSON")
         if "metadata" in _dict:
             args["metadata"] = IntegrationMetadata.from_dict(_dict.get("metadata"))
         else:
-            raise ValueError(
-                "Required property 'metadata' not present in IntegrationListItem JSON"
-            )
+            raise ValueError("Required property 'metadata' not present in IntegrationListItem JSON")
         if "created_at" in _dict:
             args["created_at"] = string_to_datetime(_dict.get("created_at"))
         else:
-            raise ValueError(
-                "Required property 'created_at' not present in IntegrationListItem JSON"
-            )
+            raise ValueError("Required property 'created_at' not present in IntegrationListItem JSON")
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in IntegrationListItem JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in IntegrationListItem JSON")
         return cls(**args)
 
     @classmethod
@@ -3948,21 +3841,15 @@ class IntegrationMetadata:
         if "endpoint" in _dict:
             args["endpoint"] = _dict.get("endpoint")
         else:
-            raise ValueError(
-                "Required property 'endpoint' not present in IntegrationMetadata JSON"
-            )
+            raise ValueError("Required property 'endpoint' not present in IntegrationMetadata JSON")
         if "crn" in _dict:
             args["crn"] = _dict.get("crn")
         else:
-            raise ValueError(
-                "Required property 'crn' not present in IntegrationMetadata JSON"
-            )
+            raise ValueError("Required property 'crn' not present in IntegrationMetadata JSON")
         if "root_key_id" in _dict:
             args["root_key_id"] = _dict.get("root_key_id")
         else:
-            raise ValueError(
-                "Required property 'root_key_id' not present in IntegrationMetadata JSON"
-            )
+            raise ValueError("Required property 'root_key_id' not present in IntegrationMetadata JSON")
         return cls(**args)
 
     @classmethod
@@ -4179,49 +4066,35 @@ class NotificationCreate:
         if "specversion" in _dict:
             args["specversion"] = _dict.get("specversion")
         else:
-            raise ValueError(
-                "Required property 'specversion' not present in NotificationCreate JSON"
-            )
+            raise ValueError("Required property 'specversion' not present in NotificationCreate JSON")
         if "time" in _dict:
             args["time"] = string_to_datetime(_dict.get("time"))
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in NotificationCreate JSON"
-            )
+            raise ValueError("Required property 'id' not present in NotificationCreate JSON")
         if "source" in _dict:
             args["source"] = _dict.get("source")
         else:
-            raise ValueError(
-                "Required property 'source' not present in NotificationCreate JSON"
-            )
+            raise ValueError("Required property 'source' not present in NotificationCreate JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in NotificationCreate JSON"
-            )
+            raise ValueError("Required property 'type' not present in NotificationCreate JSON")
         if "ibmenseverity" in _dict:
             args["ibmenseverity"] = _dict.get("ibmenseverity")
         if "ibmensourceid" in _dict:
             args["ibmensourceid"] = _dict.get("ibmensourceid")
         else:
-            raise ValueError(
-                "Required property 'ibmensourceid' not present in NotificationCreate JSON"
-            )
+            raise ValueError("Required property 'ibmensourceid' not present in NotificationCreate JSON")
         if "ibmendefaultshort" in _dict:
             args["ibmendefaultshort"] = _dict.get("ibmendefaultshort")
         else:
-            raise ValueError(
-                "Required property 'ibmendefaultshort' not present in NotificationCreate JSON"
-            )
+            raise ValueError("Required property 'ibmendefaultshort' not present in NotificationCreate JSON")
         if "ibmendefaultlong" in _dict:
             args["ibmendefaultlong"] = _dict.get("ibmendefaultlong")
         else:
-            raise ValueError(
-                "Required property 'ibmendefaultlong' not present in NotificationCreate JSON"
-            )
+            raise ValueError("Required property 'ibmendefaultlong' not present in NotificationCreate JSON")
         if "ibmensubject" in _dict:
             args["ibmensubject"] = _dict.get("ibmensubject")
         if "ibmenmailto" in _dict:
@@ -4309,18 +4182,13 @@ class NotificationCreate:
             _dict["ibmenchromeheaders"] = self.ibmenchromeheaders
         if hasattr(self, "ibmenfirefoxbody") and self.ibmenfirefoxbody is not None:
             _dict["ibmenfirefoxbody"] = self.ibmenfirefoxbody
-        if (
-            hasattr(self, "ibmenfirefoxheaders")
-            and self.ibmenfirefoxheaders is not None
-        ):
+        if hasattr(self, "ibmenfirefoxheaders") and self.ibmenfirefoxheaders is not None:
             _dict["ibmenfirefoxheaders"] = self.ibmenfirefoxheaders
         if hasattr(self, "ibmenhuaweibody") and self.ibmenhuaweibody is not None:
             _dict["ibmenhuaweibody"] = self.ibmenhuaweibody
         if hasattr(self, "ibmensafaribody") and self.ibmensafaribody is not None:
             _dict["ibmensafaribody"] = self.ibmensafaribody
-        for _key in [
-            k for k in vars(self).keys() if k not in NotificationCreate._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -4332,17 +4200,13 @@ class NotificationCreate:
         """Return a dictionary of arbitrary properties from this instance of NotificationCreate"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in NotificationCreate._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of NotificationCreate"""
-        for _key in [
-            k for k in vars(self).keys() if k not in NotificationCreate._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -4447,9 +4311,7 @@ class PageHrefResponse:
         if "href" in _dict:
             args["href"] = _dict.get("href")
         else:
-            raise ValueError(
-                "Required property 'href' not present in PageHrefResponse JSON"
-            )
+            raise ValueError("Required property 'href' not present in PageHrefResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -4519,9 +4381,7 @@ class Rules:
         if "event_type_filter" in _dict:
             args["event_type_filter"] = _dict.get("event_type_filter")
         else:
-            raise ValueError(
-                "Required property 'event_type_filter' not present in Rules JSON"
-            )
+            raise ValueError("Required property 'event_type_filter' not present in Rules JSON")
         if "notification_filter" in _dict:
             args["notification_filter"] = _dict.get("notification_filter")
         return cls(**args)
@@ -4538,10 +4398,7 @@ class Rules:
             _dict["enabled"] = self.enabled
         if hasattr(self, "event_type_filter") and self.event_type_filter is not None:
             _dict["event_type_filter"] = self.event_type_filter
-        if (
-            hasattr(self, "notification_filter")
-            and self.notification_filter is not None
-        ):
+        if hasattr(self, "notification_filter") and self.notification_filter is not None:
             _dict["notification_filter"] = self.notification_filter
         return _dict
 
@@ -4609,21 +4466,15 @@ class RulesGet:
         if "event_type_filter" in _dict:
             args["event_type_filter"] = _dict.get("event_type_filter")
         else:
-            raise ValueError(
-                "Required property 'event_type_filter' not present in RulesGet JSON"
-            )
+            raise ValueError("Required property 'event_type_filter' not present in RulesGet JSON")
         if "notification_filter" in _dict:
             args["notification_filter"] = _dict.get("notification_filter")
         else:
-            raise ValueError(
-                "Required property 'notification_filter' not present in RulesGet JSON"
-            )
+            raise ValueError("Required property 'notification_filter' not present in RulesGet JSON")
         if "updated_at" in _dict:
             args["updated_at"] = _dict.get("updated_at")
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in RulesGet JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in RulesGet JSON")
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
@@ -4642,10 +4493,7 @@ class RulesGet:
             _dict["enabled"] = self.enabled
         if hasattr(self, "event_type_filter") and self.event_type_filter is not None:
             _dict["event_type_filter"] = self.event_type_filter
-        if (
-            hasattr(self, "notification_filter")
-            and self.notification_filter is not None
-        ):
+        if hasattr(self, "notification_filter") and self.notification_filter is not None:
             _dict["notification_filter"] = self.notification_filter
         if hasattr(self, "updated_at") and self.updated_at is not None:
             _dict["updated_at"] = self.updated_at
@@ -4947,9 +4795,7 @@ class Source:
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in Source JSON"
-            )
+            raise ValueError("Required property 'description' not present in Source JSON")
         if "enabled" in _dict:
             args["enabled"] = _dict.get("enabled")
         else:
@@ -4961,21 +4807,15 @@ class Source:
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in Source JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in Source JSON")
         if "topic_count" in _dict:
             args["topic_count"] = _dict.get("topic_count")
         else:
-            raise ValueError(
-                "Required property 'topic_count' not present in Source JSON"
-            )
+            raise ValueError("Required property 'topic_count' not present in Source JSON")
         if "topic_names" in _dict:
             args["topic_names"] = _dict.get("topic_names")
         else:
-            raise ValueError(
-                "Required property 'topic_names' not present in Source JSON"
-            )
+            raise ValueError("Required property 'topic_names' not present in Source JSON")
         return cls(**args)
 
     @classmethod
@@ -5074,27 +4914,19 @@ class SourceList:
         if "total_count" in _dict:
             args["total_count"] = _dict.get("total_count")
         else:
-            raise ValueError(
-                "Required property 'total_count' not present in SourceList JSON"
-            )
+            raise ValueError("Required property 'total_count' not present in SourceList JSON")
         if "offset" in _dict:
             args["offset"] = _dict.get("offset")
         else:
-            raise ValueError(
-                "Required property 'offset' not present in SourceList JSON"
-            )
+            raise ValueError("Required property 'offset' not present in SourceList JSON")
         if "limit" in _dict:
             args["limit"] = _dict.get("limit")
         else:
             raise ValueError("Required property 'limit' not present in SourceList JSON")
         if "sources" in _dict:
-            args["sources"] = [
-                SourceListItem.from_dict(v) for v in _dict.get("sources")
-            ]
+            args["sources"] = [SourceListItem.from_dict(v) for v in _dict.get("sources")]
         else:
-            raise ValueError(
-                "Required property 'sources' not present in SourceList JSON"
-            )
+            raise ValueError("Required property 'sources' not present in SourceList JSON")
         if "first" in _dict:
             args["first"] = PageHrefResponse.from_dict(_dict.get("first"))
         if "previous" in _dict:
@@ -5210,45 +5042,31 @@ class SourceListItem:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in SourceListItem JSON"
-            )
+            raise ValueError("Required property 'id' not present in SourceListItem JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in SourceListItem JSON"
-            )
+            raise ValueError("Required property 'name' not present in SourceListItem JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in SourceListItem JSON"
-            )
+            raise ValueError("Required property 'description' not present in SourceListItem JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in SourceListItem JSON"
-            )
+            raise ValueError("Required property 'type' not present in SourceListItem JSON")
         if "enabled" in _dict:
             args["enabled"] = _dict.get("enabled")
         else:
-            raise ValueError(
-                "Required property 'enabled' not present in SourceListItem JSON"
-            )
+            raise ValueError("Required property 'enabled' not present in SourceListItem JSON")
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in SourceListItem JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in SourceListItem JSON")
         if "topic_count" in _dict:
             args["topic_count"] = _dict.get("topic_count")
         else:
-            raise ValueError(
-                "Required property 'topic_count' not present in SourceListItem JSON"
-            )
+            raise ValueError("Required property 'topic_count' not present in SourceListItem JSON")
         return cls(**args)
 
     @classmethod
@@ -5335,33 +5153,23 @@ class SourceResponse:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in SourceResponse JSON"
-            )
+            raise ValueError("Required property 'id' not present in SourceResponse JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in SourceResponse JSON"
-            )
+            raise ValueError("Required property 'name' not present in SourceResponse JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in SourceResponse JSON"
-            )
+            raise ValueError("Required property 'description' not present in SourceResponse JSON")
         if "enabled" in _dict:
             args["enabled"] = _dict.get("enabled")
         else:
-            raise ValueError(
-                "Required property 'enabled' not present in SourceResponse JSON"
-            )
+            raise ValueError("Required property 'enabled' not present in SourceResponse JSON")
         if "created_at" in _dict:
             args["created_at"] = string_to_datetime(_dict.get("created_at"))
         else:
-            raise ValueError(
-                "Required property 'created_at' not present in SourceResponse JSON"
-            )
+            raise ValueError("Required property 'created_at' not present in SourceResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -5436,9 +5244,7 @@ class SourcesItems:
         if "rules" in _dict:
             args["rules"] = [Rules.from_dict(v) for v in _dict.get("rules")]
         else:
-            raise ValueError(
-                "Required property 'rules' not present in SourcesItems JSON"
-            )
+            raise ValueError("Required property 'rules' not present in SourcesItems JSON")
         return cls(**args)
 
     @classmethod
@@ -5514,15 +5320,11 @@ class SourcesListItems:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in SourcesListItems JSON"
-            )
+            raise ValueError("Required property 'id' not present in SourcesListItems JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in SourcesListItems JSON"
-            )
+            raise ValueError("Required property 'name' not present in SourcesListItems JSON")
         if "rules" in _dict:
             args["rules"] = [RulesGet.from_dict(v) for v in _dict.get("rules")]
         return cls(**args)
@@ -5662,53 +5464,37 @@ class Subscription:
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'name' not present in Subscription JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'description' not present in Subscription JSON")
         if "updated_at" in _dict:
             args["updated_at"] = _dict.get("updated_at")
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in Subscription JSON")
         if "from" in _dict:
             args["from_"] = _dict.get("from")
         if "destination_type" in _dict:
             args["destination_type"] = _dict.get("destination_type")
         else:
-            raise ValueError(
-                "Required property 'destination_type' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'destination_type' not present in Subscription JSON")
         if "destination_id" in _dict:
             args["destination_id"] = _dict.get("destination_id")
         else:
-            raise ValueError(
-                "Required property 'destination_id' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'destination_id' not present in Subscription JSON")
         if "destination_name" in _dict:
             args["destination_name"] = _dict.get("destination_name")
         else:
-            raise ValueError(
-                "Required property 'destination_name' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'destination_name' not present in Subscription JSON")
         if "topic_id" in _dict:
             args["topic_id"] = _dict.get("topic_id")
         else:
-            raise ValueError(
-                "Required property 'topic_id' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'topic_id' not present in Subscription JSON")
         if "topic_name" in _dict:
             args["topic_name"] = _dict.get("topic_name")
         else:
-            raise ValueError(
-                "Required property 'topic_name' not present in Subscription JSON"
-            )
+            raise ValueError("Required property 'topic_name' not present in Subscription JSON")
         if "attributes" in _dict:
             args["attributes"] = _dict.get("attributes")
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
@@ -5920,29 +5706,19 @@ class SubscriptionList:
         if "total_count" in _dict:
             args["total_count"] = _dict.get("total_count")
         else:
-            raise ValueError(
-                "Required property 'total_count' not present in SubscriptionList JSON"
-            )
+            raise ValueError("Required property 'total_count' not present in SubscriptionList JSON")
         if "offset" in _dict:
             args["offset"] = _dict.get("offset")
         else:
-            raise ValueError(
-                "Required property 'offset' not present in SubscriptionList JSON"
-            )
+            raise ValueError("Required property 'offset' not present in SubscriptionList JSON")
         if "limit" in _dict:
             args["limit"] = _dict.get("limit")
         else:
-            raise ValueError(
-                "Required property 'limit' not present in SubscriptionList JSON"
-            )
+            raise ValueError("Required property 'limit' not present in SubscriptionList JSON")
         if "subscriptions" in _dict:
-            args["subscriptions"] = [
-                SubscriptionListItem.from_dict(v) for v in _dict.get("subscriptions")
-            ]
+            args["subscriptions"] = [SubscriptionListItem.from_dict(v) for v in _dict.get("subscriptions")]
         else:
-            raise ValueError(
-                "Required property 'subscriptions' not present in SubscriptionList JSON"
-            )
+            raise ValueError("Required property 'subscriptions' not present in SubscriptionList JSON")
         if "first" in _dict:
             args["first"] = PageHrefResponse.from_dict(_dict.get("first"))
         if "previous" in _dict:
@@ -6067,49 +5843,35 @@ class SubscriptionListItem:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in SubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'id' not present in SubscriptionListItem JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in SubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'name' not present in SubscriptionListItem JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in SubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'description' not present in SubscriptionListItem JSON")
         if "destination_id" in _dict:
             args["destination_id"] = _dict.get("destination_id")
         else:
-            raise ValueError(
-                "Required property 'destination_id' not present in SubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'destination_id' not present in SubscriptionListItem JSON")
         if "destination_name" in _dict:
             args["destination_name"] = _dict.get("destination_name")
         if "destination_type" in _dict:
             args["destination_type"] = _dict.get("destination_type")
         else:
-            raise ValueError(
-                "Required property 'destination_type' not present in SubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'destination_type' not present in SubscriptionListItem JSON")
         if "topic_id" in _dict:
             args["topic_id"] = _dict.get("topic_id")
         else:
-            raise ValueError(
-                "Required property 'topic_id' not present in SubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'topic_id' not present in SubscriptionListItem JSON")
         if "topic_name" in _dict:
             args["topic_name"] = _dict.get("topic_name")
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in SubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in SubscriptionListItem JSON")
         return cls(**args)
 
     @classmethod
@@ -6261,30 +6023,19 @@ class TagsSubscriptionList:
         if "total_count" in _dict:
             args["total_count"] = _dict.get("total_count")
         else:
-            raise ValueError(
-                "Required property 'total_count' not present in TagsSubscriptionList JSON"
-            )
+            raise ValueError("Required property 'total_count' not present in TagsSubscriptionList JSON")
         if "offset" in _dict:
             args["offset"] = _dict.get("offset")
         else:
-            raise ValueError(
-                "Required property 'offset' not present in TagsSubscriptionList JSON"
-            )
+            raise ValueError("Required property 'offset' not present in TagsSubscriptionList JSON")
         if "limit" in _dict:
             args["limit"] = _dict.get("limit")
         else:
-            raise ValueError(
-                "Required property 'limit' not present in TagsSubscriptionList JSON"
-            )
+            raise ValueError("Required property 'limit' not present in TagsSubscriptionList JSON")
         if "tag_subscriptions" in _dict:
-            args["tag_subscriptions"] = [
-                TagsSubscriptionListItem.from_dict(v)
-                for v in _dict.get("tag_subscriptions")
-            ]
+            args["tag_subscriptions"] = [TagsSubscriptionListItem.from_dict(v) for v in _dict.get("tag_subscriptions")]
         else:
-            raise ValueError(
-                "Required property 'tag_subscriptions' not present in TagsSubscriptionList JSON"
-            )
+            raise ValueError("Required property 'tag_subscriptions' not present in TagsSubscriptionList JSON")
         if "first" in _dict:
             args["first"] = PageHrefResponse.from_dict(_dict.get("first"))
         if "previous" in _dict:
@@ -6394,29 +6145,21 @@ class TagsSubscriptionListItem:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in TagsSubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'id' not present in TagsSubscriptionListItem JSON")
         if "device_id" in _dict:
             args["device_id"] = _dict.get("device_id")
         else:
-            raise ValueError(
-                "Required property 'device_id' not present in TagsSubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'device_id' not present in TagsSubscriptionListItem JSON")
         if "tag_name" in _dict:
             args["tag_name"] = _dict.get("tag_name")
         else:
-            raise ValueError(
-                "Required property 'tag_name' not present in TagsSubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'tag_name' not present in TagsSubscriptionListItem JSON")
         if "user_id" in _dict:
             args["user_id"] = _dict.get("user_id")
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in TagsSubscriptionListItem JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in TagsSubscriptionListItem JSON")
         return cls(**args)
 
     @classmethod
@@ -6515,9 +6258,7 @@ class Template:
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in Template JSON"
-            )
+            raise ValueError("Required property 'description' not present in Template JSON")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
@@ -6525,21 +6266,15 @@ class Template:
         if "subscription_count" in _dict:
             args["subscription_count"] = _dict.get("subscription_count")
         else:
-            raise ValueError(
-                "Required property 'subscription_count' not present in Template JSON"
-            )
+            raise ValueError("Required property 'subscription_count' not present in Template JSON")
         if "subscription_names" in _dict:
             args["subscription_names"] = _dict.get("subscription_names")
         else:
-            raise ValueError(
-                "Required property 'subscription_names' not present in Template JSON"
-            )
+            raise ValueError("Required property 'subscription_names' not present in Template JSON")
         if "updated_at" in _dict:
             args["updated_at"] = string_to_datetime(_dict.get("updated_at"))
         else:
-            raise ValueError(
-                "Required property 'updated_at' not present in Template JSON"
-            )
+            raise ValueError("Required property 'updated_at' not present in Template JSON")
         return cls(**args)
 
     @classmethod
@@ -6614,15 +6349,11 @@ class TemplateConfig:
         if "body" in _dict:
             args["body"] = _dict.get("body")
         else:
-            raise ValueError(
-                "Required property 'body' not present in TemplateConfig JSON"
-            )
+            raise ValueError("Required property 'body' not present in TemplateConfig JSON")
         if "subject" in _dict:
             args["subject"] = _dict.get("subject")
         else:
-            raise ValueError(
-                "Required property 'subject' not present in TemplateConfig JSON"
-            )
+            raise ValueError("Required property 'subject' not present in TemplateConfig JSON")
         return cls(**args)
 
     @classmethod
@@ -6709,27 +6440,19 @@ class TemplateList:
         if "total_count" in _dict:
             args["total_count"] = _dict.get("total_count")
         else:
-            raise ValueError(
-                "Required property 'total_count' not present in TemplateList JSON"
-            )
+            raise ValueError("Required property 'total_count' not present in TemplateList JSON")
         if "offset" in _dict:
             args["offset"] = _dict.get("offset")
         else:
-            raise ValueError(
-                "Required property 'offset' not present in TemplateList JSON"
-            )
+            raise ValueError("Required property 'offset' not present in TemplateList JSON")
         if "limit" in _dict:
             args["limit"] = _dict.get("limit")
         else:
-            raise ValueError(
-                "Required property 'limit' not present in TemplateList JSON"
-            )
+            raise ValueError("Required property 'limit' not present in TemplateList JSON")
         if "templates" in _dict:
             args["templates"] = [Template.from_dict(v) for v in _dict.get("templates")]
         else:
-            raise ValueError(
-                "Required property 'templates' not present in TemplateList JSON"
-            )
+            raise ValueError("Required property 'templates' not present in TemplateList JSON")
         if "first" in _dict:
             args["first"] = PageHrefResponse.from_dict(_dict.get("first"))
         if "previous" in _dict:
@@ -6842,35 +6565,25 @@ class TemplateResponse:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in TemplateResponse JSON"
-            )
+            raise ValueError("Required property 'id' not present in TemplateResponse JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in TemplateResponse JSON"
-            )
+            raise ValueError("Required property 'name' not present in TemplateResponse JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in TemplateResponse JSON"
-            )
+            raise ValueError("Required property 'type' not present in TemplateResponse JSON")
         if "params" in _dict:
             args["params"] = TemplateConfig.from_dict(_dict.get("params"))
         else:
-            raise ValueError(
-                "Required property 'params' not present in TemplateResponse JSON"
-            )
+            raise ValueError("Required property 'params' not present in TemplateResponse JSON")
         if "created_at" in _dict:
             args["created_at"] = string_to_datetime(_dict.get("created_at"))
         else:
-            raise ValueError(
-                "Required property 'created_at' not present in TemplateResponse JSON"
-            )
+            raise ValueError("Required property 'created_at' not present in TemplateResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -6942,9 +6655,7 @@ class TestDestinationResponse:
         if "status" in _dict:
             args["status"] = _dict.get("status")
         else:
-            raise ValueError(
-                "Required property 'status' not present in TestDestinationResponse JSON"
-            )
+            raise ValueError("Required property 'status' not present in TestDestinationResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -7035,9 +6746,7 @@ class Topic:
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in Topic JSON"
-            )
+            raise ValueError("Required property 'description' not present in Topic JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
@@ -7049,29 +6758,19 @@ class Topic:
         if "source_count" in _dict:
             args["source_count"] = _dict.get("source_count")
         else:
-            raise ValueError(
-                "Required property 'source_count' not present in Topic JSON"
-            )
+            raise ValueError("Required property 'source_count' not present in Topic JSON")
         if "sources" in _dict:
-            args["sources"] = [
-                SourcesListItems.from_dict(v) for v in _dict.get("sources")
-            ]
+            args["sources"] = [SourcesListItems.from_dict(v) for v in _dict.get("sources")]
         else:
             raise ValueError("Required property 'sources' not present in Topic JSON")
         if "subscription_count" in _dict:
             args["subscription_count"] = _dict.get("subscription_count")
         else:
-            raise ValueError(
-                "Required property 'subscription_count' not present in Topic JSON"
-            )
+            raise ValueError("Required property 'subscription_count' not present in Topic JSON")
         if "subscriptions" in _dict:
-            args["subscriptions"] = [
-                SubscriptionListItem.from_dict(v) for v in _dict.get("subscriptions")
-            ]
+            args["subscriptions"] = [SubscriptionListItem.from_dict(v) for v in _dict.get("subscriptions")]
         else:
-            raise ValueError(
-                "Required property 'subscriptions' not present in Topic JSON"
-            )
+            raise ValueError("Required property 'subscriptions' not present in Topic JSON")
         return cls(**args)
 
     @classmethod
@@ -7182,9 +6881,7 @@ class TopicList:
         if "total_count" in _dict:
             args["total_count"] = _dict.get("total_count")
         else:
-            raise ValueError(
-                "Required property 'total_count' not present in TopicList JSON"
-            )
+            raise ValueError("Required property 'total_count' not present in TopicList JSON")
         if "offset" in _dict:
             args["offset"] = _dict.get("offset")
         else:
@@ -7304,21 +7001,15 @@ class TopicResponse:
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in TopicResponse JSON"
-            )
+            raise ValueError("Required property 'name' not present in TopicResponse JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in TopicResponse JSON"
-            )
+            raise ValueError("Required property 'description' not present in TopicResponse JSON")
         if "created_at" in _dict:
             args["created_at"] = _dict.get("created_at")
         else:
-            raise ValueError(
-                "Required property 'created_at' not present in TopicResponse JSON"
-            )
+            raise ValueError("Required property 'created_at' not present in TopicResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -7403,39 +7094,27 @@ class TopicsListItem:
         if "id" in _dict:
             args["id"] = _dict.get("id")
         else:
-            raise ValueError(
-                "Required property 'id' not present in TopicsListItem JSON"
-            )
+            raise ValueError("Required property 'id' not present in TopicsListItem JSON")
         if "name" in _dict:
             args["name"] = _dict.get("name")
         else:
-            raise ValueError(
-                "Required property 'name' not present in TopicsListItem JSON"
-            )
+            raise ValueError("Required property 'name' not present in TopicsListItem JSON")
         if "description" in _dict:
             args["description"] = _dict.get("description")
         else:
-            raise ValueError(
-                "Required property 'description' not present in TopicsListItem JSON"
-            )
+            raise ValueError("Required property 'description' not present in TopicsListItem JSON")
         if "source_count" in _dict:
             args["source_count"] = _dict.get("source_count")
         else:
-            raise ValueError(
-                "Required property 'source_count' not present in TopicsListItem JSON"
-            )
+            raise ValueError("Required property 'source_count' not present in TopicsListItem JSON")
         if "sources_names" in _dict:
             args["sources_names"] = _dict.get("sources_names")
         else:
-            raise ValueError(
-                "Required property 'sources_names' not present in TopicsListItem JSON"
-            )
+            raise ValueError("Required property 'sources_names' not present in TopicsListItem JSON")
         if "subscription_count" in _dict:
             args["subscription_count"] = _dict.get("subscription_count")
         else:
-            raise ValueError(
-                "Required property 'subscription_count' not present in TopicsListItem JSON"
-            )
+            raise ValueError("Required property 'subscription_count' not present in TopicsListItem JSON")
         return cls(**args)
 
     @classmethod
@@ -7696,15 +7375,11 @@ class VerificationResponse:
         if "type" in _dict:
             args["type"] = _dict.get("type")
         else:
-            raise ValueError(
-                "Required property 'type' not present in VerificationResponse JSON"
-            )
+            raise ValueError("Required property 'type' not present in VerificationResponse JSON")
         if "verification" in _dict:
             args["verification"] = _dict.get("verification")
         else:
-            raise ValueError(
-                "Required property 'verification' not present in VerificationResponse JSON"
-            )
+            raise ValueError("Required property 'verification' not present in VerificationResponse JSON")
         return cls(**args)
 
     @classmethod
@@ -7860,9 +7535,7 @@ class DestinationConfigOneOfCustomDomainEmailDestinationConfig(DestinationConfig
         self.spf = spf
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "DestinationConfigOneOfCustomDomainEmailDestinationConfig":
+    def from_dict(cls, _dict: Dict) -> "DestinationConfigOneOfCustomDomainEmailDestinationConfig":
         """Initialize a DestinationConfigOneOfCustomDomainEmailDestinationConfig object from a json dictionary."""
         args = {}
         if "domain" in _dict:
@@ -7907,17 +7580,13 @@ class DestinationConfigOneOfCustomDomainEmailDestinationConfig(DestinationConfig
         """Return a `str` version of this DestinationConfigOneOfCustomDomainEmailDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "DestinationConfigOneOfCustomDomainEmailDestinationConfig"
-    ) -> bool:
+    def __eq__(self, other: "DestinationConfigOneOfCustomDomainEmailDestinationConfig") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "DestinationConfigOneOfCustomDomainEmailDestinationConfig"
-    ) -> bool:
+    def __ne__(self, other: "DestinationConfigOneOfCustomDomainEmailDestinationConfig") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -8211,9 +7880,7 @@ class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfig
         self.api_key = api_key
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "DestinationConfigOneOfIBMCloudFunctionsDestinationConfig":
+    def from_dict(cls, _dict: Dict) -> "DestinationConfigOneOfIBMCloudFunctionsDestinationConfig":
         """Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object from a json dictionary."""
         args = {}
         if "url" in _dict:
@@ -8248,24 +7915,18 @@ class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfig
         """Return a `str` version of this DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "DestinationConfigOneOfIBMCloudFunctionsDestinationConfig"
-    ) -> bool:
+    def __eq__(self, other: "DestinationConfigOneOfIBMCloudFunctionsDestinationConfig") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "DestinationConfigOneOfIBMCloudFunctionsDestinationConfig"
-    ) -> bool:
+    def __ne__(self, other: "DestinationConfigOneOfIBMCloudFunctionsDestinationConfig") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
 
-class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(
-    DestinationConfigOneOf
-):
+class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a Cloud Object Storage destination configuration.
 
@@ -8293,9 +7954,7 @@ class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(
         self.endpoint = endpoint
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig":
+    def from_dict(cls, _dict: Dict) -> "DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig":
         """Initialize a DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig object from a json dictionary."""
         args = {}
         if "bucket_name" in _dict:
@@ -8342,17 +8001,13 @@ class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(
         """Return a `str` version of this DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig"
-    ) -> bool:
+    def __eq__(self, other: "DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig"
-    ) -> bool:
+    def __ne__(self, other: "DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -8566,9 +8221,7 @@ class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
         self.routing_key = routing_key
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "DestinationConfigOneOfPagerDutyDestinationConfig":
+    def from_dict(cls, _dict: Dict) -> "DestinationConfigOneOfPagerDutyDestinationConfig":
         """Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object from a json dictionary."""
         args = {}
         if "api_key" in _dict:
@@ -8786,9 +8439,7 @@ class DestinationConfigOneOfServiceNowDestinationConfig(DestinationConfigOneOf):
         self.instance_name = instance_name
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "DestinationConfigOneOfServiceNowDestinationConfig":
+    def from_dict(cls, _dict: Dict) -> "DestinationConfigOneOfServiceNowDestinationConfig":
         """Initialize a DestinationConfigOneOfServiceNowDestinationConfig object from a json dictionary."""
         args = {}
         if "client_id" in _dict:
@@ -8851,17 +8502,13 @@ class DestinationConfigOneOfServiceNowDestinationConfig(DestinationConfigOneOf):
         """Return a `str` version of this DestinationConfigOneOfServiceNowDestinationConfig object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "DestinationConfigOneOfServiceNowDestinationConfig"
-    ) -> bool:
+    def __eq__(self, other: "DestinationConfigOneOfServiceNowDestinationConfig") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "DestinationConfigOneOfServiceNowDestinationConfig"
-    ) -> bool:
+    def __ne__(self, other: "DestinationConfigOneOfServiceNowDestinationConfig") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -8892,9 +8539,7 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
         if "url" in _dict:
             args["url"] = _dict.get("url")
         else:
-            raise ValueError(
-                "Required property 'url' not present in DestinationConfigOneOfSlackDestinationConfig JSON"
-            )
+            raise ValueError("Required property 'url' not present in DestinationConfigOneOfSlackDestinationConfig JSON")
         return cls(**args)
 
     @classmethod
@@ -9118,25 +8763,18 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
             setattr(self, _key, _value)
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionAttributesCustomEmailAttributesResponse":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionAttributesCustomEmailAttributesResponse":
         """Initialize a SubscriptionAttributesCustomEmailAttributesResponse object from a json dictionary."""
         args = {}
         if "invited" in _dict:
-            args["invited"] = [
-                EmailAttributesResponseInvitedItems.from_dict(v)
-                for v in _dict.get("invited")
-            ]
+            args["invited"] = [EmailAttributesResponseInvitedItems.from_dict(v) for v in _dict.get("invited")]
         if "subscribed" in _dict:
             args["subscribed"] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v)
-                for v in _dict.get("subscribed")
+                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get("subscribed")
             ]
         if "unsubscribed" in _dict:
             args["unsubscribed"] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v)
-                for v in _dict.get("unsubscribed")
+                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get("unsubscribed")
             ]
         if "add_notification_payload" in _dict:
             args["add_notification_payload"] = _dict.get("add_notification_payload")
@@ -9207,10 +8845,7 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
                 else:
                     unsubscribed_list.append(v.to_dict())
             _dict["unsubscribed"] = unsubscribed_list
-        if (
-            hasattr(self, "add_notification_payload")
-            and self.add_notification_payload is not None
-        ):
+        if hasattr(self, "add_notification_payload") and self.add_notification_payload is not None:
             _dict["add_notification_payload"] = self.add_notification_payload
         if hasattr(self, "reply_to_mail") and self.reply_to_mail is not None:
             _dict["reply_to_mail"] = self.reply_to_mail
@@ -9220,20 +8855,12 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
             _dict["from_name"] = self.from_name
         if hasattr(self, "from_email") and self.from_email is not None:
             _dict["from_email"] = self.from_email
-        if (
-            hasattr(self, "template_id_notification")
-            and self.template_id_notification is not None
-        ):
+        if hasattr(self, "template_id_notification") and self.template_id_notification is not None:
             _dict["template_id_notification"] = self.template_id_notification
-        if (
-            hasattr(self, "template_id_invitation")
-            and self.template_id_invitation is not None
-        ):
+        if hasattr(self, "template_id_invitation") and self.template_id_invitation is not None:
             _dict["template_id_invitation"] = self.template_id_invitation
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9247,9 +8874,7 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
         _dict = {}
 
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9257,34 +8882,25 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesCustomEmailAttributesResponse"""
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
         ]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
-            if (
-                _key
-                not in SubscriptionAttributesCustomEmailAttributesResponse._properties
-            ):
+            if _key not in SubscriptionAttributesCustomEmailAttributesResponse._properties:
                 setattr(self, _key, _value)
 
     def __str__(self) -> str:
         """Return a `str` version of this SubscriptionAttributesCustomEmailAttributesResponse object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "SubscriptionAttributesCustomEmailAttributesResponse"
-    ) -> bool:
+    def __eq__(self, other: "SubscriptionAttributesCustomEmailAttributesResponse") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "SubscriptionAttributesCustomEmailAttributesResponse"
-    ) -> bool:
+    def __ne__(self, other: "SubscriptionAttributesCustomEmailAttributesResponse") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -9363,19 +8979,14 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
         """Initialize a SubscriptionAttributesEmailAttributesResponse object from a json dictionary."""
         args = {}
         if "invited" in _dict:
-            args["invited"] = [
-                EmailAttributesResponseInvitedItems.from_dict(v)
-                for v in _dict.get("invited")
-            ]
+            args["invited"] = [EmailAttributesResponseInvitedItems.from_dict(v) for v in _dict.get("invited")]
         if "subscribed" in _dict:
             args["subscribed"] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v)
-                for v in _dict.get("subscribed")
+                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get("subscribed")
             ]
         if "unsubscribed" in _dict:
             args["unsubscribed"] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v)
-                for v in _dict.get("unsubscribed")
+                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get("unsubscribed")
             ]
         if "add_notification_payload" in _dict:
             args["add_notification_payload"] = _dict.get("add_notification_payload")
@@ -9436,10 +9047,7 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
                 else:
                     unsubscribed_list.append(v.to_dict())
             _dict["unsubscribed"] = unsubscribed_list
-        if (
-            hasattr(self, "add_notification_payload")
-            and self.add_notification_payload is not None
-        ):
+        if hasattr(self, "add_notification_payload") and self.add_notification_payload is not None:
             _dict["add_notification_payload"] = self.add_notification_payload
         if hasattr(self, "reply_to_mail") and self.reply_to_mail is not None:
             _dict["reply_to_mail"] = self.reply_to_mail
@@ -9448,9 +9056,7 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
         if hasattr(self, "from_name") and self.from_name is not None:
             _dict["from_name"] = self.from_name
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesEmailAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9464,9 +9070,7 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
         _dict = {}
 
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesEmailAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9474,9 +9078,7 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesEmailAttributesResponse"""
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesEmailAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties
         ]:
             delattr(self, _key)
 
@@ -9541,17 +9143,11 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
         """Initialize a SubscriptionAttributesSMSAttributesResponse object from a json dictionary."""
         args = {}
         if "subscribed" in _dict:
-            args["subscribed"] = [
-                SMSAttributesItems.from_dict(v) for v in _dict.get("subscribed")
-            ]
+            args["subscribed"] = [SMSAttributesItems.from_dict(v) for v in _dict.get("subscribed")]
         if "unsubscribed" in _dict:
-            args["unsubscribed"] = [
-                SMSAttributesItems.from_dict(v) for v in _dict.get("unsubscribed")
-            ]
+            args["unsubscribed"] = [SMSAttributesItems.from_dict(v) for v in _dict.get("unsubscribed")]
         if "invited" in _dict:
-            args["invited"] = [
-                SMSInviteAttributesItems.from_dict(v) for v in _dict.get("invited")
-            ]
+            args["invited"] = [SMSInviteAttributesItems.from_dict(v) for v in _dict.get("invited")]
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -9587,11 +9183,7 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
                 else:
                     invited_list.append(v.to_dict())
             _dict["invited"] = invited_list
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSMSAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSMSAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -9603,21 +9195,13 @@ class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesSMSAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSMSAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSMSAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesSMSAttributesResponse"""
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSMSAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSMSAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -9673,9 +9257,7 @@ class SubscriptionAttributesServiceNowAttributesResponse(SubscriptionAttributes)
             setattr(self, _key, _value)
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionAttributesServiceNowAttributesResponse":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionAttributesServiceNowAttributesResponse":
         """Initialize a SubscriptionAttributesServiceNowAttributesResponse object from a json dictionary."""
         args = {}
         if "assigned_to" in _dict:
@@ -9698,9 +9280,7 @@ class SubscriptionAttributesServiceNowAttributesResponse(SubscriptionAttributes)
         if hasattr(self, "assignment_group") and self.assignment_group is not None:
             _dict["assignment_group"] = self.assignment_group
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9714,9 +9294,7 @@ class SubscriptionAttributesServiceNowAttributesResponse(SubscriptionAttributes)
         _dict = {}
 
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9724,34 +9302,25 @@ class SubscriptionAttributesServiceNowAttributesResponse(SubscriptionAttributes)
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesServiceNowAttributesResponse"""
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
         ]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
-            if (
-                _key
-                not in SubscriptionAttributesServiceNowAttributesResponse._properties
-            ):
+            if _key not in SubscriptionAttributesServiceNowAttributesResponse._properties:
                 setattr(self, _key, _value)
 
     def __str__(self) -> str:
         """Return a `str` version of this SubscriptionAttributesServiceNowAttributesResponse object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "SubscriptionAttributesServiceNowAttributesResponse"
-    ) -> bool:
+    def __eq__(self, other: "SubscriptionAttributesServiceNowAttributesResponse") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "SubscriptionAttributesServiceNowAttributesResponse"
-    ) -> bool:
+    def __ne__(self, other: "SubscriptionAttributesServiceNowAttributesResponse") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -9804,9 +9373,7 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
         if hasattr(self, "attachment_color") and self.attachment_color is not None:
             _dict["attachment_color"] = self.attachment_color
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSlackAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9820,9 +9387,7 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
         _dict = {}
 
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSlackAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9830,9 +9395,7 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesSlackAttributesResponse"""
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSlackAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties
         ]:
             delattr(self, _key)
 
@@ -9888,9 +9451,7 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
             setattr(self, _key, _value)
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionAttributesWebhookAttributesResponse":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionAttributesWebhookAttributesResponse":
         """Initialize a SubscriptionAttributesWebhookAttributesResponse object from a json dictionary."""
         args = {}
         if "signing_enabled" in _dict:
@@ -9918,15 +9479,10 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
         _dict = {}
         if hasattr(self, "signing_enabled") and self.signing_enabled is not None:
             _dict["signing_enabled"] = self.signing_enabled
-        if (
-            hasattr(self, "add_notification_payload")
-            and self.add_notification_payload is not None
-        ):
+        if hasattr(self, "add_notification_payload") and self.add_notification_payload is not None:
             _dict["add_notification_payload"] = self.add_notification_payload
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesWebhookAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9940,9 +9496,7 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
         _dict = {}
 
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesWebhookAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties
         ]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -9950,9 +9504,7 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesWebhookAttributesResponse"""
         for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesWebhookAttributesResponse._properties
+            k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties
         ]:
             delattr(self, _key)
 
@@ -10028,9 +9580,7 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         self.template_id_invitation = template_id_invitation
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionCreateAttributesCustomEmailAttributes":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionCreateAttributesCustomEmailAttributes":
         """Initialize a SubscriptionCreateAttributesCustomEmailAttributes object from a json dictionary."""
         args = {}
         if "invited" in _dict:
@@ -10085,10 +9635,7 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         _dict = {}
         if hasattr(self, "invited") and self.invited is not None:
             _dict["invited"] = self.invited
-        if (
-            hasattr(self, "add_notification_payload")
-            and self.add_notification_payload is not None
-        ):
+        if hasattr(self, "add_notification_payload") and self.add_notification_payload is not None:
             _dict["add_notification_payload"] = self.add_notification_payload
         if hasattr(self, "reply_to_mail") and self.reply_to_mail is not None:
             _dict["reply_to_mail"] = self.reply_to_mail
@@ -10098,15 +9645,9 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
             _dict["from_name"] = self.from_name
         if hasattr(self, "from_email") and self.from_email is not None:
             _dict["from_email"] = self.from_email
-        if (
-            hasattr(self, "template_id_notification")
-            and self.template_id_notification is not None
-        ):
+        if hasattr(self, "template_id_notification") and self.template_id_notification is not None:
             _dict["template_id_notification"] = self.template_id_notification
-        if (
-            hasattr(self, "template_id_invitation")
-            and self.template_id_invitation is not None
-        ):
+        if hasattr(self, "template_id_invitation") and self.template_id_invitation is not None:
             _dict["template_id_invitation"] = self.template_id_invitation
         return _dict
 
@@ -10118,17 +9659,13 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         """Return a `str` version of this SubscriptionCreateAttributesCustomEmailAttributes object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "SubscriptionCreateAttributesCustomEmailAttributes"
-    ) -> bool:
+    def __eq__(self, other: "SubscriptionCreateAttributesCustomEmailAttributes") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "SubscriptionCreateAttributesCustomEmailAttributes"
-    ) -> bool:
+    def __ne__(self, other: "SubscriptionCreateAttributesCustomEmailAttributes") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -10216,10 +9753,7 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
         _dict = {}
         if hasattr(self, "invited") and self.invited is not None:
             _dict["invited"] = self.invited
-        if (
-            hasattr(self, "add_notification_payload")
-            and self.add_notification_payload is not None
-        ):
+        if hasattr(self, "add_notification_payload") and self.add_notification_payload is not None:
             _dict["add_notification_payload"] = self.add_notification_payload
         if hasattr(self, "reply_to_mail") and self.reply_to_mail is not None:
             _dict["reply_to_mail"] = self.reply_to_mail
@@ -10387,9 +9921,7 @@ class SubscriptionCreateAttributesServiceNowAttributes(SubscriptionCreateAttribu
         self.assignment_group = assignment_group
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionCreateAttributesServiceNowAttributes":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionCreateAttributesServiceNowAttributes":
         """Initialize a SubscriptionCreateAttributesServiceNowAttributes object from a json dictionary."""
         args = {}
         if "assigned_to" in _dict:
@@ -10553,9 +10085,7 @@ class SubscriptionCreateAttributesWebhookAttributes(SubscriptionCreateAttributes
         return not self == other
 
 
-class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
-    SubscriptionUpdateAttributes
-):
+class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdateAttributes):
     """
     The attributes for an email notification.
 
@@ -10622,9 +10152,7 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
         self.template_id_invitation = template_id_invitation
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionUpdateAttributesCustomEmailUpdateAttributes":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionUpdateAttributesCustomEmailUpdateAttributes":
         """Initialize a SubscriptionUpdateAttributesCustomEmailUpdateAttributes object from a json dictionary."""
         args = {}
         if "invited" in _dict:
@@ -10660,13 +10188,9 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
                 "Required property 'from_email' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON"
             )
         if "subscribed" in _dict:
-            args["subscribed"] = UpdateAttributesSubscribed.from_dict(
-                _dict.get("subscribed")
-            )
+            args["subscribed"] = UpdateAttributesSubscribed.from_dict(_dict.get("subscribed"))
         if "unsubscribed" in _dict:
-            args["unsubscribed"] = UpdateAttributesUnsubscribed.from_dict(
-                _dict.get("unsubscribed")
-            )
+            args["unsubscribed"] = UpdateAttributesUnsubscribed.from_dict(_dict.get("unsubscribed"))
         if "template_id_notification" in _dict:
             args["template_id_notification"] = _dict.get("template_id_notification")
         if "template_id_invitation" in _dict:
@@ -10686,10 +10210,7 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
                 _dict["invited"] = self.invited
             else:
                 _dict["invited"] = self.invited.to_dict()
-        if (
-            hasattr(self, "add_notification_payload")
-            and self.add_notification_payload is not None
-        ):
+        if hasattr(self, "add_notification_payload") and self.add_notification_payload is not None:
             _dict["add_notification_payload"] = self.add_notification_payload
         if hasattr(self, "reply_to_mail") and self.reply_to_mail is not None:
             _dict["reply_to_mail"] = self.reply_to_mail
@@ -10709,15 +10230,9 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
                 _dict["unsubscribed"] = self.unsubscribed
             else:
                 _dict["unsubscribed"] = self.unsubscribed.to_dict()
-        if (
-            hasattr(self, "template_id_notification")
-            and self.template_id_notification is not None
-        ):
+        if hasattr(self, "template_id_notification") and self.template_id_notification is not None:
             _dict["template_id_notification"] = self.template_id_notification
-        if (
-            hasattr(self, "template_id_invitation")
-            and self.template_id_invitation is not None
-        ):
+        if hasattr(self, "template_id_invitation") and self.template_id_invitation is not None:
             _dict["template_id_invitation"] = self.template_id_invitation
         return _dict
 
@@ -10729,17 +10244,13 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
         """Return a `str` version of this SubscriptionUpdateAttributesCustomEmailUpdateAttributes object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "SubscriptionUpdateAttributesCustomEmailUpdateAttributes"
-    ) -> bool:
+    def __eq__(self, other: "SubscriptionUpdateAttributesCustomEmailUpdateAttributes") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "SubscriptionUpdateAttributesCustomEmailUpdateAttributes"
-    ) -> bool:
+    def __ne__(self, other: "SubscriptionUpdateAttributesCustomEmailUpdateAttributes") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -10797,9 +10308,7 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
         self.unsubscribed = unsubscribed
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionUpdateAttributesEmailUpdateAttributes":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionUpdateAttributesEmailUpdateAttributes":
         """Initialize a SubscriptionUpdateAttributesEmailUpdateAttributes object from a json dictionary."""
         args = {}
         if "invited" in _dict:
@@ -10829,13 +10338,9 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
                 "Required property 'from_name' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON"
             )
         if "subscribed" in _dict:
-            args["subscribed"] = UpdateAttributesSubscribed.from_dict(
-                _dict.get("subscribed")
-            )
+            args["subscribed"] = UpdateAttributesSubscribed.from_dict(_dict.get("subscribed"))
         if "unsubscribed" in _dict:
-            args["unsubscribed"] = UpdateAttributesUnsubscribed.from_dict(
-                _dict.get("unsubscribed")
-            )
+            args["unsubscribed"] = UpdateAttributesUnsubscribed.from_dict(_dict.get("unsubscribed"))
         return cls(**args)
 
     @classmethod
@@ -10851,10 +10356,7 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
                 _dict["invited"] = self.invited
             else:
                 _dict["invited"] = self.invited.to_dict()
-        if (
-            hasattr(self, "add_notification_payload")
-            and self.add_notification_payload is not None
-        ):
+        if hasattr(self, "add_notification_payload") and self.add_notification_payload is not None:
             _dict["add_notification_payload"] = self.add_notification_payload
         if hasattr(self, "reply_to_mail") and self.reply_to_mail is not None:
             _dict["reply_to_mail"] = self.reply_to_mail
@@ -10882,17 +10384,13 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
         """Return a `str` version of this SubscriptionUpdateAttributesEmailUpdateAttributes object."""
         return json.dumps(self.to_dict(), indent=2)
 
-    def __eq__(
-        self, other: "SubscriptionUpdateAttributesEmailUpdateAttributes"
-    ) -> bool:
+    def __eq__(self, other: "SubscriptionUpdateAttributesEmailUpdateAttributes") -> bool:
         """Return `true` when self and other are equal, false otherwise."""
         if not isinstance(other, self.__class__):
             return False
         return self.__dict__ == other.__dict__
 
-    def __ne__(
-        self, other: "SubscriptionUpdateAttributesEmailUpdateAttributes"
-    ) -> bool:
+    def __ne__(self, other: "SubscriptionUpdateAttributesEmailUpdateAttributes") -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -10932,21 +10430,15 @@ class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttribut
         self.unsubscribed = unsubscribed
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionUpdateAttributesSMSUpdateAttributes":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionUpdateAttributesSMSUpdateAttributes":
         """Initialize a SubscriptionUpdateAttributesSMSUpdateAttributes object from a json dictionary."""
         args = {}
         if "invited" in _dict:
             args["invited"] = UpdateAttributesInvited.from_dict(_dict.get("invited"))
         if "subscribed" in _dict:
-            args["subscribed"] = UpdateAttributesSubscribed.from_dict(
-                _dict.get("subscribed")
-            )
+            args["subscribed"] = UpdateAttributesSubscribed.from_dict(_dict.get("subscribed"))
         if "unsubscribed" in _dict:
-            args["unsubscribed"] = UpdateAttributesUnsubscribed.from_dict(
-                _dict.get("unsubscribed")
-            )
+            args["unsubscribed"] = UpdateAttributesUnsubscribed.from_dict(_dict.get("unsubscribed"))
         return cls(**args)
 
     @classmethod
@@ -11022,9 +10514,7 @@ class SubscriptionUpdateAttributesServiceNowAttributes(SubscriptionUpdateAttribu
         self.assignment_group = assignment_group
 
     @classmethod
-    def from_dict(
-        cls, _dict: Dict
-    ) -> "SubscriptionUpdateAttributesServiceNowAttributes":
+    def from_dict(cls, _dict: Dict) -> "SubscriptionUpdateAttributesServiceNowAttributes":
         """Initialize a SubscriptionUpdateAttributesServiceNowAttributes object from a json dictionary."""
         args = {}
         if "assigned_to" in _dict:

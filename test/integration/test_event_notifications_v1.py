@@ -106,9 +106,7 @@ class TestEventNotificationsV1:
             cls.event_notifications_service = EventNotificationsV1.new_instance()
             assert cls.event_notifications_service is not None
 
-            cls.config = read_external_sources(
-                EventNotificationsV1.DEFAULT_SERVICE_NAME
-            )
+            cls.config = read_external_sources(EventNotificationsV1.DEFAULT_SERVICE_NAME)
             assert cls.config is not None
 
             cls.event_notifications_service.enable_retries()
@@ -261,9 +259,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_get_source(self):
-        get_source_response = self.event_notifications_service.get_source(
-            instance_id, source_id
-        )
+        get_source_response = self.event_notifications_service.get_source(instance_id, source_id)
 
         assert get_source_response.get_status_code() == 200
         source = get_source_response.get_result()
@@ -361,7 +357,9 @@ class TestEventNotificationsV1:
 
         topic_id2 = topic.id
 
-        description = "This topic is used for routing all compliance related notifications to the appropriate destinations"
+        description = (
+            "This topic is used for routing all compliance related notifications to the appropriate destinations"
+        )
         name = "FCM_topic"
 
         create_topic_response = self.event_notifications_service.create_topic(
@@ -428,9 +426,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_get_topic(self):
-        get_topic_response = self.event_notifications_service.get_topic(
-            instance_id, id=topic_id, include=search
-        )
+        get_topic_response = self.event_notifications_service.get_topic(instance_id, id=topic_id, include=search)
 
         assert get_topic_response.get_status_code() == 200
         topic = get_topic_response.get_result()
@@ -513,14 +509,12 @@ class TestEventNotificationsV1:
         typeval = "webhook"
         description = "Webhook Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -544,14 +538,12 @@ class TestEventNotificationsV1:
         typeval = "push_android"
         description = "FCM Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -579,14 +571,12 @@ class TestEventNotificationsV1:
         typeval = "slack"
         description = "Slack Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -620,15 +610,13 @@ class TestEventNotificationsV1:
         description = "Safari Destination"
 
         certificatefile = open(safariCertificatePath, "rb")
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-                certificate=certificatefile,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
+            certificate=certificatefile,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -656,14 +644,12 @@ class TestEventNotificationsV1:
         typeval = "msteams"
         description = "MSteams Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -691,14 +677,12 @@ class TestEventNotificationsV1:
         typeval = "ibmcf"
         description = "This is a Cloud Functions Destination for actions"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -726,14 +710,12 @@ class TestEventNotificationsV1:
         typeval = "push_chrome"
         description = "This is a Chrome Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -758,14 +740,12 @@ class TestEventNotificationsV1:
         typeval = "push_firefox"
         description = "This is a Firefox Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -793,14 +773,12 @@ class TestEventNotificationsV1:
         typeval = "pagerduty"
         description = "This is a PagerDuty Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -831,14 +809,12 @@ class TestEventNotificationsV1:
         typeval = "servicenow"
         description = "This is a ServiceNow Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -866,14 +842,12 @@ class TestEventNotificationsV1:
         typeval = "push_android"
         description = "FCM V1 Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -905,14 +879,12 @@ class TestEventNotificationsV1:
         typeval = "ibmce"
         description = "code engine Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -940,14 +912,12 @@ class TestEventNotificationsV1:
         typeval = "ibmcos"
         description = "COS Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -975,14 +945,12 @@ class TestEventNotificationsV1:
         typeval = "push_huawei"
         description = "Huawei Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -1008,14 +976,12 @@ class TestEventNotificationsV1:
         typeval = "smtp_custom"
         description = "Custom Email Destination"
 
-        create_destination_response = (
-            self.event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeval,
-                description=description,
-                config=destination_config_model,
-            )
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
         )
 
         assert create_destination_response.get_status_code() == 201
@@ -1044,9 +1010,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_destination(self):
-        test_destination_response = self.event_notifications_service.test_destination(
-            instance_id, id=destination_id4
-        )
+        test_destination_response = self.event_notifications_service.test_destination(instance_id, id=destination_id4)
 
         assert test_destination_response.get_status_code() == 200
 
@@ -1118,10 +1082,8 @@ class TestEventNotificationsV1:
         offset = 0
 
         while more_results:
-            list_destinations_response = (
-                self.event_notifications_service.list_destinations(
-                    instance_id, limit=limit, offset=offset, search=search
-                )
+            list_destinations_response = self.event_notifications_service.list_destinations(
+                instance_id, limit=limit, offset=offset, search=search
             )
 
             assert list_destinations_response.get_status_code() == 200
@@ -1177,9 +1139,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_get_destination(self):
-        get_destination_response = self.event_notifications_service.get_destination(
-            instance_id, id=destination_id
-        )
+        get_destination_response = self.event_notifications_service.get_destination(instance_id, id=destination_id)
 
         assert get_destination_response.get_status_code() == 200
         destination = get_destination_response.get_result()
@@ -1196,9 +1156,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_get_template(self):
-        get_template_response = self.event_notifications_service.get_template(
-            instance_id, id=template_invitation_id
-        )
+        get_template_response = self.event_notifications_service.get_template(instance_id, id=template_invitation_id)
 
         assert get_template_response.get_status_code() == 200
         template_response = get_template_response.get_result()
@@ -1221,14 +1179,12 @@ class TestEventNotificationsV1:
 
         name = "Admin GCM Compliance"
         description = "This destination is for creating admin GCM webhook to receive compliance notifications"
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1251,14 +1207,12 @@ class TestEventNotificationsV1:
         name = "FCM_destination_update"
         description = "FCM Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id3,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id3,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1284,14 +1238,12 @@ class TestEventNotificationsV1:
         name = "Slack_destination_update"
         description = "Slack Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id4,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id4,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1323,15 +1275,13 @@ class TestEventNotificationsV1:
         certificatefile = open(safariCertificatePath, "rb")
         name = "Safari Dest"
         description = "This destination is for Safari"
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id5,
-                name=name,
-                description=description,
-                config=safari_destination_config_model,
-                certificate=certificatefile,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id5,
+            name=name,
+            description=description,
+            config=safari_destination_config_model,
+            certificate=certificatefile,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1357,14 +1307,12 @@ class TestEventNotificationsV1:
         name = "MSTeams_destination_update"
         description = "MSteams Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id6,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id6,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1390,14 +1338,12 @@ class TestEventNotificationsV1:
         name = "Cloud_Functions_dest"
         description = "This is a Cloud Functions Destination"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id7,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id7,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1423,14 +1369,12 @@ class TestEventNotificationsV1:
         name = "Chrome_destination_update"
         description = "This is a Chrome Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id8,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id8,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1453,14 +1397,12 @@ class TestEventNotificationsV1:
         name = "Firefox_destination_update"
         description = "This is a Firefox Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id9,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id9,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1486,14 +1428,12 @@ class TestEventNotificationsV1:
         name = "PagerDuty_destination_update"
         description = "This is a PagerDuty Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id10,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id10,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1523,14 +1463,12 @@ class TestEventNotificationsV1:
         name = "Service_Now_destination_update"
         description = "This is a ServiceNow Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id11,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id11,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1556,14 +1494,12 @@ class TestEventNotificationsV1:
         name = "FCM_destination_V1_update"
         description = "FCM Destination V1 update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id12,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id12,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1592,14 +1528,12 @@ class TestEventNotificationsV1:
 
         name = "code engine updated"
         description = "This destination is updated for code engine notifications"
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id13,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id13,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1625,14 +1559,12 @@ class TestEventNotificationsV1:
         name = "COS_destination_update"
         description = "COS Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id14,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id14,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1658,14 +1590,12 @@ class TestEventNotificationsV1:
         name = "Huawei_destination_update"
         description = "Huawei Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id15,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id15,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1680,21 +1610,17 @@ class TestEventNotificationsV1:
         assert res_name == name
         assert res_description == description
 
-        destination_config_model = {
-            "params": {"domain": "test.event-notifications.test.cloud.ibm.com"}
-        }
+        destination_config_model = {"params": {"domain": "test.event-notifications.test.cloud.ibm.com"}}
 
         name = "Custom_Email_destination_update"
         description = "Custom Email Destination update"
 
-        update_destination_response = (
-            self.event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id16,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            )
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id16,
+            name=name,
+            description=description,
+            config=destination_config_model,
         )
 
         assert update_destination_response.get_status_code() == 200
@@ -1798,15 +1724,13 @@ class TestEventNotificationsV1:
 
         name = "subscription_web"
         description = "Subscription for web"
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id,
-                topic_id,
-                attributes=subscription_create_attributes_model,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id,
+            topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1825,15 +1749,13 @@ class TestEventNotificationsV1:
 
         name = "subscription_sms"
         description = "Subscription for sms"
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id1,
-                topic_id=topic_id,
-                attributes=subscription_create_attributes_model,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id1,
+            topic_id=topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1857,15 +1779,13 @@ class TestEventNotificationsV1:
 
         name = "subscription_email"
         description = "Subscription for email"
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id2,
-                topic_id=topic_id,
-                attributes=subscription_create_attributes_model,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id2,
+            topic_id=topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1883,14 +1803,12 @@ class TestEventNotificationsV1:
         name = "FCM subscription"
         description = "Subscription for the FCM"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id3,
-                topic_id=topic_id3,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id3,
+            topic_id=topic_id3,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1911,15 +1829,13 @@ class TestEventNotificationsV1:
             "attachment_color": "#0000FF",
         }
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id4,
-                topic_id=topic_id,
-                description=description,
-                attributes=subscription_create_attributes_model,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id4,
+            topic_id=topic_id,
+            description=description,
+            attributes=subscription_create_attributes_model,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1936,14 +1852,12 @@ class TestEventNotificationsV1:
         name = "safari subscription"
         description = "Subscription for the safari"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id5,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id5,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1960,14 +1874,12 @@ class TestEventNotificationsV1:
         name = "MSTeams subscription"
         description = "Subscription for the MSTeams"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id6,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id6,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -1984,14 +1896,12 @@ class TestEventNotificationsV1:
         name = "cloud functions subscription"
         description = "Subscription for the cloud functions"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id7,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id7,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2008,14 +1918,12 @@ class TestEventNotificationsV1:
         name = "chrome subscription"
         description = "Subscription for the chrome"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id8,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id8,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2032,14 +1940,12 @@ class TestEventNotificationsV1:
         name = "Firefox subscription"
         description = "Subscription for the firefox"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id9,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id9,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2056,14 +1962,12 @@ class TestEventNotificationsV1:
         name = "PagerDuty subscription"
         description = "Subscription for the PagerDuty"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id10,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id10,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2085,15 +1989,13 @@ class TestEventNotificationsV1:
             "assignment_group": "group",
         }
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id11,
-                topic_id=topic_id,
-                description=description,
-                attributes=subscription_create_attributes_model,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id11,
+            topic_id=topic_id,
+            description=description,
+            attributes=subscription_create_attributes_model,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2110,14 +2012,12 @@ class TestEventNotificationsV1:
         name = "FCM V1 subscription"
         description = "Subscription for the FCM V11"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id12,
-                topic_id=topic_id3,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id12,
+            topic_id=topic_id3,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2137,15 +2037,13 @@ class TestEventNotificationsV1:
 
         name = "subscription_code_engine"
         description = "Subscription for code engine"
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id13,
-                topic_id,
-                attributes=subscription_create_attributes_model,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id13,
+            topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2161,14 +2059,12 @@ class TestEventNotificationsV1:
         name = "COS destination subscription"
         description = "Subscription for the COS destination"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id14,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id14,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2185,14 +2081,12 @@ class TestEventNotificationsV1:
         name = "Huawei destination subscription"
         description = "Subscription for the Huawei destination"
 
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id15,
-                topic_id=topic_id,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id15,
+            topic_id=topic_id,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2219,15 +2113,13 @@ class TestEventNotificationsV1:
 
         name = "subscription_custom_email"
         description = "Subscription for custom email"
-        create_subscription_response = (
-            self.event_notifications_service.create_subscription(
-                instance_id,
-                name,
-                destination_id=destination_id16,
-                topic_id=topic_id,
-                attributes=subscription_create_attributes_model,
-                description=description,
-            )
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id16,
+            topic_id=topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2260,10 +2152,8 @@ class TestEventNotificationsV1:
         offset = 0
 
         while more_results:
-            list_subscriptions_response = (
-                self.event_notifications_service.list_subscriptions(
-                    instance_id, offset=offset, limit=limit, search=search
-                )
+            list_subscriptions_response = self.event_notifications_service.list_subscriptions(
+                instance_id, offset=offset, limit=limit, search=search
             )
 
             assert list_subscriptions_response.get_status_code() == 200
@@ -2285,9 +2175,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_get_subscription(self):
-        get_subscription_response = self.event_notifications_service.get_subscription(
-            instance_id, id=subscription_id
-        )
+        get_subscription_response = self.event_notifications_service.get_subscription(instance_id, id=subscription_id)
 
         assert get_subscription_response.get_status_code() == 200
         subscription = get_subscription_response.get_result()
@@ -2311,14 +2199,12 @@ class TestEventNotificationsV1:
 
         name = "Webhook_sub_updated"
         description = "Update Webhook subscription"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id,
-                name=name,
-                description=description,
-                attributes=subscription_update_attributes_model,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2344,14 +2230,12 @@ class TestEventNotificationsV1:
 
         name = "subscription_sms update"
         description = "Subscription for sms updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id1,
-                name=name,
-                description=description,
-                attributes=subscription_update_attributes_model,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id1,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2380,14 +2264,12 @@ class TestEventNotificationsV1:
 
         name = "subscription_email update"
         description = "Subscription for email updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id2,
-                name=name,
-                description=description,
-                attributes=subscription_update_attributes_model,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id2,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2402,13 +2284,11 @@ class TestEventNotificationsV1:
 
         name = "FCM update"
         description = "Subscription for FCM updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id3,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id3,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2426,14 +2306,12 @@ class TestEventNotificationsV1:
         subscription_update_attributes_model = {
             "attachment_color": "#0000FF",
         }
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id4,
-                name=name,
-                description=description,
-                attributes=subscription_update_attributes_model,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id4,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2448,13 +2326,11 @@ class TestEventNotificationsV1:
 
         name = "safari update"
         description = "Subscription for safari updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id5,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id5,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2469,13 +2345,11 @@ class TestEventNotificationsV1:
 
         name = "MSTeams update"
         description = "Subscription for MSTeams updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id6,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id6,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2490,13 +2364,11 @@ class TestEventNotificationsV1:
 
         name = "cloud functions update"
         description = "Subscription for cloud functions updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id7,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id7,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2511,13 +2383,11 @@ class TestEventNotificationsV1:
 
         name = "chrome update"
         description = "Subscription for chrome updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id8,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id8,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2532,13 +2402,11 @@ class TestEventNotificationsV1:
 
         name = "Firefox update"
         description = "Subscription for Firefox updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id9,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id9,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2553,13 +2421,11 @@ class TestEventNotificationsV1:
 
         name = "PagerDuty update"
         description = "Subscription for PagerDuty updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id10,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id10,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2579,14 +2445,12 @@ class TestEventNotificationsV1:
 
         name = "ServiceNow update"
         description = "Subscription for ServiceNow updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id11,
-                name=name,
-                description=description,
-                attributes=subscription_update_attributes_model,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id11,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2601,13 +2465,11 @@ class TestEventNotificationsV1:
 
         name = "FCM V1 update"
         description = "Subscription for FCM V1 updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id12,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id12,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2626,14 +2488,12 @@ class TestEventNotificationsV1:
 
         name = "code_engine_sub_updated"
         description = "Update code engine subscription"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id13,
-                name=name,
-                description=description,
-                attributes=subscription_update_attributes_model,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id13,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2649,13 +2509,11 @@ class TestEventNotificationsV1:
 
         name = "COS subscription update"
         description = "Subscription for COS updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id14,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id14,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2670,13 +2528,11 @@ class TestEventNotificationsV1:
 
         name = "Huawei subscription update"
         description = "Subscription for Huawei updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id15,
-                name=name,
-                description=description,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id15,
+            name=name,
+            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2689,9 +2545,7 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        custom_email_update_attributes_invite_model = {
-            "add": ["tester4@ibm.com", "nitishkulkarni005@gmail.com"]
-        }
+        custom_email_update_attributes_invite_model = {"add": ["tester4@ibm.com", "nitishkulkarni005@gmail.com"]}
 
         custom_email_update_attributes_to_remove_model = {"remove": ["tester3@ibm.com"]}
 
@@ -2710,14 +2564,12 @@ class TestEventNotificationsV1:
 
         name = "subscription_custom_email update"
         description = "Subscription for custom email updated"
-        update_subscription_response = (
-            self.event_notifications_service.update_subscription(
-                instance_id,
-                id=subscription_id16,
-                name=name,
-                description=description,
-                attributes=subscription_update_attributes_model,
-            )
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id16,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -2872,10 +2724,8 @@ class TestEventNotificationsV1:
             "time": "2019-01-01T12:00:00.000Z",
         }
 
-        send_notifications_response = (
-            self.event_notifications_service.send_notifications(
-                instance_id, body=notification_create_model
-            )
+        send_notifications_response = self.event_notifications_service.send_notifications(
+            instance_id, body=notification_create_model
         )
 
         assert send_notifications_response.get_status_code() == 202
@@ -2916,10 +2766,8 @@ class TestEventNotificationsV1:
             "time": "2019-01-01T12:00:00.000Z",
         }
 
-        send_notifications_response = (
-            self.event_notifications_service.send_notifications(
-                instance_id, body=notification_create_model1
-            )
+        send_notifications_response = self.event_notifications_service.send_notifications(
+            instance_id, body=notification_create_model1
         )
         assert send_notifications_response.get_status_code() == 202
         notification_response = send_notifications_response.get_result()
@@ -3062,11 +2910,9 @@ class TestEventNotificationsV1:
             "time": "2019-01-01T12:00:00.000Z",
         }
 
-        send_bulk_notifications_response = (
-            self.event_notifications_service.send_bulk_notifications(
-                instance_id=instance_id,
-                bulk_messages=[notification_create_model, notification_create_model1],
-            )
+        send_bulk_notifications_response = self.event_notifications_service.send_bulk_notifications(
+            instance_id=instance_id,
+            bulk_messages=[notification_create_model, notification_create_model1],
         )
 
         assert send_bulk_notifications_response.get_status_code() == 202
@@ -3104,9 +2950,7 @@ class TestEventNotificationsV1:
             subscription_id15,
             subscription_id16,
         ]:
-            delete_subscription_response = (
-                self.event_notifications_service.delete_subscription(instance_id, id)
-            )
+            delete_subscription_response = self.event_notifications_service.delete_subscription(instance_id, id)
 
             assert delete_subscription_response.get_status_code() == 204
 
@@ -3122,9 +2966,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_delete_topic(self):
         for id in [topic_id, topic_id2, topic_id3]:
-            delete_topic_response = self.event_notifications_service.delete_topic(
-                instance_id, id
-            )
+            delete_topic_response = self.event_notifications_service.delete_topic(instance_id, id)
 
             assert delete_topic_response.get_status_code() == 204
 
@@ -3156,9 +2998,7 @@ class TestEventNotificationsV1:
             destination_id15,
             destination_id16,
         ]:
-            delete_destination_response = (
-                self.event_notifications_service.delete_destination(instance_id, id)
-            )
+            delete_destination_response = self.event_notifications_service.delete_destination(instance_id, id)
         print(
             "\ndelete_destination() response status code: ",
             delete_destination_response.get_status_code(),
@@ -3176,9 +3016,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_delete_template(self):
         for id in [template_invitation_id, template_notification_id]:
-            delete_template_response = self.event_notifications_service.delete_template(
-                instance_id, id
-            )
+            delete_template_response = self.event_notifications_service.delete_template(instance_id, id)
         print(
             "\ndelete_template() response status code: ",
             delete_template_response.get_status_code(),
@@ -3186,9 +3024,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_delete_source(self):
-        delete_source_response = self.event_notifications_service.delete_source(
-            instance_id, id=source_id
-        )
+        delete_source_response = self.event_notifications_service.delete_source(instance_id, id=source_id)
 
         assert delete_source_response.get_status_code() == 204
 

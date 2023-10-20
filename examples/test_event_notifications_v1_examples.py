@@ -194,9 +194,7 @@ class TestEventNotificationsV1Examples:
             print("\nlist_sources() result:")
             # begin-list_sources
 
-            source_list = event_notifications_service.list_sources(
-                instance_id
-            ).get_result()
+            source_list = event_notifications_service.list_sources(instance_id).get_result()
 
             print(json.dumps(source_list, indent=2))
 
@@ -214,9 +212,7 @@ class TestEventNotificationsV1Examples:
             print("\nget_source() result:")
             # begin-get_source
 
-            source = event_notifications_service.get_source(
-                instance_id, id=source_id
-            ).get_result()
+            source = event_notifications_service.get_source(instance_id, id=source_id).get_result()
 
             print(json.dumps(source, indent=2))
 
@@ -297,9 +293,7 @@ class TestEventNotificationsV1Examples:
             print("\nlist_topics() result:")
             # begin-list_topics
 
-            topic_list = event_notifications_service.list_topics(
-                instance_id
-            ).get_result()
+            topic_list = event_notifications_service.list_topics(instance_id).get_result()
 
             print(json.dumps(topic_list, indent=2))
 
@@ -317,9 +311,7 @@ class TestEventNotificationsV1Examples:
             print("\nget_topic() result:")
             # begin-get_topic
 
-            topic = event_notifications_service.get_topic(
-                instance_id, id=topic_id
-            ).get_result()
+            topic = event_notifications_service.get_topic(instance_id, id=topic_id).get_result()
 
             print(json.dumps(topic, indent=2))
 
@@ -648,14 +640,12 @@ class TestEventNotificationsV1Examples:
             typeval = "push_android"
             description = "FCM V1 Destination"
 
-            create_destination_response = (
-                self.event_notifications_service.create_destination(
-                    instance_id,
-                    name,
-                    type=typeval,
-                    description=description,
-                    config=destination_config_model,
-                )
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model,
             )
 
             assert create_destination_response.get_status_code() == 201
@@ -774,9 +764,7 @@ class TestEventNotificationsV1Examples:
         """
         # begin-test_destination
         try:
-            test_destination_response = event_notifications_service.test_destination(
-                instance_id, id=destination_id4
-            )
+            test_destination_response = event_notifications_service.test_destination(instance_id, id=destination_id4)
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -873,9 +861,7 @@ class TestEventNotificationsV1Examples:
             print("\nlist_destinations() result:")
             # begin-list_destinations
 
-            destination_list = event_notifications_service.list_destinations(
-                instance_id
-            ).get_result()
+            destination_list = event_notifications_service.list_destinations(instance_id).get_result()
 
             # end-list_destinations
             print(json.dumps(destination_list, indent=2))
@@ -908,9 +894,7 @@ class TestEventNotificationsV1Examples:
             print("\nget_destination() result:")
             # begin-get_destination
 
-            destination = event_notifications_service.get_destination(
-                instance_id, id=destination_id
-            ).get_result()
+            destination = event_notifications_service.get_destination(instance_id, id=destination_id).get_result()
 
             print(json.dumps(destination, indent=2))
 
@@ -1029,16 +1013,14 @@ class TestEventNotificationsV1Examples:
             certificatefile = open(safariCertificatePath, "rb")
             name = "Safari Dest"
             description = "This destination is for Safari"
-            update_destination_response = (
-                event_notifications_service.update_destination(
-                    instance_id,
-                    id=destination_id5,
-                    name=name,
-                    description=description,
-                    config=safari_destination_config_model,
-                    certificate=certificatefile,
-                ).get_result()
-            )
+            update_destination_response = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id5,
+                name=name,
+                description=description,
+                config=safari_destination_config_model,
+                certificate=certificatefile,
+            ).get_result()
 
             print(json.dumps(update_destination_response, indent=2))
 
@@ -1076,15 +1058,13 @@ class TestEventNotificationsV1Examples:
             name = "Cloud_Functions_dest"
             description = "This is a Cloud Functions Destination"
 
-            update_destination_response = (
-                event_notifications_service.update_destination(
-                    instance_id,
-                    id=destination_id7,
-                    name=name,
-                    description=description,
-                    config=destination_config_model,
-                ).get_result()
-            )
+            update_destination_response = event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id7,
+                name=name,
+                description=description,
+                config=destination_config_model,
+            ).get_result()
 
             print(json.dumps(update_destination_response, indent=2))
 
@@ -1264,9 +1244,7 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(destination, indent=2))
 
-            destination_config_model = {
-                "params": {"domain": "abc.event-notifications.test.cloud.ibm.com"}
-            }
+            destination_config_model = {"params": {"domain": "abc.event-notifications.test.cloud.ibm.com"}}
 
             name = "Custom_Email_destination_update"
             description = "Custom Email Destination update"
@@ -1281,13 +1259,11 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(destination, indent=2))
 
-            verification_response = (
-                self.event_notifications_service.update_verify_destination(
-                    instance_id,
-                    id=destination_id16,
-                    type="spf/dkim",
-                ).get_result()
-            )
+            verification_response = self.event_notifications_service.update_verify_destination(
+                instance_id,
+                id=destination_id16,
+                type="spf/dkim",
+            ).get_result()
 
             print(json.dumps(verification_response, indent=2))
             # end-update_destination
@@ -1508,9 +1484,7 @@ class TestEventNotificationsV1Examples:
             print("\nlist_subscriptions() result:")
             # begin-list_subscriptions
 
-            subscription_list = event_notifications_service.list_subscriptions(
-                instance_id
-            ).get_result()
+            subscription_list = event_notifications_service.list_subscriptions(instance_id).get_result()
 
             print(json.dumps(subscription_list, indent=2))
 
@@ -1528,9 +1502,7 @@ class TestEventNotificationsV1Examples:
             print("\nget_subscription() result:")
             # begin-get_subscription
 
-            subscription = event_notifications_service.get_subscription(
-                instance_id, id=subscription_id
-            ).get_result()
+            subscription = event_notifications_service.get_subscription(instance_id, id=subscription_id).get_result()
 
             print(json.dumps(subscription, indent=2))
 
@@ -1599,14 +1571,12 @@ class TestEventNotificationsV1Examples:
 
             name = "subscription_email update"
             description = "Subscription for email updated"
-            update_subscription_response = (
-                event_notifications_service.update_subscription(
-                    instance_id,
-                    id=subscription_id2,
-                    name=name,
-                    description=description,
-                    attributes=subscription_update_attributes_model,
-                )
+            update_subscription_response = event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id2,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
             )
 
             subscription_response = update_subscription_response.get_result()
@@ -1619,14 +1589,12 @@ class TestEventNotificationsV1Examples:
 
             name = "Webhook_sub_updated"
             description = "Update Webhook subscription"
-            update_subscription_response = (
-                event_notifications_service.update_subscription(
-                    instance_id,
-                    id=subscription_id3,
-                    name=name,
-                    description=description,
-                    attributes=subscription_update_attributes_model,
-                )
+            update_subscription_response = event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id3,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
             )
 
             subscription_response = update_subscription_response.get_result()
@@ -1639,14 +1607,12 @@ class TestEventNotificationsV1Examples:
 
             name = "ServiceNow update"
             description = "Subscription for ServiceNow updated"
-            update_subscription_response = (
-                self.event_notifications_service.update_subscription(
-                    instance_id,
-                    id=subscription_id4,
-                    name=name,
-                    description=description,
-                    attributes=subscription_update_attributes_model,
-                )
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id4,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
             )
 
             subscription_response = update_subscription_response.get_result()
@@ -1657,26 +1623,20 @@ class TestEventNotificationsV1Examples:
             subscription_update_attributes_model = {
                 "attachment_color": "#0000FF",
             }
-            update_subscription_response = (
-                self.event_notifications_service.update_subscription(
-                    instance_id,
-                    id=subscription_id5,
-                    name=name,
-                    description=description,
-                    attributes=subscription_update_attributes_model,
-                )
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id5,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
             )
 
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
 
-            custom_email_update_attributes_invite_model = {
-                "add": ["tester4@ibm.com", "abc@gmail.com"]
-            }
+            custom_email_update_attributes_invite_model = {"add": ["tester4@ibm.com", "abc@gmail.com"]}
 
-            custom_email_update_attributes_to_remove_model = {
-                "remove": ["tester3@ibm.com"]
-            }
+            custom_email_update_attributes_to_remove_model = {"remove": ["tester3@ibm.com"]}
 
             subscription_update_attributes_model = {
                 "invited": custom_email_update_attributes_invite_model,
@@ -1693,14 +1653,12 @@ class TestEventNotificationsV1Examples:
 
             name = "subscription_custom_email update"
             description = "Subscription for custom email updated"
-            update_subscription_response = (
-                self.event_notifications_service.update_subscription(
-                    instance_id,
-                    id=subscription_id6,
-                    name=name,
-                    description=description,
-                    attributes=subscription_update_attributes_model,
-                )
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id6,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
             )
 
             subscription_response = update_subscription_response.get_result()
@@ -1803,11 +1761,9 @@ class TestEventNotificationsV1Examples:
                 "time": "2019-01-01T12:00:00.000Z",
             }
 
-            send_notifications_response = (
-                event_notifications_service.send_notifications(
-                    instance_id, body=notification_create_model
-                ).get_result()
-            )
+            send_notifications_response = event_notifications_service.send_notifications(
+                instance_id, body=notification_create_model
+            ).get_result()
 
             print(json.dumps(send_notifications_response, indent=2))
 
@@ -1824,9 +1780,7 @@ class TestEventNotificationsV1Examples:
         try:
             # begin-delete_subscription
 
-            response = event_notifications_service.delete_subscription(
-                instance_id, id=subscription_id
-            )
+            response = event_notifications_service.delete_subscription(instance_id, id=subscription_id)
             # end-delete_subscription
             print(
                 "\ndelete_subscription() response status code: ",
@@ -1841,9 +1795,7 @@ class TestEventNotificationsV1Examples:
                 subscription_id5,
                 subscription_id6,
             ]:
-                delete_subscription_response = (
-                    event_notifications_service.delete_subscription(instance_id, id)
-                )
+                delete_subscription_response = event_notifications_service.delete_subscription(instance_id, id)
             print(
                 "\ndelete_subscription() response status code: ",
                 delete_subscription_response.get_status_code(),
@@ -1860,9 +1812,7 @@ class TestEventNotificationsV1Examples:
         try:
             # begin-delete_topic
 
-            response = event_notifications_service.delete_topic(
-                instance_id, id=topic_id
-            )
+            response = event_notifications_service.delete_topic(instance_id, id=topic_id)
 
             # end-delete_topic
             print("\ndelete_topic() response status code: ", response.get_status_code())
@@ -1878,9 +1828,7 @@ class TestEventNotificationsV1Examples:
         try:
             # begin-delete_destination
 
-            response = event_notifications_service.delete_destination(
-                instance_id, id=destination_id
-            )
+            response = event_notifications_service.delete_destination(instance_id, id=destination_id)
 
             # end-delete_destination
             print(
@@ -1904,9 +1852,7 @@ class TestEventNotificationsV1Examples:
                 destination_id15,
                 destination_id16,
             ]:
-                delete_destination_response = (
-                    event_notifications_service.delete_destination(instance_id, id)
-                )
+                delete_destination_response = event_notifications_service.delete_destination(instance_id, id)
             print(
                 "\ndelete_destination() response status code: ",
                 delete_destination_response.get_status_code(),
@@ -1922,9 +1868,7 @@ class TestEventNotificationsV1Examples:
         """
         for id in [template_invitation_id, template_notification_id]:
             # begin-delete_template
-            delete_template_response = event_notifications_service.delete_template(
-                instance_id, id
-            ).get_result()
+            delete_template_response = event_notifications_service.delete_template(instance_id, id).get_result()
             # end-delete_template
         print(
             "\ndelete_template() response status code: ",
@@ -1939,14 +1883,10 @@ class TestEventNotificationsV1Examples:
         try:
             # begin-delete_source
 
-            response = event_notifications_service.delete_source(
-                instance_id, id=source_id
-            )
+            response = event_notifications_service.delete_source(instance_id, id=source_id)
 
             # end-delete_source
-            print(
-                "\ndelete_source() response status code: ", response.get_status_code()
-            )
+            print("\ndelete_source() response status code: ", response.get_status_code())
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1977,9 +1917,7 @@ class TestEventNotificationsV1Examples:
     def test_get_integration_example(self):
         try:
             # begin-get_integration
-            get_integration_response = event_notifications_service.get_integration(
-                instance_id, id=integration_id
-            )
+            get_integration_response = event_notifications_service.get_integration(instance_id, id=integration_id)
 
             # end-get_integration
             print(
@@ -2001,13 +1939,11 @@ class TestEventNotificationsV1Examples:
                 "root_key_id": "insert root key id",
             }
 
-            update_integration_response = (
-                event_notifications_service.replace_integration(
-                    instance_id,
-                    type="kms/hs-crypto",
-                    id=integration_id,
-                    metadata=integration_metadata,
-                )
+            update_integration_response = event_notifications_service.replace_integration(
+                instance_id,
+                type="kms/hs-crypto",
+                id=integration_id,
+                metadata=integration_metadata,
             )
 
             # end-replace_integration

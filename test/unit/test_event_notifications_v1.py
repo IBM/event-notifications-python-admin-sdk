@@ -142,13 +142,9 @@ class TestSendNotifications:
         notification_create_model["ibmenapnsbody"] = "testString"
         notification_create_model["ibmenapnsheaders"] = "testString"
         notification_create_model["ibmenchromebody"] = "testString"
-        notification_create_model[
-            "ibmenchromeheaders"
-        ] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model["ibmenchromeheaders"] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model["ibmenfirefoxbody"] = "testString"
-        notification_create_model[
-            "ibmenfirefoxheaders"
-        ] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model["ibmenfirefoxheaders"] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model["ibmenhuaweibody"] = "testString"
         notification_create_model["ibmensafaribody"] = "testString"
         notification_create_model["foo"] = "testString"
@@ -242,10 +238,7 @@ class TestSendNotifications:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.send_notifications(**req_copy)
 
@@ -302,13 +295,9 @@ class TestSendBulkNotifications:
         notification_create_model["ibmenapnsbody"] = "testString"
         notification_create_model["ibmenapnsheaders"] = "testString"
         notification_create_model["ibmenchromebody"] = "testString"
-        notification_create_model[
-            "ibmenchromeheaders"
-        ] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model["ibmenchromeheaders"] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model["ibmenfirefoxbody"] = "testString"
-        notification_create_model[
-            "ibmenfirefoxheaders"
-        ] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model["ibmenfirefoxheaders"] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model["ibmenhuaweibody"] = "testString"
         notification_create_model["ibmensafaribody"] = "testString"
         notification_create_model["foo"] = "testString"
@@ -402,10 +391,7 @@ class TestSendBulkNotifications:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.send_bulk_notifications(**req_copy)
 
@@ -541,10 +527,7 @@ class TestCreateSources:
             "description": description,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_sources(**req_copy)
 
@@ -675,10 +658,7 @@ class TestListSources:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_sources(**req_copy)
 
@@ -836,10 +816,7 @@ class TestGetSource:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_source(**req_copy)
 
@@ -918,10 +895,7 @@ class TestDeleteSource:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_source(**req_copy)
 
@@ -1020,10 +994,7 @@ class TestUpdateSource:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_source(**req_copy)
 
@@ -1100,12 +1071,8 @@ class TestCreateTopic:
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model["enabled"] = True
-        rules_model[
-            "event_type_filter"
-        ] = "$.notification_event_info.event_type == 'cert_manager'"
-        rules_model[
-            "notification_filter"
-        ] = "$.notification.findings[0].severity == 'MODERATE'"
+        rules_model["event_type_filter"] = "$.notification_event_info.event_type == 'cert_manager'"
+        rules_model["notification_filter"] = "$.notification.findings[0].severity == 'MODERATE'"
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -1164,12 +1131,8 @@ class TestCreateTopic:
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model["enabled"] = True
-        rules_model[
-            "event_type_filter"
-        ] = "$.notification_event_info.event_type == 'cert_manager'"
-        rules_model[
-            "notification_filter"
-        ] = "$.notification.findings[0].severity == 'MODERATE'"
+        rules_model["event_type_filter"] = "$.notification_event_info.event_type == 'cert_manager'"
+        rules_model["notification_filter"] = "$.notification.findings[0].severity == 'MODERATE'"
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -1188,10 +1151,7 @@ class TestCreateTopic:
             "name": name,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_topic(**req_copy)
 
@@ -1322,10 +1282,7 @@ class TestListTopics:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_topics(**req_copy)
 
@@ -1529,10 +1486,7 @@ class TestGetTopic:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_topic(**req_copy)
 
@@ -1570,12 +1524,8 @@ class TestReplaceTopic:
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model["enabled"] = True
-        rules_model[
-            "event_type_filter"
-        ] = "$.notification_event_info.event_type == 'cert_manager'"
-        rules_model[
-            "notification_filter"
-        ] = "$.notification.findings[0].severity == 'MODERATE'"
+        rules_model["event_type_filter"] = "$.notification_event_info.event_type == 'cert_manager'"
+        rules_model["notification_filter"] = "$.notification.findings[0].severity == 'MODERATE'"
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -1636,12 +1586,8 @@ class TestReplaceTopic:
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model["enabled"] = True
-        rules_model[
-            "event_type_filter"
-        ] = "$.notification_event_info.event_type == 'cert_manager'"
-        rules_model[
-            "notification_filter"
-        ] = "$.notification.findings[0].severity == 'MODERATE'"
+        rules_model["event_type_filter"] = "$.notification_event_info.event_type == 'cert_manager'"
+        rules_model["notification_filter"] = "$.notification.findings[0].severity == 'MODERATE'"
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -1661,10 +1607,7 @@ class TestReplaceTopic:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_topic(**req_copy)
 
@@ -1743,10 +1686,7 @@ class TestDeleteTopic:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_topic(**req_copy)
 
@@ -1897,10 +1837,7 @@ class TestCreateTemplate:
             "params": params,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_template(**req_copy)
 
@@ -2031,10 +1968,7 @@ class TestListTemplates:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_templates(**req_copy)
 
@@ -2192,10 +2126,7 @@ class TestGetTemplate:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_template(**req_copy)
 
@@ -2308,10 +2239,7 @@ class TestUpdateTemplate:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_template(**req_copy)
 
@@ -2390,10 +2318,7 @@ class TestDeleteTemplate:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_template(**req_copy)
 
@@ -2517,10 +2442,7 @@ class TestTestDestination:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.test_destination(**req_copy)
 
@@ -2705,10 +2627,7 @@ class TestCreateDestination:
             "type": type,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_destination(**req_copy)
 
@@ -2839,10 +2758,7 @@ class TestListDestinations:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_destinations(**req_copy)
 
@@ -3000,10 +2916,7 @@ class TestGetDestination:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_destination(**req_copy)
 
@@ -3184,10 +3097,7 @@ class TestUpdateDestination:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_destination(**req_copy)
 
@@ -3266,10 +3176,7 @@ class TestDeleteDestination:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_destination(**req_copy)
 
@@ -3362,10 +3269,7 @@ class TestUpdateVerifyDestination:
             "type": type,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_verify_destination(**req_copy)
 
@@ -3429,9 +3333,7 @@ class TestCreateTagsSubscription:
         create_tags_subscription()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
@@ -3479,9 +3381,7 @@ class TestCreateTagsSubscription:
         test_create_tags_subscription_value_error()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         mock_response = '{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
@@ -3505,10 +3405,7 @@ class TestCreateTagsSubscription:
             "tag_name": tag_name,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_tags_subscription(**req_copy)
 
@@ -3533,9 +3430,7 @@ class TestListTagsSubscription:
         list_tags_subscription()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
@@ -3596,9 +3491,7 @@ class TestListTagsSubscription:
         test_list_tags_subscription_required_params()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
@@ -3638,9 +3531,7 @@ class TestListTagsSubscription:
         test_list_tags_subscription_value_error()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "tag_subscriptions": [{"id": "id", "device_id": "device_id", "tag_name": "tag_name", "user_id": "user_id", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
@@ -3660,10 +3551,7 @@ class TestListTagsSubscription:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_tags_subscription(**req_copy)
 
@@ -3682,9 +3570,7 @@ class TestListTagsSubscription:
         test_list_tags_subscription_with_pager_get_next()
         """
         # Set up a two-page mock response
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         responses.add(
@@ -3726,9 +3612,7 @@ class TestListTagsSubscription:
         test_list_tags_subscription_with_pager_get_all()
         """
         # Set up a two-page mock response
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         mock_response2 = '{"total_count":2,"limit":1,"tag_subscriptions":[{"id":"id","device_id":"device_id","tag_name":"tag_name","user_id":"user_id","updated_at":"2019-01-01T12:00:00.000Z"}]}'
         responses.add(
@@ -3773,9 +3657,7 @@ class TestDeleteTagsSubscription:
         delete_tags_subscription()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         responses.add(
             responses.DELETE,
             url,
@@ -3821,9 +3703,7 @@ class TestDeleteTagsSubscription:
         test_delete_tags_subscription_required_params()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         responses.add(
             responses.DELETE,
             url,
@@ -3860,9 +3740,7 @@ class TestDeleteTagsSubscription:
         test_delete_tags_subscription_value_error()
         """
         # Set up mock
-        url = preprocess_url(
-            "/v1/instances/testString/destinations/testString/tag_subscriptions"
-        )
+        url = preprocess_url("/v1/instances/testString/destinations/testString/tag_subscriptions")
         responses.add(
             responses.DELETE,
             url,
@@ -3879,10 +3757,7 @@ class TestDeleteTagsSubscription:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_tags_subscription(**req_copy)
 
@@ -4035,10 +3910,7 @@ class TestCreateSubscription:
             "topic_id": topic_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.create_subscription(**req_copy)
 
@@ -4169,10 +4041,7 @@ class TestListSubscriptions:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_subscriptions(**req_copy)
 
@@ -4330,10 +4199,7 @@ class TestGetSubscription:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_subscription(**req_copy)
 
@@ -4412,10 +4278,7 @@ class TestDeleteSubscription:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.delete_subscription(**req_copy)
 
@@ -4465,15 +4328,9 @@ class TestUpdateSubscription:
 
         # Construct a dict representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_model = {}
-        subscription_update_attributes_model[
-            "invited"
-        ] = update_attributes_invited_model
-        subscription_update_attributes_model[
-            "subscribed"
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_model[
-            "unsubscribed"
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_model["invited"] = update_attributes_invited_model
+        subscription_update_attributes_model["subscribed"] = update_attributes_subscribed_model
+        subscription_update_attributes_model["unsubscribed"] = update_attributes_unsubscribed_model
 
         # Set up parameter values
         instance_id = "testString"
@@ -4541,15 +4398,9 @@ class TestUpdateSubscription:
 
         # Construct a dict representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_model = {}
-        subscription_update_attributes_model[
-            "invited"
-        ] = update_attributes_invited_model
-        subscription_update_attributes_model[
-            "subscribed"
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_model[
-            "unsubscribed"
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_model["invited"] = update_attributes_invited_model
+        subscription_update_attributes_model["subscribed"] = update_attributes_subscribed_model
+        subscription_update_attributes_model["unsubscribed"] = update_attributes_unsubscribed_model
 
         # Set up parameter values
         instance_id = "testString"
@@ -4564,10 +4415,7 @@ class TestUpdateSubscription:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.update_subscription(**req_copy)
 
@@ -4737,10 +4585,7 @@ class TestListIntegrations:
             "instance_id": instance_id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.list_integrations(**req_copy)
 
@@ -4898,10 +4743,7 @@ class TestGetIntegration:
             "id": id,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.get_integration(**req_copy)
 
@@ -5010,10 +4852,7 @@ class TestReplaceIntegration:
             "metadata": metadata,
         }
         for param in req_param_dict.keys():
-            req_copy = {
-                key: val if key is not param else None
-                for (key, val) in req_param_dict.items()
-            }
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
             with pytest.raises(ValueError):
                 _service.replace_integration(**req_copy)
 
@@ -5055,30 +4894,21 @@ class TestModel_BulkNotificationResponse:
         bulk_notification_response_model_json["bulk_messages"] = ["testString"]
 
         # Construct a model instance of BulkNotificationResponse by calling from_dict on the json representation
-        bulk_notification_response_model = BulkNotificationResponse.from_dict(
-            bulk_notification_response_model_json
-        )
+        bulk_notification_response_model = BulkNotificationResponse.from_dict(bulk_notification_response_model_json)
         assert bulk_notification_response_model != False
 
         # Construct a model instance of BulkNotificationResponse by calling from_dict on the json representation
         bulk_notification_response_model_dict = BulkNotificationResponse.from_dict(
             bulk_notification_response_model_json
         ).__dict__
-        bulk_notification_response_model2 = BulkNotificationResponse(
-            **bulk_notification_response_model_dict
-        )
+        bulk_notification_response_model2 = BulkNotificationResponse(**bulk_notification_response_model_dict)
 
         # Verify the model instances are equivalent
         assert bulk_notification_response_model == bulk_notification_response_model2
 
         # Convert model instance back to dict and verify no loss of data
-        bulk_notification_response_model_json2 = (
-            bulk_notification_response_model.to_dict()
-        )
-        assert (
-            bulk_notification_response_model_json2
-            == bulk_notification_response_model_json
-        )
+        bulk_notification_response_model_json2 = bulk_notification_response_model.to_dict()
+        assert bulk_notification_response_model_json2 == bulk_notification_response_model_json
 
 
 class TestModel_DKIMAttributes:
@@ -5102,9 +4932,7 @@ class TestModel_DKIMAttributes:
         assert dkim_attributes_model != False
 
         # Construct a model instance of DKIMAttributes by calling from_dict on the json representation
-        dkim_attributes_model_dict = DKIMAttributes.from_dict(
-            dkim_attributes_model_json
-        ).__dict__
+        dkim_attributes_model_dict = DKIMAttributes.from_dict(dkim_attributes_model_json).__dict__
         dkim_attributes_model2 = DKIMAttributes(**dkim_attributes_model_dict)
 
         # Verify the model instances are equivalent
@@ -5127,12 +4955,8 @@ class TestModel_Destination:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_one_of_model = (
-            {}
-        )  # DestinationConfigOneOfWebhookDestinationConfig
-        destination_config_one_of_model[
-            "url"
-        ] = "https://cloud.ibm.com/nhwebhook/sendwebhook"
+        destination_config_one_of_model = {}  # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model["url"] = "https://cloud.ibm.com/nhwebhook/sendwebhook"
         destination_config_one_of_model["verb"] = "post"
         destination_config_one_of_model["custom_headers"] = {"key1": "testString"}
         destination_config_one_of_model["sensitive_headers"] = ["authorization"]
@@ -5179,12 +5003,8 @@ class TestModel_DestinationConfig:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_one_of_model = (
-            {}
-        )  # DestinationConfigOneOfWebhookDestinationConfig
-        destination_config_one_of_model[
-            "url"
-        ] = "https://1ea472c0.us-south.apigw.appdomain.cloud/nhwebhook/sendwebhook"
+        destination_config_one_of_model = {}  # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model["url"] = "https://1ea472c0.us-south.apigw.appdomain.cloud/nhwebhook/sendwebhook"
         destination_config_one_of_model["verb"] = "post"
         destination_config_one_of_model["custom_headers"] = {"key1": "testString"}
         destination_config_one_of_model["sensitive_headers"] = ["authorization"]
@@ -5194,15 +5014,11 @@ class TestModel_DestinationConfig:
         destination_config_model_json["params"] = destination_config_one_of_model
 
         # Construct a model instance of DestinationConfig by calling from_dict on the json representation
-        destination_config_model = DestinationConfig.from_dict(
-            destination_config_model_json
-        )
+        destination_config_model = DestinationConfig.from_dict(destination_config_model_json)
         assert destination_config_model != False
 
         # Construct a model instance of DestinationConfig by calling from_dict on the json representation
-        destination_config_model_dict = DestinationConfig.from_dict(
-            destination_config_model_json
-        ).__dict__
+        destination_config_model_dict = DestinationConfig.from_dict(destination_config_model_json).__dict__
         destination_config_model2 = DestinationConfig(**destination_config_model_dict)
 
         # Verify the model instances are equivalent
@@ -5228,14 +5044,10 @@ class TestModel_DestinationList:
         destination_list_item_model = {}  # DestinationListItem
         destination_list_item_model["id"] = "11fe18ba-d0c8-4108-9f07-355e8052a813"
         destination_list_item_model["name"] = "SL Web"
-        destination_list_item_model[
-            "description"
-        ] = "This destination is for webhook purpose new"
+        destination_list_item_model["description"] = "This destination is for webhook purpose new"
         destination_list_item_model["type"] = "webhook"
         destination_list_item_model["subscription_count"] = 2
-        destination_list_item_model["subscription_names"] = [
-            "Webhook Sub for new change"
-        ]
+        destination_list_item_model["subscription_names"] = ["Webhook Sub for new change"]
         destination_list_item_model["updated_at"] = "2021-09-05T00:25:19.599000Z"
 
         page_href_response_model = {}  # PageHrefResponse
@@ -5258,9 +5070,7 @@ class TestModel_DestinationList:
         assert destination_list_model != False
 
         # Construct a model instance of DestinationList by calling from_dict on the json representation
-        destination_list_model_dict = DestinationList.from_dict(
-            destination_list_model_json
-        ).__dict__
+        destination_list_model_dict = DestinationList.from_dict(destination_list_model_json).__dict__
         destination_list_model2 = DestinationList(**destination_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -5292,18 +5102,12 @@ class TestModel_DestinationListItem:
         destination_list_item_model_json["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of DestinationListItem by calling from_dict on the json representation
-        destination_list_item_model = DestinationListItem.from_dict(
-            destination_list_item_model_json
-        )
+        destination_list_item_model = DestinationListItem.from_dict(destination_list_item_model_json)
         assert destination_list_item_model != False
 
         # Construct a model instance of DestinationListItem by calling from_dict on the json representation
-        destination_list_item_model_dict = DestinationListItem.from_dict(
-            destination_list_item_model_json
-        ).__dict__
-        destination_list_item_model2 = DestinationListItem(
-            **destination_list_item_model_dict
-        )
+        destination_list_item_model_dict = DestinationListItem.from_dict(destination_list_item_model_json).__dict__
+        destination_list_item_model2 = DestinationListItem(**destination_list_item_model_dict)
 
         # Verify the model instances are equivalent
         assert destination_list_item_model == destination_list_item_model2
@@ -5325,12 +5129,8 @@ class TestModel_DestinationResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        destination_config_one_of_model = (
-            {}
-        )  # DestinationConfigOneOfWebhookDestinationConfig
-        destination_config_one_of_model[
-            "url"
-        ] = "https://cloud.ibm.com/nhwebhook/sendwebhook"
+        destination_config_one_of_model = {}  # DestinationConfigOneOfWebhookDestinationConfig
+        destination_config_one_of_model["url"] = "https://cloud.ibm.com/nhwebhook/sendwebhook"
         destination_config_one_of_model["verb"] = "post"
         destination_config_one_of_model["custom_headers"] = {"key1": "testString"}
         destination_config_one_of_model["sensitive_headers"] = ["authorization"]
@@ -5348,18 +5148,12 @@ class TestModel_DestinationResponse:
         destination_response_model_json["created_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of DestinationResponse by calling from_dict on the json representation
-        destination_response_model = DestinationResponse.from_dict(
-            destination_response_model_json
-        )
+        destination_response_model = DestinationResponse.from_dict(destination_response_model_json)
         assert destination_response_model != False
 
         # Construct a model instance of DestinationResponse by calling from_dict on the json representation
-        destination_response_model_dict = DestinationResponse.from_dict(
-            destination_response_model_json
-        ).__dict__
-        destination_response_model2 = DestinationResponse(
-            **destination_response_model_dict
-        )
+        destination_response_model_dict = DestinationResponse.from_dict(destination_response_model_json).__dict__
+        destination_response_model2 = DestinationResponse(**destination_response_model_dict)
 
         # Verify the model instances are equivalent
         assert destination_response_model == destination_response_model2
@@ -5385,44 +5179,28 @@ class TestModel_DestinationTagsSubscriptionResponse:
         destination_tags_subscription_response_model_json["device_id"] = "testString"
         destination_tags_subscription_response_model_json["tag_name"] = "testString"
         destination_tags_subscription_response_model_json["user_id"] = "testString"
-        destination_tags_subscription_response_model_json[
-            "created_at"
-        ] = "2019-01-01T12:00:00Z"
+        destination_tags_subscription_response_model_json["created_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of DestinationTagsSubscriptionResponse by calling from_dict on the json representation
-        destination_tags_subscription_response_model = (
-            DestinationTagsSubscriptionResponse.from_dict(
-                destination_tags_subscription_response_model_json
-            )
+        destination_tags_subscription_response_model = DestinationTagsSubscriptionResponse.from_dict(
+            destination_tags_subscription_response_model_json
         )
         assert destination_tags_subscription_response_model != False
 
         # Construct a model instance of DestinationTagsSubscriptionResponse by calling from_dict on the json representation
-        destination_tags_subscription_response_model_dict = (
-            DestinationTagsSubscriptionResponse.from_dict(
-                destination_tags_subscription_response_model_json
-            ).__dict__
-        )
-        destination_tags_subscription_response_model2 = (
-            DestinationTagsSubscriptionResponse(
-                **destination_tags_subscription_response_model_dict
-            )
+        destination_tags_subscription_response_model_dict = DestinationTagsSubscriptionResponse.from_dict(
+            destination_tags_subscription_response_model_json
+        ).__dict__
+        destination_tags_subscription_response_model2 = DestinationTagsSubscriptionResponse(
+            **destination_tags_subscription_response_model_dict
         )
 
         # Verify the model instances are equivalent
-        assert (
-            destination_tags_subscription_response_model
-            == destination_tags_subscription_response_model2
-        )
+        assert destination_tags_subscription_response_model == destination_tags_subscription_response_model2
 
         # Convert model instance back to dict and verify no loss of data
-        destination_tags_subscription_response_model_json2 = (
-            destination_tags_subscription_response_model.to_dict()
-        )
-        assert (
-            destination_tags_subscription_response_model_json2
-            == destination_tags_subscription_response_model_json
-        )
+        destination_tags_subscription_response_model_json2 = destination_tags_subscription_response_model.to_dict()
+        assert destination_tags_subscription_response_model_json2 == destination_tags_subscription_response_model_json
 
 
 class TestModel_EmailAttributesResponseInvitedItems:
@@ -5438,47 +5216,29 @@ class TestModel_EmailAttributesResponseInvitedItems:
         # Construct a json representation of a EmailAttributesResponseInvitedItems model
         email_attributes_response_invited_items_model_json = {}
         email_attributes_response_invited_items_model_json["email"] = "testString"
-        email_attributes_response_invited_items_model_json[
-            "updated_at"
-        ] = "2019-01-01T12:00:00Z"
-        email_attributes_response_invited_items_model_json[
-            "expires_at"
-        ] = "2019-01-01T12:00:00Z"
+        email_attributes_response_invited_items_model_json["updated_at"] = "2019-01-01T12:00:00Z"
+        email_attributes_response_invited_items_model_json["expires_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of EmailAttributesResponseInvitedItems by calling from_dict on the json representation
-        email_attributes_response_invited_items_model = (
-            EmailAttributesResponseInvitedItems.from_dict(
-                email_attributes_response_invited_items_model_json
-            )
+        email_attributes_response_invited_items_model = EmailAttributesResponseInvitedItems.from_dict(
+            email_attributes_response_invited_items_model_json
         )
         assert email_attributes_response_invited_items_model != False
 
         # Construct a model instance of EmailAttributesResponseInvitedItems by calling from_dict on the json representation
-        email_attributes_response_invited_items_model_dict = (
-            EmailAttributesResponseInvitedItems.from_dict(
-                email_attributes_response_invited_items_model_json
-            ).__dict__
-        )
-        email_attributes_response_invited_items_model2 = (
-            EmailAttributesResponseInvitedItems(
-                **email_attributes_response_invited_items_model_dict
-            )
+        email_attributes_response_invited_items_model_dict = EmailAttributesResponseInvitedItems.from_dict(
+            email_attributes_response_invited_items_model_json
+        ).__dict__
+        email_attributes_response_invited_items_model2 = EmailAttributesResponseInvitedItems(
+            **email_attributes_response_invited_items_model_dict
         )
 
         # Verify the model instances are equivalent
-        assert (
-            email_attributes_response_invited_items_model
-            == email_attributes_response_invited_items_model2
-        )
+        assert email_attributes_response_invited_items_model == email_attributes_response_invited_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        email_attributes_response_invited_items_model_json2 = (
-            email_attributes_response_invited_items_model.to_dict()
-        )
-        assert (
-            email_attributes_response_invited_items_model_json2
-            == email_attributes_response_invited_items_model_json
-        )
+        email_attributes_response_invited_items_model_json2 = email_attributes_response_invited_items_model.to_dict()
+        assert email_attributes_response_invited_items_model_json2 == email_attributes_response_invited_items_model_json
 
 
 class TestModel_EmailAttributesResponseSubscribedUnsubscribedItems:
@@ -5495,12 +5255,8 @@ class TestModel_EmailAttributesResponseSubscribedUnsubscribedItems:
 
         # Construct a json representation of a EmailAttributesResponseSubscribedUnsubscribedItems model
         email_attributes_response_subscribed_unsubscribed_items_model_json = {}
-        email_attributes_response_subscribed_unsubscribed_items_model_json[
-            "email"
-        ] = "testString"
-        email_attributes_response_subscribed_unsubscribed_items_model_json[
-            "updated_at"
-        ] = "2019-01-01T12:00:00Z"
+        email_attributes_response_subscribed_unsubscribed_items_model_json["email"] = "testString"
+        email_attributes_response_subscribed_unsubscribed_items_model_json["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of EmailAttributesResponseSubscribedUnsubscribedItems by calling from_dict on the json representation
         email_attributes_response_subscribed_unsubscribed_items_model = (
@@ -5551,48 +5307,34 @@ class TestModel_IntegrationGetResponse:
         # Construct dict forms of any model objects needed in order to build this model.
 
         integration_metadata_model = {}  # IntegrationMetadata
-        integration_metadata_model[
-            "endpoint"
-        ] = "https://private.us-south.kms.cloud.ibm.com"
-        integration_metadata_model[
-            "crn"
-        ] = "crn:v1:staging:public:kms:us-south:a/****:****::"
-        integration_metadata_model[
-            "root_key_id"
-        ] = "cf49847c-bd3e-4fda-853f-2bcf0575a895"
+        integration_metadata_model["endpoint"] = "https://private.us-south.kms.cloud.ibm.com"
+        integration_metadata_model["crn"] = "crn:v1:staging:public:kms:us-south:a/****:****::"
+        integration_metadata_model["root_key_id"] = "cf49847c-bd3e-4fda-853f-2bcf0575a895"
 
         # Construct a json representation of a IntegrationGetResponse model
         integration_get_response_model_json = {}
-        integration_get_response_model_json[
-            "id"
-        ] = "9fab83da-98cb-4f18-a7ba-b6f0435c9673"
+        integration_get_response_model_json["id"] = "9fab83da-98cb-4f18-a7ba-b6f0435c9673"
         integration_get_response_model_json["type"] = "testString"
         integration_get_response_model_json["metadata"] = integration_metadata_model
         integration_get_response_model_json["created_at"] = "2019-01-01T12:00:00Z"
         integration_get_response_model_json["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of IntegrationGetResponse by calling from_dict on the json representation
-        integration_get_response_model = IntegrationGetResponse.from_dict(
-            integration_get_response_model_json
-        )
+        integration_get_response_model = IntegrationGetResponse.from_dict(integration_get_response_model_json)
         assert integration_get_response_model != False
 
         # Construct a model instance of IntegrationGetResponse by calling from_dict on the json representation
         integration_get_response_model_dict = IntegrationGetResponse.from_dict(
             integration_get_response_model_json
         ).__dict__
-        integration_get_response_model2 = IntegrationGetResponse(
-            **integration_get_response_model_dict
-        )
+        integration_get_response_model2 = IntegrationGetResponse(**integration_get_response_model_dict)
 
         # Verify the model instances are equivalent
         assert integration_get_response_model == integration_get_response_model2
 
         # Convert model instance back to dict and verify no loss of data
         integration_get_response_model_json2 = integration_get_response_model.to_dict()
-        assert (
-            integration_get_response_model_json2 == integration_get_response_model_json
-        )
+        assert integration_get_response_model_json2 == integration_get_response_model_json
 
 
 class TestModel_IntegrationList:
@@ -5608,15 +5350,9 @@ class TestModel_IntegrationList:
         # Construct dict forms of any model objects needed in order to build this model.
 
         integration_metadata_model = {}  # IntegrationMetadata
-        integration_metadata_model[
-            "endpoint"
-        ] = "https://private.us-south.kms.cloud.ibm.com"
-        integration_metadata_model[
-            "crn"
-        ] = "crn:v1:staging:public:kms:us-south:a/****:****::"
-        integration_metadata_model[
-            "root_key_id"
-        ] = "cf49847c-bd3e-4fda-853f-2bcf0575a895"
+        integration_metadata_model["endpoint"] = "https://private.us-south.kms.cloud.ibm.com"
+        integration_metadata_model["crn"] = "crn:v1:staging:public:kms:us-south:a/****:****::"
+        integration_metadata_model["root_key_id"] = "cf49847c-bd3e-4fda-853f-2bcf0575a895"
 
         integration_list_item_model = {}  # IntegrationListItem
         integration_list_item_model["id"] = "bc0cb555-bf6d-444f-b8f3-069199b04a77"
@@ -5645,9 +5381,7 @@ class TestModel_IntegrationList:
         assert integration_list_model != False
 
         # Construct a model instance of IntegrationList by calling from_dict on the json representation
-        integration_list_model_dict = IntegrationList.from_dict(
-            integration_list_model_json
-        ).__dict__
+        integration_list_model_dict = IntegrationList.from_dict(integration_list_model_json).__dict__
         integration_list_model2 = IntegrationList(**integration_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -5671,15 +5405,9 @@ class TestModel_IntegrationListItem:
         # Construct dict forms of any model objects needed in order to build this model.
 
         integration_metadata_model = {}  # IntegrationMetadata
-        integration_metadata_model[
-            "endpoint"
-        ] = "https://private.us-south.kms.cloud.ibm.com"
-        integration_metadata_model[
-            "crn"
-        ] = "crn:v1:staging:public:kms:us-south:a/****:****::"
-        integration_metadata_model[
-            "root_key_id"
-        ] = "cf49847c-bd3e-4fda-853f-2bcf0575a895"
+        integration_metadata_model["endpoint"] = "https://private.us-south.kms.cloud.ibm.com"
+        integration_metadata_model["crn"] = "crn:v1:staging:public:kms:us-south:a/****:****::"
+        integration_metadata_model["root_key_id"] = "cf49847c-bd3e-4fda-853f-2bcf0575a895"
 
         # Construct a json representation of a IntegrationListItem model
         integration_list_item_model_json = {}
@@ -5690,18 +5418,12 @@ class TestModel_IntegrationListItem:
         integration_list_item_model_json["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of IntegrationListItem by calling from_dict on the json representation
-        integration_list_item_model = IntegrationListItem.from_dict(
-            integration_list_item_model_json
-        )
+        integration_list_item_model = IntegrationListItem.from_dict(integration_list_item_model_json)
         assert integration_list_item_model != False
 
         # Construct a model instance of IntegrationListItem by calling from_dict on the json representation
-        integration_list_item_model_dict = IntegrationListItem.from_dict(
-            integration_list_item_model_json
-        ).__dict__
-        integration_list_item_model2 = IntegrationListItem(
-            **integration_list_item_model_dict
-        )
+        integration_list_item_model_dict = IntegrationListItem.from_dict(integration_list_item_model_json).__dict__
+        integration_list_item_model2 = IntegrationListItem(**integration_list_item_model_dict)
 
         # Verify the model instances are equivalent
         assert integration_list_item_model == integration_list_item_model2
@@ -5728,18 +5450,12 @@ class TestModel_IntegrationMetadata:
         integration_metadata_model_json["root_key_id"] = "testString"
 
         # Construct a model instance of IntegrationMetadata by calling from_dict on the json representation
-        integration_metadata_model = IntegrationMetadata.from_dict(
-            integration_metadata_model_json
-        )
+        integration_metadata_model = IntegrationMetadata.from_dict(integration_metadata_model_json)
         assert integration_metadata_model != False
 
         # Construct a model instance of IntegrationMetadata by calling from_dict on the json representation
-        integration_metadata_model_dict = IntegrationMetadata.from_dict(
-            integration_metadata_model_json
-        ).__dict__
-        integration_metadata_model2 = IntegrationMetadata(
-            **integration_metadata_model_dict
-        )
+        integration_metadata_model_dict = IntegrationMetadata.from_dict(integration_metadata_model_json).__dict__
+        integration_metadata_model2 = IntegrationMetadata(**integration_metadata_model_dict)
 
         # Verify the model instances are equivalent
         assert integration_metadata_model == integration_metadata_model2
@@ -5781,30 +5497,20 @@ class TestModel_NotificationCreate:
         notification_create_model_json["ibmenapnsbody"] = "testString"
         notification_create_model_json["ibmenapnsheaders"] = "testString"
         notification_create_model_json["ibmenchromebody"] = "testString"
-        notification_create_model_json[
-            "ibmenchromeheaders"
-        ] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model_json["ibmenchromeheaders"] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model_json["ibmenfirefoxbody"] = "testString"
-        notification_create_model_json[
-            "ibmenfirefoxheaders"
-        ] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
+        notification_create_model_json["ibmenfirefoxheaders"] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model_json["ibmenhuaweibody"] = "testString"
         notification_create_model_json["ibmensafaribody"] = "testString"
         notification_create_model_json["foo"] = "testString"
 
         # Construct a model instance of NotificationCreate by calling from_dict on the json representation
-        notification_create_model = NotificationCreate.from_dict(
-            notification_create_model_json
-        )
+        notification_create_model = NotificationCreate.from_dict(notification_create_model_json)
         assert notification_create_model != False
 
         # Construct a model instance of NotificationCreate by calling from_dict on the json representation
-        notification_create_model_dict = NotificationCreate.from_dict(
-            notification_create_model_json
-        ).__dict__
-        notification_create_model2 = NotificationCreate(
-            **notification_create_model_dict
-        )
+        notification_create_model_dict = NotificationCreate.from_dict(notification_create_model_json).__dict__
+        notification_create_model2 = NotificationCreate(**notification_create_model_dict)
 
         # Verify the model instances are equivalent
         assert notification_create_model == notification_create_model2
@@ -5839,18 +5545,12 @@ class TestModel_NotificationResponse:
         notification_response_model_json["notification_id"] = "testString"
 
         # Construct a model instance of NotificationResponse by calling from_dict on the json representation
-        notification_response_model = NotificationResponse.from_dict(
-            notification_response_model_json
-        )
+        notification_response_model = NotificationResponse.from_dict(notification_response_model_json)
         assert notification_response_model != False
 
         # Construct a model instance of NotificationResponse by calling from_dict on the json representation
-        notification_response_model_dict = NotificationResponse.from_dict(
-            notification_response_model_json
-        ).__dict__
-        notification_response_model2 = NotificationResponse(
-            **notification_response_model_dict
-        )
+        notification_response_model_dict = NotificationResponse.from_dict(notification_response_model_json).__dict__
+        notification_response_model2 = NotificationResponse(**notification_response_model_dict)
 
         # Verify the model instances are equivalent
         assert notification_response_model == notification_response_model2
@@ -5875,15 +5575,11 @@ class TestModel_PageHrefResponse:
         page_href_response_model_json["href"] = "testString"
 
         # Construct a model instance of PageHrefResponse by calling from_dict on the json representation
-        page_href_response_model = PageHrefResponse.from_dict(
-            page_href_response_model_json
-        )
+        page_href_response_model = PageHrefResponse.from_dict(page_href_response_model_json)
         assert page_href_response_model != False
 
         # Construct a model instance of PageHrefResponse by calling from_dict on the json representation
-        page_href_response_model_dict = PageHrefResponse.from_dict(
-            page_href_response_model_json
-        ).__dict__
+        page_href_response_model_dict = PageHrefResponse.from_dict(page_href_response_model_json).__dict__
         page_href_response_model2 = PageHrefResponse(**page_href_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -5976,18 +5672,12 @@ class TestModel_SMSAttributesItems:
         sms_attributes_items_model_json["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of SMSAttributesItems by calling from_dict on the json representation
-        sms_attributes_items_model = SMSAttributesItems.from_dict(
-            sms_attributes_items_model_json
-        )
+        sms_attributes_items_model = SMSAttributesItems.from_dict(sms_attributes_items_model_json)
         assert sms_attributes_items_model != False
 
         # Construct a model instance of SMSAttributesItems by calling from_dict on the json representation
-        sms_attributes_items_model_dict = SMSAttributesItems.from_dict(
-            sms_attributes_items_model_json
-        ).__dict__
-        sms_attributes_items_model2 = SMSAttributesItems(
-            **sms_attributes_items_model_dict
-        )
+        sms_attributes_items_model_dict = SMSAttributesItems.from_dict(sms_attributes_items_model_json).__dict__
+        sms_attributes_items_model2 = SMSAttributesItems(**sms_attributes_items_model_dict)
 
         # Verify the model instances are equivalent
         assert sms_attributes_items_model == sms_attributes_items_model2
@@ -6014,30 +5704,21 @@ class TestModel_SMSInviteAttributesItems:
         sms_invite_attributes_items_model_json["expires_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of SMSInviteAttributesItems by calling from_dict on the json representation
-        sms_invite_attributes_items_model = SMSInviteAttributesItems.from_dict(
-            sms_invite_attributes_items_model_json
-        )
+        sms_invite_attributes_items_model = SMSInviteAttributesItems.from_dict(sms_invite_attributes_items_model_json)
         assert sms_invite_attributes_items_model != False
 
         # Construct a model instance of SMSInviteAttributesItems by calling from_dict on the json representation
         sms_invite_attributes_items_model_dict = SMSInviteAttributesItems.from_dict(
             sms_invite_attributes_items_model_json
         ).__dict__
-        sms_invite_attributes_items_model2 = SMSInviteAttributesItems(
-            **sms_invite_attributes_items_model_dict
-        )
+        sms_invite_attributes_items_model2 = SMSInviteAttributesItems(**sms_invite_attributes_items_model_dict)
 
         # Verify the model instances are equivalent
         assert sms_invite_attributes_items_model == sms_invite_attributes_items_model2
 
         # Convert model instance back to dict and verify no loss of data
-        sms_invite_attributes_items_model_json2 = (
-            sms_invite_attributes_items_model.to_dict()
-        )
-        assert (
-            sms_invite_attributes_items_model_json2
-            == sms_invite_attributes_items_model_json
-        )
+        sms_invite_attributes_items_model_json2 = sms_invite_attributes_items_model.to_dict()
+        assert sms_invite_attributes_items_model_json2 == sms_invite_attributes_items_model_json
 
 
 class TestModel_SPFAttributes:
@@ -6061,9 +5742,7 @@ class TestModel_SPFAttributes:
         assert spf_attributes_model != False
 
         # Construct a model instance of SPFAttributes by calling from_dict on the json representation
-        spf_attributes_model_dict = SPFAttributes.from_dict(
-            spf_attributes_model_json
-        ).__dict__
+        spf_attributes_model_dict = SPFAttributes.from_dict(spf_attributes_model_json).__dict__
         spf_attributes_model2 = SPFAttributes(**spf_attributes_model_dict)
 
         # Verify the model instances are equivalent
@@ -6188,9 +5867,7 @@ class TestModel_SourceListItem:
         assert source_list_item_model != False
 
         # Construct a model instance of SourceListItem by calling from_dict on the json representation
-        source_list_item_model_dict = SourceListItem.from_dict(
-            source_list_item_model_json
-        ).__dict__
+        source_list_item_model_dict = SourceListItem.from_dict(source_list_item_model_json).__dict__
         source_list_item_model2 = SourceListItem(**source_list_item_model_dict)
 
         # Verify the model instances are equivalent
@@ -6224,9 +5901,7 @@ class TestModel_SourceResponse:
         assert source_response_model != False
 
         # Construct a model instance of SourceResponse by calling from_dict on the json representation
-        source_response_model_dict = SourceResponse.from_dict(
-            source_response_model_json
-        ).__dict__
+        source_response_model_dict = SourceResponse.from_dict(source_response_model_json).__dict__
         source_response_model2 = SourceResponse(**source_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -6264,9 +5939,7 @@ class TestModel_SourcesItems:
         assert sources_items_model != False
 
         # Construct a model instance of SourcesItems by calling from_dict on the json representation
-        sources_items_model_dict = SourcesItems.from_dict(
-            sources_items_model_json
-        ).__dict__
+        sources_items_model_dict = SourcesItems.from_dict(sources_items_model_json).__dict__
         sources_items_model2 = SourcesItems(**sources_items_model_dict)
 
         # Verify the model instances are equivalent
@@ -6291,12 +5964,8 @@ class TestModel_SourcesListItems:
 
         rules_get_model = {}  # RulesGet
         rules_get_model["enabled"] = True
-        rules_get_model[
-            "event_type_filter"
-        ] = "$.notification_event_info.event_type == 'test'"
-        rules_get_model[
-            "notification_filter"
-        ] = "$.notification.findings[0].severity == 'LOW'"
+        rules_get_model["event_type_filter"] = "$.notification_event_info.event_type == 'test'"
+        rules_get_model["notification_filter"] = "$.notification.findings[0].severity == 'LOW'"
         rules_get_model["updated_at"] = "2021-09-08T13:25:20.523533Z"
         rules_get_model["id"] = "218f4e30-9af2-4f70-b38b-738f923b0c4b"
 
@@ -6307,15 +5976,11 @@ class TestModel_SourcesListItems:
         sources_list_items_model_json["rules"] = [rules_get_model]
 
         # Construct a model instance of SourcesListItems by calling from_dict on the json representation
-        sources_list_items_model = SourcesListItems.from_dict(
-            sources_list_items_model_json
-        )
+        sources_list_items_model = SourcesListItems.from_dict(sources_list_items_model_json)
         assert sources_list_items_model != False
 
         # Construct a model instance of SourcesListItems by calling from_dict on the json representation
-        sources_list_items_model_dict = SourcesListItems.from_dict(
-            sources_list_items_model_json
-        ).__dict__
+        sources_list_items_model_dict = SourcesListItems.from_dict(sources_list_items_model_json).__dict__
         sources_list_items_model2 = SourcesListItems(**sources_list_items_model_dict)
 
         # Verify the model instances are equivalent
@@ -6338,9 +6003,7 @@ class TestModel_Subscription:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        subscription_attributes_model = (
-            {}
-        )  # SubscriptionAttributesWebhookAttributesResponse
+        subscription_attributes_model = {}  # SubscriptionAttributesWebhookAttributesResponse
         subscription_attributes_model["signing_enabled"] = True
         subscription_attributes_model["add_notification_payload"] = True
         subscription_attributes_model["foo"] = "testString"
@@ -6365,9 +6028,7 @@ class TestModel_Subscription:
         assert subscription_model != False
 
         # Construct a model instance of Subscription by calling from_dict on the json representation
-        subscription_model_dict = Subscription.from_dict(
-            subscription_model_json
-        ).__dict__
+        subscription_model_dict = Subscription.from_dict(subscription_model_json).__dict__
         subscription_model2 = Subscription(**subscription_model_dict)
 
         # Verify the model instances are equivalent
@@ -6404,16 +6065,10 @@ class TestModel_SubscriptionList:
         subscription_list_item_model["id"] = "60502ac0-5748-40b1-84b8-938b77f1c8d1"
         subscription_list_item_model["name"] = "Test subscription"
         subscription_list_item_model["description"] = "Developers of EN"
-        subscription_list_item_model[
-            "destination_id"
-        ] = "b5cb3f03-ff12-42f3-9fae-37ee27f2a81a"
-        subscription_list_item_model[
-            "destination_name"
-        ] = "Developers Email destination"
+        subscription_list_item_model["destination_id"] = "b5cb3f03-ff12-42f3-9fae-37ee27f2a81a"
+        subscription_list_item_model["destination_name"] = "Developers Email destination"
         subscription_list_item_model["destination_type"] = "smtp_ibm"
-        subscription_list_item_model[
-            "topic_id"
-        ] = "33d2b8d5-8ab8-46c7-97b9-c508afbf0701"
+        subscription_list_item_model["topic_id"] = "33d2b8d5-8ab8-46c7-97b9-c508afbf0701"
         subscription_list_item_model["topic_name"] = "Developers topic"
         subscription_list_item_model["updated_at"] = "2021-08-18T09:50:32.133000Z"
 
@@ -6433,15 +6088,11 @@ class TestModel_SubscriptionList:
         subscription_list_model_json["next"] = page_href_response_model
 
         # Construct a model instance of SubscriptionList by calling from_dict on the json representation
-        subscription_list_model = SubscriptionList.from_dict(
-            subscription_list_model_json
-        )
+        subscription_list_model = SubscriptionList.from_dict(subscription_list_model_json)
         assert subscription_list_model != False
 
         # Construct a model instance of SubscriptionList by calling from_dict on the json representation
-        subscription_list_model_dict = SubscriptionList.from_dict(
-            subscription_list_model_json
-        ).__dict__
+        subscription_list_model_dict = SubscriptionList.from_dict(subscription_list_model_json).__dict__
         subscription_list_model2 = SubscriptionList(**subscription_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -6475,18 +6126,12 @@ class TestModel_SubscriptionListItem:
         subscription_list_item_model_json["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of SubscriptionListItem by calling from_dict on the json representation
-        subscription_list_item_model = SubscriptionListItem.from_dict(
-            subscription_list_item_model_json
-        )
+        subscription_list_item_model = SubscriptionListItem.from_dict(subscription_list_item_model_json)
         assert subscription_list_item_model != False
 
         # Construct a model instance of SubscriptionListItem by calling from_dict on the json representation
-        subscription_list_item_model_dict = SubscriptionListItem.from_dict(
-            subscription_list_item_model_json
-        ).__dict__
-        subscription_list_item_model2 = SubscriptionListItem(
-            **subscription_list_item_model_dict
-        )
+        subscription_list_item_model_dict = SubscriptionListItem.from_dict(subscription_list_item_model_json).__dict__
+        subscription_list_item_model2 = SubscriptionListItem(**subscription_list_item_model_dict)
 
         # Verify the model instances are equivalent
         assert subscription_list_item_model == subscription_list_item_model2
@@ -6510,9 +6155,7 @@ class TestModel_TagsSubscriptionList:
 
         tags_subscription_list_item_model = {}  # TagsSubscriptionListItem
         tags_subscription_list_item_model["id"] = "330cfdf8-7ae6-4afb-aac1-458243877d00"
-        tags_subscription_list_item_model[
-            "device_id"
-        ] = "11fe18ba-d0c8-4108-9f07-355e8052a813"
+        tags_subscription_list_item_model["device_id"] = "11fe18ba-d0c8-4108-9f07-355e8052a813"
         tags_subscription_list_item_model["tag_name"] = "sl_web"
         tags_subscription_list_item_model["user_id"] = "fcm_id_123"
         tags_subscription_list_item_model["updated_at"] = "2021-09-05T00:25:19.599000Z"
@@ -6527,26 +6170,18 @@ class TestModel_TagsSubscriptionList:
         tags_subscription_list_model_json["total_count"] = 38
         tags_subscription_list_model_json["offset"] = 38
         tags_subscription_list_model_json["limit"] = 38
-        tags_subscription_list_model_json["tag_subscriptions"] = [
-            tags_subscription_list_item_model
-        ]
+        tags_subscription_list_model_json["tag_subscriptions"] = [tags_subscription_list_item_model]
         tags_subscription_list_model_json["first"] = page_href_response_model
         tags_subscription_list_model_json["previous"] = page_href_response_model
         tags_subscription_list_model_json["next"] = page_href_response_model
 
         # Construct a model instance of TagsSubscriptionList by calling from_dict on the json representation
-        tags_subscription_list_model = TagsSubscriptionList.from_dict(
-            tags_subscription_list_model_json
-        )
+        tags_subscription_list_model = TagsSubscriptionList.from_dict(tags_subscription_list_model_json)
         assert tags_subscription_list_model != False
 
         # Construct a model instance of TagsSubscriptionList by calling from_dict on the json representation
-        tags_subscription_list_model_dict = TagsSubscriptionList.from_dict(
-            tags_subscription_list_model_json
-        ).__dict__
-        tags_subscription_list_model2 = TagsSubscriptionList(
-            **tags_subscription_list_model_dict
-        )
+        tags_subscription_list_model_dict = TagsSubscriptionList.from_dict(tags_subscription_list_model_json).__dict__
+        tags_subscription_list_model2 = TagsSubscriptionList(**tags_subscription_list_model_dict)
 
         # Verify the model instances are equivalent
         assert tags_subscription_list_model == tags_subscription_list_model2
@@ -6575,30 +6210,21 @@ class TestModel_TagsSubscriptionListItem:
         tags_subscription_list_item_model_json["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of TagsSubscriptionListItem by calling from_dict on the json representation
-        tags_subscription_list_item_model = TagsSubscriptionListItem.from_dict(
-            tags_subscription_list_item_model_json
-        )
+        tags_subscription_list_item_model = TagsSubscriptionListItem.from_dict(tags_subscription_list_item_model_json)
         assert tags_subscription_list_item_model != False
 
         # Construct a model instance of TagsSubscriptionListItem by calling from_dict on the json representation
         tags_subscription_list_item_model_dict = TagsSubscriptionListItem.from_dict(
             tags_subscription_list_item_model_json
         ).__dict__
-        tags_subscription_list_item_model2 = TagsSubscriptionListItem(
-            **tags_subscription_list_item_model_dict
-        )
+        tags_subscription_list_item_model2 = TagsSubscriptionListItem(**tags_subscription_list_item_model_dict)
 
         # Verify the model instances are equivalent
         assert tags_subscription_list_item_model == tags_subscription_list_item_model2
 
         # Convert model instance back to dict and verify no loss of data
-        tags_subscription_list_item_model_json2 = (
-            tags_subscription_list_item_model.to_dict()
-        )
-        assert (
-            tags_subscription_list_item_model_json2
-            == tags_subscription_list_item_model_json
-        )
+        tags_subscription_list_item_model_json2 = tags_subscription_list_item_model.to_dict()
+        assert tags_subscription_list_item_model_json2 == tags_subscription_list_item_model_json
 
 
 class TestModel_Template:
@@ -6657,9 +6283,7 @@ class TestModel_TemplateConfig:
         assert template_config_model != False
 
         # Construct a model instance of TemplateConfig by calling from_dict on the json representation
-        template_config_model_dict = TemplateConfig.from_dict(
-            template_config_model_json
-        ).__dict__
+        template_config_model_dict = TemplateConfig.from_dict(template_config_model_json).__dict__
         template_config_model2 = TemplateConfig(**template_config_model_dict)
 
         # Verify the model instances are equivalent
@@ -6711,9 +6335,7 @@ class TestModel_TemplateList:
         assert template_list_model != False
 
         # Construct a model instance of TemplateList by calling from_dict on the json representation
-        template_list_model_dict = TemplateList.from_dict(
-            template_list_model_json
-        ).__dict__
+        template_list_model_dict = TemplateList.from_dict(template_list_model_json).__dict__
         template_list_model2 = TemplateList(**template_list_model_dict)
 
         # Verify the model instances are equivalent
@@ -6752,15 +6374,11 @@ class TestModel_TemplateResponse:
         template_response_model_json["created_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a model instance of TemplateResponse by calling from_dict on the json representation
-        template_response_model = TemplateResponse.from_dict(
-            template_response_model_json
-        )
+        template_response_model = TemplateResponse.from_dict(template_response_model_json)
         assert template_response_model != False
 
         # Construct a model instance of TemplateResponse by calling from_dict on the json representation
-        template_response_model_dict = TemplateResponse.from_dict(
-            template_response_model_json
-        ).__dict__
+        template_response_model_dict = TemplateResponse.from_dict(template_response_model_json).__dict__
         template_response_model2 = TemplateResponse(**template_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -6786,30 +6404,21 @@ class TestModel_TestDestinationResponse:
         test_destination_response_model_json["status"] = "testString"
 
         # Construct a model instance of TestDestinationResponse by calling from_dict on the json representation
-        test_destination_response_model = TestDestinationResponse.from_dict(
-            test_destination_response_model_json
-        )
+        test_destination_response_model = TestDestinationResponse.from_dict(test_destination_response_model_json)
         assert test_destination_response_model != False
 
         # Construct a model instance of TestDestinationResponse by calling from_dict on the json representation
         test_destination_response_model_dict = TestDestinationResponse.from_dict(
             test_destination_response_model_json
         ).__dict__
-        test_destination_response_model2 = TestDestinationResponse(
-            **test_destination_response_model_dict
-        )
+        test_destination_response_model2 = TestDestinationResponse(**test_destination_response_model_dict)
 
         # Verify the model instances are equivalent
         assert test_destination_response_model == test_destination_response_model2
 
         # Convert model instance back to dict and verify no loss of data
-        test_destination_response_model_json2 = (
-            test_destination_response_model.to_dict()
-        )
-        assert (
-            test_destination_response_model_json2
-            == test_destination_response_model_json
-        )
+        test_destination_response_model_json2 = test_destination_response_model.to_dict()
+        assert test_destination_response_model_json2 == test_destination_response_model_json
 
 
 class TestModel_Topic:
@@ -6826,12 +6435,8 @@ class TestModel_Topic:
 
         rules_get_model = {}  # RulesGet
         rules_get_model["enabled"] = True
-        rules_get_model[
-            "event_type_filter"
-        ] = "$.notification_event_info.event_type == 'test'"
-        rules_get_model[
-            "notification_filter"
-        ] = "$.notification.findings[0].severity == 'LOW'"
+        rules_get_model["event_type_filter"] = "$.notification_event_info.event_type == 'test'"
+        rules_get_model["notification_filter"] = "$.notification.findings[0].severity == 'LOW'"
         rules_get_model["updated_at"] = "2021-09-08T13:25:20.523533Z"
         rules_get_model["id"] = "218f4e30-9af2-4f70-b38b-738f923b0c4b"
 
@@ -6846,14 +6451,10 @@ class TestModel_Topic:
         subscription_list_item_model[
             "description"
         ] = "This subscription is to send events from SCC to EN Admins via sms"
-        subscription_list_item_model[
-            "destination_id"
-        ] = "ec28efee-2236-4c2d-8839-d34f697cfc69"
+        subscription_list_item_model["destination_id"] = "ec28efee-2236-4c2d-8839-d34f697cfc69"
         subscription_list_item_model["destination_name"] = "testString"
         subscription_list_item_model["destination_type"] = "sms_ibm"
-        subscription_list_item_model[
-            "topic_id"
-        ] = "7b23362d-6d48-47ef-847a-c8b291220306"
+        subscription_list_item_model["topic_id"] = "7b23362d-6d48-47ef-847a-c8b291220306"
         subscription_list_item_model["topic_name"] = "testString"
         subscription_list_item_model["updated_at"] = "2021-08-20T10:08:46.060000Z"
 
@@ -6957,9 +6558,7 @@ class TestModel_TopicResponse:
         assert topic_response_model != False
 
         # Construct a model instance of TopicResponse by calling from_dict on the json representation
-        topic_response_model_dict = TopicResponse.from_dict(
-            topic_response_model_json
-        ).__dict__
+        topic_response_model_dict = TopicResponse.from_dict(topic_response_model_json).__dict__
         topic_response_model2 = TopicResponse(**topic_response_model_dict)
 
         # Verify the model instances are equivalent
@@ -6994,9 +6593,7 @@ class TestModel_TopicsListItem:
         assert topics_list_item_model != False
 
         # Construct a model instance of TopicsListItem by calling from_dict on the json representation
-        topics_list_item_model_dict = TopicsListItem.from_dict(
-            topics_list_item_model_json
-        ).__dict__
+        topics_list_item_model_dict = TopicsListItem.from_dict(topics_list_item_model_json).__dict__
         topics_list_item_model2 = TopicsListItem(**topics_list_item_model_dict)
 
         # Verify the model instances are equivalent
@@ -7023,30 +6620,21 @@ class TestModel_UpdateAttributesInvited:
         update_attributes_invited_model_json["remove"] = ["testString"]
 
         # Construct a model instance of UpdateAttributesInvited by calling from_dict on the json representation
-        update_attributes_invited_model = UpdateAttributesInvited.from_dict(
-            update_attributes_invited_model_json
-        )
+        update_attributes_invited_model = UpdateAttributesInvited.from_dict(update_attributes_invited_model_json)
         assert update_attributes_invited_model != False
 
         # Construct a model instance of UpdateAttributesInvited by calling from_dict on the json representation
         update_attributes_invited_model_dict = UpdateAttributesInvited.from_dict(
             update_attributes_invited_model_json
         ).__dict__
-        update_attributes_invited_model2 = UpdateAttributesInvited(
-            **update_attributes_invited_model_dict
-        )
+        update_attributes_invited_model2 = UpdateAttributesInvited(**update_attributes_invited_model_dict)
 
         # Verify the model instances are equivalent
         assert update_attributes_invited_model == update_attributes_invited_model2
 
         # Convert model instance back to dict and verify no loss of data
-        update_attributes_invited_model_json2 = (
-            update_attributes_invited_model.to_dict()
-        )
-        assert (
-            update_attributes_invited_model_json2
-            == update_attributes_invited_model_json
-        )
+        update_attributes_invited_model_json2 = update_attributes_invited_model.to_dict()
+        assert update_attributes_invited_model_json2 == update_attributes_invited_model_json
 
 
 class TestModel_UpdateAttributesSubscribed:
@@ -7073,21 +6661,14 @@ class TestModel_UpdateAttributesSubscribed:
         update_attributes_subscribed_model_dict = UpdateAttributesSubscribed.from_dict(
             update_attributes_subscribed_model_json
         ).__dict__
-        update_attributes_subscribed_model2 = UpdateAttributesSubscribed(
-            **update_attributes_subscribed_model_dict
-        )
+        update_attributes_subscribed_model2 = UpdateAttributesSubscribed(**update_attributes_subscribed_model_dict)
 
         # Verify the model instances are equivalent
         assert update_attributes_subscribed_model == update_attributes_subscribed_model2
 
         # Convert model instance back to dict and verify no loss of data
-        update_attributes_subscribed_model_json2 = (
-            update_attributes_subscribed_model.to_dict()
-        )
-        assert (
-            update_attributes_subscribed_model_json2
-            == update_attributes_subscribed_model_json
-        )
+        update_attributes_subscribed_model_json2 = update_attributes_subscribed_model.to_dict()
+        assert update_attributes_subscribed_model_json2 == update_attributes_subscribed_model_json
 
 
 class TestModel_UpdateAttributesUnsubscribed:
@@ -7111,29 +6692,19 @@ class TestModel_UpdateAttributesUnsubscribed:
         assert update_attributes_unsubscribed_model != False
 
         # Construct a model instance of UpdateAttributesUnsubscribed by calling from_dict on the json representation
-        update_attributes_unsubscribed_model_dict = (
-            UpdateAttributesUnsubscribed.from_dict(
-                update_attributes_unsubscribed_model_json
-            ).__dict__
-        )
+        update_attributes_unsubscribed_model_dict = UpdateAttributesUnsubscribed.from_dict(
+            update_attributes_unsubscribed_model_json
+        ).__dict__
         update_attributes_unsubscribed_model2 = UpdateAttributesUnsubscribed(
             **update_attributes_unsubscribed_model_dict
         )
 
         # Verify the model instances are equivalent
-        assert (
-            update_attributes_unsubscribed_model
-            == update_attributes_unsubscribed_model2
-        )
+        assert update_attributes_unsubscribed_model == update_attributes_unsubscribed_model2
 
         # Convert model instance back to dict and verify no loss of data
-        update_attributes_unsubscribed_model_json2 = (
-            update_attributes_unsubscribed_model.to_dict()
-        )
-        assert (
-            update_attributes_unsubscribed_model_json2
-            == update_attributes_unsubscribed_model_json
-        )
+        update_attributes_unsubscribed_model_json2 = update_attributes_unsubscribed_model.to_dict()
+        assert update_attributes_unsubscribed_model_json2 == update_attributes_unsubscribed_model_json
 
 
 class TestModel_VerificationResponse:
@@ -7152,18 +6723,12 @@ class TestModel_VerificationResponse:
         verification_response_model_json["verification"] = "testString"
 
         # Construct a model instance of VerificationResponse by calling from_dict on the json representation
-        verification_response_model = VerificationResponse.from_dict(
-            verification_response_model_json
-        )
+        verification_response_model = VerificationResponse.from_dict(verification_response_model_json)
         assert verification_response_model != False
 
         # Construct a model instance of VerificationResponse by calling from_dict on the json representation
-        verification_response_model_dict = VerificationResponse.from_dict(
-            verification_response_model_json
-        ).__dict__
-        verification_response_model2 = VerificationResponse(
-            **verification_response_model_dict
-        )
+        verification_response_model_dict = VerificationResponse.from_dict(verification_response_model_json).__dict__
+        verification_response_model2 = VerificationResponse(**verification_response_model_dict)
 
         # Verify the model instances are equivalent
         assert verification_response_model == verification_response_model2
@@ -7185,18 +6750,10 @@ class TestModel_DestinationConfigOneOfChromeDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfChromeDestinationConfig model
         destination_config_one_of_chrome_destination_config_model_json = {}
-        destination_config_one_of_chrome_destination_config_model_json[
-            "api_key"
-        ] = "testString"
-        destination_config_one_of_chrome_destination_config_model_json[
-            "website_url"
-        ] = "testString"
-        destination_config_one_of_chrome_destination_config_model_json[
-            "public_key"
-        ] = "testString"
-        destination_config_one_of_chrome_destination_config_model_json[
-            "pre_prod"
-        ] = False
+        destination_config_one_of_chrome_destination_config_model_json["api_key"] = "testString"
+        destination_config_one_of_chrome_destination_config_model_json["website_url"] = "testString"
+        destination_config_one_of_chrome_destination_config_model_json["public_key"] = "testString"
+        destination_config_one_of_chrome_destination_config_model_json["pre_prod"] = False
 
         # Construct a model instance of DestinationConfigOneOfChromeDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_chrome_destination_config_model = (
@@ -7212,10 +6769,8 @@ class TestModel_DestinationConfigOneOfChromeDestinationConfig:
                 destination_config_one_of_chrome_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_chrome_destination_config_model2 = (
-            DestinationConfigOneOfChromeDestinationConfig(
-                **destination_config_one_of_chrome_destination_config_model_dict
-            )
+        destination_config_one_of_chrome_destination_config_model2 = DestinationConfigOneOfChromeDestinationConfig(
+            **destination_config_one_of_chrome_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7260,31 +6815,28 @@ class TestModel_DestinationConfigOneOfCustomDomainEmailDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfCustomDomainEmailDestinationConfig model
         destination_config_one_of_custom_domain_email_destination_config_model_json = {}
-        destination_config_one_of_custom_domain_email_destination_config_model_json[
-            "domain"
-        ] = "testString"
-        destination_config_one_of_custom_domain_email_destination_config_model_json[
-            "dkim"
-        ] = dkim_attributes_model
-        destination_config_one_of_custom_domain_email_destination_config_model_json[
-            "spf"
-        ] = spf_attributes_model
+        destination_config_one_of_custom_domain_email_destination_config_model_json["domain"] = "testString"
+        destination_config_one_of_custom_domain_email_destination_config_model_json["dkim"] = dkim_attributes_model
+        destination_config_one_of_custom_domain_email_destination_config_model_json["spf"] = spf_attributes_model
 
         # Construct a model instance of DestinationConfigOneOfCustomDomainEmailDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_custom_domain_email_destination_config_model = DestinationConfigOneOfCustomDomainEmailDestinationConfig.from_dict(
-            destination_config_one_of_custom_domain_email_destination_config_model_json
+        destination_config_one_of_custom_domain_email_destination_config_model = (
+            DestinationConfigOneOfCustomDomainEmailDestinationConfig.from_dict(
+                destination_config_one_of_custom_domain_email_destination_config_model_json
+            )
         )
-        assert (
-            destination_config_one_of_custom_domain_email_destination_config_model
-            != False
-        )
+        assert destination_config_one_of_custom_domain_email_destination_config_model != False
 
         # Construct a model instance of DestinationConfigOneOfCustomDomainEmailDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_custom_domain_email_destination_config_model_dict = DestinationConfigOneOfCustomDomainEmailDestinationConfig.from_dict(
-            destination_config_one_of_custom_domain_email_destination_config_model_json
-        ).__dict__
-        destination_config_one_of_custom_domain_email_destination_config_model2 = DestinationConfigOneOfCustomDomainEmailDestinationConfig(
-            **destination_config_one_of_custom_domain_email_destination_config_model_dict
+        destination_config_one_of_custom_domain_email_destination_config_model_dict = (
+            DestinationConfigOneOfCustomDomainEmailDestinationConfig.from_dict(
+                destination_config_one_of_custom_domain_email_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_custom_domain_email_destination_config_model2 = (
+            DestinationConfigOneOfCustomDomainEmailDestinationConfig(
+                **destination_config_one_of_custom_domain_email_destination_config_model_dict
+            )
         )
 
         # Verify the model instances are equivalent
@@ -7315,28 +6867,16 @@ class TestModel_DestinationConfigOneOfFCMDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfFCMDestinationConfig model
         destination_config_one_of_fcm_destination_config_model_json = {}
-        destination_config_one_of_fcm_destination_config_model_json[
-            "server_key"
-        ] = "testString"
-        destination_config_one_of_fcm_destination_config_model_json[
-            "sender_id"
-        ] = "testString"
+        destination_config_one_of_fcm_destination_config_model_json["server_key"] = "testString"
+        destination_config_one_of_fcm_destination_config_model_json["sender_id"] = "testString"
         destination_config_one_of_fcm_destination_config_model_json["pre_prod"] = False
-        destination_config_one_of_fcm_destination_config_model_json[
-            "project_id"
-        ] = "testString"
-        destination_config_one_of_fcm_destination_config_model_json[
-            "private_key"
-        ] = "testString"
-        destination_config_one_of_fcm_destination_config_model_json[
-            "client_email"
-        ] = "testString"
+        destination_config_one_of_fcm_destination_config_model_json["project_id"] = "testString"
+        destination_config_one_of_fcm_destination_config_model_json["private_key"] = "testString"
+        destination_config_one_of_fcm_destination_config_model_json["client_email"] = "testString"
 
         # Construct a model instance of DestinationConfigOneOfFCMDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_fcm_destination_config_model = (
-            DestinationConfigOneOfFCMDestinationConfig.from_dict(
-                destination_config_one_of_fcm_destination_config_model_json
-            )
+        destination_config_one_of_fcm_destination_config_model = DestinationConfigOneOfFCMDestinationConfig.from_dict(
+            destination_config_one_of_fcm_destination_config_model_json
         )
         assert destination_config_one_of_fcm_destination_config_model != False
 
@@ -7346,10 +6886,8 @@ class TestModel_DestinationConfigOneOfFCMDestinationConfig:
                 destination_config_one_of_fcm_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_fcm_destination_config_model2 = (
-            DestinationConfigOneOfFCMDestinationConfig(
-                **destination_config_one_of_fcm_destination_config_model_dict
-            )
+        destination_config_one_of_fcm_destination_config_model2 = DestinationConfigOneOfFCMDestinationConfig(
+            **destination_config_one_of_fcm_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7380,15 +6918,9 @@ class TestModel_DestinationConfigOneOfFirefoxDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfFirefoxDestinationConfig model
         destination_config_one_of_firefox_destination_config_model_json = {}
-        destination_config_one_of_firefox_destination_config_model_json[
-            "website_url"
-        ] = "testString"
-        destination_config_one_of_firefox_destination_config_model_json[
-            "public_key"
-        ] = "testString"
-        destination_config_one_of_firefox_destination_config_model_json[
-            "pre_prod"
-        ] = False
+        destination_config_one_of_firefox_destination_config_model_json["website_url"] = "testString"
+        destination_config_one_of_firefox_destination_config_model_json["public_key"] = "testString"
+        destination_config_one_of_firefox_destination_config_model_json["pre_prod"] = False
 
         # Construct a model instance of DestinationConfigOneOfFirefoxDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_firefox_destination_config_model = (
@@ -7404,10 +6936,8 @@ class TestModel_DestinationConfigOneOfFirefoxDestinationConfig:
                 destination_config_one_of_firefox_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_firefox_destination_config_model2 = (
-            DestinationConfigOneOfFirefoxDestinationConfig(
-                **destination_config_one_of_firefox_destination_config_model_dict
-            )
+        destination_config_one_of_firefox_destination_config_model2 = DestinationConfigOneOfFirefoxDestinationConfig(
+            **destination_config_one_of_firefox_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7438,15 +6968,9 @@ class TestModel_DestinationConfigOneOfHuaweiDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfHuaweiDestinationConfig model
         destination_config_one_of_huawei_destination_config_model_json = {}
-        destination_config_one_of_huawei_destination_config_model_json[
-            "client_id"
-        ] = "testString"
-        destination_config_one_of_huawei_destination_config_model_json[
-            "client_secret"
-        ] = "testString"
-        destination_config_one_of_huawei_destination_config_model_json[
-            "pre_prod"
-        ] = False
+        destination_config_one_of_huawei_destination_config_model_json["client_id"] = "testString"
+        destination_config_one_of_huawei_destination_config_model_json["client_secret"] = "testString"
+        destination_config_one_of_huawei_destination_config_model_json["pre_prod"] = False
 
         # Construct a model instance of DestinationConfigOneOfHuaweiDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_huawei_destination_config_model = (
@@ -7462,10 +6986,8 @@ class TestModel_DestinationConfigOneOfHuaweiDestinationConfig:
                 destination_config_one_of_huawei_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_huawei_destination_config_model2 = (
-            DestinationConfigOneOfHuaweiDestinationConfig(
-                **destination_config_one_of_huawei_destination_config_model_dict
-            )
+        destination_config_one_of_huawei_destination_config_model2 = DestinationConfigOneOfHuaweiDestinationConfig(
+            **destination_config_one_of_huawei_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7498,28 +7020,27 @@ class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig model
         destination_config_one_of_ibm_cloud_functions_destination_config_model_json = {}
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_json[
-            "url"
-        ] = "testString"
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_json[
-            "api_key"
-        ] = "testString"
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_json["url"] = "testString"
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_json["api_key"] = "testString"
 
         # Construct a model instance of DestinationConfigOneOfIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_ibm_cloud_functions_destination_config_model = DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(
-            destination_config_one_of_ibm_cloud_functions_destination_config_model_json
+        destination_config_one_of_ibm_cloud_functions_destination_config_model = (
+            DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(
+                destination_config_one_of_ibm_cloud_functions_destination_config_model_json
+            )
         )
-        assert (
-            destination_config_one_of_ibm_cloud_functions_destination_config_model
-            != False
-        )
+        assert destination_config_one_of_ibm_cloud_functions_destination_config_model != False
 
         # Construct a model instance of DestinationConfigOneOfIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_dict = DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(
-            destination_config_one_of_ibm_cloud_functions_destination_config_model_json
-        ).__dict__
-        destination_config_one_of_ibm_cloud_functions_destination_config_model2 = DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(
-            **destination_config_one_of_ibm_cloud_functions_destination_config_model_dict
+        destination_config_one_of_ibm_cloud_functions_destination_config_model_dict = (
+            DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(
+                destination_config_one_of_ibm_cloud_functions_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_ibm_cloud_functions_destination_config_model2 = (
+            DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(
+                **destination_config_one_of_ibm_cloud_functions_destination_config_model_dict
+            )
         )
 
         # Verify the model instances are equivalent
@@ -7551,34 +7072,29 @@ class TestModel_DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig:
         """
 
         # Construct a json representation of a DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig model
-        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json = (
-            {}
-        )
-        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json[
-            "bucket_name"
-        ] = "testString"
-        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json[
-            "instance_id"
-        ] = "testString"
-        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json[
-            "endpoint"
-        ] = "testString"
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json = {}
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json["bucket_name"] = "testString"
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json["instance_id"] = "testString"
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json["endpoint"] = "testString"
 
         # Construct a model instance of DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_ibm_cloud_object_storage_destination_config_model = DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig.from_dict(
-            destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model = (
+            DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig.from_dict(
+                destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json
+            )
         )
-        assert (
-            destination_config_one_of_ibm_cloud_object_storage_destination_config_model
-            != False
-        )
+        assert destination_config_one_of_ibm_cloud_object_storage_destination_config_model != False
 
         # Construct a model instance of DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_dict = DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig.from_dict(
-            destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json
-        ).__dict__
-        destination_config_one_of_ibm_cloud_object_storage_destination_config_model2 = DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(
-            **destination_config_one_of_ibm_cloud_object_storage_destination_config_model_dict
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model_dict = (
+            DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig.from_dict(
+                destination_config_one_of_ibm_cloud_object_storage_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_ibm_cloud_object_storage_destination_config_model2 = (
+            DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(
+                **destination_config_one_of_ibm_cloud_object_storage_destination_config_model_dict
+            )
         )
 
         # Verify the model instances are equivalent
@@ -7610,28 +7126,16 @@ class TestModel_DestinationConfigOneOfIOSDestinationConfig:
         # Construct a json representation of a DestinationConfigOneOfIOSDestinationConfig model
         destination_config_one_of_ios_destination_config_model_json = {}
         destination_config_one_of_ios_destination_config_model_json["cert_type"] = "p8"
-        destination_config_one_of_ios_destination_config_model_json[
-            "is_sandbox"
-        ] = False
-        destination_config_one_of_ios_destination_config_model_json[
-            "password"
-        ] = "testString"
-        destination_config_one_of_ios_destination_config_model_json[
-            "key_id"
-        ] = "testString"
-        destination_config_one_of_ios_destination_config_model_json[
-            "team_id"
-        ] = "testString"
-        destination_config_one_of_ios_destination_config_model_json[
-            "bundle_id"
-        ] = "testString"
+        destination_config_one_of_ios_destination_config_model_json["is_sandbox"] = False
+        destination_config_one_of_ios_destination_config_model_json["password"] = "testString"
+        destination_config_one_of_ios_destination_config_model_json["key_id"] = "testString"
+        destination_config_one_of_ios_destination_config_model_json["team_id"] = "testString"
+        destination_config_one_of_ios_destination_config_model_json["bundle_id"] = "testString"
         destination_config_one_of_ios_destination_config_model_json["pre_prod"] = False
 
         # Construct a model instance of DestinationConfigOneOfIOSDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_ios_destination_config_model = (
-            DestinationConfigOneOfIOSDestinationConfig.from_dict(
-                destination_config_one_of_ios_destination_config_model_json
-            )
+        destination_config_one_of_ios_destination_config_model = DestinationConfigOneOfIOSDestinationConfig.from_dict(
+            destination_config_one_of_ios_destination_config_model_json
         )
         assert destination_config_one_of_ios_destination_config_model != False
 
@@ -7641,10 +7145,8 @@ class TestModel_DestinationConfigOneOfIOSDestinationConfig:
                 destination_config_one_of_ios_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_ios_destination_config_model2 = (
-            DestinationConfigOneOfIOSDestinationConfig(
-                **destination_config_one_of_ios_destination_config_model_dict
-            )
+        destination_config_one_of_ios_destination_config_model2 = DestinationConfigOneOfIOSDestinationConfig(
+            **destination_config_one_of_ios_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7675,9 +7177,7 @@ class TestModel_DestinationConfigOneOfMSTeamsDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfMSTeamsDestinationConfig model
         destination_config_one_of_ms_teams_destination_config_model_json = {}
-        destination_config_one_of_ms_teams_destination_config_model_json[
-            "url"
-        ] = "testString"
+        destination_config_one_of_ms_teams_destination_config_model_json["url"] = "testString"
 
         # Construct a model instance of DestinationConfigOneOfMSTeamsDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_ms_teams_destination_config_model = (
@@ -7693,10 +7193,8 @@ class TestModel_DestinationConfigOneOfMSTeamsDestinationConfig:
                 destination_config_one_of_ms_teams_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_ms_teams_destination_config_model2 = (
-            DestinationConfigOneOfMSTeamsDestinationConfig(
-                **destination_config_one_of_ms_teams_destination_config_model_dict
-            )
+        destination_config_one_of_ms_teams_destination_config_model2 = DestinationConfigOneOfMSTeamsDestinationConfig(
+            **destination_config_one_of_ms_teams_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7729,12 +7227,8 @@ class TestModel_DestinationConfigOneOfPagerDutyDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfPagerDutyDestinationConfig model
         destination_config_one_of_pager_duty_destination_config_model_json = {}
-        destination_config_one_of_pager_duty_destination_config_model_json[
-            "api_key"
-        ] = "testString"
-        destination_config_one_of_pager_duty_destination_config_model_json[
-            "routing_key"
-        ] = "testString"
+        destination_config_one_of_pager_duty_destination_config_model_json["api_key"] = "testString"
+        destination_config_one_of_pager_duty_destination_config_model_json["routing_key"] = "testString"
 
         # Construct a model instance of DestinationConfigOneOfPagerDutyDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_pager_duty_destination_config_model = (
@@ -7784,27 +7278,13 @@ class TestModel_DestinationConfigOneOfSafariDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfSafariDestinationConfig model
         destination_config_one_of_safari_destination_config_model_json = {}
-        destination_config_one_of_safari_destination_config_model_json[
-            "cert_type"
-        ] = "p12"
-        destination_config_one_of_safari_destination_config_model_json[
-            "password"
-        ] = "testString"
-        destination_config_one_of_safari_destination_config_model_json[
-            "website_url"
-        ] = "testString"
-        destination_config_one_of_safari_destination_config_model_json[
-            "website_name"
-        ] = "testString"
-        destination_config_one_of_safari_destination_config_model_json[
-            "url_format_string"
-        ] = "testString"
-        destination_config_one_of_safari_destination_config_model_json[
-            "website_push_id"
-        ] = "testString"
-        destination_config_one_of_safari_destination_config_model_json[
-            "pre_prod"
-        ] = False
+        destination_config_one_of_safari_destination_config_model_json["cert_type"] = "p12"
+        destination_config_one_of_safari_destination_config_model_json["password"] = "testString"
+        destination_config_one_of_safari_destination_config_model_json["website_url"] = "testString"
+        destination_config_one_of_safari_destination_config_model_json["website_name"] = "testString"
+        destination_config_one_of_safari_destination_config_model_json["url_format_string"] = "testString"
+        destination_config_one_of_safari_destination_config_model_json["website_push_id"] = "testString"
+        destination_config_one_of_safari_destination_config_model_json["pre_prod"] = False
 
         # Construct a model instance of DestinationConfigOneOfSafariDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_safari_destination_config_model = (
@@ -7820,10 +7300,8 @@ class TestModel_DestinationConfigOneOfSafariDestinationConfig:
                 destination_config_one_of_safari_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_safari_destination_config_model2 = (
-            DestinationConfigOneOfSafariDestinationConfig(
-                **destination_config_one_of_safari_destination_config_model_dict
-            )
+        destination_config_one_of_safari_destination_config_model2 = DestinationConfigOneOfSafariDestinationConfig(
+            **destination_config_one_of_safari_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7856,21 +7334,11 @@ class TestModel_DestinationConfigOneOfServiceNowDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfServiceNowDestinationConfig model
         destination_config_one_of_service_now_destination_config_model_json = {}
-        destination_config_one_of_service_now_destination_config_model_json[
-            "client_id"
-        ] = "testString"
-        destination_config_one_of_service_now_destination_config_model_json[
-            "client_secret"
-        ] = "testString"
-        destination_config_one_of_service_now_destination_config_model_json[
-            "username"
-        ] = "testString"
-        destination_config_one_of_service_now_destination_config_model_json[
-            "password"
-        ] = "testString"
-        destination_config_one_of_service_now_destination_config_model_json[
-            "instance_name"
-        ] = "testString"
+        destination_config_one_of_service_now_destination_config_model_json["client_id"] = "testString"
+        destination_config_one_of_service_now_destination_config_model_json["client_secret"] = "testString"
+        destination_config_one_of_service_now_destination_config_model_json["username"] = "testString"
+        destination_config_one_of_service_now_destination_config_model_json["password"] = "testString"
+        destination_config_one_of_service_now_destination_config_model_json["instance_name"] = "testString"
 
         # Construct a model instance of DestinationConfigOneOfServiceNowDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_service_now_destination_config_model = (
@@ -7920,9 +7388,7 @@ class TestModel_DestinationConfigOneOfSlackDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfSlackDestinationConfig model
         destination_config_one_of_slack_destination_config_model_json = {}
-        destination_config_one_of_slack_destination_config_model_json[
-            "url"
-        ] = "testString"
+        destination_config_one_of_slack_destination_config_model_json["url"] = "testString"
 
         # Construct a model instance of DestinationConfigOneOfSlackDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_slack_destination_config_model = (
@@ -7938,10 +7404,8 @@ class TestModel_DestinationConfigOneOfSlackDestinationConfig:
                 destination_config_one_of_slack_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_slack_destination_config_model2 = (
-            DestinationConfigOneOfSlackDestinationConfig(
-                **destination_config_one_of_slack_destination_config_model_dict
-            )
+        destination_config_one_of_slack_destination_config_model2 = DestinationConfigOneOfSlackDestinationConfig(
+            **destination_config_one_of_slack_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -7972,16 +7436,10 @@ class TestModel_DestinationConfigOneOfWebhookDestinationConfig:
 
         # Construct a json representation of a DestinationConfigOneOfWebhookDestinationConfig model
         destination_config_one_of_webhook_destination_config_model_json = {}
-        destination_config_one_of_webhook_destination_config_model_json[
-            "url"
-        ] = "testString"
+        destination_config_one_of_webhook_destination_config_model_json["url"] = "testString"
         destination_config_one_of_webhook_destination_config_model_json["verb"] = "get"
-        destination_config_one_of_webhook_destination_config_model_json[
-            "custom_headers"
-        ] = {"key1": "testString"}
-        destination_config_one_of_webhook_destination_config_model_json[
-            "sensitive_headers"
-        ] = ["testString"]
+        destination_config_one_of_webhook_destination_config_model_json["custom_headers"] = {"key1": "testString"}
+        destination_config_one_of_webhook_destination_config_model_json["sensitive_headers"] = ["testString"]
 
         # Construct a model instance of DestinationConfigOneOfWebhookDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_webhook_destination_config_model = (
@@ -7997,10 +7455,8 @@ class TestModel_DestinationConfigOneOfWebhookDestinationConfig:
                 destination_config_one_of_webhook_destination_config_model_json
             ).__dict__
         )
-        destination_config_one_of_webhook_destination_config_model2 = (
-            DestinationConfigOneOfWebhookDestinationConfig(
-                **destination_config_one_of_webhook_destination_config_model_dict
-            )
+        destination_config_one_of_webhook_destination_config_model2 = DestinationConfigOneOfWebhookDestinationConfig(
+            **destination_config_one_of_webhook_destination_config_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8033,62 +7489,36 @@ class TestModel_SubscriptionAttributesCustomEmailAttributesResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        email_attributes_response_invited_items_model = (
-            {}
-        )  # EmailAttributesResponseInvitedItems
+        email_attributes_response_invited_items_model = {}  # EmailAttributesResponseInvitedItems
         email_attributes_response_invited_items_model["email"] = "testString"
-        email_attributes_response_invited_items_model[
-            "updated_at"
-        ] = "2019-01-01T12:00:00Z"
-        email_attributes_response_invited_items_model[
-            "expires_at"
-        ] = "2019-01-01T12:00:00Z"
+        email_attributes_response_invited_items_model["updated_at"] = "2019-01-01T12:00:00Z"
+        email_attributes_response_invited_items_model["expires_at"] = "2019-01-01T12:00:00Z"
 
         email_attributes_response_subscribed_unsubscribed_items_model = (
             {}
         )  # EmailAttributesResponseSubscribedUnsubscribedItems
-        email_attributes_response_subscribed_unsubscribed_items_model[
-            "email"
-        ] = "testString"
-        email_attributes_response_subscribed_unsubscribed_items_model[
-            "updated_at"
-        ] = "2019-01-01T12:00:00Z"
+        email_attributes_response_subscribed_unsubscribed_items_model["email"] = "testString"
+        email_attributes_response_subscribed_unsubscribed_items_model["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a json representation of a SubscriptionAttributesCustomEmailAttributesResponse model
         subscription_attributes_custom_email_attributes_response_model_json = {}
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "invited"
-        ] = [email_attributes_response_invited_items_model]
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "subscribed"
-        ] = [email_attributes_response_subscribed_unsubscribed_items_model]
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "unsubscribed"
-        ] = [email_attributes_response_subscribed_unsubscribed_items_model]
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "add_notification_payload"
-        ] = False
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "reply_to_mail"
-        ] = "testString"
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "reply_to_name"
-        ] = "testString"
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "from_name"
-        ] = "testString"
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "from_email"
-        ] = "testString"
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "template_id_notification"
-        ] = "testString"
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "template_id_invitation"
-        ] = "testString"
-        subscription_attributes_custom_email_attributes_response_model_json[
-            "foo"
-        ] = "testString"
+        subscription_attributes_custom_email_attributes_response_model_json["invited"] = [
+            email_attributes_response_invited_items_model
+        ]
+        subscription_attributes_custom_email_attributes_response_model_json["subscribed"] = [
+            email_attributes_response_subscribed_unsubscribed_items_model
+        ]
+        subscription_attributes_custom_email_attributes_response_model_json["unsubscribed"] = [
+            email_attributes_response_subscribed_unsubscribed_items_model
+        ]
+        subscription_attributes_custom_email_attributes_response_model_json["add_notification_payload"] = False
+        subscription_attributes_custom_email_attributes_response_model_json["reply_to_mail"] = "testString"
+        subscription_attributes_custom_email_attributes_response_model_json["reply_to_name"] = "testString"
+        subscription_attributes_custom_email_attributes_response_model_json["from_name"] = "testString"
+        subscription_attributes_custom_email_attributes_response_model_json["from_email"] = "testString"
+        subscription_attributes_custom_email_attributes_response_model_json["template_id_notification"] = "testString"
+        subscription_attributes_custom_email_attributes_response_model_json["template_id_invitation"] = "testString"
+        subscription_attributes_custom_email_attributes_response_model_json["foo"] = "testString"
 
         # Construct a model instance of SubscriptionAttributesCustomEmailAttributesResponse by calling from_dict on the json representation
         subscription_attributes_custom_email_attributes_response_model = (
@@ -8126,21 +7556,13 @@ class TestModel_SubscriptionAttributesCustomEmailAttributesResponse:
         )
 
         # Test get_properties and set_properties methods.
-        subscription_attributes_custom_email_attributes_response_model.set_properties(
-            {}
-        )
-        actual_dict = (
-            subscription_attributes_custom_email_attributes_response_model.get_properties()
-        )
+        subscription_attributes_custom_email_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_custom_email_attributes_response_model.get_properties()
         assert actual_dict == {}
 
         expected_dict = {"foo": "testString"}
-        subscription_attributes_custom_email_attributes_response_model.set_properties(
-            expected_dict
-        )
-        actual_dict = (
-            subscription_attributes_custom_email_attributes_response_model.get_properties()
-        )
+        subscription_attributes_custom_email_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_custom_email_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 
@@ -8156,26 +7578,16 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        email_attributes_response_invited_items_model = (
-            {}
-        )  # EmailAttributesResponseInvitedItems
+        email_attributes_response_invited_items_model = {}  # EmailAttributesResponseInvitedItems
         email_attributes_response_invited_items_model["email"] = "testString"
-        email_attributes_response_invited_items_model[
-            "updated_at"
-        ] = "2019-01-01T12:00:00Z"
-        email_attributes_response_invited_items_model[
-            "expires_at"
-        ] = "2019-01-01T12:00:00Z"
+        email_attributes_response_invited_items_model["updated_at"] = "2019-01-01T12:00:00Z"
+        email_attributes_response_invited_items_model["expires_at"] = "2019-01-01T12:00:00Z"
 
         email_attributes_response_subscribed_unsubscribed_items_model = (
             {}
         )  # EmailAttributesResponseSubscribedUnsubscribedItems
-        email_attributes_response_subscribed_unsubscribed_items_model[
-            "email"
-        ] = "testString"
-        email_attributes_response_subscribed_unsubscribed_items_model[
-            "updated_at"
-        ] = "2019-01-01T12:00:00Z"
+        email_attributes_response_subscribed_unsubscribed_items_model["email"] = "testString"
+        email_attributes_response_subscribed_unsubscribed_items_model["updated_at"] = "2019-01-01T12:00:00Z"
 
         # Construct a json representation of a SubscriptionAttributesEmailAttributesResponse model
         subscription_attributes_email_attributes_response_model_json = {}
@@ -8188,21 +7600,11 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse:
         subscription_attributes_email_attributes_response_model_json["unsubscribed"] = [
             email_attributes_response_subscribed_unsubscribed_items_model
         ]
-        subscription_attributes_email_attributes_response_model_json[
-            "add_notification_payload"
-        ] = False
-        subscription_attributes_email_attributes_response_model_json[
-            "reply_to_mail"
-        ] = "testString"
-        subscription_attributes_email_attributes_response_model_json[
-            "reply_to_name"
-        ] = "testString"
-        subscription_attributes_email_attributes_response_model_json[
-            "from_name"
-        ] = "testString"
-        subscription_attributes_email_attributes_response_model_json[
-            "foo"
-        ] = "testString"
+        subscription_attributes_email_attributes_response_model_json["add_notification_payload"] = False
+        subscription_attributes_email_attributes_response_model_json["reply_to_mail"] = "testString"
+        subscription_attributes_email_attributes_response_model_json["reply_to_name"] = "testString"
+        subscription_attributes_email_attributes_response_model_json["from_name"] = "testString"
+        subscription_attributes_email_attributes_response_model_json["foo"] = "testString"
 
         # Construct a model instance of SubscriptionAttributesEmailAttributesResponse by calling from_dict on the json representation
         subscription_attributes_email_attributes_response_model = (
@@ -8218,10 +7620,8 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse:
                 subscription_attributes_email_attributes_response_model_json
             ).__dict__
         )
-        subscription_attributes_email_attributes_response_model2 = (
-            SubscriptionAttributesEmailAttributesResponse(
-                **subscription_attributes_email_attributes_response_model_dict
-            )
+        subscription_attributes_email_attributes_response_model2 = SubscriptionAttributesEmailAttributesResponse(
+            **subscription_attributes_email_attributes_response_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8241,18 +7641,12 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse:
 
         # Test get_properties and set_properties methods.
         subscription_attributes_email_attributes_response_model.set_properties({})
-        actual_dict = (
-            subscription_attributes_email_attributes_response_model.get_properties()
-        )
+        actual_dict = subscription_attributes_email_attributes_response_model.get_properties()
         assert actual_dict == {}
 
         expected_dict = {"foo": "testString"}
-        subscription_attributes_email_attributes_response_model.set_properties(
-            expected_dict
-        )
-        actual_dict = (
-            subscription_attributes_email_attributes_response_model.get_properties()
-        )
+        subscription_attributes_email_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_email_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 
@@ -8279,22 +7673,14 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse:
 
         # Construct a json representation of a SubscriptionAttributesSMSAttributesResponse model
         subscription_attributes_sms_attributes_response_model_json = {}
-        subscription_attributes_sms_attributes_response_model_json["subscribed"] = [
-            sms_attributes_items_model
-        ]
-        subscription_attributes_sms_attributes_response_model_json["unsubscribed"] = [
-            sms_attributes_items_model
-        ]
-        subscription_attributes_sms_attributes_response_model_json["invited"] = [
-            sms_invite_attributes_items_model
-        ]
+        subscription_attributes_sms_attributes_response_model_json["subscribed"] = [sms_attributes_items_model]
+        subscription_attributes_sms_attributes_response_model_json["unsubscribed"] = [sms_attributes_items_model]
+        subscription_attributes_sms_attributes_response_model_json["invited"] = [sms_invite_attributes_items_model]
         subscription_attributes_sms_attributes_response_model_json["foo"] = "testString"
 
         # Construct a model instance of SubscriptionAttributesSMSAttributesResponse by calling from_dict on the json representation
-        subscription_attributes_sms_attributes_response_model = (
-            SubscriptionAttributesSMSAttributesResponse.from_dict(
-                subscription_attributes_sms_attributes_response_model_json
-            )
+        subscription_attributes_sms_attributes_response_model = SubscriptionAttributesSMSAttributesResponse.from_dict(
+            subscription_attributes_sms_attributes_response_model_json
         )
         assert subscription_attributes_sms_attributes_response_model != False
 
@@ -8304,10 +7690,8 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse:
                 subscription_attributes_sms_attributes_response_model_json
             ).__dict__
         )
-        subscription_attributes_sms_attributes_response_model2 = (
-            SubscriptionAttributesSMSAttributesResponse(
-                **subscription_attributes_sms_attributes_response_model_dict
-            )
+        subscription_attributes_sms_attributes_response_model2 = SubscriptionAttributesSMSAttributesResponse(
+            **subscription_attributes_sms_attributes_response_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8327,18 +7711,12 @@ class TestModel_SubscriptionAttributesSMSAttributesResponse:
 
         # Test get_properties and set_properties methods.
         subscription_attributes_sms_attributes_response_model.set_properties({})
-        actual_dict = (
-            subscription_attributes_sms_attributes_response_model.get_properties()
-        )
+        actual_dict = subscription_attributes_sms_attributes_response_model.get_properties()
         assert actual_dict == {}
 
         expected_dict = {"foo": "testString"}
-        subscription_attributes_sms_attributes_response_model.set_properties(
-            expected_dict
-        )
-        actual_dict = (
-            subscription_attributes_sms_attributes_response_model.get_properties()
-        )
+        subscription_attributes_sms_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_sms_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 
@@ -8356,15 +7734,9 @@ class TestModel_SubscriptionAttributesServiceNowAttributesResponse:
 
         # Construct a json representation of a SubscriptionAttributesServiceNowAttributesResponse model
         subscription_attributes_service_now_attributes_response_model_json = {}
-        subscription_attributes_service_now_attributes_response_model_json[
-            "assigned_to"
-        ] = "testString"
-        subscription_attributes_service_now_attributes_response_model_json[
-            "assignment_group"
-        ] = "testString"
-        subscription_attributes_service_now_attributes_response_model_json[
-            "foo"
-        ] = "testString"
+        subscription_attributes_service_now_attributes_response_model_json["assigned_to"] = "testString"
+        subscription_attributes_service_now_attributes_response_model_json["assignment_group"] = "testString"
+        subscription_attributes_service_now_attributes_response_model_json["foo"] = "testString"
 
         # Construct a model instance of SubscriptionAttributesServiceNowAttributesResponse by calling from_dict on the json representation
         subscription_attributes_service_now_attributes_response_model = (
@@ -8403,18 +7775,12 @@ class TestModel_SubscriptionAttributesServiceNowAttributesResponse:
 
         # Test get_properties and set_properties methods.
         subscription_attributes_service_now_attributes_response_model.set_properties({})
-        actual_dict = (
-            subscription_attributes_service_now_attributes_response_model.get_properties()
-        )
+        actual_dict = subscription_attributes_service_now_attributes_response_model.get_properties()
         assert actual_dict == {}
 
         expected_dict = {"foo": "testString"}
-        subscription_attributes_service_now_attributes_response_model.set_properties(
-            expected_dict
-        )
-        actual_dict = (
-            subscription_attributes_service_now_attributes_response_model.get_properties()
-        )
+        subscription_attributes_service_now_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_service_now_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 
@@ -8430,12 +7796,8 @@ class TestModel_SubscriptionAttributesSlackAttributesResponse:
 
         # Construct a json representation of a SubscriptionAttributesSlackAttributesResponse model
         subscription_attributes_slack_attributes_response_model_json = {}
-        subscription_attributes_slack_attributes_response_model_json[
-            "attachment_color"
-        ] = "testString"
-        subscription_attributes_slack_attributes_response_model_json[
-            "foo"
-        ] = "testString"
+        subscription_attributes_slack_attributes_response_model_json["attachment_color"] = "testString"
+        subscription_attributes_slack_attributes_response_model_json["foo"] = "testString"
 
         # Construct a model instance of SubscriptionAttributesSlackAttributesResponse by calling from_dict on the json representation
         subscription_attributes_slack_attributes_response_model = (
@@ -8451,10 +7813,8 @@ class TestModel_SubscriptionAttributesSlackAttributesResponse:
                 subscription_attributes_slack_attributes_response_model_json
             ).__dict__
         )
-        subscription_attributes_slack_attributes_response_model2 = (
-            SubscriptionAttributesSlackAttributesResponse(
-                **subscription_attributes_slack_attributes_response_model_dict
-            )
+        subscription_attributes_slack_attributes_response_model2 = SubscriptionAttributesSlackAttributesResponse(
+            **subscription_attributes_slack_attributes_response_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8474,18 +7834,12 @@ class TestModel_SubscriptionAttributesSlackAttributesResponse:
 
         # Test get_properties and set_properties methods.
         subscription_attributes_slack_attributes_response_model.set_properties({})
-        actual_dict = (
-            subscription_attributes_slack_attributes_response_model.get_properties()
-        )
+        actual_dict = subscription_attributes_slack_attributes_response_model.get_properties()
         assert actual_dict == {}
 
         expected_dict = {"foo": "testString"}
-        subscription_attributes_slack_attributes_response_model.set_properties(
-            expected_dict
-        )
-        actual_dict = (
-            subscription_attributes_slack_attributes_response_model.get_properties()
-        )
+        subscription_attributes_slack_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_slack_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 
@@ -8501,15 +7855,9 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse:
 
         # Construct a json representation of a SubscriptionAttributesWebhookAttributesResponse model
         subscription_attributes_webhook_attributes_response_model_json = {}
-        subscription_attributes_webhook_attributes_response_model_json[
-            "signing_enabled"
-        ] = True
-        subscription_attributes_webhook_attributes_response_model_json[
-            "add_notification_payload"
-        ] = True
-        subscription_attributes_webhook_attributes_response_model_json[
-            "foo"
-        ] = "testString"
+        subscription_attributes_webhook_attributes_response_model_json["signing_enabled"] = True
+        subscription_attributes_webhook_attributes_response_model_json["add_notification_payload"] = True
+        subscription_attributes_webhook_attributes_response_model_json["foo"] = "testString"
 
         # Construct a model instance of SubscriptionAttributesWebhookAttributesResponse by calling from_dict on the json representation
         subscription_attributes_webhook_attributes_response_model = (
@@ -8525,10 +7873,8 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse:
                 subscription_attributes_webhook_attributes_response_model_json
             ).__dict__
         )
-        subscription_attributes_webhook_attributes_response_model2 = (
-            SubscriptionAttributesWebhookAttributesResponse(
-                **subscription_attributes_webhook_attributes_response_model_dict
-            )
+        subscription_attributes_webhook_attributes_response_model2 = SubscriptionAttributesWebhookAttributesResponse(
+            **subscription_attributes_webhook_attributes_response_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8548,18 +7894,12 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse:
 
         # Test get_properties and set_properties methods.
         subscription_attributes_webhook_attributes_response_model.set_properties({})
-        actual_dict = (
-            subscription_attributes_webhook_attributes_response_model.get_properties()
-        )
+        actual_dict = subscription_attributes_webhook_attributes_response_model.get_properties()
         assert actual_dict == {}
 
         expected_dict = {"foo": "testString"}
-        subscription_attributes_webhook_attributes_response_model.set_properties(
-            expected_dict
-        )
-        actual_dict = (
-            subscription_attributes_webhook_attributes_response_model.get_properties()
-        )
+        subscription_attributes_webhook_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_webhook_attributes_response_model.get_properties()
         assert actual_dict == expected_dict
 
 
@@ -8575,30 +7915,14 @@ class TestModel_SubscriptionCreateAttributesCustomEmailAttributes:
 
         # Construct a json representation of a SubscriptionCreateAttributesCustomEmailAttributes model
         subscription_create_attributes_custom_email_attributes_model_json = {}
-        subscription_create_attributes_custom_email_attributes_model_json["invited"] = [
-            "testString"
-        ]
-        subscription_create_attributes_custom_email_attributes_model_json[
-            "add_notification_payload"
-        ] = False
-        subscription_create_attributes_custom_email_attributes_model_json[
-            "reply_to_mail"
-        ] = "testString"
-        subscription_create_attributes_custom_email_attributes_model_json[
-            "reply_to_name"
-        ] = "testString"
-        subscription_create_attributes_custom_email_attributes_model_json[
-            "from_name"
-        ] = "testString"
-        subscription_create_attributes_custom_email_attributes_model_json[
-            "from_email"
-        ] = "testString"
-        subscription_create_attributes_custom_email_attributes_model_json[
-            "template_id_notification"
-        ] = "testString"
-        subscription_create_attributes_custom_email_attributes_model_json[
-            "template_id_invitation"
-        ] = "testString"
+        subscription_create_attributes_custom_email_attributes_model_json["invited"] = ["testString"]
+        subscription_create_attributes_custom_email_attributes_model_json["add_notification_payload"] = False
+        subscription_create_attributes_custom_email_attributes_model_json["reply_to_mail"] = "testString"
+        subscription_create_attributes_custom_email_attributes_model_json["reply_to_name"] = "testString"
+        subscription_create_attributes_custom_email_attributes_model_json["from_name"] = "testString"
+        subscription_create_attributes_custom_email_attributes_model_json["from_email"] = "testString"
+        subscription_create_attributes_custom_email_attributes_model_json["template_id_notification"] = "testString"
+        subscription_create_attributes_custom_email_attributes_model_json["template_id_invitation"] = "testString"
 
         # Construct a model instance of SubscriptionCreateAttributesCustomEmailAttributes by calling from_dict on the json representation
         subscription_create_attributes_custom_email_attributes_model = (
@@ -8648,27 +7972,15 @@ class TestModel_SubscriptionCreateAttributesEmailAttributes:
 
         # Construct a json representation of a SubscriptionCreateAttributesEmailAttributes model
         subscription_create_attributes_email_attributes_model_json = {}
-        subscription_create_attributes_email_attributes_model_json["invited"] = [
-            "testString"
-        ]
-        subscription_create_attributes_email_attributes_model_json[
-            "add_notification_payload"
-        ] = False
-        subscription_create_attributes_email_attributes_model_json[
-            "reply_to_mail"
-        ] = "testString"
-        subscription_create_attributes_email_attributes_model_json[
-            "reply_to_name"
-        ] = "testString"
-        subscription_create_attributes_email_attributes_model_json[
-            "from_name"
-        ] = "testString"
+        subscription_create_attributes_email_attributes_model_json["invited"] = ["testString"]
+        subscription_create_attributes_email_attributes_model_json["add_notification_payload"] = False
+        subscription_create_attributes_email_attributes_model_json["reply_to_mail"] = "testString"
+        subscription_create_attributes_email_attributes_model_json["reply_to_name"] = "testString"
+        subscription_create_attributes_email_attributes_model_json["from_name"] = "testString"
 
         # Construct a model instance of SubscriptionCreateAttributesEmailAttributes by calling from_dict on the json representation
-        subscription_create_attributes_email_attributes_model = (
-            SubscriptionCreateAttributesEmailAttributes.from_dict(
-                subscription_create_attributes_email_attributes_model_json
-            )
+        subscription_create_attributes_email_attributes_model = SubscriptionCreateAttributesEmailAttributes.from_dict(
+            subscription_create_attributes_email_attributes_model_json
         )
         assert subscription_create_attributes_email_attributes_model != False
 
@@ -8678,10 +7990,8 @@ class TestModel_SubscriptionCreateAttributesEmailAttributes:
                 subscription_create_attributes_email_attributes_model_json
             ).__dict__
         )
-        subscription_create_attributes_email_attributes_model2 = (
-            SubscriptionCreateAttributesEmailAttributes(
-                **subscription_create_attributes_email_attributes_model_dict
-            )
+        subscription_create_attributes_email_attributes_model2 = SubscriptionCreateAttributesEmailAttributes(
+            **subscription_create_attributes_email_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8714,29 +8024,22 @@ class TestModel_SubscriptionCreateAttributesFCMAttributes:
         subscription_create_attributes_fcm_attributes_model_json = {}
 
         # Construct a model instance of SubscriptionCreateAttributesFCMAttributes by calling from_dict on the json representation
-        subscription_create_attributes_fcm_attributes_model = (
-            SubscriptionCreateAttributesFCMAttributes.from_dict(
-                subscription_create_attributes_fcm_attributes_model_json
-            )
+        subscription_create_attributes_fcm_attributes_model = SubscriptionCreateAttributesFCMAttributes.from_dict(
+            subscription_create_attributes_fcm_attributes_model_json
         )
         assert subscription_create_attributes_fcm_attributes_model != False
 
         # Construct a model instance of SubscriptionCreateAttributesFCMAttributes by calling from_dict on the json representation
-        subscription_create_attributes_fcm_attributes_model_dict = (
-            SubscriptionCreateAttributesFCMAttributes.from_dict(
-                subscription_create_attributes_fcm_attributes_model_json
-            ).__dict__
-        )
-        subscription_create_attributes_fcm_attributes_model2 = (
-            SubscriptionCreateAttributesFCMAttributes(
-                **subscription_create_attributes_fcm_attributes_model_dict
-            )
+        subscription_create_attributes_fcm_attributes_model_dict = SubscriptionCreateAttributesFCMAttributes.from_dict(
+            subscription_create_attributes_fcm_attributes_model_json
+        ).__dict__
+        subscription_create_attributes_fcm_attributes_model2 = SubscriptionCreateAttributesFCMAttributes(
+            **subscription_create_attributes_fcm_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
         assert (
-            subscription_create_attributes_fcm_attributes_model
-            == subscription_create_attributes_fcm_attributes_model2
+            subscription_create_attributes_fcm_attributes_model == subscription_create_attributes_fcm_attributes_model2
         )
 
         # Convert model instance back to dict and verify no loss of data
@@ -8761,34 +8064,25 @@ class TestModel_SubscriptionCreateAttributesSMSAttributes:
 
         # Construct a json representation of a SubscriptionCreateAttributesSMSAttributes model
         subscription_create_attributes_sms_attributes_model_json = {}
-        subscription_create_attributes_sms_attributes_model_json["invited"] = [
-            "testString"
-        ]
+        subscription_create_attributes_sms_attributes_model_json["invited"] = ["testString"]
 
         # Construct a model instance of SubscriptionCreateAttributesSMSAttributes by calling from_dict on the json representation
-        subscription_create_attributes_sms_attributes_model = (
-            SubscriptionCreateAttributesSMSAttributes.from_dict(
-                subscription_create_attributes_sms_attributes_model_json
-            )
+        subscription_create_attributes_sms_attributes_model = SubscriptionCreateAttributesSMSAttributes.from_dict(
+            subscription_create_attributes_sms_attributes_model_json
         )
         assert subscription_create_attributes_sms_attributes_model != False
 
         # Construct a model instance of SubscriptionCreateAttributesSMSAttributes by calling from_dict on the json representation
-        subscription_create_attributes_sms_attributes_model_dict = (
-            SubscriptionCreateAttributesSMSAttributes.from_dict(
-                subscription_create_attributes_sms_attributes_model_json
-            ).__dict__
-        )
-        subscription_create_attributes_sms_attributes_model2 = (
-            SubscriptionCreateAttributesSMSAttributes(
-                **subscription_create_attributes_sms_attributes_model_dict
-            )
+        subscription_create_attributes_sms_attributes_model_dict = SubscriptionCreateAttributesSMSAttributes.from_dict(
+            subscription_create_attributes_sms_attributes_model_json
+        ).__dict__
+        subscription_create_attributes_sms_attributes_model2 = SubscriptionCreateAttributesSMSAttributes(
+            **subscription_create_attributes_sms_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
         assert (
-            subscription_create_attributes_sms_attributes_model
-            == subscription_create_attributes_sms_attributes_model2
+            subscription_create_attributes_sms_attributes_model == subscription_create_attributes_sms_attributes_model2
         )
 
         # Convert model instance back to dict and verify no loss of data
@@ -8813,12 +8107,8 @@ class TestModel_SubscriptionCreateAttributesServiceNowAttributes:
 
         # Construct a json representation of a SubscriptionCreateAttributesServiceNowAttributes model
         subscription_create_attributes_service_now_attributes_model_json = {}
-        subscription_create_attributes_service_now_attributes_model_json[
-            "assigned_to"
-        ] = "testString"
-        subscription_create_attributes_service_now_attributes_model_json[
-            "assignment_group"
-        ] = "testString"
+        subscription_create_attributes_service_now_attributes_model_json["assigned_to"] = "testString"
+        subscription_create_attributes_service_now_attributes_model_json["assignment_group"] = "testString"
 
         # Construct a model instance of SubscriptionCreateAttributesServiceNowAttributes by calling from_dict on the json representation
         subscription_create_attributes_service_now_attributes_model = (
@@ -8834,10 +8124,8 @@ class TestModel_SubscriptionCreateAttributesServiceNowAttributes:
                 subscription_create_attributes_service_now_attributes_model_json
             ).__dict__
         )
-        subscription_create_attributes_service_now_attributes_model2 = (
-            SubscriptionCreateAttributesServiceNowAttributes(
-                **subscription_create_attributes_service_now_attributes_model_dict
-            )
+        subscription_create_attributes_service_now_attributes_model2 = SubscriptionCreateAttributesServiceNowAttributes(
+            **subscription_create_attributes_service_now_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8868,15 +8156,11 @@ class TestModel_SubscriptionCreateAttributesSlackAttributes:
 
         # Construct a json representation of a SubscriptionCreateAttributesSlackAttributes model
         subscription_create_attributes_slack_attributes_model_json = {}
-        subscription_create_attributes_slack_attributes_model_json[
-            "attachment_color"
-        ] = "testString"
+        subscription_create_attributes_slack_attributes_model_json["attachment_color"] = "testString"
 
         # Construct a model instance of SubscriptionCreateAttributesSlackAttributes by calling from_dict on the json representation
-        subscription_create_attributes_slack_attributes_model = (
-            SubscriptionCreateAttributesSlackAttributes.from_dict(
-                subscription_create_attributes_slack_attributes_model_json
-            )
+        subscription_create_attributes_slack_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
+            subscription_create_attributes_slack_attributes_model_json
         )
         assert subscription_create_attributes_slack_attributes_model != False
 
@@ -8886,10 +8170,8 @@ class TestModel_SubscriptionCreateAttributesSlackAttributes:
                 subscription_create_attributes_slack_attributes_model_json
             ).__dict__
         )
-        subscription_create_attributes_slack_attributes_model2 = (
-            SubscriptionCreateAttributesSlackAttributes(
-                **subscription_create_attributes_slack_attributes_model_dict
-            )
+        subscription_create_attributes_slack_attributes_model2 = SubscriptionCreateAttributesSlackAttributes(
+            **subscription_create_attributes_slack_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8920,9 +8202,7 @@ class TestModel_SubscriptionCreateAttributesWebhookAttributes:
 
         # Construct a json representation of a SubscriptionCreateAttributesWebhookAttributes model
         subscription_create_attributes_webhook_attributes_model_json = {}
-        subscription_create_attributes_webhook_attributes_model_json[
-            "signing_enabled"
-        ] = True
+        subscription_create_attributes_webhook_attributes_model_json["signing_enabled"] = True
 
         # Construct a model instance of SubscriptionCreateAttributesWebhookAttributes by calling from_dict on the json representation
         subscription_create_attributes_webhook_attributes_model = (
@@ -8938,10 +8218,8 @@ class TestModel_SubscriptionCreateAttributesWebhookAttributes:
                 subscription_create_attributes_webhook_attributes_model_json
             ).__dict__
         )
-        subscription_create_attributes_webhook_attributes_model2 = (
-            SubscriptionCreateAttributesWebhookAttributes(
-                **subscription_create_attributes_webhook_attributes_model_dict
-            )
+        subscription_create_attributes_webhook_attributes_model2 = SubscriptionCreateAttributesWebhookAttributes(
+            **subscription_create_attributes_webhook_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -8989,21 +8267,11 @@ class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
         subscription_update_attributes_custom_email_update_attributes_model_json[
             "invited"
         ] = update_attributes_invited_model
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            "add_notification_payload"
-        ] = False
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            "reply_to_mail"
-        ] = "testString"
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            "reply_to_name"
-        ] = "testString"
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            "from_name"
-        ] = "testString"
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            "from_email"
-        ] = "testString"
+        subscription_update_attributes_custom_email_update_attributes_model_json["add_notification_payload"] = False
+        subscription_update_attributes_custom_email_update_attributes_model_json["reply_to_mail"] = "testString"
+        subscription_update_attributes_custom_email_update_attributes_model_json["reply_to_name"] = "testString"
+        subscription_update_attributes_custom_email_update_attributes_model_json["from_name"] = "testString"
+        subscription_update_attributes_custom_email_update_attributes_model_json["from_email"] = "testString"
         subscription_update_attributes_custom_email_update_attributes_model_json[
             "subscribed"
         ] = update_attributes_subscribed_model
@@ -9023,9 +8291,7 @@ class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
                 subscription_update_attributes_custom_email_update_attributes_model_json
             )
         )
-        assert (
-            subscription_update_attributes_custom_email_update_attributes_model != False
-        )
+        assert subscription_update_attributes_custom_email_update_attributes_model != False
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_email_update_attributes_model_dict = (
@@ -9033,8 +8299,10 @@ class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
                 subscription_update_attributes_custom_email_update_attributes_model_json
             ).__dict__
         )
-        subscription_update_attributes_custom_email_update_attributes_model2 = SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
-            **subscription_update_attributes_custom_email_update_attributes_model_dict
+        subscription_update_attributes_custom_email_update_attributes_model2 = (
+            SubscriptionUpdateAttributesCustomEmailUpdateAttributes(
+                **subscription_update_attributes_custom_email_update_attributes_model_dict
+            )
         )
 
         # Verify the model instances are equivalent
@@ -9077,21 +8345,11 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesEmailUpdateAttributes model
         subscription_update_attributes_email_update_attributes_model_json = {}
-        subscription_update_attributes_email_update_attributes_model_json[
-            "invited"
-        ] = update_attributes_invited_model
-        subscription_update_attributes_email_update_attributes_model_json[
-            "add_notification_payload"
-        ] = False
-        subscription_update_attributes_email_update_attributes_model_json[
-            "reply_to_mail"
-        ] = "testString"
-        subscription_update_attributes_email_update_attributes_model_json[
-            "reply_to_name"
-        ] = "testString"
-        subscription_update_attributes_email_update_attributes_model_json[
-            "from_name"
-        ] = "testString"
+        subscription_update_attributes_email_update_attributes_model_json["invited"] = update_attributes_invited_model
+        subscription_update_attributes_email_update_attributes_model_json["add_notification_payload"] = False
+        subscription_update_attributes_email_update_attributes_model_json["reply_to_mail"] = "testString"
+        subscription_update_attributes_email_update_attributes_model_json["reply_to_name"] = "testString"
+        subscription_update_attributes_email_update_attributes_model_json["from_name"] = "testString"
         subscription_update_attributes_email_update_attributes_model_json[
             "subscribed"
         ] = update_attributes_subscribed_model
@@ -9159,9 +8417,7 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_sms_update_attributes_model_json = {}
-        subscription_update_attributes_sms_update_attributes_model_json[
-            "invited"
-        ] = update_attributes_invited_model
+        subscription_update_attributes_sms_update_attributes_model_json["invited"] = update_attributes_invited_model
         subscription_update_attributes_sms_update_attributes_model_json[
             "subscribed"
         ] = update_attributes_subscribed_model
@@ -9183,10 +8439,8 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes:
                 subscription_update_attributes_sms_update_attributes_model_json
             ).__dict__
         )
-        subscription_update_attributes_sms_update_attributes_model2 = (
-            SubscriptionUpdateAttributesSMSUpdateAttributes(
-                **subscription_update_attributes_sms_update_attributes_model_dict
-            )
+        subscription_update_attributes_sms_update_attributes_model2 = SubscriptionUpdateAttributesSMSUpdateAttributes(
+            **subscription_update_attributes_sms_update_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -9217,12 +8471,8 @@ class TestModel_SubscriptionUpdateAttributesServiceNowAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesServiceNowAttributes model
         subscription_update_attributes_service_now_attributes_model_json = {}
-        subscription_update_attributes_service_now_attributes_model_json[
-            "assigned_to"
-        ] = "testString"
-        subscription_update_attributes_service_now_attributes_model_json[
-            "assignment_group"
-        ] = "testString"
+        subscription_update_attributes_service_now_attributes_model_json["assigned_to"] = "testString"
+        subscription_update_attributes_service_now_attributes_model_json["assignment_group"] = "testString"
 
         # Construct a model instance of SubscriptionUpdateAttributesServiceNowAttributes by calling from_dict on the json representation
         subscription_update_attributes_service_now_attributes_model = (
@@ -9238,10 +8488,8 @@ class TestModel_SubscriptionUpdateAttributesServiceNowAttributes:
                 subscription_update_attributes_service_now_attributes_model_json
             ).__dict__
         )
-        subscription_update_attributes_service_now_attributes_model2 = (
-            SubscriptionUpdateAttributesServiceNowAttributes(
-                **subscription_update_attributes_service_now_attributes_model_dict
-            )
+        subscription_update_attributes_service_now_attributes_model2 = SubscriptionUpdateAttributesServiceNowAttributes(
+            **subscription_update_attributes_service_now_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -9272,15 +8520,11 @@ class TestModel_SubscriptionUpdateAttributesSlackAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesSlackAttributes model
         subscription_update_attributes_slack_attributes_model_json = {}
-        subscription_update_attributes_slack_attributes_model_json[
-            "attachment_color"
-        ] = "testString"
+        subscription_update_attributes_slack_attributes_model_json["attachment_color"] = "testString"
 
         # Construct a model instance of SubscriptionUpdateAttributesSlackAttributes by calling from_dict on the json representation
-        subscription_update_attributes_slack_attributes_model = (
-            SubscriptionUpdateAttributesSlackAttributes.from_dict(
-                subscription_update_attributes_slack_attributes_model_json
-            )
+        subscription_update_attributes_slack_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(
+            subscription_update_attributes_slack_attributes_model_json
         )
         assert subscription_update_attributes_slack_attributes_model != False
 
@@ -9290,10 +8534,8 @@ class TestModel_SubscriptionUpdateAttributesSlackAttributes:
                 subscription_update_attributes_slack_attributes_model_json
             ).__dict__
         )
-        subscription_update_attributes_slack_attributes_model2 = (
-            SubscriptionUpdateAttributesSlackAttributes(
-                **subscription_update_attributes_slack_attributes_model_dict
-            )
+        subscription_update_attributes_slack_attributes_model2 = SubscriptionUpdateAttributesSlackAttributes(
+            **subscription_update_attributes_slack_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
@@ -9324,9 +8566,7 @@ class TestModel_SubscriptionUpdateAttributesWebhookAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesWebhookAttributes model
         subscription_update_attributes_webhook_attributes_model_json = {}
-        subscription_update_attributes_webhook_attributes_model_json[
-            "signing_enabled"
-        ] = True
+        subscription_update_attributes_webhook_attributes_model_json["signing_enabled"] = True
 
         # Construct a model instance of SubscriptionUpdateAttributesWebhookAttributes by calling from_dict on the json representation
         subscription_update_attributes_webhook_attributes_model = (
@@ -9342,10 +8582,8 @@ class TestModel_SubscriptionUpdateAttributesWebhookAttributes:
                 subscription_update_attributes_webhook_attributes_model_json
             ).__dict__
         )
-        subscription_update_attributes_webhook_attributes_model2 = (
-            SubscriptionUpdateAttributesWebhookAttributes(
-                **subscription_update_attributes_webhook_attributes_model_dict
-            )
+        subscription_update_attributes_webhook_attributes_model2 = SubscriptionUpdateAttributesWebhookAttributes(
+            **subscription_update_attributes_webhook_attributes_model_dict
         )
 
         # Verify the model instances are equivalent
