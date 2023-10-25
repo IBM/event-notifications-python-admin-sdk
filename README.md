@@ -341,6 +341,7 @@ print(json.dumps(destination, indent=2))
 ```
 
 ### Update Destination
+
 ```py
 # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
 destination_config_params_model = {
