@@ -1,3 +1,11 @@
+## [0.2.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.2.0...v0.2.1) (2023-11-07)
+
+
+### Bug Fixes
+
+* vulnerability fix and code format ([8b28a9a](https://github.com/IBM/event-notifications-python-admin-sdk/commit/8b28a9aa1ce9c17136ec2d3f7e21c544e396d3c1))
+* vulnerability fix and code format ([#47](https://github.com/IBM/event-notifications-python-admin-sdk/issues/47)) ([9052edf](https://github.com/IBM/event-notifications-python-admin-sdk/commit/9052edf22f6cf1c1430bcd2b63472f5ddff7a5fd))
+
 # [0.2.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.1.16...v0.2.0) (2023-10-10)
 
 
