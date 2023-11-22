@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.2.1...v0.3.0) (2023-11-22)
+
+
+### Features
+
+* adds custom sms support ([#51](https://github.com/IBM/event-notifications-python-admin-sdk/issues/51)) ([2f13a88](https://github.com/IBM/event-notifications-python-admin-sdk/commit/2f13a88a865a113299aee49e3b8e28946bb3e4ad))
+
 ## [0.2.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.2.0...v0.2.1) (2023-11-07)
 
 
