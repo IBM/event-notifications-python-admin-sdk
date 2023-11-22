@@ -65,6 +65,7 @@ destination_id13 = ""
 destination_id14 = ""
 destination_id15 = ""
 destination_id16 = ""
+destination_id17 = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -73,6 +74,7 @@ subscription_id3 = ""
 subscription_id4 = ""
 subscription_id5 = ""
 subscription_id6 = ""
+subscription_id7 = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -92,6 +94,9 @@ cos_instance_id = ""
 cos_end_point = ""
 template_invitation_id = ""
 template_notification_id = ""
+template_body = ""
+cos_instance_crn = ""
+cos_integration_id = ""
 
 
 ##############################################################################
@@ -105,7 +110,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -139,6 +144,8 @@ class TestEventNotificationsV1Examples:
             cos_instance_id = cls.config["COS_INSTANCE"]
             cos_bucket_name = cls.config["COS_BUCKET_NAME"]
             cos_end_point = cls.config["COS_ENDPOINT"]
+            cos_instance_crn = cls.config["COS_INSTANCE_CRN"]
+            template_body = cls.config["TEMPLATE_BODY"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -150,6 +157,8 @@ class TestEventNotificationsV1Examples:
             assert cos_end_point is not None
             assert cos_instance_id is not None
             assert cos_bucket_name is not None
+            assert template_body is not None
+            assert cos_instance_crn is not None
 
         print("Setup complete.")
 
@@ -363,7 +372,7 @@ class TestEventNotificationsV1Examples:
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17
         try:
             print("\ncreate_destination() result:")
             # begin-create_destination
@@ -752,6 +761,22 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(destination, indent=2))
             destination = DestinationResponse.from_dict(destination)
             destination_id16 = destination.id
+
+            name = "custom_sms_destination"
+            typeval = "sms_custom"
+            description = "Custom sms Destination"
+
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                collect_failed_events=False,
+            )
+
+            destination_response = create_destination_response.get_result()
+            destination_id17 = destination_response.get('id')
+
             # end-create_destination
 
         except ApiException as e:
@@ -780,7 +805,7 @@ class TestEventNotificationsV1Examples:
             print("\ncreate_template() result:")
             # begin-create_template
             template_config_model = {
-                "body": "<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>",
+                "body": template_body,
                 "subject": "Hi this is invitation for invitation message",
             }
 
@@ -1266,6 +1291,18 @@ class TestEventNotificationsV1Examples:
             ).get_result()
 
             print(json.dumps(verification_response, indent=2))
+
+            name = "Custom_SMS_destination_update"
+            description = "Custom SMS Destination update"
+
+            destination = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id17,
+                name=name,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
             # end-update_destination
 
         except ApiException as e:
@@ -1282,7 +1319,7 @@ class TestEventNotificationsV1Examples:
             # begin-update_template
 
             template_config_model = {
-                "body": "<!DOCTYPE html><html><head><title>IBM Event Notifications</title></head><body><p>Hello! Invitation template</p><table><tr><td>Hello invitation link:{{ ibmen_invitation }} </td></tr></table></body></html>",
+                "body": template_body,
                 "subject": "Hi this is invitation for invitation message",
             }
 
@@ -1290,7 +1327,7 @@ class TestEventNotificationsV1Examples:
             typeval = "smtp_custom.invitation"
             description = "invitation template"
 
-            update_template_response = event_notifications_service.update_template(
+            replace_template_response = self.event_notifications_service.replace_template(
                 instance_id,
                 id=template_invitation_id,
                 name=template_name,
@@ -1299,13 +1336,13 @@ class TestEventNotificationsV1Examples:
                 params=template_config_model,
             ).get_result()
 
-            print(json.dumps(update_template_response, indent=2))
+            print(json.dumps(replace_template_response, indent=2))
 
             template_name = "template_notification"
             typeval = "smtp_custom.notification"
             description = "notification template"
 
-            update_template_response = event_notifications_service.update_template(
+            replace_template_response = self.event_notifications_service.replace_template(
                 instance_id,
                 id=template_notification_id,
                 name=template_name,
@@ -1315,7 +1352,7 @@ class TestEventNotificationsV1Examples:
             ).get_result()
 
             # end-update_template
-            print(json.dumps(update_template_response, indent=2))
+            print(json.dumps(replace_template_response, indent=2))
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1325,7 +1362,7 @@ class TestEventNotificationsV1Examples:
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7
         try:
             print("\ncreate_subscription() result:")
             # begin-create_subscription
@@ -1469,6 +1506,24 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(subscription, indent=2))
             subscription_id6 = subscription.get("id")
+
+            subscription_create_attributes_model = {
+                "invited": ["+12064512559", "+12064512559"],
+            }
+
+            name = "subscription_custom_sms"
+            description = "Subscription for custom sms"
+            create_subscription_response = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id17,
+                topic_id=topic_id,
+                attributes=subscription_create_attributes_model,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(create_subscription_response, indent=2))
+            subscription_id7 = create_subscription_response.get("id")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1664,9 +1719,44 @@ class TestEventNotificationsV1Examples:
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
 
+            sms_update_attributes_invite_model = {"add": ["+12064512559"]}
+            sms_update_attributes_to_remove_model = {"remove": ["+12064512559"]}
+
+            subscription_update_attributes_model = {
+                "invited": sms_update_attributes_invite_model,
+                "subscribed": sms_update_attributes_to_remove_model,
+                "unsubscribed": sms_update_attributes_to_remove_model,
+            }
+
+            name = "subscription_custom_sms update"
+            description = "Subscription for custom sms updated"
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id7,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+
             # end-update_subscription
         except ApiException as e:
             pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_enabled_countries(self):
+        # begin-get_enabled_countries
+        try:
+            get_enabled_countries_response = self.event_notifications_service.get_enabled_countries(
+                instance_id, id=destination_id17
+            )
+            enabled_countries_response = get_enabled_countries_response.get_result()
+            print(json.dumps(enabled_countries_response, indent=2))
+        except ApiException as e:
+            pytest.fail(str(e))
+        # end-get_enabled_countries
 
     @needscredentials
     def test_send_notifications_example(self):
@@ -1740,6 +1830,7 @@ class TestEventNotificationsV1Examples:
                 'Security and Complaince dashboard</a> to find more information<br/>"'
             )
             mailto = '["abc@ibm.com", "def@us.ibm.com"]'
+            smsto = '["+911234567890", "+911224567890"]'
 
             notification_create_model = {
                 "ibmenseverity": notification_severity,
@@ -1754,6 +1845,7 @@ class TestEventNotificationsV1Examples:
                 "ibmenhtmlbody": htmlbody,
                 "ibmensubject": "Findings on IBM Cloud Security Advisor",
                 "ibmenmailto": mailto,
+                "ibmensmsto": smsto,
                 "id": notification_id,
                 "source": notifications_source,
                 "type": type_value,
@@ -1794,6 +1886,7 @@ class TestEventNotificationsV1Examples:
                 subscription_id4,
                 subscription_id5,
                 subscription_id6,
+                subscription_id7,
             ]:
                 delete_subscription_response = event_notifications_service.delete_subscription(instance_id, id)
             print(
@@ -1851,6 +1944,7 @@ class TestEventNotificationsV1Examples:
                 destination_id14,
                 destination_id15,
                 destination_id16,
+                destination_id17,
             ]:
                 delete_destination_response = event_notifications_service.delete_destination(instance_id, id)
             print(
@@ -1887,6 +1981,33 @@ class TestEventNotificationsV1Examples:
 
             # end-delete_source
             print("\ndelete_source() response status code: ", response.get_status_code())
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_integration(self):
+        global cos_integration_id
+        try:
+            # begin-create_integration
+            integration_metadata = {
+                "endpoint": cos_end_point,
+                "crn": cos_instance_crn,
+                "bucket_name": cos_bucket_name,
+            }
+
+            create_integration_response = self.event_notifications_service.create_integration(
+                instance_id,
+                type="collect_failed_events",
+                metadata=integration_metadata,
+            )
+
+            assert create_integration_response.get_status_code() == 201
+            integration_response = create_integration_response.get_result()
+            integration = IntegrationCreateResponse.from_dict(integration_response)
+
+            cos_integration_id = integration.id
+            # end-create_integration
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1939,18 +2060,39 @@ class TestEventNotificationsV1Examples:
                 "root_key_id": "insert root key id",
             }
 
-            update_integration_response = event_notifications_service.replace_integration(
+            replace_integration_response = event_notifications_service.replace_integration(
                 instance_id,
                 type="kms/hs-crypto",
                 id=integration_id,
                 metadata=integration_metadata,
             )
 
-            # end-replace_integration
             print(
                 "\nupdate_integration() response status code: ",
-                update_integration_response.get_status_code(),
+                replace_integration_response.get_status_code(),
             )
+
+            integration_metadata = {
+                "endpoint": cos_end_point,
+                "crn": cos_instance_crn,
+                "bucket_name": cos_bucket_name,
+            }
+
+            replace_integration_response = self.event_notifications_service.replace_integration(
+                instance_id,
+                id=cos_integration_id,
+                type="collect_failed_events",
+                metadata=integration_metadata,
+            )
+
+            assert replace_integration_response.get_status_code() == 200
+            integration_response = replace_integration_response.get_result()
+            assert integration_response is not None
+            print(
+                "\nupdate_integration() response status code: ",
+                replace_integration_response.get_status_code(),
+            )
+            # end-replace_integration
 
         except ApiException as e:
             pytest.fail(str(e))
