@@ -66,6 +66,7 @@ destination_id14 = ""
 destination_id15 = ""
 destination_id16 = ""
 destination_id17 = ""
+destination_id18 = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -97,6 +98,7 @@ template_notification_id = ""
 template_body = ""
 cos_instance_crn = ""
 cos_integration_id = ""
+code_engine_project_CRN = ""
 
 
 ##############################################################################
@@ -110,7 +112,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -146,6 +148,7 @@ class TestEventNotificationsV1Examples:
             cos_end_point = cls.config["COS_ENDPOINT"]
             cos_instance_crn = cls.config["COS_INSTANCE_CRN"]
             template_body = cls.config["TEMPLATE_BODY"]
+            code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -159,6 +162,8 @@ class TestEventNotificationsV1Examples:
             assert cos_bucket_name is not None
             assert template_body is not None
             assert cos_instance_crn is not None
+            assert code_engine_project_CRN is not None
+
 
         print("Setup complete.")
 
@@ -372,7 +377,7 @@ class TestEventNotificationsV1Examples:
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18
         try:
             print("\ncreate_destination() result:")
             # begin-create_destination
@@ -667,6 +672,7 @@ class TestEventNotificationsV1Examples:
             destination_config_params_model = {
                 "url": code_engine_URL,
                 "verb": "get",
+                "type": "application",
                 "custom_headers": {"authorization": "apikey"},
                 "sensitive_headers": ["authorization"],
             }
@@ -776,6 +782,32 @@ class TestEventNotificationsV1Examples:
 
             destination_response = create_destination_response.get_result()
             destination_id17 = destination_response.get('id')
+
+            destination_config_params_model = {
+                "type": "job",
+                "project_crn": code_engine_project_CRN,
+                "job_name": "custom-job",
+            }
+
+            # Construct a dict representation of a DestinationConfig model
+            destination_config_model = {
+                "params": destination_config_params_model,
+            }
+
+            name = "code_engine_destination_job"
+            typeval = "ibmce"
+            description = "code engine Destination job"
+
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model,
+            )
+
+            destination_response = create_destination_response.get_result()
+            destination_id18 = destination_response.get('id')
 
             # end-create_destination
 
@@ -1206,6 +1238,7 @@ class TestEventNotificationsV1Examples:
             destination_config_params_model = {
                 "url": code_engine_URL,
                 "verb": "post",
+                "type": "application",
                 "custom_headers": {"authorization": "authorization token"},
                 "sensitive_headers": ["authorization"],
             }
@@ -1303,6 +1336,30 @@ class TestEventNotificationsV1Examples:
             ).get_result()
 
             print(json.dumps(destination, indent=2))
+
+            destination_config_params_model = {
+                "type": "job",
+                "project_crn": code_engine_project_CRN,
+                "job_name": "custom-job",
+            }
+
+            # Construct a dict representation of a DestinationConfig model
+            destination_config_model = {
+                "params": destination_config_params_model,
+            }
+
+            name = "code engine job updated"
+            description = "This destination is updated for code engine job notifications"
+            update_destination_response = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id18,
+                name=name,
+                description=description,
+                config=destination_config_model,
+            ).get_result()
+
+            print(json.dumps(destination, indent=2))
+
             # end-update_destination
 
         except ApiException as e:
@@ -1945,6 +2002,7 @@ class TestEventNotificationsV1Examples:
                 destination_id15,
                 destination_id16,
                 destination_id17,
+                destination_id18,
             ]:
                 delete_destination_response = event_notifications_service.delete_destination(instance_id, id)
             print(

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -123,63 +123,6 @@ class EventNotificationsV1(BaseService):
         path_param_values = self.encode_path_vars(instance_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/instances/{instance_id}/notifications'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='POST',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
-    def send_bulk_notifications(
-        self,
-        instance_id: str,
-        *,
-        bulk_messages: List['NotificationCreate'] = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Send Bulk notification.
-
-        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
-               instance.
-        :param List[NotificationCreate] bulk_messages: (optional) List of
-               notifications body.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `BulkNotificationResponse` object
-        """
-
-        if not instance_id:
-            raise ValueError('instance_id must be provided')
-        if bulk_messages is not None:
-            bulk_messages = [convert_model(x) for x in bulk_messages]
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='send_bulk_notifications',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'bulk_messages': bulk_messages,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['instance_id']
-        path_param_values = self.encode_path_vars(instance_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/instances/{instance_id}/notifications/bulk'.format(**path_param_dict)
         request = self.prepare_request(
             method='POST',
             url=url,
@@ -2449,72 +2392,6 @@ class CreateDestinationEnums:
 ##############################################################################
 
 
-class BulkNotificationResponse:
-    """
-    Payload describing a notifications response.
-
-    :attr str bulk_notification_id: (optional) Bulk Notification ID.
-    :attr List[object] bulk_messages: (optional) List of Notifications.
-    """
-
-    def __init__(
-        self,
-        *,
-        bulk_notification_id: str = None,
-        bulk_messages: List[object] = None,
-    ) -> None:
-        """
-        Initialize a BulkNotificationResponse object.
-
-        :param str bulk_notification_id: (optional) Bulk Notification ID.
-        :param List[object] bulk_messages: (optional) List of Notifications.
-        """
-        self.bulk_notification_id = bulk_notification_id
-        self.bulk_messages = bulk_messages
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'BulkNotificationResponse':
-        """Initialize a BulkNotificationResponse object from a json dictionary."""
-        args = {}
-        if 'bulk_notification_id' in _dict:
-            args['bulk_notification_id'] = _dict.get('bulk_notification_id')
-        if 'bulk_messages' in _dict:
-            args['bulk_messages'] = _dict.get('bulk_messages')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a BulkNotificationResponse object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'bulk_notification_id') and self.bulk_notification_id is not None:
-            _dict['bulk_notification_id'] = self.bulk_notification_id
-        if hasattr(self, 'bulk_messages') and self.bulk_messages is not None:
-            _dict['bulk_messages'] = self.bulk_messages
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this BulkNotificationResponse object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'BulkNotificationResponse') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'BulkNotificationResponse') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
 class DKIMAttributes:
     """
     The DKIM attributes.
@@ -2837,6 +2714,7 @@ class DestinationConfigOneOf:
                 [
                     'DestinationConfigOneOfCustomDomainEmailDestinationConfig',
                     'DestinationConfigOneOfWebhookDestinationConfig',
+                    'DestinationConfigOneOfCodeEngineDestinationConfig',
                     'DestinationConfigOneOfFCMDestinationConfig',
                     'DestinationConfigOneOfIOSDestinationConfig',
                     'DestinationConfigOneOfChromeDestinationConfig',
@@ -7888,6 +7766,137 @@ class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
     def __ne__(self, other: 'DestinationConfigOneOfChromeDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class DestinationConfigOneOfCodeEngineDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a code engine destination configuration.
+
+    :attr str url: (optional) URL of code engine.
+    :attr str verb: (optional) HTTP method of code engine.
+    :attr str type: The code engine destination type.
+    :attr str project_crn: (optional) CRN of the code engine project.
+    :attr str job_name: (optional) name of the code engine job.
+    :attr dict custom_headers: (optional) Custom headers (Key-Value pair) for
+          webhook call.
+    :attr List[str] sensitive_headers: (optional) List of sensitive headers from
+          custom headers.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        *,
+        url: str = None,
+        verb: str = None,
+        project_crn: str = None,
+        job_name: str = None,
+        custom_headers: dict = None,
+        sensitive_headers: List[str] = None,
+    ) -> None:
+        """
+        Initialize a DestinationConfigOneOfCodeEngineDestinationConfig object.
+
+        :param str type: The code engine destination type.
+        :param str url: (optional) URL of code engine.
+        :param str verb: (optional) HTTP method of code engine.
+        :param str project_crn: (optional) CRN of the code engine project.
+        :param str job_name: (optional) name of the code engine job.
+        :param dict custom_headers: (optional) Custom headers (Key-Value pair) for
+               webhook call.
+        :param List[str] sensitive_headers: (optional) List of sensitive headers
+               from custom headers.
+        """
+        # pylint: disable=super-init-not-called
+        self.url = url
+        self.verb = verb
+        self.type = type
+        self.project_crn = project_crn
+        self.job_name = job_name
+        self.custom_headers = custom_headers
+        self.sensitive_headers = sensitive_headers
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfCodeEngineDestinationConfig':
+        """Initialize a DestinationConfigOneOfCodeEngineDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'url' in _dict:
+            args['url'] = _dict.get('url')
+        if 'verb' in _dict:
+            args['verb'] = _dict.get('verb')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError(
+                'Required property \'type\' not present in DestinationConfigOneOfCodeEngineDestinationConfig JSON'
+            )
+        if 'project_crn' in _dict:
+            args['project_crn'] = _dict.get('project_crn')
+        if 'job_name' in _dict:
+            args['job_name'] = _dict.get('job_name')
+        if 'custom_headers' in _dict:
+            args['custom_headers'] = _dict.get('custom_headers')
+        if 'sensitive_headers' in _dict:
+            args['sensitive_headers'] = _dict.get('sensitive_headers')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfCodeEngineDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'url') and self.url is not None:
+            _dict['url'] = self.url
+        if hasattr(self, 'verb') and self.verb is not None:
+            _dict['verb'] = self.verb
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'project_crn') and self.project_crn is not None:
+            _dict['project_crn'] = self.project_crn
+        if hasattr(self, 'job_name') and self.job_name is not None:
+            _dict['job_name'] = self.job_name
+        if hasattr(self, 'custom_headers') and self.custom_headers is not None:
+            _dict['custom_headers'] = self.custom_headers
+        if hasattr(self, 'sensitive_headers') and self.sensitive_headers is not None:
+            _dict['sensitive_headers'] = self.sensitive_headers
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfCodeEngineDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfCodeEngineDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfCodeEngineDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class VerbEnum(str, Enum):
+        """
+        HTTP method of code engine.
+        """
+
+        GET = 'get'
+        POST = 'post'
+
+    class TypeEnum(str, Enum):
+        """
+        The code engine destination type.
+        """
+
+        JOB = 'job'
+        APPLICATION = 'application'
 
 
 class DestinationConfigOneOfCustomDomainEmailDestinationConfig(DestinationConfigOneOf):
