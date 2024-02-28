@@ -164,7 +164,6 @@ class TestEventNotificationsV1Examples:
             assert cos_instance_crn is not None
             assert code_engine_project_CRN is not None
 
-
         print("Setup complete.")
 
     needscredentials = pytest.mark.skipif(

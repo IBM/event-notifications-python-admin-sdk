@@ -2831,6 +2831,7 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_new_id == subscription_id18
         assert subscription_description == description
+
     #
     # The following status codes aren't covered by tests.
     # Please provide integration tests for these too.
