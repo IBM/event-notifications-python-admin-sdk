@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.3.0...v0.4.0) (2024-03-01)
+
+
+### Features
+
+* code engine destination changes ([#52](https://github.com/IBM/event-notifications-python-admin-sdk/issues/52)) ([9f39afa](https://github.com/IBM/event-notifications-python-admin-sdk/commit/9f39afa08df29e7887986ca4b525e3c8e0d6a4f9))
+
 # [0.3.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.2.1...v0.3.0) (2023-11-22)
 
 
