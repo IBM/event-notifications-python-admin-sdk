@@ -50,6 +50,7 @@ destination_id14 = ""
 destination_id15 = ""
 destination_id16 = ""
 destination_id17 = ""
+destination_id18 = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -69,6 +70,7 @@ subscription_id14 = ""
 subscription_id15 = ""
 subscription_id16 = ""
 subscription_id17 = ""
+subscription_id18 = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -81,6 +83,7 @@ fcm_private_key = ""
 fcm_project_id = ""
 fcm_client_email = ""
 code_engine_URL = ""
+code_engine_project_CRN = ""
 huawei_client_id = ""
 huawei_client_secret = ""
 cos_bucket_name = ""
@@ -104,7 +107,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -140,6 +143,7 @@ class TestEventNotificationsV1:
             pager_duty_api_key = cls.config["PD_API_KEY"]
             pager_duty_routing_key = cls.config["PD_ROUTING_KEY"]
             template_body = cls.config["TEMPLATE_BODY"]
+            code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -158,6 +162,7 @@ class TestEventNotificationsV1:
             assert slack_url is not None
             assert template_body is not None
             assert cos_instance_crn is not None
+            assert code_engine_project_CRN is not None
 
         print("Setup complete.")
 
@@ -518,7 +523,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_create_destination(self):
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18
         destination_config_params_model = {
             "url": "https://gcm.com",
             "verb": "get",
@@ -892,6 +897,7 @@ class TestEventNotificationsV1:
         destination_config_params_model = {
             "url": code_engine_URL,
             "verb": "get",
+            "type": "application",
             "custom_headers": {"authorization": "apikey"},
             "sensitive_headers": ["authorization"],
         }
@@ -1043,6 +1049,41 @@ class TestEventNotificationsV1:
         assert destination_response.get('description') == description
         assert destination_response.get('type') == typeval
 
+        destination_config_params_model = {
+            "type": "job",
+            "project_crn": code_engine_project_CRN,
+            "job_name": "custom-job",
+        }
+
+        # Construct a dict representation of a DestinationConfig model
+        destination_config_model = {
+            "params": destination_config_params_model,
+        }
+
+        name = "code_engine_destination_job"
+        typeval = "ibmce"
+        description = "code engine Destination job"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id18 = destination.id
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1563,6 +1604,7 @@ class TestEventNotificationsV1:
         destination_config_params_model = {
             "url": code_engine_URL,
             "verb": "post",
+            "type": "application",
             "custom_headers": {"authorization": "authorization token"},
             "sensitive_headers": ["authorization"],
         }
@@ -1721,6 +1763,39 @@ class TestEventNotificationsV1:
         assert res_name == name
         assert res_description == description
 
+        destination_config_params_model = {
+            "type": "job",
+            "project_crn": code_engine_project_CRN,
+            "job_name": "custom-job",
+        }
+
+        # Construct a dict representation of a DestinationConfig model
+        destination_config_model = {
+            "params": destination_config_params_model,
+        }
+
+        name = "code engine job updated"
+        description = "This destination is updated for code engine job notifications"
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id18,
+            name=name,
+            description=description,
+            config=destination_config_model,
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get("id")
+        res_name = destination_response.get("name")
+        res_description = destination_response.get("description")
+
+        assert res_id == destination_id18
+        assert res_name == name
+        assert res_description == description
+
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1786,7 +1861,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18
         subscription_create_attributes_model = {
             "signing_enabled": False,
         }
@@ -2225,6 +2300,31 @@ class TestEventNotificationsV1:
         subscription_description = subscription_response.get("description")
         subscription_id17 = subscription_response.get("id")
 
+        assert subscription_name == name
+        assert subscription_description == description
+
+        subscription_create_attributes_model = {
+            "signing_enabled": False,
+        }
+
+        name = "subscription_code_engine_job"
+        description = "Subscription for code engine job"
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id18,
+            topic_id,
+            attributes=subscription_create_attributes_model,
+            description=description,
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get("name")
+        subscription_description = subscription_response.get("description")
+        subscription_id18 = subscription_response.get("id")
         assert subscription_name == name
         assert subscription_description == description
 
@@ -2707,6 +2807,31 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
+        subscription_update_attributes_model = {
+            "signing_enabled": True,
+        }
+
+        name = "code_engine_job_sub_updated"
+        description = "Update code engine job subscription"
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id18,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_new_id = subscription_response.get("id")
+        subscription_name = subscription_response.get("name")
+        subscription_description = subscription_response.get("description")
+        assert subscription_name == name
+        assert subscription_new_id == subscription_id18
+        assert subscription_description == description
+
     #
     # The following status codes aren't covered by tests.
     # Please provide integration tests for these too.
@@ -2921,152 +3046,6 @@ class TestEventNotificationsV1:
         #
 
     @needscredentials
-    def test_send_bulk_notifications(self):
-        # Construct a dict representation of a NotificationDevices model
-        notification_devices_model = {
-            "user_ids": ["userId"],
-        }
-
-        # Construct a dict representation of a Lights model
-        lights_model = {
-            "led_argb": "RED",
-            "led_on_ms": 0,
-            "led_off_ms": "20",
-        }
-
-        # Construct a dict representation of a Style model
-        style_model = {
-            "type": "picture_notification",
-            "title": "hello",
-            "url": "url.ibm.com",
-        }
-
-        # Construct a dict representation of a NotificationFCMBodyMessageData model
-        notification_fcm_body_message_data_model = {
-            "alert": "Alert message",
-            "collapse_key": "collapse_key",
-            "interactive_category": "category_test",
-            "icon": "test.png",
-            "delay_while_idle": True,
-            "sync": True,
-            "visibility": "0",
-            "redact": "redact test alert",
-            "payload": {},
-            "priority": "MIN",
-            "sound": "newSound",
-            "time_to_live": 0,
-            "lights": lights_model,
-            "android_title": "IBM test title",
-            "group_id": "Group_ID_1",
-            "style": style_model,
-            "type": "DEFAULT",
-        }
-
-        # Construct a dict representation of a NotificationFCMBodyMessageENData model
-        notification_fcm_body_model = {
-            "en_data": notification_fcm_body_message_data_model,
-        }
-
-        # Construct a dict representation of a NotificationAPNSBodyMessageData model
-        notification_apns_body_message_data_model = {
-            "alert": "Alert message",
-            "badge": 38,
-            "interactiveCategory": "InteractiveCategory",
-            "iosActionKey": "IosActionKey",
-            "payload": {"foo": "bar"},
-            "sound": "sound.wav",
-            "titleLocKey": "TitleLocKey",
-            "locKey": "LocKey",
-            "launchImage": "image.png",
-            "titleLocArgs": ["TitleLocArgs1"],
-            "locArgs": ["LocArgs1"],
-            "title": "Message Title",
-            "subtitle": "Message SubTitle",
-            "attachmentUrl": "https://testimage.sub.png",
-            "type": "DEFAULT",
-            "apnsCollapseId": "ApnsCollapseID",
-            "apnsThreadId": "ApnsThreadID",
-            "apnsGroupSummaryArg": "ApnsGroupSummaryArg",
-            "apnsGroupSummaryArgCount": 38,
-        }
-
-        # Construct a dict representation of a NotificationAPNSBodyMessageENData model
-        notification_apns_body_model = {
-            "en_data": notification_apns_body_message_data_model,
-        }
-
-        message_apns_headers = {
-            "apns-collapse-id": "123",
-        }
-
-        notification_safari_body_model = {
-            "saf": {
-                "alert": "Game Request",
-                "badge": 5,
-            },
-        }
-
-        notification_id = "1234-1234-sdfs-234"
-        notification_severity = "MEDIUM"
-        type_value = "com.acme.offer:new"
-        notifications_source = "1234-1234-sdfs-234:test"
-
-        # Construct a dict representation of a NotificationCreate model
-        notification_create_model = {
-            "ibmenseverity": notification_severity,
-            "ibmenfcmbody": json.dumps(notification_fcm_body_model),
-            "ibmenpushto": json.dumps(notification_devices_model),
-            "ibmenapnsheaders": json.dumps(message_apns_headers),
-            "ibmenapnsbody": json.dumps(notification_apns_body_model),
-            "ibmensafaribody": json.dumps(notification_safari_body_model),
-            "ibmensourceid": source_id,
-            "id": notification_id,
-            "source": notifications_source,
-            "type": type_value,
-            "specversion": "1.0",
-            "time": "2019-01-01T12:00:00.000Z",
-        }
-
-        notification_id1 = "1234-1111-sdfs-234"
-        notification_severity1 = "HIGH"
-        type_value1 = "com.ibm.cloud.compliance.certificate_manager:certificate_expired"
-        notifications_source1 = "1234-1234-sdfs-234:test"
-
-        notification_create_model1 = {
-            "ibmenseverity": notification_severity1,
-            "ibmenfcmbody": json.dumps(notification_fcm_body_model),
-            "ibmenpushto": json.dumps(notification_devices_model),
-            "ibmenapnsheaders": json.dumps(message_apns_headers),
-            "ibmenapnsbody": json.dumps(notification_apns_body_model),
-            "ibmensafaribody": json.dumps(notification_safari_body_model),
-            "ibmensourceid": source_id,
-            "id": notification_id1,
-            "source": notifications_source1,
-            "type": type_value1,
-            "specversion": "1.0",
-            "time": "2019-01-01T12:00:00.000Z",
-        }
-
-        send_bulk_notifications_response = self.event_notifications_service.send_bulk_notifications(
-            instance_id=instance_id,
-            bulk_messages=[notification_create_model, notification_create_model1],
-        )
-
-        assert send_bulk_notifications_response.get_status_code() == 202
-        bulk_notification_response = send_bulk_notifications_response.get_result()
-        assert bulk_notification_response is not None
-
-    #
-    # The following status codes aren't covered by tests.
-    # Please provide integration tests for these too.
-    #
-    # 400
-    # 401
-    # 415
-    # 500
-    #
-
-    @needscredentials
     def test_delete_subscription(self):
         for id in [
             subscription_id,
@@ -3087,6 +3066,7 @@ class TestEventNotificationsV1:
             subscription_id15,
             subscription_id16,
             subscription_id17,
+            subscription_id18,
         ]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(instance_id, id)
 
@@ -3136,6 +3116,7 @@ class TestEventNotificationsV1:
             destination_id15,
             destination_id16,
             destination_id17,
+            destination_id18,
         ]:
             delete_destination_response = self.event_notifications_service.delete_destination(instance_id, id)
         print(

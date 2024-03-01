@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2023.
+# (C) Copyright IBM Corp. 2024.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -251,160 +251,6 @@ class TestSendNotifications:
         # Disable retries and run test_send_notifications_value_error.
         _service.disable_retries()
         self.test_send_notifications_value_error()
-
-
-class TestSendBulkNotifications:
-    """
-    Test Class for send_bulk_notifications
-    """
-
-    @responses.activate
-    def test_send_bulk_notifications_all_params(self):
-        """
-        send_bulk_notifications()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/notifications/bulk')
-        mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=202,
-        )
-
-        # Construct a dict representation of a NotificationCreate model
-        notification_create_model = {}
-        notification_create_model['specversion'] = '1.0'
-        notification_create_model['time'] = '2019-01-01T12:00:00Z'
-        notification_create_model['id'] = 'testString'
-        notification_create_model['source'] = 'testString'
-        notification_create_model['type'] = 'testString'
-        notification_create_model['ibmenseverity'] = 'testString'
-        notification_create_model['ibmensourceid'] = 'testString'
-        notification_create_model['ibmendefaultshort'] = 'testString'
-        notification_create_model['ibmendefaultlong'] = 'testString'
-        notification_create_model['ibmensubject'] = 'testString'
-        notification_create_model['ibmensmsto'] = 'testString'
-        notification_create_model['ibmenmailto'] = 'testString'
-        notification_create_model['ibmenhtmlbody'] = 'testString'
-        notification_create_model['subject'] = 'testString'
-        notification_create_model['data'] = {'foo': 'bar'}
-        notification_create_model['datacontenttype'] = 'application/json'
-        notification_create_model['ibmenpushto'] = '{"platforms":["push_android"]}'
-        notification_create_model['ibmenfcmbody'] = 'testString'
-        notification_create_model['ibmenapnsbody'] = 'testString'
-        notification_create_model['ibmenapnsheaders'] = 'testString'
-        notification_create_model['ibmenchromebody'] = 'testString'
-        notification_create_model['ibmenchromeheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
-        notification_create_model['ibmenfirefoxbody'] = 'testString'
-        notification_create_model['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
-        notification_create_model['ibmenhuaweibody'] = 'testString'
-        notification_create_model['ibmensafaribody'] = 'testString'
-        notification_create_model['foo'] = 'testString'
-
-        # Set up parameter values
-        instance_id = 'testString'
-        bulk_messages = [notification_create_model]
-
-        # Invoke method
-        response = _service.send_bulk_notifications(
-            instance_id,
-            bulk_messages=bulk_messages,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 202
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['bulk_messages'] == [notification_create_model]
-
-    def test_send_bulk_notifications_all_params_with_retries(self):
-        # Enable retries and run test_send_bulk_notifications_all_params.
-        _service.enable_retries()
-        self.test_send_bulk_notifications_all_params()
-
-        # Disable retries and run test_send_bulk_notifications_all_params.
-        _service.disable_retries()
-        self.test_send_bulk_notifications_all_params()
-
-    @responses.activate
-    def test_send_bulk_notifications_required_params(self):
-        """
-        test_send_bulk_notifications_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/notifications/bulk')
-        mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=202,
-        )
-
-        # Set up parameter values
-        instance_id = 'testString'
-
-        # Invoke method
-        response = _service.send_bulk_notifications(
-            instance_id,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 202
-
-    def test_send_bulk_notifications_required_params_with_retries(self):
-        # Enable retries and run test_send_bulk_notifications_required_params.
-        _service.enable_retries()
-        self.test_send_bulk_notifications_required_params()
-
-        # Disable retries and run test_send_bulk_notifications_required_params.
-        _service.disable_retries()
-        self.test_send_bulk_notifications_required_params()
-
-    @responses.activate
-    def test_send_bulk_notifications_value_error(self):
-        """
-        test_send_bulk_notifications_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/notifications/bulk')
-        mock_response = '{"bulk_notification_id": "bulk_notification_id", "bulk_messages": ["anyValue"]}'
-        responses.add(
-            responses.POST,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=202,
-        )
-
-        # Set up parameter values
-        instance_id = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.send_bulk_notifications(**req_copy)
-
-    def test_send_bulk_notifications_value_error_with_retries(self):
-        # Enable retries and run test_send_bulk_notifications_value_error.
-        _service.enable_retries()
-        self.test_send_bulk_notifications_value_error()
-
-        # Disable retries and run test_send_bulk_notifications_value_error.
-        _service.disable_retries()
-        self.test_send_bulk_notifications_value_error()
 
 
 # endregion
@@ -5076,39 +4922,6 @@ class TestReplaceIntegration:
 # region
 
 
-class TestModel_BulkNotificationResponse:
-    """
-    Test Class for BulkNotificationResponse
-    """
-
-    def test_bulk_notification_response_serialization(self):
-        """
-        Test serialization/deserialization for BulkNotificationResponse
-        """
-
-        # Construct a json representation of a BulkNotificationResponse model
-        bulk_notification_response_model_json = {}
-        bulk_notification_response_model_json['bulk_notification_id'] = 'testString'
-        bulk_notification_response_model_json['bulk_messages'] = ['testString']
-
-        # Construct a model instance of BulkNotificationResponse by calling from_dict on the json representation
-        bulk_notification_response_model = BulkNotificationResponse.from_dict(bulk_notification_response_model_json)
-        assert bulk_notification_response_model != False
-
-        # Construct a model instance of BulkNotificationResponse by calling from_dict on the json representation
-        bulk_notification_response_model_dict = BulkNotificationResponse.from_dict(
-            bulk_notification_response_model_json
-        ).__dict__
-        bulk_notification_response_model2 = BulkNotificationResponse(**bulk_notification_response_model_dict)
-
-        # Verify the model instances are equivalent
-        assert bulk_notification_response_model == bulk_notification_response_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        bulk_notification_response_model_json2 = bulk_notification_response_model.to_dict()
-        assert bulk_notification_response_model_json2 == bulk_notification_response_model_json
-
-
 class TestModel_DKIMAttributes:
     """
     Test Class for DKIMAttributes
@@ -5251,9 +5064,9 @@ class TestModel_DestinationList:
         destination_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a DestinationList model
         destination_list_model_json = {}
@@ -5581,9 +5394,9 @@ class TestModel_IntegrationCreateResponse:
 
         integration_create_metadata_model = {}  # IntegrationCreateMetadata
         integration_create_metadata_model['endpoint'] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        integration_create_metadata_model[
-            'crn'
-        ] = 'crn:v1:bluemix:public:cloud-object-storage:global:a/xxxxxxx6db359a81a1dde8f44bxxxxxx:xxxxxxxx-1d48-xxxx-xxxx-xxxxxxxxxxxx:bucket:cloud-object-storage'
+        integration_create_metadata_model['crn'] = (
+            'crn:v1:bluemix:public:cloud-object-storage:global:a/xxxxxxx6db359a81a1dde8f44bxxxxxx:xxxxxxxx-1d48-xxxx-xxxx-xxxxxxxxxxxx:bucket:cloud-object-storage'
+        )
         integration_create_metadata_model['bucket_name'] = 'cloud-object-storage'
 
         # Construct a json representation of a IntegrationCreateResponse model
@@ -5681,9 +5494,9 @@ class TestModel_IntegrationList:
         integration_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a IntegrationList model
         integration_list_model_json = {}
@@ -6165,9 +5978,9 @@ class TestModel_SourceList:
         source_list_item_model['topic_count'] = 0
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SourceList model
         source_list_model_json = {}
@@ -6426,9 +6239,9 @@ class TestModel_SubscriptionList:
         subscription_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SubscriptionList model
         subscription_list_model_json = {}
@@ -6514,9 +6327,9 @@ class TestModel_TagsSubscriptionList:
         tags_subscription_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TagsSubscriptionList model
         tags_subscription_list_model_json = {}
@@ -6669,9 +6482,9 @@ class TestModel_TemplateList:
         template_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/templates?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/templates?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TemplateList model
         template_list_model_json = {}
@@ -6799,9 +6612,9 @@ class TestModel_Topic:
         subscription_list_item_model = {}  # SubscriptionListItem
         subscription_list_item_model['id'] = '87bef75e-f826-4aa9-b64d-91af9be5e12b'
         subscription_list_item_model['name'] = 'SMS Subscription on new change'
-        subscription_list_item_model[
-            'description'
-        ] = 'This subscription is to send events from SCC to EN Admins via sms'
+        subscription_list_item_model['description'] = (
+            'This subscription is to send events from SCC to EN Admins via sms'
+        )
         subscription_list_item_model['destination_id'] = 'ec28efee-2236-4c2d-8839-d34f697cfc69'
         subscription_list_item_model['destination_name'] = 'testString'
         subscription_list_item_model['destination_type'] = 'sms_ibm'
@@ -6857,9 +6670,9 @@ class TestModel_TopicList:
         topics_list_item_model['subscription_count'] = 3
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TopicList model
         topic_list_model_json = {}
@@ -7137,6 +6950,62 @@ class TestModel_DestinationConfigOneOfChromeDestinationConfig:
         assert (
             destination_config_one_of_chrome_destination_config_model_json2
             == destination_config_one_of_chrome_destination_config_model_json
+        )
+
+
+class TestModel_DestinationConfigOneOfCodeEngineDestinationConfig:
+    """
+    Test Class for DestinationConfigOneOfCodeEngineDestinationConfig
+    """
+
+    def test_destination_config_one_of_code_engine_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfCodeEngineDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfCodeEngineDestinationConfig model
+        destination_config_one_of_code_engine_destination_config_model_json = {}
+        destination_config_one_of_code_engine_destination_config_model_json['url'] = 'testString'
+        destination_config_one_of_code_engine_destination_config_model_json['verb'] = 'get'
+        destination_config_one_of_code_engine_destination_config_model_json['type'] = 'job'
+        destination_config_one_of_code_engine_destination_config_model_json['project_crn'] = 'testString'
+        destination_config_one_of_code_engine_destination_config_model_json['job_name'] = 'testString'
+        destination_config_one_of_code_engine_destination_config_model_json['custom_headers'] = {'key1': 'testString'}
+        destination_config_one_of_code_engine_destination_config_model_json['sensitive_headers'] = ['testString']
+
+        # Construct a model instance of DestinationConfigOneOfCodeEngineDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_code_engine_destination_config_model = (
+            DestinationConfigOneOfCodeEngineDestinationConfig.from_dict(
+                destination_config_one_of_code_engine_destination_config_model_json
+            )
+        )
+        assert destination_config_one_of_code_engine_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfCodeEngineDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_code_engine_destination_config_model_dict = (
+            DestinationConfigOneOfCodeEngineDestinationConfig.from_dict(
+                destination_config_one_of_code_engine_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_code_engine_destination_config_model2 = (
+            DestinationConfigOneOfCodeEngineDestinationConfig(
+                **destination_config_one_of_code_engine_destination_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            destination_config_one_of_code_engine_destination_config_model
+            == destination_config_one_of_code_engine_destination_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_code_engine_destination_config_model_json2 = (
+            destination_config_one_of_code_engine_destination_config_model.to_dict()
+        )
+        assert (
+            destination_config_one_of_code_engine_destination_config_model_json2
+            == destination_config_one_of_code_engine_destination_config_model_json
         )
 
 
@@ -8723,26 +8592,26 @@ class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesCustomEmailUpdateAttributes model
         subscription_update_attributes_custom_email_update_attributes_model_json = {}
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'invited'
-        ] = update_attributes_invited_model
+        subscription_update_attributes_custom_email_update_attributes_model_json['invited'] = (
+            update_attributes_invited_model
+        )
         subscription_update_attributes_custom_email_update_attributes_model_json['add_notification_payload'] = False
         subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_name'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['from_name'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['from_email'] = 'testString'
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'template_id_notification'
-        ] = 'testString'
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'template_id_invitation'
-        ] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_invitation'] = (
+            'testString'
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_email_update_attributes_model = (
@@ -8804,15 +8673,15 @@ class TestModel_SubscriptionUpdateAttributesCustomSMSUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesCustomSMSUpdateAttributes model
         subscription_update_attributes_custom_sms_update_attributes_model_json = {}
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'invited'
-        ] = update_attributes_invited_model
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_custom_sms_update_attributes_model_json['invited'] = (
+            update_attributes_invited_model
+        )
+        subscription_update_attributes_custom_sms_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_custom_sms_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomSMSUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_sms_update_attributes_model = (
@@ -8879,12 +8748,12 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes:
         subscription_update_attributes_email_update_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['reply_to_name'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['from_name'] = 'testString'
-        subscription_update_attributes_email_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_email_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_email_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_email_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_email_update_attributes_model = (
@@ -8947,12 +8816,12 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes:
         # Construct a json representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_sms_update_attributes_model_json = {}
         subscription_update_attributes_sms_update_attributes_model_json['invited'] = update_attributes_invited_model
-        subscription_update_attributes_sms_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_sms_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_sms_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_sms_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesSMSUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_sms_update_attributes_model = (
