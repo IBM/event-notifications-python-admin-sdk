@@ -118,9 +118,9 @@ SDK Methods to consume
     - [Update Template](#update-template)
     - [Delete Template](#delete-template)
 - [Push Destination APIs](#push-destination-apis)
-  - [Create Destination tag subscription](#create-destination-tag-subscription)
-  - [List Destination tag subscription](#list-destination-tag-subscription)
-  - [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
+    - [Create Destination tag subscription](#create-destination-tag-subscription)
+    - [List Destination tag subscription](#list-destination-tag-subscription)
+    - [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
 - [Subscriptions](#subscriptions)
     - [Create Subscription](#create-subscription)
     - [List Subscriptions](#list-subscriptions)
@@ -128,10 +128,24 @@ SDK Methods to consume
     - [Update Subscription](#update-subscription)
     - [Delete Subscription](#delete-subscription)
 - [Integration](#integration)
-  - [Create Integration](#create-integration)
-  - [List Integrations](#list-integrations)
-  - [Get Integrations](#get-integration)
-  - [Update Integration](#update-integration)  
+    - [Create Integration](#create-integration)
+    - [List Integrations](#list-integrations)
+    - [Get Integrations](#get-integration)
+    - [Update Integration](#update-integration)
+- [SMTP Configurations](#SMTPConfigurations)
+	- [Create SMTP Configuration](#create-smtp-configuration)
+	- [Create SMTP User](#create-smtp-user)
+	- [Get SMTP Configuration](#get-smtp-configuration)
+	- [Get SMTP User](#get-smtp-user)	
+	- [Get SMTP Allowed Ips](#get-smtp-allowed-ips)
+	- [List SMTP Configurations](#list-smtp-configurations)
+	- [List SMTP Users](#list-smtp-users)
+	- [Update SMTP Configuration](#update-smtp-configuration)
+	- [Update SMTP User](#update-smtp-user)
+	- [Update SMTP Allowed Ips](#update-smtp-allowed-ips)
+	- [Delete SMTP User](#delete-smtp-user)
+	- [Delete SMTP Configuration](#delete-smtp-user)
+	- [Verify SMTP](#verify-smtp)
 - [Send Notifications](#send-notifications)
 
 ## Source 
@@ -423,6 +437,8 @@ supports the following templates:
 - Custom Email invitation
 
 ### Create Template
+
+#### Custom Email Template
 ```py
 template_config_model = {
     'body': 'base 64 encoded html content',
@@ -437,6 +453,24 @@ create_template_response = event_notifications_service.create_template(
     description=<template-description>
 ).get_result()
 ```
+For custom email supported template type values: smtp_custom.invitation, smtp_custom.notification 
+
+#### Slack Template
+```py
+template_config_model = {
+    'body': 'base 64 encoded json body',
+}
+
+create_template_response = event_notifications_service.create_template(
+    instance_id=<instance-id>,
+    name=<template-name>,
+    type=<template-type>,
+    params=template_config_model,
+    description=<template-description>
+).get_result()
+```
+For slack template supported template type value: slack.notification
+
 ### List Templates
 ```py
 list_templates_response = event_notifications_service.list_templates(
@@ -670,6 +704,195 @@ update_integration_response = event_notifications_service.replace_integration(
 integration_response = update_integration_response.get_result()
 ```
 
+## SMTPConfigurations
+
+### Create SMTP Configuration
+
+```py
+
+create_smtp_config_response = self.event_notifications_service.create_smtp_configuration(
+    instance_id=<instance_id>,
+    name=<smtp-config-name>,
+    domain=<smtp-domain-name>,
+    description=<smtp-description>
+)
+
+smtp_response = create_smtp_config_response.get_result()
+
+```
+
+### Create SMTP User
+
+```py
+
+create_smtp_user_response = self.event_notifications_service.create_smtp_user(
+    instance_id=<instance-id>,
+    id=<smtp-config-id>,
+    description=<smtp-description>
+)
+
+create_user_response = create_smtp_user_response.get_result()
+
+```
+
+### Get SMTP Configuration
+
+```py
+
+get_smtp_config_response = self.event_notifications_service.get_smtp_configuration(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+)
+
+get_smtp_config_response = get_smtp_config_response.get_result()
+
+```
+
+### Get SMTP User
+
+```py
+
+get_smtp_user_response = self.event_notifications_service.get_smtp_user(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+    user_id=<smtp_user_id>
+)
+
+get_smtp_user_response = get_smtp_user_response.get_result()
+
+```
+
+### Get SMTP Allowed Ips
+
+```py
+
+get_smtp_allowed_ip_response = self.event_notifications_service.get_smtp_allowed_ips(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+)
+
+get_smtp_allowed_ip_response = get_smtp_allowed_ip_response.get_result()
+
+```
+
+### List SMTP Configurations
+
+```py
+
+list_smtp_config_response = self.event_notifications_service.list_smtp_configurations(
+    instance_id=<instance-id>,
+    limit=<limit>,
+    offset=<offset>,
+    search=<search>,
+)
+
+list_smtp_config_response = list_smtp_config_response.get_result()
+
+```
+
+### List SMTP Users
+
+```py
+
+list_smtp_user_response = self.event_notifications_service.list_smtp_users(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+    limit=<limit>,
+    offset=<offset>,
+    search=<search>,
+)
+
+list_smtp_user_response = list_smtp_user_response.get_result()
+
+```
+
+### Update SMTP Configuration
+
+```py
+
+update_smtp_config_response = self.event_notifications_service.update_smtp_configuration(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+    name=<smtp-name>,
+    description=<smtp-description>,
+)
+
+update_smtp_config_response = update_smtp_config_response.get_result()
+
+```
+
+### Update SMTP User
+
+```py
+
+update_smtp_user_response = self.event_notifications_service.update_smtp_user(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+    user_id=<smtp_user_id>,
+    description=<smtp-description>,
+)
+
+update_smtp_user_response = update_smtp_user_response.get_result()
+
+```
+
+### Update SMTP Allowed IPs
+
+```py
+
+subnets = ['<subnet-ips>']
+update_smtp_allowed_ip_response = self.event_notifications_service.update_smtp_allowed_ips(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+    subnets=subnets
+)
+
+allowed_ip_response = update_smtp_allowed_ip_response.get_result()
+
+```
+
+### Delete SMTP User
+
+```py
+
+delete_smtp_user_response = self.event_notifications_service.delete_smtp_user(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+    user_id=<user-id>
+)
+
+print(json.dumps(delete_smtp_user_response, indent=2))
+
+```
+
+### Delete SMTP Configuration
+
+```py
+
+delete_smtp_config_response = self.event_notifications_service.delete_smtp_configuration(
+    instance_id=<instance-id>,
+    id=<smtp_config_id>,
+)
+
+print(json.dumps(delete_smtp_config_response, indent=2))
+
+```
+
+### Verify SMTP
+
+```py
+
+update_verify_smtp_response = self.event_notifications_service.update_verify_smtp(
+    instance_id=<instance-id>,
+    type=<verification-type>,
+    id=<smtp_config_id>
+)
+
+verify_response = update_verify_smtp_response.get_result()
+
+```
+supported verification types are dkim,spf and en_authorization.
+
 ### Send Notifications
 
 
@@ -723,6 +946,7 @@ htmlbody = '"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to
            'Security and Complaince dashboard</a> to find more information<br/>"'
 mailto = '[\"abc@ibm.com\", \"def@us.ibm.com\"]'
 smsto = '[\"+911234567890\", \"+911224567890\"]'
+templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
 
 notification_create_model = {
     'ibmenseverity': notification_severity,
@@ -737,6 +961,7 @@ notification_create_model = {
     'ibmensubject': 'Findings on IBM Cloud Security Advisor',
     'ibmenmailto': mailto,
     'ibmensmsto': smsto,
+    "ibmentemplates": templates,
     'id': notification_id,
     'source': notifications_source,
     'type': type_value,
@@ -793,6 +1018,7 @@ send_notifications_response = event_notifications_service.send_notifications(
   - **ibmenhtmlbody*** (_string_) - The html body of notification for email.
   - **ibmenmailto*** (_Array of string_) - Array of email ids to which the notification to be sent.
   - **ibmensmsto*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
+  - **ibmentemplates*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
 
 Note: variable with * represents the mandatory attribute.
 </details>
@@ -805,10 +1031,37 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_APIKEY` - Add the Event Notifications service instance apikey.
 - `EVENT_NOTIFICATIONS_GUID` - Add the Event Notifications service instance GUID.
 
-Optional 
+**Optional**
 - `EVENT_NOTIFICATIONS_AUTH_URL` - Add the IAM url if you are using IBM test cloud.
 - `EVENT_NOTIFICATIONS_FCM_KEY` - Add firebase server key for Android FCM destination.
 - `EVENT_NOTIFICATIONS_FCM_ID` - Add firebase sender Id for Android FCM destination.
+- `EVENT_NOTIFICATIONS_FCM_PROJECT_ID` - fcm project id
+- `EVENT_NOTIFICATIONS_FCM_CLIENT_EMAIL` - fcm client email
+- `EVENT_NOTIFICATIONS_FCM_PRIVATE_KEY` - fcm private key
+- `EVENT_NOTIFICATIONS_SAFARI_CERTIFICATE` - safari certificate path
+
+- `EVENT_NOTIFICATIONS_SNOW_CLIENT_ID` - service now client id
+- `EVENT_NOTIFICATIONS_SNOW_CLIENT_SECRET` - service now client secret
+- `EVENT_NOTIFICATIONS_SNOW_USER_NAME` - service now user name
+- `EVENT_NOTIFICATIONS_SNOW_PASSWORD` - service now password
+- `EVENT_NOTIFICATIONS_SNOW_INSTANCE_NAME` - service now instance name
+
+- `EVENT_NOTIFICATIONS_COS_BUCKET_NAME` - cloud object storage bucket name
+- `EVENT_NOTIFICATIONS_COS_INSTANCE` - cloud object storage instance id
+- `EVENT_NOTIFICATIONS_COS_INSTANCE_CRN` - cloud object storage instance crn
+- `EVENT_NOTIFICATIONS_COS_ENDPOINT` - cloud object storage end point
+
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_URL` - code engine app url
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_PROJECT_CRN` - code engine project crn
+- `EVENT_NOTIFICATIONS_HUAWEI_CLIENT_SECRET` - huawei client secret
+- `EVENT_NOTIFICATIONS_HUAWEI_CLIENT_ID` - huawei client id
+
+- `EVENT_NOTIFICATIONS_SLACK_URL` - slack webhook url
+- `EVENT_NOTIFICATIONS_MS_TEAMS_URL` - msteams webhook url
+- `EVENT_NOTIFICATIONS_PD_ROUTING_KEY` - pagerduty routing key
+- `EVENT_NOTIFICATIONS_PD_API_KEY` - pagerduty api key
+- `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
+- `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 
