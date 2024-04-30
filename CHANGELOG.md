@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.4.0...v0.5.0) (2024-04-30)
+
+
+### Features
+
+* smtp slack template and vulnerability fix ([#53](https://github.com/IBM/event-notifications-python-admin-sdk/issues/53)) ([dc483ab](https://github.com/IBM/event-notifications-python-admin-sdk/commit/dc483ab139079eaeae616f12a03cfdf8f48a3019))
+
 # [0.4.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.3.0...v0.4.0) (2024-03-01)
 
 
