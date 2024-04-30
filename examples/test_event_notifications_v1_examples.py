@@ -95,10 +95,14 @@ cos_instance_id = ""
 cos_end_point = ""
 template_invitation_id = ""
 template_notification_id = ""
+slack_template_id = ""
 template_body = ""
+slack_template_body = ""
 cos_instance_crn = ""
 cos_integration_id = ""
 code_engine_project_CRN = ""
+smtp_user_id = ""
+smtp_config_id = ""
 
 
 ##############################################################################
@@ -112,7 +116,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -148,6 +152,7 @@ class TestEventNotificationsV1Examples:
             cos_end_point = cls.config["COS_ENDPOINT"]
             cos_instance_crn = cls.config["COS_INSTANCE_CRN"]
             template_body = cls.config["TEMPLATE_BODY"]
+            slack_template_body = cls.config["SLACK_TEMPLATE_BODY"]
             code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
             assert instance_id is not None
             assert fcmServerKey is not None
@@ -831,20 +836,22 @@ class TestEventNotificationsV1Examples:
         """
         create_template request example
         """
-        global template_notification_id, template_invitation_id
+        global template_notification_id, template_invitation_id, slack_template_id
         try:
             print("\ncreate_template() result:")
             # begin-create_template
-            template_config_model = {
-                "body": template_body,
-                "subject": "Hi this is invitation for invitation message",
+            template_config_model_json = {
+                'body': template_body,
+                'subject': 'Hi this is invitation for invitation message',
             }
+
+            template_config_model = TemplateConfigOneOfEmailTemplateConfig.from_dict(template_config_model_json)
 
             name = "template_invitation"
             typeval = "smtp_custom.invitation"
             description = "invitation template"
 
-            create_template_response = event_notifications_service.create_template(
+            create_template_response = self.event_notifications_service.create_template(
                 instance_id,
                 name,
                 type=typeval,
@@ -860,7 +867,7 @@ class TestEventNotificationsV1Examples:
             typeval = "smtp_custom.notification"
             description = "notification template"
 
-            create_template_response = event_notifications_service.create_template(
+            create_template_response = self.event_notifications_service.create_template(
                 instance_id,
                 name,
                 type=typeval,
@@ -868,10 +875,32 @@ class TestEventNotificationsV1Examples:
                 description=description,
             ).get_result()
 
-            # end-create_template
             print(json.dumps(create_template_response, indent=2))
             template = TemplateResponse.from_dict(create_template_response)
             template_notification_id = template.id
+
+            slack_template_config_model_json = {'body': slack_template_body}
+
+            slack_template_config_model = TemplateConfigOneOfSlackTemplateConfig.from_dict(
+                slack_template_config_model_json
+            )
+
+            name = "template_slack"
+            typeval = "slack.notification"
+            description = "slack template"
+
+            create_template_response = self.event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=slack_template_config_model,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(create_template_response, indent=2))
+            template = TemplateResponse.from_dict(create_template_response)
+            slack_template_id = template.id
+            # end-create_template
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1407,9 +1436,29 @@ class TestEventNotificationsV1Examples:
                 params=template_config_model,
             ).get_result()
 
-            # end-update_template
             print(json.dumps(replace_template_response, indent=2))
 
+            slack_template_config_model_json = {'body': slack_template_body}
+
+            slack_template_config_model = TemplateConfigOneOfSlackTemplateConfig.from_dict(
+                slack_template_config_model_json
+            )
+
+            name = "template_slack"
+            typeval = "slack.notification"
+            description = "slack template"
+
+            replace_template_response = self.event_notifications_service.replace_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=slack_template_config_model,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(replace_template_response, indent=2))
+
+            # end-update_template
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -1521,9 +1570,14 @@ class TestEventNotificationsV1Examples:
             name = "slack subscription"
             description = "Subscription for the slack"
 
-            subscription_create_attributes_model = {
-                "attachment_color": "#0000FF",
+            subscription_create_attributes_model_json = {
+                'attachment_color': '#0000FF',
+                'template_id_notification': slack_template_id,
             }
+
+            subscription_create_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
+                subscription_create_attributes_model_json
+            )
 
             subscription = self.event_notifications_service.create_subscription(
                 instance_id,
@@ -1731,9 +1785,13 @@ class TestEventNotificationsV1Examples:
 
             name = "Slack update"
             description = "Subscription for slack updated"
-            subscription_update_attributes_model = {
-                "attachment_color": "#0000FF",
+            subscription_update_attributes_model_json = {
+                'attachment_color': '#0000FF',
+                'template_id_notification': slack_template_id,
             }
+            subscription_update_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(
+                subscription_update_attributes_model_json
+            )
             update_subscription_response = self.event_notifications_service.update_subscription(
                 instance_id,
                 id=subscription_id5,
@@ -1887,6 +1945,7 @@ class TestEventNotificationsV1Examples:
             )
             mailto = '["abc@ibm.com", "def@us.ibm.com"]'
             smsto = '["+911234567890", "+911224567890"]'
+            templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
 
             notification_create_model = {
                 "ibmenseverity": notification_severity,
@@ -1902,6 +1961,7 @@ class TestEventNotificationsV1Examples:
                 "ibmensubject": "Findings on IBM Cloud Security Advisor",
                 "ibmenmailto": mailto,
                 "ibmensmsto": smsto,
+                "ibmentemplates": templates,
                 "id": notification_id,
                 "source": notifications_source,
                 "type": type_value,
@@ -1916,6 +1976,248 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(send_notifications_response, indent=2))
 
             # end-send_notifications
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_smtp_configuration_example(self):
+        global template_notification_id, template_invitation_id, slack_template_id
+        try:
+            print("\ncreate_smtp_configuration() result:")
+            # begin-create_smtp_configuration
+            global smtp_config_id
+            name = "SMTP configuration"
+            domain = "mailx.event-notifications.test.cloud.ibm.com"
+            description = "SMTP description"
+
+            create_smtp_config_response = self.event_notifications_service.create_smtp_configuration(
+                instance_id, name, domain, description=description
+            )
+
+            smtp_response = create_smtp_config_response.get_result()
+            print(json.dumps(create_smtp_config_response, indent=2))
+            smtp_config = SMTPCreateResponse.from_dict(smtp_response)
+            smtp_config_id = smtp_config.id
+            # end-create_smtp_configuration
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_verify_smtp_example(self):
+        try:
+            print("\nverify_smtp() result:")
+            # begin-verify_smtp
+            update_verify_smtp_response = self.event_notifications_service.update_verify_smtp(
+                instance_id, type="dkim,spf,en_authorization", id=smtp_config_id
+            )
+
+            verify_response = update_verify_smtp_response.get_result()
+            print(json.dumps(verify_response, indent=2))
+            # end-verify_smtp
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_smtp_allowed_ips_example(self):
+        try:
+            print("\n test_update_smtp_allowed_ips_example() result:")
+            # begin-update_smtp_allowed_ip
+            subnets = ['192.168.1.64']
+            update_smtp_allowed_ip_response = self.event_notifications_service.update_smtp_allowed_ips(
+                instance_id, id=smtp_config_id, subnets=subnets
+            )
+
+            allowed_ip_response = update_smtp_allowed_ip_response.get_result()
+            print(json.dumps(allowed_ip_response, indent=2))
+            # end-update_smtp_allowed_ip
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_create_smtp_user_example(self):
+        global smtp_user_id
+        try:
+            print("\n test_create_smtp_user_example() result:")
+            # begin-create_smtp_user
+            global smtp_user_id
+            description = 'SMTP user description'
+            create_smtp_user_response = self.event_notifications_service.create_smtp_user(
+                instance_id, id=smtp_config_id, description=description
+            )
+
+            create_user_response = create_smtp_user_response.get_result()
+            print(json.dumps(create_user_response, indent=2))
+            smtp_user = SMTPUserResponse.from_dict(create_user_response)
+            smtp_user_id = smtp_user.id
+            # end-create_smtp_user
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_smtp_configurations_example(self):
+        try:
+            print("\n test_list_smtp_configurations_example() result:")
+            # begin-list_smtp_configurations
+            limit = 1
+            offset = 0
+            list_smtp_config_response = self.event_notifications_service.list_smtp_configurations(
+                instance_id,
+                limit=limit,
+                offset=offset,
+                search=search,
+            )
+
+            list_smtp_config_response = list_smtp_config_response.get_result()
+            print(json.dumps(list_smtp_config_response, indent=2))
+            # end-list_smtp_configurations
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_list_smtp_users_example(self):
+        try:
+            print("\n test_list_smtp_users_example() result:")
+            # begin-list_smtp_users
+            limit = 1
+            offset = 0
+            list_smtp_user_response = self.event_notifications_service.list_smtp_users(
+                instance_id,
+                id=smtp_config_id,
+                limit=limit,
+                offset=offset,
+                search=search,
+            )
+
+            list_smtp_user_response = list_smtp_user_response.get_result()
+            print(json.dumps(list_smtp_user_response, indent=2))
+            # end-list_smtp_users
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_smtp_configuration_example(self):
+        try:
+            print("\n test_get_smtp_configuration_example() result:")
+            # begin-get_smtp_configuration
+            get_smtp_config_response = self.event_notifications_service.get_smtp_configuration(
+                instance_id,
+                id=smtp_config_id,
+            )
+
+            get_smtp_config_response = get_smtp_config_response.get_result()
+            print(json.dumps(get_smtp_config_response, indent=2))
+            # end-get_smtp_configuration
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_smtp_allowed_ip_example(self):
+        try:
+            print("\n test_get_smtp_allowed_ip_example() result:")
+            # begin-get_smtp_allowed_ip
+            get_smtp_allowed_ip_response = self.event_notifications_service.get_smtp_allowed_ips(
+                instance_id,
+                id=smtp_config_id,
+            )
+
+            get_smtp_allowed_ip_response = get_smtp_allowed_ip_response.get_result()
+            print(json.dumps(get_smtp_allowed_ip_response, indent=2))
+            # end-get_smtp_allowed_ip
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_smtp_user_example(self):
+        try:
+            print("\n test_get_smtp_user_example() result:")
+            # begin-get_smtp_user
+            get_smtp_user_response = self.event_notifications_service.get_smtp_user(
+                instance_id, id=smtp_config_id, user_id=smtp_user_id
+            )
+
+            get_smtp_user_response = get_smtp_user_response.get_result()
+            print(json.dumps(get_smtp_user_response, indent=2))
+            # end-get_smtp_user
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_smtp_configuration_example(self):
+        try:
+            print("\n test_update_smtp_configuration_example() result:")
+            # begin-update_smtp_configuration
+            name = 'SMTP configuration update'
+            description = 'SMTP configuration description update'
+            update_smtp_config_response = self.event_notifications_service.update_smtp_configuration(
+                instance_id,
+                id=smtp_config_id,
+                name=name,
+                description=description,
+            )
+
+            update_smtp_config_response = update_smtp_config_response.get_result()
+            print(json.dumps(update_smtp_config_response, indent=2))
+            # end-update_smtp_configuration
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_update_smtp_user_example(self):
+        try:
+            print("\n test_update_smtp_user_example() result:")
+            # begin-update_smtp_user
+            description = 'SMTP user description update'
+            update_smtp_user_response = self.event_notifications_service.update_smtp_user(
+                instance_id,
+                id=smtp_config_id,
+                user_id=smtp_user_id,
+                description=description,
+            )
+
+            update_smtp_user_response = update_smtp_user_response.get_result()
+            print(json.dumps(update_smtp_user_response, indent=2))
+            # end-update_smtp_user
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_smtp_user_example(self):
+        try:
+            print("\n test_delete_smtp_user_example() result:")
+            # begin-delete_smtp_user
+            delete_smtp_user_response = self.event_notifications_service.delete_smtp_user(
+                instance_id, id=smtp_config_id, user_id=smtp_user_id
+            )
+
+            print(json.dumps(delete_smtp_user_response, indent=2))
+            # end-delete_smtp_user
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_delete_smtp_configuration_example(self):
+        try:
+            print("\n test_delete_smtp_configuration_example() result:")
+            # begin-delete_smtp_configuration
+            delete_smtp_config_response = self.event_notifications_service.delete_smtp_configuration(
+                instance_id, id=smtp_config_id
+            )
+
+            print(json.dumps(delete_smtp_config_response, indent=2))
+            # end-delete_smtp_configuration
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -2017,7 +2319,7 @@ class TestEventNotificationsV1Examples:
         """
         delete_template request example
         """
-        for id in [template_invitation_id, template_notification_id]:
+        for id in [template_invitation_id, template_notification_id, slack_template_id]:
             # begin-delete_template
             delete_template_response = event_notifications_service.delete_template(instance_id, id).get_result()
             # end-delete_template

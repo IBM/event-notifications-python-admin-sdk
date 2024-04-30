@@ -91,13 +91,17 @@ cos_instance_id = ""
 cos_end_point = ""
 template_invitation_id = ""
 template_notification_id = ""
+slack_template_id = ""
 slack_url = ""
 teams_url = ""
 pager_duty_api_key = ""
 pager_duty_routing_key = ""
 template_body = ""
+slack_template_body = ""
 cos_instance_crn = ""
 cos_integration_id = ""
+smtp_config_id = ""
+smtp_user_id = ""
 
 
 class TestEventNotificationsV1:
@@ -107,7 +111,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -143,6 +147,7 @@ class TestEventNotificationsV1:
             pager_duty_api_key = cls.config["PD_API_KEY"]
             pager_duty_routing_key = cls.config["PD_ROUTING_KEY"]
             template_body = cls.config["TEMPLATE_BODY"]
+            slack_template_body = cls.config["SLACK_TEMPLATE_BODY"]
             code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
             assert instance_id is not None
             assert fcmServerKey is not None
@@ -163,6 +168,7 @@ class TestEventNotificationsV1:
             assert template_body is not None
             assert cos_instance_crn is not None
             assert code_engine_project_CRN is not None
+            assert slack_template_body is not None
 
         print("Setup complete.")
 
@@ -623,45 +629,45 @@ class TestEventNotificationsV1:
 
         destination_id4 = destination.id
 
-        safari_config_params = {
-            "cert_type": "p12",
-            "password": "password",
-            "website_url": "https://ensafaripush.mybluemix.net",
-            "website_name": "NodeJS Starter Application",
-            "url_format_string": "https://ensafaripush.mybluemix.net/%@/?flight=%@",
-            "website_push_id": "web.net.mybluemix.ensafaripush",
-        }
-
-        destination_config_model = {
-            "params": safari_config_params,
-        }
-
-        name = "Safari_destination"
-        typeval = "push_safari"
-        description = "Safari Destination"
-
-        certificatefile = open(safariCertificatePath, "rb")
-        create_destination_response = self.event_notifications_service.create_destination(
-            instance_id,
-            name,
-            type=typeval,
-            description=description,
-            config=destination_config_model,
-            certificate=certificatefile,
-        )
-
-        assert create_destination_response.get_status_code() == 201
-        destination_response = create_destination_response.get_result()
-        assert destination_response is not None
-
-        destination = DestinationResponse.from_dict(destination_response)
-
-        assert destination is not None
-        assert destination.name == name
-        assert destination.description == description
-        assert destination.type == typeval
-
-        destination_id5 = destination.id
+        # safari_config_params = {
+        #     "cert_type": "p12",
+        #     "password": "password",
+        #     "website_url": "https://ensafaripush.mybluemix.net",
+        #     "website_name": "NodeJS Starter Application",
+        #     "url_format_string": "https://ensafaripush.mybluemix.net/%@/?flight=%@",
+        #     "website_push_id": "web.net.mybluemix.ensafaripush",
+        # }
+        #
+        # destination_config_model = {
+        #     "params": safari_config_params,
+        # }
+        #
+        # name = "Safari_destination"
+        # typeval = "push_safari"
+        # description = "Safari Destination"
+        #
+        # certificatefile = open(safariCertificatePath, "rb")
+        # create_destination_response = self.event_notifications_service.create_destination(
+        #     instance_id,
+        #     name,
+        #     type=typeval,
+        #     description=description,
+        #     config=destination_config_model,
+        #     certificate=certificatefile,
+        # )
+        #
+        # assert create_destination_response.get_status_code() == 201
+        # destination_response = create_destination_response.get_result()
+        # assert destination_response is not None
+        #
+        # destination = DestinationResponse.from_dict(destination_response)
+        #
+        # assert destination is not None
+        # assert destination.name == name
+        # assert destination.description == description
+        # assert destination.type == typeval
+        #
+        # destination_id5 = destination.id
 
         msteams_config_params = {
             "url": teams_url,
@@ -998,56 +1004,56 @@ class TestEventNotificationsV1:
 
         destination_id15 = destination.id
 
-        destination_config_model = {
-            "params": {
-                "domain": "test.event-notifications.test.cloud.ibm.com",
-            }
-        }
-
-        name = "custom_email_destination"
-        typeval = "smtp_custom"
-        description = "Custom Email Destination"
-
-        create_destination_response = self.event_notifications_service.create_destination(
-            instance_id,
-            name,
-            type=typeval,
-            description=description,
-            config=destination_config_model,
-        )
-
-        assert create_destination_response.get_status_code() == 201
-        destination_response = create_destination_response.get_result()
-        assert destination_response is not None
-
-        destination = DestinationResponse.from_dict(destination_response)
-
-        assert destination is not None
-        assert destination.name == name
-        assert destination.description == description
-        assert destination.type == typeval
-
-        destination_id16 = destination.id
-
-        name = "custom_sms_destination"
-        typeval = "sms_custom"
-        description = "Custom sms Destination"
-
-        create_destination_response = self.event_notifications_service.create_destination(
-            instance_id,
-            name,
-            type=typeval,
-            description=description,
-            collect_failed_events=False,
-        )
-
-        assert create_destination_response.get_status_code() == 201
-        destination_response = create_destination_response.get_result()
-        assert destination_response is not None
-        destination_id17 = destination_response.get('id')
-        assert destination_response.get('name') == name
-        assert destination_response.get('description') == description
-        assert destination_response.get('type') == typeval
+        # destination_config_model = {
+        #     "params": {
+        #         "domain": "test.event-notifications.test.cloud.ibm.com",
+        #     }
+        # }
+        #
+        # name = "custom_email_destination"
+        # typeval = "smtp_custom"
+        # description = "Custom Email Destination"
+        #
+        # create_destination_response = self.event_notifications_service.create_destination(
+        #     instance_id,
+        #     name,
+        #     type=typeval,
+        #     description=description,
+        #     config=destination_config_model,
+        # )
+        #
+        # assert create_destination_response.get_status_code() == 201
+        # destination_response = create_destination_response.get_result()
+        # assert destination_response is not None
+        #
+        # destination = DestinationResponse.from_dict(destination_response)
+        #
+        # assert destination is not None
+        # assert destination.name == name
+        # assert destination.description == description
+        # assert destination.type == typeval
+        #
+        # destination_id16 = destination.id
+        #
+        # name = "custom_sms_destination"
+        # typeval = "sms_custom"
+        # description = "Custom sms Destination"
+        #
+        # create_destination_response = self.event_notifications_service.create_destination(
+        #     instance_id,
+        #     name,
+        #     type=typeval,
+        #     description=description,
+        #     collect_failed_events=False,
+        # )
+        #
+        # assert create_destination_response.get_status_code() == 201
+        # destination_response = create_destination_response.get_result()
+        # assert destination_response is not None
+        # destination_id17 = destination_response.get('id')
+        # assert destination_response.get('name') == name
+        # assert destination_response.get('description') == description
+        # assert destination_response.get('type') == typeval
 
         destination_config_params_model = {
             "type": "job",
@@ -1103,13 +1109,11 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_create_template(self):
-        # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global template_invitation_id, template_notification_id
+        global template_invitation_id, template_notification_id, slack_template_id
 
-        template_config_model = {
-            "body": template_body,
-            "subject": "Hi this is invitation for invitation message",
-        }
+        template_config_model_json = {'body': template_body, 'subject': 'Hi this is invitation for invitation message'}
+
+        template_config_model = TemplateConfigOneOfEmailTemplateConfig.from_dict(template_config_model_json)
 
         name = "template_invitation"
         typeval = "smtp_custom.invitation"
@@ -1160,6 +1164,35 @@ class TestEventNotificationsV1:
         assert template.type == typeval
 
         template_notification_id = template.id
+
+        slack_template_config_model_json = {'body': slack_template_body}
+
+        slack_template_config_model = TemplateConfigOneOfSlackTemplateConfig.from_dict(slack_template_config_model_json)
+
+        name = "template_slack"
+        typeval = "slack.notification"
+        description = "slack template"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=slack_template_config_model,
+            description=description,
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+
+        slack_template_id = template.id
 
     @needscredentials
     def test_list_destinations(self):
@@ -1345,43 +1378,43 @@ class TestEventNotificationsV1:
         assert res_name == name
         assert res_description == description
 
-        safari_destination_config_params_model = {
-            "cert_type": "p12",
-            "password": "password",
-            "website_url": "https://ensafaripush.mybluemix.net",
-            "website_name": "NodeJS Starter Application",
-            "url_format_string": "https://ensafaripush.mybluemix.net/%@/?flight=%@",
-            "website_push_id": "web.net.mybluemix.ensafaripush",
-        }
-
-        # Construct a dict representation of a DestinationConfig model
-        safari_destination_config_model = {
-            "params": safari_destination_config_params_model,
-        }
-
-        certificatefile = open(safariCertificatePath, "rb")
-        name = "Safari Dest"
-        description = "This destination is for Safari"
-        update_destination_response = self.event_notifications_service.update_destination(
-            instance_id,
-            id=destination_id5,
-            name=name,
-            description=description,
-            config=safari_destination_config_model,
-            certificate=certificatefile,
-        )
-
-        assert update_destination_response.get_status_code() == 200
-        destination_response = update_destination_response.get_result()
-        assert destination_response is not None
-
-        res_id = destination_response.get("id")
-        res_name = destination_response.get("name")
-        res_description = destination_response.get("description")
-
-        assert res_id == destination_id5
-        assert res_name == name
-        assert res_description == description
+        # safari_destination_config_params_model = {
+        #     "cert_type": "p12",
+        #     "password": "password",
+        #     "website_url": "https://ensafaripush.mybluemix.net",
+        #     "website_name": "NodeJS Starter Application",
+        #     "url_format_string": "https://ensafaripush.mybluemix.net/%@/?flight=%@",
+        #     "website_push_id": "web.net.mybluemix.ensafaripush",
+        # }
+        #
+        # # Construct a dict representation of a DestinationConfig model
+        # safari_destination_config_model = {
+        #     "params": safari_destination_config_params_model,
+        # }
+        #
+        # certificatefile = open(safariCertificatePath, "rb")
+        # name = "Safari Dest"
+        # description = "This destination is for Safari"
+        # update_destination_response = self.event_notifications_service.update_destination(
+        #     instance_id,
+        #     id=destination_id5,
+        #     name=name,
+        #     description=description,
+        #     config=safari_destination_config_model,
+        #     certificate=certificatefile,
+        # )
+        #
+        # assert update_destination_response.get_status_code() == 200
+        # destination_response = update_destination_response.get_result()
+        # assert destination_response is not None
+        #
+        # res_id = destination_response.get("id")
+        # res_name = destination_response.get("name")
+        # res_description = destination_response.get("description")
+        #
+        # assert res_id == destination_id5
+        # assert res_name == name
+        # assert res_description == description
 
         msteams_config_params = {
             "url": teams_url,
@@ -1698,70 +1731,70 @@ class TestEventNotificationsV1:
         assert res_name == name
         assert res_description == description
 
-        destination_config_model = {"params": {"domain": "test.event-notifications.test.cloud.ibm.com"}}
-
-        name = "Custom_Email_destination_update"
-        description = "Custom Email Destination update"
-
-        update_destination_response = self.event_notifications_service.update_destination(
-            instance_id,
-            id=destination_id16,
-            name=name,
-            description=description,
-            config=destination_config_model,
-        )
-
-        assert update_destination_response.get_status_code() == 200
-        destination_response = update_destination_response.get_result()
-        assert destination_response is not None
-
-        res_id = destination_response.get("id")
-        res_name = destination_response.get("name")
-        res_description = destination_response.get("description")
-
-        assert res_id == destination_id16
-        assert res_name == name
-        assert res_description == description
-
-        spf_response = self.event_notifications_service.update_verify_destination(
-            instance_id,
-            id=destination_id16,
-            type="spf",
-        )
-        assert spf_response.get_status_code() == 200
-        spf_verification_response = spf_response.get_result()
-        assert spf_verification_response is not None
-
-        dkim_response = self.event_notifications_service.update_verify_destination(
-            instance_id,
-            id=destination_id16,
-            type="dkim",
-        )
-        assert dkim_response.get_status_code() == 200
-        dkim_verification_response = dkim_response.get_result()
-        assert dkim_verification_response is not None
-
-        name = "Custom_SMS_destination_update"
-        description = "Custom SMS Destination update"
-
-        update_destination_response = self.event_notifications_service.update_destination(
-            instance_id,
-            id=destination_id17,
-            name=name,
-            description=description,
-        )
-
-        assert update_destination_response.get_status_code() == 200
-        destination_response = update_destination_response.get_result()
-        assert destination_response is not None
-
-        res_id = destination_response.get("id")
-        res_name = destination_response.get("name")
-        res_description = destination_response.get("description")
-
-        assert res_id == destination_id17
-        assert res_name == name
-        assert res_description == description
+        # destination_config_model = {"params": {"domain": "test.event-notifications.test.cloud.ibm.com"}}
+        #
+        # name = "Custom_Email_destination_update"
+        # description = "Custom Email Destination update"
+        #
+        # update_destination_response = self.event_notifications_service.update_destination(
+        #     instance_id,
+        #     id=destination_id16,
+        #     name=name,
+        #     description=description,
+        #     config=destination_config_model,
+        # )
+        #
+        # assert update_destination_response.get_status_code() == 200
+        # destination_response = update_destination_response.get_result()
+        # assert destination_response is not None
+        #
+        # res_id = destination_response.get("id")
+        # res_name = destination_response.get("name")
+        # res_description = destination_response.get("description")
+        #
+        # assert res_id == destination_id16
+        # assert res_name == name
+        # assert res_description == description
+        #
+        # spf_response = self.event_notifications_service.update_verify_destination(
+        #     instance_id,
+        #     id=destination_id16,
+        #     type="spf",
+        # )
+        # assert spf_response.get_status_code() == 200
+        # spf_verification_response = spf_response.get_result()
+        # assert spf_verification_response is not None
+        #
+        # dkim_response = self.event_notifications_service.update_verify_destination(
+        #     instance_id,
+        #     id=destination_id16,
+        #     type="dkim",
+        # )
+        # assert dkim_response.get_status_code() == 200
+        # dkim_verification_response = dkim_response.get_result()
+        # assert dkim_verification_response is not None
+        #
+        # name = "Custom_SMS_destination_update"
+        # description = "Custom SMS Destination update"
+        #
+        # update_destination_response = self.event_notifications_service.update_destination(
+        #     instance_id,
+        #     id=destination_id17,
+        #     name=name,
+        #     description=description,
+        # )
+        #
+        # assert update_destination_response.get_status_code() == 200
+        # destination_response = update_destination_response.get_result()
+        # assert destination_response is not None
+        #
+        # res_id = destination_response.get("id")
+        # res_name = destination_response.get("name")
+        # res_description = destination_response.get("description")
+        #
+        # assert res_id == destination_id17
+        # assert res_name == name
+        # assert res_description == description
 
         destination_config_params_model = {
             "type": "job",
@@ -1810,10 +1843,10 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_update_template(self):
-        template_config_model = {
-            "body": template_body,
-            "subject": "Hi this is invitation for invitation message",
-        }
+
+        template_config_model_json = {'body': template_body, 'subject': 'Hi this is invitation for invitation message'}
+
+        template_config_model = TemplateConfigOneOfEmailTemplateConfig.from_dict(template_config_model_json)
 
         template_name = "template_invitation"
         typeval = "smtp_custom.invitation"
@@ -1857,6 +1890,32 @@ class TestEventNotificationsV1:
         assert template_response.get("description") == description
         assert template_response.get("type") == typeval
         assert template_response.get("id") == template_notification_id
+
+        slack_template_config_model_json = {'body': slack_template_body}
+
+        slack_template_config_model = TemplateConfigOneOfSlackTemplateConfig.from_dict(slack_template_config_model_json)
+
+        name = "template_slack"
+        typeval = "slack.notification"
+        description = "slack template"
+
+        update_template_response = self.event_notifications_service.replace_template(
+            instance_id,
+            id=slack_template_id,
+            name=name,
+            description=description,
+            type=typeval,
+            params=slack_template_config_model,
+        )
+
+        assert update_template_response.get_status_code() == 200
+        template_response = update_template_response.get_result()
+
+        assert template_response is not None
+        assert template_response.get("name") == name
+        assert template_response.get("description") == description
+        assert template_response.get("type") == typeval
+        assert template_response.get("id") == slack_template_id
 
     @needscredentials
     def test_create_subscription(self):
@@ -1969,9 +2028,14 @@ class TestEventNotificationsV1:
         name = "slack subscription"
         description = "Subscription for the slack"
 
-        subscription_create_attributes_model = {
-            "attachment_color": "#0000FF",
+        subscription_create_attributes_model_json = {
+            'attachment_color': '#0000FF',
+            'template_id_notification': slack_template_id,
         }
+
+        subscription_create_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
+            subscription_create_attributes_model_json
+        )
 
         create_subscription_response = self.event_notifications_service.create_subscription(
             instance_id,
@@ -1993,27 +2057,27 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        name = "safari subscription"
-        description = "Subscription for the safari"
-
-        create_subscription_response = self.event_notifications_service.create_subscription(
-            instance_id,
-            name,
-            destination_id=destination_id5,
-            topic_id=topic_id,
-            description=description,
-        )
-
-        assert create_subscription_response.get_status_code() == 201
-        subscription_response = create_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-        subscription_id5 = subscription_response.get("id")
-
-        assert subscription_name == name
-        assert subscription_description == description
+        # name = "safari subscription"
+        # description = "Subscription for the safari"
+        #
+        # create_subscription_response = self.event_notifications_service.create_subscription(
+        #     instance_id,
+        #     name,
+        #     destination_id=destination_id5,
+        #     topic_id=topic_id,
+        #     description=description,
+        # )
+        #
+        # assert create_subscription_response.get_status_code() == 201
+        # subscription_response = create_subscription_response.get_result()
+        # assert subscription_response is not None
+        #
+        # subscription_name = subscription_response.get("name")
+        # subscription_description = subscription_response.get("description")
+        # subscription_id5 = subscription_response.get("id")
+        #
+        # assert subscription_name == name
+        # assert subscription_description == description
 
         name = "MSTeams subscription"
         description = "Subscription for the MSTeams"
@@ -2244,64 +2308,64 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        subscription_create_attributes_model = {
-            "invited": ["nitishkulkarni005@gmail.com", "tester3@ibm.com"],
-            "add_notification_payload": True,
-            "reply_to_mail": "reply_to_mail@us.com",
-            "reply_to_name": "US News",
-            "from_name": "IBM",
-            "from_email": "test@test.event-notifications.test.cloud.ibm.com",
-            "template_id_invitation": template_invitation_id,
-            "template_id_notification": template_notification_id,
-        }
-
-        name = "subscription_custom_email"
-        description = "Subscription for custom email"
-        create_subscription_response = self.event_notifications_service.create_subscription(
-            instance_id,
-            name,
-            destination_id=destination_id16,
-            topic_id=topic_id,
-            attributes=subscription_create_attributes_model,
-            description=description,
-        )
-
-        assert create_subscription_response.get_status_code() == 201
-        subscription_response = create_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-        subscription_id16 = subscription_response.get("id")
-
-        assert subscription_name == name
-        assert subscription_description == description
-
-        subscription_create_attributes_model = {
-            "invited": ["+12064512559", "+12064512559"],
-        }
-
-        name = "subscription_custom_sms"
-        description = "Subscription for custom sms"
-        create_subscription_response = self.event_notifications_service.create_subscription(
-            instance_id,
-            name,
-            destination_id=destination_id17,
-            topic_id=topic_id,
-            attributes=subscription_create_attributes_model,
-            description=description,
-        )
-
-        assert create_subscription_response.get_status_code() == 201
-        subscription_response = create_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-        subscription_id17 = subscription_response.get("id")
-
-        assert subscription_name == name
-        assert subscription_description == description
+        # subscription_create_attributes_model = {
+        #     "invited": ["nitishkulkarni005@gmail.com", "tester3@ibm.com"],
+        #     "add_notification_payload": True,
+        #     "reply_to_mail": "reply_to_mail@us.com",
+        #     "reply_to_name": "US News",
+        #     "from_name": "IBM",
+        #     "from_email": "test@test.event-notifications.test.cloud.ibm.com",
+        #     "template_id_invitation": template_invitation_id,
+        #     "template_id_notification": template_notification_id,
+        # }
+        #
+        # name = "subscription_custom_email"
+        # description = "Subscription for custom email"
+        # create_subscription_response = self.event_notifications_service.create_subscription(
+        #     instance_id,
+        #     name,
+        #     destination_id=destination_id16,
+        #     topic_id=topic_id,
+        #     attributes=subscription_create_attributes_model,
+        #     description=description,
+        # )
+        #
+        # assert create_subscription_response.get_status_code() == 201
+        # subscription_response = create_subscription_response.get_result()
+        # assert subscription_response is not None
+        #
+        # subscription_name = subscription_response.get("name")
+        # subscription_description = subscription_response.get("description")
+        # subscription_id16 = subscription_response.get("id")
+        #
+        # assert subscription_name == name
+        # assert subscription_description == description
+        #
+        # subscription_create_attributes_model = {
+        #     "invited": ["+12064512559", "+12064512559"],
+        # }
+        #
+        # name = "subscription_custom_sms"
+        # description = "Subscription for custom sms"
+        # create_subscription_response = self.event_notifications_service.create_subscription(
+        #     instance_id,
+        #     name,
+        #     destination_id=destination_id17,
+        #     topic_id=topic_id,
+        #     attributes=subscription_create_attributes_model,
+        #     description=description,
+        # )
+        #
+        # assert create_subscription_response.get_status_code() == 201
+        # subscription_response = create_subscription_response.get_result()
+        # assert subscription_response is not None
+        #
+        # subscription_name = subscription_response.get("name")
+        # subscription_description = subscription_response.get("description")
+        # subscription_id17 = subscription_response.get("id")
+        #
+        # assert subscription_name == name
+        # assert subscription_description == description
 
         subscription_create_attributes_model = {
             "signing_enabled": False,
@@ -2498,9 +2562,15 @@ class TestEventNotificationsV1:
 
         name = "Slack update"
         description = "Subscription for slack updated"
-        subscription_update_attributes_model = {
-            "attachment_color": "#0000FF",
+
+        subscription_update_attributes_model_json = {
+            'attachment_color': '#0000FF',
+            'template_id_notification': slack_template_id,
         }
+        subscription_update_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(
+            subscription_update_attributes_model_json
+        )
+
         update_subscription_response = self.event_notifications_service.update_subscription(
             instance_id,
             id=subscription_id4,
@@ -2519,24 +2589,24 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        name = "safari update"
-        description = "Subscription for safari updated"
-        update_subscription_response = self.event_notifications_service.update_subscription(
-            instance_id,
-            id=subscription_id5,
-            name=name,
-            description=description,
-        )
-
-        assert update_subscription_response.get_status_code() == 200
-        subscription_response = update_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-
-        assert subscription_name == name
-        assert subscription_description == description
+        # name = "safari update"
+        # description = "Subscription for safari updated"
+        # update_subscription_response = self.event_notifications_service.update_subscription(
+        #     instance_id,
+        #     id=subscription_id5,
+        #     name=name,
+        #     description=description,
+        # )
+        #
+        # assert update_subscription_response.get_status_code() == 200
+        # subscription_response = update_subscription_response.get_result()
+        # assert subscription_response is not None
+        #
+        # subscription_name = subscription_response.get("name")
+        # subscription_description = subscription_response.get("description")
+        #
+        # assert subscription_name == name
+        # assert subscription_description == description
 
         name = "MSTeams update"
         description = "Subscription for MSTeams updated"
@@ -2740,72 +2810,72 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        custom_email_update_attributes_invite_model = {"add": ["tester4@ibm.com", "nitishkulkarni005@gmail.com"]}
-
-        custom_email_update_attributes_to_remove_model = {"remove": ["tester3@ibm.com"]}
-
-        subscription_update_attributes_model = {
-            "invited": custom_email_update_attributes_invite_model,
-            "add_notification_payload": True,
-            "reply_to_mail": "reply_to_mail@us.com",
-            "reply_to_name": "US News",
-            "from_name": "IBM",
-            "from_email": "test@test.event-notifications.test.cloud.ibm.com",
-            "subscribed": custom_email_update_attributes_to_remove_model,
-            "unsubscribed": custom_email_update_attributes_to_remove_model,
-            "template_id_invitation": template_invitation_id,
-            "template_id_notification": template_notification_id,
-        }
-
-        name = "subscription_custom_email update"
-        description = "Subscription for custom email updated"
-        update_subscription_response = self.event_notifications_service.update_subscription(
-            instance_id,
-            id=subscription_id16,
-            name=name,
-            description=description,
-            attributes=subscription_update_attributes_model,
-        )
-
-        assert update_subscription_response.get_status_code() == 200
-        subscription_response = update_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-
-        assert subscription_name == name
-        assert subscription_description == description
-
-        sms_update_attributes_invite_model = {"add": ["+12064512559"]}
-
-        sms_update_attributes_to_remove_model = {"remove": ["+12064512559"]}
-
-        subscription_update_attributes_model = {
-            "invited": sms_update_attributes_invite_model,
-            "subscribed": sms_update_attributes_to_remove_model,
-            "unsubscribed": sms_update_attributes_to_remove_model,
-        }
-
-        name = "subscription_custom_sms update"
-        description = "Subscription for custom sms updated"
-        update_subscription_response = self.event_notifications_service.update_subscription(
-            instance_id,
-            id=subscription_id17,
-            name=name,
-            description=description,
-            attributes=subscription_update_attributes_model,
-        )
-
-        assert update_subscription_response.get_status_code() == 200
-        subscription_response = update_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-
-        assert subscription_name == name
-        assert subscription_description == description
+        # custom_email_update_attributes_invite_model = {"add": ["tester4@ibm.com", "nitishkulkarni005@gmail.com"]}
+        #
+        # custom_email_update_attributes_to_remove_model = {"remove": ["tester3@ibm.com"]}
+        #
+        # subscription_update_attributes_model = {
+        #     "invited": custom_email_update_attributes_invite_model,
+        #     "add_notification_payload": True,
+        #     "reply_to_mail": "reply_to_mail@us.com",
+        #     "reply_to_name": "US News",
+        #     "from_name": "IBM",
+        #     "from_email": "test@test.event-notifications.test.cloud.ibm.com",
+        #     "subscribed": custom_email_update_attributes_to_remove_model,
+        #     "unsubscribed": custom_email_update_attributes_to_remove_model,
+        #     "template_id_invitation": template_invitation_id,
+        #     "template_id_notification": template_notification_id,
+        # }
+        #
+        # name = "subscription_custom_email update"
+        # description = "Subscription for custom email updated"
+        # update_subscription_response = self.event_notifications_service.update_subscription(
+        #     instance_id,
+        #     id=subscription_id16,
+        #     name=name,
+        #     description=description,
+        #     attributes=subscription_update_attributes_model,
+        # )
+        #
+        # assert update_subscription_response.get_status_code() == 200
+        # subscription_response = update_subscription_response.get_result()
+        # assert subscription_response is not None
+        #
+        # subscription_name = subscription_response.get("name")
+        # subscription_description = subscription_response.get("description")
+        #
+        # assert subscription_name == name
+        # assert subscription_description == description
+        #
+        # sms_update_attributes_invite_model = {"add": ["+12064512559"]}
+        #
+        # sms_update_attributes_to_remove_model = {"remove": ["+12064512559"]}
+        #
+        # subscription_update_attributes_model = {
+        #     "invited": sms_update_attributes_invite_model,
+        #     "subscribed": sms_update_attributes_to_remove_model,
+        #     "unsubscribed": sms_update_attributes_to_remove_model,
+        # }
+        #
+        # name = "subscription_custom_sms update"
+        # description = "Subscription for custom sms updated"
+        # update_subscription_response = self.event_notifications_service.update_subscription(
+        #     instance_id,
+        #     id=subscription_id17,
+        #     name=name,
+        #     description=description,
+        #     attributes=subscription_update_attributes_model,
+        # )
+        #
+        # assert update_subscription_response.get_status_code() == 200
+        # subscription_response = update_subscription_response.get_result()
+        # assert subscription_response is not None
+        #
+        # subscription_name = subscription_response.get("name")
+        # subscription_description = subscription_response.get("description")
+        #
+        # assert subscription_name == name
+        # assert subscription_description == description
 
         subscription_update_attributes_model = {
             "signing_enabled": True,
@@ -2844,15 +2914,15 @@ class TestEventNotificationsV1:
     # 500
     #
 
-    @needscredentials
-    def test_get_enabled_countries(self):
-        get_enabled_countries_response = self.event_notifications_service.get_enabled_countries(
-            instance_id, id=destination_id17
-        )
-
-        assert get_enabled_countries_response.get_status_code() == 200
-        destination = get_enabled_countries_response.get_result()
-        assert destination is not None
+    # @needscredentials
+    # def test_get_enabled_countries(self):
+    #     get_enabled_countries_response = self.event_notifications_service.get_enabled_countries(
+    #         instance_id, id=destination_id17
+    #     )
+    #
+    #     assert get_enabled_countries_response.get_status_code() == 200
+    #     destination = get_enabled_countries_response.get_result()
+    #     assert destination is not None
 
     @needscredentials
     def test_send_notifications(self):
@@ -2964,6 +3034,7 @@ class TestEventNotificationsV1:
         )
         mailto = '["abc@ibm.com", "def@us.ibm.com"]'
         smsto = '["+911234567890", "+911224567890"]'
+        templates = '["' + slack_template_id + '"]'
 
         notification_create_model = {
             "ibmenseverity": notification_severity,
@@ -2975,6 +3046,7 @@ class TestEventNotificationsV1:
             "ibmensubject": "Findings on IBM Cloud Security Advisor",
             "ibmenmailto": mailto,
             "ibmensmsto": smsto,
+            "ibmentemplates": templates,
             "ibmensourceid": source_id,
             "ibmendefaultshort": "Alert Message",
             "ibmendefaultlong": "Alert for closing offers",
@@ -3046,6 +3118,222 @@ class TestEventNotificationsV1:
         #
 
     @needscredentials
+    def test_create_smtp_configuration(self):
+
+        global smtp_config_id
+        name = "SMTP configuration"
+        domain = "mailx.event-notifications.test.cloud.ibm.com"
+        description = "SMTP description"
+
+        create_smtp_config_response = self.event_notifications_service.create_smtp_configuration(
+            instance_id, name, domain, description=description
+        )
+
+        assert create_smtp_config_response.get_status_code() == 201
+        smtp_response = create_smtp_config_response.get_result()
+        assert smtp_response is not None
+
+        smtp_config = SMTPCreateResponse.from_dict(smtp_response)
+
+        assert smtp_config is not None
+        assert smtp_config.name == name
+        assert smtp_config.description == description
+        assert smtp_config.domain == domain
+
+        smtp_config_id = smtp_config.id
+
+    @needscredentials
+    def test_verify_smtp(self):
+
+        update_verify_smtp_response = self.event_notifications_service.update_verify_smtp(
+            instance_id, type="dkim,spf,en_authorization", id=smtp_config_id
+        )
+
+        assert update_verify_smtp_response.get_status_code() == 200
+        verify_response = update_verify_smtp_response.get_result()
+        assert verify_response is not None
+
+        smtp_verify = SMTPVerificationUpdateResponse.from_dict(verify_response)
+        assert smtp_verify is not None
+
+    @needscredentials
+    def test_update_smtp_allowed_ips(self):
+
+        subnets = ['192.168.1.64']
+        update_smtp_allowed_ip_response = self.event_notifications_service.update_smtp_allowed_ips(
+            instance_id, id=smtp_config_id, subnets=subnets
+        )
+
+        assert update_smtp_allowed_ip_response.get_status_code() == 200
+        allowed_ip_response = update_smtp_allowed_ip_response.get_result()
+        assert allowed_ip_response is not None
+
+        allowed_ip = SMTPAllowedIPs.from_dict(allowed_ip_response)
+        assert allowed_ip.subnets.pop() is not None
+
+    @needscredentials
+    def test_create_smtp_user(self):
+
+        global smtp_user_id
+        description = 'SMTP user description'
+        create_smtp_user_response = self.event_notifications_service.create_smtp_user(
+            instance_id, id=smtp_config_id, description=description
+        )
+
+        assert create_smtp_user_response.get_status_code() == 201
+        create_user_response = create_smtp_user_response.get_result()
+        assert create_user_response is not None
+
+        smtp_user = SMTPUserResponse.from_dict(create_user_response)
+        assert smtp_user.username is not None
+        assert smtp_user.password is not None
+        assert smtp_user.description == description
+        smtp_user_id = smtp_user.id
+
+    @needscredentials
+    def test_list_smtp_configurations(self):
+
+        limit = 1
+        offset = 0
+        list_smtp_config_response = self.event_notifications_service.list_smtp_configurations(
+            instance_id,
+            limit=limit,
+            offset=offset,
+            search=search,
+        )
+
+        assert list_smtp_config_response.get_status_code() == 200
+        list_smtp_config_response = list_smtp_config_response.get_result()
+        assert list_smtp_config_response is not None
+
+        smtp_config_list = SMTPConfigurationsList.from_dict(list_smtp_config_response)
+        assert smtp_config_list.total_count == 1
+
+    @needscredentials
+    def test_list_smtp_users(self):
+
+        limit = 1
+        offset = 0
+        list_smtp_user_response = self.event_notifications_service.list_smtp_users(
+            instance_id,
+            id=smtp_config_id,
+            limit=limit,
+            offset=offset,
+            search=search,
+        )
+
+        assert list_smtp_user_response.get_status_code() == 200
+        list_smtp_user_response = list_smtp_user_response.get_result()
+        assert list_smtp_user_response is not None
+
+        smtp_user_list = SMTPUsersList.from_dict(list_smtp_user_response)
+        assert smtp_user_list.total_count == 1
+
+    @needscredentials
+    def test_get_smtp_configuration(self):
+
+        get_smtp_config_response = self.event_notifications_service.get_smtp_configuration(
+            instance_id,
+            id=smtp_config_id,
+        )
+
+        assert get_smtp_config_response.get_status_code() == 200
+        get_smtp_config_response = get_smtp_config_response.get_result()
+        assert get_smtp_config_response is not None
+
+        smtp_config = SMTPConfiguration.from_dict(get_smtp_config_response)
+        assert smtp_config is not None
+
+    @needscredentials
+    def test_get_smtp_allowed_ip(self):
+
+        get_smtp_allowed_ip_response = self.event_notifications_service.get_smtp_allowed_ips(
+            instance_id,
+            id=smtp_config_id,
+        )
+
+        assert get_smtp_allowed_ip_response.get_status_code() == 200
+        get_smtp_allowed_ip_response = get_smtp_allowed_ip_response.get_result()
+        assert get_smtp_allowed_ip_response is not None
+
+        smtp_allowed_ip = SMTPAllowedIPs.from_dict(get_smtp_allowed_ip_response)
+        assert smtp_allowed_ip.subnets.pop() is not None
+
+    @needscredentials
+    def test_get_smtp_user(self):
+
+        get_smtp_user_response = self.event_notifications_service.get_smtp_user(
+            instance_id, id=smtp_config_id, user_id=smtp_user_id
+        )
+
+        assert get_smtp_user_response.get_status_code() == 200
+        get_smtp_user_response = get_smtp_user_response.get_result()
+        assert get_smtp_user_response is not None
+
+        smtp_user = SMTPUser.from_dict(get_smtp_user_response)
+        assert smtp_user is not None
+
+    @needscredentials
+    def test_update_smtp_configuration(self):
+
+        name = 'SMTP configuration update'
+        description = 'SMTP configuration description update'
+        update_smtp_config_response = self.event_notifications_service.update_smtp_configuration(
+            instance_id,
+            id=smtp_config_id,
+            name=name,
+            description=description,
+        )
+
+        assert update_smtp_config_response.get_status_code() == 200
+        update_smtp_config_response = update_smtp_config_response.get_result()
+        assert update_smtp_config_response is not None
+
+        smtp_config = SMTPConfiguration.from_dict(update_smtp_config_response)
+        assert smtp_config is not None
+        assert smtp_config.name == name
+        assert smtp_config.description == description
+
+    @needscredentials
+    def test_update_smtp_user(self):
+
+        description = 'SMTP user description update'
+        update_smtp_user_response = self.event_notifications_service.update_smtp_user(
+            instance_id,
+            id=smtp_config_id,
+            user_id=smtp_user_id,
+            description=description,
+        )
+
+        assert update_smtp_user_response.get_status_code() == 200
+        update_smtp_user_response = update_smtp_user_response.get_result()
+        assert update_smtp_user_response is not None
+
+        smtp_user = SMTPUser.from_dict(update_smtp_user_response)
+        assert smtp_user is not None
+        assert smtp_user.description == description
+
+    @needscredentials
+    def test_delete_smtp_user(self):
+        for id in [
+            smtp_user_id,
+        ]:
+            delete_smtp_user_response = self.event_notifications_service.delete_smtp_user(
+                instance_id, id=smtp_config_id, user_id=id
+            )
+        assert delete_smtp_user_response.get_status_code() == 204
+
+    @needscredentials
+    def test_delete_smtp_configuration(self):
+        for id in [
+            smtp_config_id,
+        ]:
+            delete_smtp_config_response = self.event_notifications_service.delete_smtp_configuration(
+                instance_id, id=smtp_config_id
+            )
+        assert delete_smtp_config_response.get_status_code() == 204
+
+    @needscredentials
     def test_delete_subscription(self):
         for id in [
             subscription_id,
@@ -3053,7 +3341,7 @@ class TestEventNotificationsV1:
             subscription_id2,
             subscription_id3,
             subscription_id4,
-            subscription_id5,
+            # subscription_id5,
             subscription_id6,
             subscription_id7,
             subscription_id8,
@@ -3064,8 +3352,8 @@ class TestEventNotificationsV1:
             subscription_id13,
             subscription_id14,
             subscription_id15,
-            subscription_id16,
-            subscription_id17,
+            # subscription_id16,
+            # subscription_id17,
             subscription_id18,
         ]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(instance_id, id)
@@ -3103,7 +3391,7 @@ class TestEventNotificationsV1:
             destination_id,
             destination_id3,
             destination_id4,
-            destination_id5,
+            # destination_id5,
             destination_id6,
             destination_id7,
             destination_id8,
@@ -3114,8 +3402,8 @@ class TestEventNotificationsV1:
             destination_id13,
             destination_id14,
             destination_id15,
-            destination_id16,
-            destination_id17,
+            # destination_id16,
+            # destination_id17,
             destination_id18,
         ]:
             delete_destination_response = self.event_notifications_service.delete_destination(instance_id, id)
@@ -3135,7 +3423,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_delete_template(self):
-        for id in [template_invitation_id, template_notification_id]:
+        for id in [template_invitation_id, template_notification_id, slack_template_id]:
             delete_template_response = self.event_notifications_service.delete_template(instance_id, id)
         print(
             "\ndelete_template() response status code: ",

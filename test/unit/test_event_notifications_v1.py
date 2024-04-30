@@ -132,8 +132,9 @@ class TestSendNotifications:
         notification_create_model['ibmendefaultshort'] = 'testString'
         notification_create_model['ibmendefaultlong'] = 'testString'
         notification_create_model['ibmensubject'] = 'testString'
-        notification_create_model['ibmensmsto'] = 'testString'
+        notification_create_model['ibmentemplates'] = 'testString'
         notification_create_model['ibmenmailto'] = 'testString'
+        notification_create_model['ibmensmsto'] = 'testString'
         notification_create_model['ibmenhtmlbody'] = 'testString'
         notification_create_model['subject'] = 'testString'
         notification_create_model['data'] = {'foo': 'bar'}
@@ -1608,16 +1609,16 @@ class TestCreateTemplate:
             status=201,
         )
 
-        # Construct a dict representation of a TemplateConfig model
-        template_config_model = {}
-        template_config_model['body'] = 'testString'
-        template_config_model['subject'] = 'testString'
+        # Construct a dict representation of a TemplateConfigOneOfEmailTemplateConfig model
+        template_config_one_of_model = {}
+        template_config_one_of_model['body'] = 'testString'
+        template_config_one_of_model['subject'] = 'testString'
 
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
         type = 'testString'
-        params = template_config_model
+        params = template_config_one_of_model
         description = 'testString'
 
         # Invoke method
@@ -1637,7 +1638,7 @@ class TestCreateTemplate:
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
         assert req_body['type'] == 'testString'
-        assert req_body['params'] == template_config_model
+        assert req_body['params'] == template_config_one_of_model
         assert req_body['description'] == 'testString'
 
     def test_create_template_all_params_with_retries(self):
@@ -1665,16 +1666,16 @@ class TestCreateTemplate:
             status=201,
         )
 
-        # Construct a dict representation of a TemplateConfig model
-        template_config_model = {}
-        template_config_model['body'] = 'testString'
-        template_config_model['subject'] = 'testString'
+        # Construct a dict representation of a TemplateConfigOneOfEmailTemplateConfig model
+        template_config_one_of_model = {}
+        template_config_one_of_model['body'] = 'testString'
+        template_config_one_of_model['subject'] = 'testString'
 
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
         type = 'testString'
-        params = template_config_model
+        params = template_config_one_of_model
         description = 'testString'
 
         # Pass in all but one required param and check for a ValueError
@@ -2009,10 +2010,10 @@ class TestReplaceTemplate:
             status=200,
         )
 
-        # Construct a dict representation of a TemplateConfig model
-        template_config_model = {}
-        template_config_model['body'] = 'testString'
-        template_config_model['subject'] = 'testString'
+        # Construct a dict representation of a TemplateConfigOneOfEmailTemplateConfig model
+        template_config_one_of_model = {}
+        template_config_one_of_model['body'] = 'testString'
+        template_config_one_of_model['subject'] = 'testString'
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2020,7 +2021,7 @@ class TestReplaceTemplate:
         name = 'testString'
         description = 'testString'
         type = 'testString'
-        params = template_config_model
+        params = template_config_one_of_model
 
         # Invoke method
         response = _service.replace_template(
@@ -2041,7 +2042,7 @@ class TestReplaceTemplate:
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
         assert req_body['type'] == 'testString'
-        assert req_body['params'] == template_config_model
+        assert req_body['params'] == template_config_one_of_model
 
     def test_replace_template_all_params_with_retries(self):
         # Enable retries and run test_replace_template_all_params.
@@ -2068,10 +2069,10 @@ class TestReplaceTemplate:
             status=200,
         )
 
-        # Construct a dict representation of a TemplateConfig model
-        template_config_model = {}
-        template_config_model['body'] = 'testString'
-        template_config_model['subject'] = 'testString'
+        # Construct a dict representation of a TemplateConfigOneOfEmailTemplateConfig model
+        template_config_one_of_model = {}
+        template_config_one_of_model['body'] = 'testString'
+        template_config_one_of_model['subject'] = 'testString'
 
         # Set up parameter values
         instance_id = 'testString'
@@ -2079,7 +2080,7 @@ class TestReplaceTemplate:
         name = 'testString'
         description = 'testString'
         type = 'testString'
-        params = template_config_model
+        params = template_config_one_of_model
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -4423,7 +4424,7 @@ class TestCreateIntegration:
             url,
             body=mock_response,
             content_type='application/json',
-            status=200,
+            status=201,
         )
 
         # Construct a dict representation of a IntegrationCreateMetadata model
@@ -4447,7 +4448,7 @@ class TestCreateIntegration:
 
         # Check for correct operation
         assert len(responses.calls) == 1
-        assert response.status_code == 200
+        assert response.status_code == 201
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['type'] == 'collect_failed_events'
@@ -4475,7 +4476,7 @@ class TestCreateIntegration:
             url,
             body=mock_response,
             content_type='application/json',
-            status=200,
+            status=201,
         )
 
         # Construct a dict representation of a IntegrationCreateMetadata model
@@ -4915,6 +4916,1445 @@ class TestReplaceIntegration:
 # End of Service: Integrations
 ##############################################################################
 
+##############################################################################
+# Start of Service: SMTPConfigurations
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestCreateSmtpConfiguration:
+    """
+    Test Class for create_smtp_configuration
+    """
+
+    @responses.activate
+    def test_create_smtp_configuration_all_params(self):
+        """
+        create_smtp_configuration()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        name = 'testString'
+        domain = 'testString'
+        description = 'testString'
+
+        # Invoke method
+        response = _service.create_smtp_configuration(
+            instance_id,
+            name,
+            domain,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['domain'] == 'testString'
+        assert req_body['description'] == 'testString'
+
+    def test_create_smtp_configuration_all_params_with_retries(self):
+        # Enable retries and run test_create_smtp_configuration_all_params.
+        _service.enable_retries()
+        self.test_create_smtp_configuration_all_params()
+
+        # Disable retries and run test_create_smtp_configuration_all_params.
+        _service.disable_retries()
+        self.test_create_smtp_configuration_all_params()
+
+    @responses.activate
+    def test_create_smtp_configuration_value_error(self):
+        """
+        test_create_smtp_configuration_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        name = 'testString'
+        domain = 'testString'
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "name": name,
+            "domain": domain,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_smtp_configuration(**req_copy)
+
+    def test_create_smtp_configuration_value_error_with_retries(self):
+        # Enable retries and run test_create_smtp_configuration_value_error.
+        _service.enable_retries()
+        self.test_create_smtp_configuration_value_error()
+
+        # Disable retries and run test_create_smtp_configuration_value_error.
+        _service.disable_retries()
+        self.test_create_smtp_configuration_value_error()
+
+
+class TestListSmtpConfigurations:
+    """
+    Test Class for list_smtp_configurations
+    """
+
+    @responses.activate
+    def test_list_smtp_configurations_all_params(self):
+        """
+        list_smtp_configurations()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        limit = 1
+        offset = 0
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_smtp_configurations(
+            instance_id,
+            limit=limit,
+            offset=offset,
+            search=search,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_smtp_configurations_all_params_with_retries(self):
+        # Enable retries and run test_list_smtp_configurations_all_params.
+        _service.enable_retries()
+        self.test_list_smtp_configurations_all_params()
+
+        # Disable retries and run test_list_smtp_configurations_all_params.
+        _service.disable_retries()
+        self.test_list_smtp_configurations_all_params()
+
+    @responses.activate
+    def test_list_smtp_configurations_required_params(self):
+        """
+        test_list_smtp_configurations_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Invoke method
+        response = _service.list_smtp_configurations(
+            instance_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_smtp_configurations_required_params_with_retries(self):
+        # Enable retries and run test_list_smtp_configurations_required_params.
+        _service.enable_retries()
+        self.test_list_smtp_configurations_required_params()
+
+        # Disable retries and run test_list_smtp_configurations_required_params.
+        _service.disable_retries()
+        self.test_list_smtp_configurations_required_params()
+
+    @responses.activate
+    def test_list_smtp_configurations_value_error(self):
+        """
+        test_list_smtp_configurations_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_smtp_configurations(**req_copy)
+
+    def test_list_smtp_configurations_value_error_with_retries(self):
+        # Enable retries and run test_list_smtp_configurations_value_error.
+        _service.enable_retries()
+        self.test_list_smtp_configurations_value_error()
+
+        # Disable retries and run test_list_smtp_configurations_value_error.
+        _service.disable_retries()
+        self.test_list_smtp_configurations_value_error()
+
+    @responses.activate
+    def test_list_smtp_configurations_with_pager_get_next(self):
+        """
+        test_list_smtp_configurations_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/smtp/config')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = SmtpConfigurationsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_smtp_configurations_with_pager_get_all(self):
+        """
+        test_list_smtp_configurations_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/smtp/config')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = SmtpConfigurationsPager(
+            client=_service,
+            instance_id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestCreateSmtpUser:
+    """
+    Test Class for create_smtp_user
+    """
+
+    @responses.activate
+    def test_create_smtp_user_all_params(self):
+        """
+        create_smtp_user()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response = '{"id": "id", "description": "description", "domain": "domain", "smtp_config_id": "smtp_config_id", "username": "username", "password": "password", "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        description = 'testString'
+
+        # Invoke method
+        response = _service.create_smtp_user(
+            instance_id,
+            id,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['description'] == 'testString'
+
+    def test_create_smtp_user_all_params_with_retries(self):
+        # Enable retries and run test_create_smtp_user_all_params.
+        _service.enable_retries()
+        self.test_create_smtp_user_all_params()
+
+        # Disable retries and run test_create_smtp_user_all_params.
+        _service.disable_retries()
+        self.test_create_smtp_user_all_params()
+
+    @responses.activate
+    def test_create_smtp_user_value_error(self):
+        """
+        test_create_smtp_user_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response = '{"id": "id", "description": "description", "domain": "domain", "smtp_config_id": "smtp_config_id", "username": "username", "password": "password", "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.create_smtp_user(**req_copy)
+
+    def test_create_smtp_user_value_error_with_retries(self):
+        # Enable retries and run test_create_smtp_user_value_error.
+        _service.enable_retries()
+        self.test_create_smtp_user_value_error()
+
+        # Disable retries and run test_create_smtp_user_value_error.
+        _service.disable_retries()
+        self.test_create_smtp_user_value_error()
+
+
+class TestListSmtpUsers:
+    """
+    Test Class for list_smtp_users
+    """
+
+    @responses.activate
+    def test_list_smtp_users_all_params(self):
+        """
+        list_smtp_users()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "users": [{"id": "id", "smtp_config_id": "smtp_config_id", "description": "description", "domain": "domain", "username": "username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        limit = 1
+        offset = 0
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_smtp_users(
+            instance_id,
+            id,
+            limit=limit,
+            offset=offset,
+            search=search,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_smtp_users_all_params_with_retries(self):
+        # Enable retries and run test_list_smtp_users_all_params.
+        _service.enable_retries()
+        self.test_list_smtp_users_all_params()
+
+        # Disable retries and run test_list_smtp_users_all_params.
+        _service.disable_retries()
+        self.test_list_smtp_users_all_params()
+
+    @responses.activate
+    def test_list_smtp_users_required_params(self):
+        """
+        test_list_smtp_users_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "users": [{"id": "id", "smtp_config_id": "smtp_config_id", "description": "description", "domain": "domain", "username": "username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.list_smtp_users(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_list_smtp_users_required_params_with_retries(self):
+        # Enable retries and run test_list_smtp_users_required_params.
+        _service.enable_retries()
+        self.test_list_smtp_users_required_params()
+
+        # Disable retries and run test_list_smtp_users_required_params.
+        _service.disable_retries()
+        self.test_list_smtp_users_required_params()
+
+    @responses.activate
+    def test_list_smtp_users_value_error(self):
+        """
+        test_list_smtp_users_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "users": [{"id": "id", "smtp_config_id": "smtp_config_id", "description": "description", "domain": "domain", "username": "username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_smtp_users(**req_copy)
+
+    def test_list_smtp_users_value_error_with_retries(self):
+        # Enable retries and run test_list_smtp_users_value_error.
+        _service.enable_retries()
+        self.test_list_smtp_users_value_error()
+
+        # Disable retries and run test_list_smtp_users_value_error.
+        _service.disable_retries()
+        self.test_list_smtp_users_value_error()
+
+    @responses.activate
+    def test_list_smtp_users_with_pager_get_next(self):
+        """
+        test_list_smtp_users_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"users":[{"id":"id","smtp_config_id":"smtp_config_id","description":"description","domain":"domain","username":"username","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"users":[{"id":"id","smtp_config_id":"smtp_config_id","description":"description","domain":"domain","username":"username","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = SmtpUsersPager(
+            client=_service,
+            instance_id='testString',
+            id='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_smtp_users_with_pager_get_all(self):
+        """
+        test_list_smtp_users_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"users":[{"id":"id","smtp_config_id":"smtp_config_id","description":"description","domain":"domain","username":"username","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"users":[{"id":"id","smtp_config_id":"smtp_config_id","description":"description","domain":"domain","username":"username","created_at":"2019-01-01T12:00:00.000Z","updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = SmtpUsersPager(
+            client=_service,
+            instance_id='testString',
+            id='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
+class TestGetSmtpConfiguration:
+    """
+    Test Class for get_smtp_configuration
+    """
+
+    @responses.activate
+    def test_get_smtp_configuration_all_params(self):
+        """
+        get_smtp_configuration()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_smtp_configuration(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_smtp_configuration_all_params_with_retries(self):
+        # Enable retries and run test_get_smtp_configuration_all_params.
+        _service.enable_retries()
+        self.test_get_smtp_configuration_all_params()
+
+        # Disable retries and run test_get_smtp_configuration_all_params.
+        _service.disable_retries()
+        self.test_get_smtp_configuration_all_params()
+
+    @responses.activate
+    def test_get_smtp_configuration_value_error(self):
+        """
+        test_get_smtp_configuration_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_smtp_configuration(**req_copy)
+
+    def test_get_smtp_configuration_value_error_with_retries(self):
+        # Enable retries and run test_get_smtp_configuration_value_error.
+        _service.enable_retries()
+        self.test_get_smtp_configuration_value_error()
+
+        # Disable retries and run test_get_smtp_configuration_value_error.
+        _service.disable_retries()
+        self.test_get_smtp_configuration_value_error()
+
+
+class TestUpdateSmtpConfiguration:
+    """
+    Test Class for update_smtp_configuration
+    """
+
+    @responses.activate
+    def test_update_smtp_configuration_all_params(self):
+        """
+        update_smtp_configuration()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        name = 'testString'
+        description = 'testString'
+
+        # Invoke method
+        response = _service.update_smtp_configuration(
+            instance_id,
+            id,
+            name=name,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['name'] == 'testString'
+        assert req_body['description'] == 'testString'
+
+    def test_update_smtp_configuration_all_params_with_retries(self):
+        # Enable retries and run test_update_smtp_configuration_all_params.
+        _service.enable_retries()
+        self.test_update_smtp_configuration_all_params()
+
+        # Disable retries and run test_update_smtp_configuration_all_params.
+        _service.disable_retries()
+        self.test_update_smtp_configuration_all_params()
+
+    @responses.activate
+    def test_update_smtp_configuration_value_error(self):
+        """
+        test_update_smtp_configuration_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        name = 'testString'
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_smtp_configuration(**req_copy)
+
+    def test_update_smtp_configuration_value_error_with_retries(self):
+        # Enable retries and run test_update_smtp_configuration_value_error.
+        _service.enable_retries()
+        self.test_update_smtp_configuration_value_error()
+
+        # Disable retries and run test_update_smtp_configuration_value_error.
+        _service.disable_retries()
+        self.test_update_smtp_configuration_value_error()
+
+
+class TestDeleteSmtpConfiguration:
+    """
+    Test Class for delete_smtp_configuration
+    """
+
+    @responses.activate
+    def test_delete_smtp_configuration_all_params(self):
+        """
+        delete_smtp_configuration()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.delete_smtp_configuration(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_smtp_configuration_all_params_with_retries(self):
+        # Enable retries and run test_delete_smtp_configuration_all_params.
+        _service.enable_retries()
+        self.test_delete_smtp_configuration_all_params()
+
+        # Disable retries and run test_delete_smtp_configuration_all_params.
+        _service.disable_retries()
+        self.test_delete_smtp_configuration_all_params()
+
+    @responses.activate
+    def test_delete_smtp_configuration_value_error(self):
+        """
+        test_delete_smtp_configuration_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_smtp_configuration(**req_copy)
+
+    def test_delete_smtp_configuration_value_error_with_retries(self):
+        # Enable retries and run test_delete_smtp_configuration_value_error.
+        _service.enable_retries()
+        self.test_delete_smtp_configuration_value_error()
+
+        # Disable retries and run test_delete_smtp_configuration_value_error.
+        _service.disable_retries()
+        self.test_delete_smtp_configuration_value_error()
+
+
+class TestGetSmtpUser:
+    """
+    Test Class for get_smtp_user
+    """
+
+    @responses.activate
+    def test_get_smtp_user_all_params(self):
+        """
+        get_smtp_user()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users/testString')
+        mock_response = '{"id": "id", "smtp_config_id": "smtp_config_id", "description": "description", "domain": "domain", "username": "username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        user_id = 'testString'
+
+        # Invoke method
+        response = _service.get_smtp_user(
+            instance_id,
+            id,
+            user_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_smtp_user_all_params_with_retries(self):
+        # Enable retries and run test_get_smtp_user_all_params.
+        _service.enable_retries()
+        self.test_get_smtp_user_all_params()
+
+        # Disable retries and run test_get_smtp_user_all_params.
+        _service.disable_retries()
+        self.test_get_smtp_user_all_params()
+
+    @responses.activate
+    def test_get_smtp_user_value_error(self):
+        """
+        test_get_smtp_user_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users/testString')
+        mock_response = '{"id": "id", "smtp_config_id": "smtp_config_id", "description": "description", "domain": "domain", "username": "username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        user_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "user_id": user_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_smtp_user(**req_copy)
+
+    def test_get_smtp_user_value_error_with_retries(self):
+        # Enable retries and run test_get_smtp_user_value_error.
+        _service.enable_retries()
+        self.test_get_smtp_user_value_error()
+
+        # Disable retries and run test_get_smtp_user_value_error.
+        _service.disable_retries()
+        self.test_get_smtp_user_value_error()
+
+
+class TestUpdateSmtpUser:
+    """
+    Test Class for update_smtp_user
+    """
+
+    @responses.activate
+    def test_update_smtp_user_all_params(self):
+        """
+        update_smtp_user()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users/testString')
+        mock_response = '{"id": "id", "smtp_config_id": "smtp_config_id", "description": "description", "domain": "domain", "username": "username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        user_id = 'testString'
+        description = 'testString'
+
+        # Invoke method
+        response = _service.update_smtp_user(
+            instance_id,
+            id,
+            user_id,
+            description=description,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['description'] == 'testString'
+
+    def test_update_smtp_user_all_params_with_retries(self):
+        # Enable retries and run test_update_smtp_user_all_params.
+        _service.enable_retries()
+        self.test_update_smtp_user_all_params()
+
+        # Disable retries and run test_update_smtp_user_all_params.
+        _service.disable_retries()
+        self.test_update_smtp_user_all_params()
+
+    @responses.activate
+    def test_update_smtp_user_value_error(self):
+        """
+        test_update_smtp_user_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users/testString')
+        mock_response = '{"id": "id", "smtp_config_id": "smtp_config_id", "description": "description", "domain": "domain", "username": "username", "created_at": "2019-01-01T12:00:00.000Z", "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        user_id = 'testString'
+        description = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "user_id": user_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_smtp_user(**req_copy)
+
+    def test_update_smtp_user_value_error_with_retries(self):
+        # Enable retries and run test_update_smtp_user_value_error.
+        _service.enable_retries()
+        self.test_update_smtp_user_value_error()
+
+        # Disable retries and run test_update_smtp_user_value_error.
+        _service.disable_retries()
+        self.test_update_smtp_user_value_error()
+
+
+class TestDeleteSmtpUser:
+    """
+    Test Class for delete_smtp_user
+    """
+
+    @responses.activate
+    def test_delete_smtp_user_all_params(self):
+        """
+        delete_smtp_user()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        user_id = 'testString'
+
+        # Invoke method
+        response = _service.delete_smtp_user(
+            instance_id,
+            id,
+            user_id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 204
+
+    def test_delete_smtp_user_all_params_with_retries(self):
+        # Enable retries and run test_delete_smtp_user_all_params.
+        _service.enable_retries()
+        self.test_delete_smtp_user_all_params()
+
+        # Disable retries and run test_delete_smtp_user_all_params.
+        _service.disable_retries()
+        self.test_delete_smtp_user_all_params()
+
+    @responses.activate
+    def test_delete_smtp_user_value_error(self):
+        """
+        test_delete_smtp_user_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users/testString')
+        responses.add(
+            responses.DELETE,
+            url,
+            status=204,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        user_id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "user_id": user_id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.delete_smtp_user(**req_copy)
+
+    def test_delete_smtp_user_value_error_with_retries(self):
+        # Enable retries and run test_delete_smtp_user_value_error.
+        _service.enable_retries()
+        self.test_delete_smtp_user_value_error()
+
+        # Disable retries and run test_delete_smtp_user_value_error.
+        _service.disable_retries()
+        self.test_delete_smtp_user_value_error()
+
+
+class TestGetSmtpAllowedIps:
+    """
+    Test Class for get_smtp_allowed_ips
+    """
+
+    @responses.activate
+    def test_get_smtp_allowed_ips_all_params(self):
+        """
+        get_smtp_allowed_ips()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/allowed_ips')
+        mock_response = '{"subnets": ["subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_smtp_allowed_ips(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_smtp_allowed_ips_all_params_with_retries(self):
+        # Enable retries and run test_get_smtp_allowed_ips_all_params.
+        _service.enable_retries()
+        self.test_get_smtp_allowed_ips_all_params()
+
+        # Disable retries and run test_get_smtp_allowed_ips_all_params.
+        _service.disable_retries()
+        self.test_get_smtp_allowed_ips_all_params()
+
+    @responses.activate
+    def test_get_smtp_allowed_ips_value_error(self):
+        """
+        test_get_smtp_allowed_ips_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/allowed_ips')
+        mock_response = '{"subnets": ["subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_smtp_allowed_ips(**req_copy)
+
+    def test_get_smtp_allowed_ips_value_error_with_retries(self):
+        # Enable retries and run test_get_smtp_allowed_ips_value_error.
+        _service.enable_retries()
+        self.test_get_smtp_allowed_ips_value_error()
+
+        # Disable retries and run test_get_smtp_allowed_ips_value_error.
+        _service.disable_retries()
+        self.test_get_smtp_allowed_ips_value_error()
+
+
+class TestUpdateSmtpAllowedIps:
+    """
+    Test Class for update_smtp_allowed_ips
+    """
+
+    @responses.activate
+    def test_update_smtp_allowed_ips_all_params(self):
+        """
+        update_smtp_allowed_ips()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/allowed_ips')
+        mock_response = '{"subnets": ["subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        subnets = ['testString']
+
+        # Invoke method
+        response = _service.update_smtp_allowed_ips(
+            instance_id,
+            id,
+            subnets,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['subnets'] == ['testString']
+
+    def test_update_smtp_allowed_ips_all_params_with_retries(self):
+        # Enable retries and run test_update_smtp_allowed_ips_all_params.
+        _service.enable_retries()
+        self.test_update_smtp_allowed_ips_all_params()
+
+        # Disable retries and run test_update_smtp_allowed_ips_all_params.
+        _service.disable_retries()
+        self.test_update_smtp_allowed_ips_all_params()
+
+    @responses.activate
+    def test_update_smtp_allowed_ips_value_error(self):
+        """
+        test_update_smtp_allowed_ips_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/allowed_ips')
+        mock_response = '{"subnets": ["subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        subnets = ['testString']
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "subnets": subnets,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_smtp_allowed_ips(**req_copy)
+
+    def test_update_smtp_allowed_ips_value_error_with_retries(self):
+        # Enable retries and run test_update_smtp_allowed_ips_value_error.
+        _service.enable_retries()
+        self.test_update_smtp_allowed_ips_value_error()
+
+        # Disable retries and run test_update_smtp_allowed_ips_value_error.
+        _service.disable_retries()
+        self.test_update_smtp_allowed_ips_value_error()
+
+
+class TestUpdateVerifySmtp:
+    """
+    Test Class for update_verify_smtp
+    """
+
+    @responses.activate
+    def test_update_verify_smtp_all_params(self):
+        """
+        update_verify_smtp()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/verify')
+        mock_response = '{"status": [{"type": "type", "verification": "verification"}]}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        type = 'testString'
+
+        # Invoke method
+        response = _service.update_verify_smtp(
+            instance_id,
+            id,
+            type,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'type={}'.format(type) in query_string
+
+    def test_update_verify_smtp_all_params_with_retries(self):
+        # Enable retries and run test_update_verify_smtp_all_params.
+        _service.enable_retries()
+        self.test_update_verify_smtp_all_params()
+
+        # Disable retries and run test_update_verify_smtp_all_params.
+        _service.disable_retries()
+        self.test_update_verify_smtp_all_params()
+
+    @responses.activate
+    def test_update_verify_smtp_value_error(self):
+        """
+        test_update_verify_smtp_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/verify')
+        mock_response = '{"status": [{"type": "type", "verification": "verification"}]}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        type = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_verify_smtp(**req_copy)
+
+    def test_update_verify_smtp_value_error_with_retries(self):
+        # Enable retries and run test_update_verify_smtp_value_error.
+        _service.enable_retries()
+        self.test_update_verify_smtp_value_error()
+
+        # Disable retries and run test_update_verify_smtp_value_error.
+        _service.disable_retries()
+        self.test_update_verify_smtp_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: SMTPConfigurations
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
@@ -5216,6 +6656,36 @@ class TestModel_DestinationTagsSubscriptionResponse:
         # Convert model instance back to dict and verify no loss of data
         destination_tags_subscription_response_model_json2 = destination_tags_subscription_response_model.to_dict()
         assert destination_tags_subscription_response_model_json2 == destination_tags_subscription_response_model_json
+
+
+class TestModel_ENAuthAttributes:
+    """
+    Test Class for ENAuthAttributes
+    """
+
+    def test_en_auth_attributes_serialization(self):
+        """
+        Test serialization/deserialization for ENAuthAttributes
+        """
+
+        # Construct a json representation of a ENAuthAttributes model
+        en_auth_attributes_model_json = {}
+        en_auth_attributes_model_json['verification'] = 'testString'
+
+        # Construct a model instance of ENAuthAttributes by calling from_dict on the json representation
+        en_auth_attributes_model = ENAuthAttributes.from_dict(en_auth_attributes_model_json)
+        assert en_auth_attributes_model != False
+
+        # Construct a model instance of ENAuthAttributes by calling from_dict on the json representation
+        en_auth_attributes_model_dict = ENAuthAttributes.from_dict(en_auth_attributes_model_json).__dict__
+        en_auth_attributes_model2 = ENAuthAttributes(**en_auth_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert en_auth_attributes_model == en_auth_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        en_auth_attributes_model_json2 = en_auth_attributes_model.to_dict()
+        assert en_auth_attributes_model_json2 == en_auth_attributes_model_json
 
 
 class TestModel_EmailAttributesResponseInvitedItems:
@@ -5621,8 +7091,9 @@ class TestModel_NotificationCreate:
         notification_create_model_json['ibmendefaultshort'] = 'testString'
         notification_create_model_json['ibmendefaultlong'] = 'testString'
         notification_create_model_json['ibmensubject'] = 'testString'
-        notification_create_model_json['ibmensmsto'] = 'testString'
+        notification_create_model_json['ibmentemplates'] = 'testString'
         notification_create_model_json['ibmenmailto'] = 'testString'
+        notification_create_model_json['ibmensmsto'] = 'testString'
         notification_create_model_json['ibmenhtmlbody'] = 'testString'
         notification_create_model_json['subject'] = 'testString'
         notification_create_model_json['data'] = {'foo': 'bar'}
@@ -5885,6 +7356,468 @@ class TestModel_SMSInviteAttributesItems:
         # Convert model instance back to dict and verify no loss of data
         sms_invite_attributes_items_model_json2 = sms_invite_attributes_items_model.to_dict()
         assert sms_invite_attributes_items_model_json2 == sms_invite_attributes_items_model_json
+
+
+class TestModel_SMTPAllowedIPs:
+    """
+    Test Class for SMTPAllowedIPs
+    """
+
+    def test_smtp_allowed_i_ps_serialization(self):
+        """
+        Test serialization/deserialization for SMTPAllowedIPs
+        """
+
+        # Construct a json representation of a SMTPAllowedIPs model
+        smtp_allowed_i_ps_model_json = {}
+        smtp_allowed_i_ps_model_json['subnets'] = ['testString']
+        smtp_allowed_i_ps_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of SMTPAllowedIPs by calling from_dict on the json representation
+        smtp_allowed_i_ps_model = SMTPAllowedIPs.from_dict(smtp_allowed_i_ps_model_json)
+        assert smtp_allowed_i_ps_model != False
+
+        # Construct a model instance of SMTPAllowedIPs by calling from_dict on the json representation
+        smtp_allowed_i_ps_model_dict = SMTPAllowedIPs.from_dict(smtp_allowed_i_ps_model_json).__dict__
+        smtp_allowed_i_ps_model2 = SMTPAllowedIPs(**smtp_allowed_i_ps_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_allowed_i_ps_model == smtp_allowed_i_ps_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_allowed_i_ps_model_json2 = smtp_allowed_i_ps_model.to_dict()
+        assert smtp_allowed_i_ps_model_json2 == smtp_allowed_i_ps_model_json
+
+
+class TestModel_SMTPConfig:
+    """
+    Test Class for SMTPConfig
+    """
+
+    def test_smtp_config_serialization(self):
+        """
+        Test serialization/deserialization for SMTPConfig
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        dkim_attributes_model = {}  # DKIMAttributes
+        dkim_attributes_model['public_key'] = 'publickey'
+        dkim_attributes_model['selector'] = 'd1dcfc74-76f8-4dce-xxxx-d99ecc75exxx'
+        dkim_attributes_model['verification'] = 'PENDING'
+
+        en_auth_attributes_model = {}  # ENAuthAttributes
+        en_auth_attributes_model['verification'] = 'PENDING'
+
+        spf_attributes_model = {}  # SPFAttributes
+        spf_attributes_model['txt_name'] = 'test.com'
+        spf_attributes_model['txt_value'] = 'v=spf1 include:mail.event-notifications.test.cloud.ibm.com -all'
+        spf_attributes_model['verification'] = 'PENDING'
+
+        # Construct a json representation of a SMTPConfig model
+        smtp_config_model_json = {}
+        smtp_config_model_json['dkim'] = dkim_attributes_model
+        smtp_config_model_json['en_authorization'] = en_auth_attributes_model
+        smtp_config_model_json['spf'] = spf_attributes_model
+
+        # Construct a model instance of SMTPConfig by calling from_dict on the json representation
+        smtp_config_model = SMTPConfig.from_dict(smtp_config_model_json)
+        assert smtp_config_model != False
+
+        # Construct a model instance of SMTPConfig by calling from_dict on the json representation
+        smtp_config_model_dict = SMTPConfig.from_dict(smtp_config_model_json).__dict__
+        smtp_config_model2 = SMTPConfig(**smtp_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_config_model == smtp_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_config_model_json2 = smtp_config_model.to_dict()
+        assert smtp_config_model_json2 == smtp_config_model_json
+
+
+class TestModel_SMTPConfiguration:
+    """
+    Test Class for SMTPConfiguration
+    """
+
+    def test_smtp_configuration_serialization(self):
+        """
+        Test serialization/deserialization for SMTPConfiguration
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        dkim_attributes_model = {}  # DKIMAttributes
+        dkim_attributes_model['public_key'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsn16JPTzYhlfGTgmeL3vgDpC+R9Unsx/sF56BFyZsyrNp6kTcCy2UrK+EyXcuFEvuE0Lh8T6QNIWk4kXc9viyraYVx6E7+yDWKtBiJsPBEUzM2jKOVPzcDUN27bxOmHzXRVqgRu1K0MdWkjX99p7/7FblW5lun7sZwuA7uqtkB6b71YvsQlln58W7zsF/7N06o6HTt0AhEcPTJt373+ltgZ3fN4Fo0r/p55ODFSACS1yXcbFKdIsA8KGRrAJBg1uTDe0gbrUES7mKFG7E1lfCdON5954mZloN1zt3YgQ/cfDv0Zfs9tdzRbYap5Tw8NsC8s2yrUnZP7sXeqkNqwtaQIDAQAB'
+        )
+        dkim_attributes_model['selector'] = '133a2a4e-830e-4b41-ac3f-1a3edbbb72ff'
+        dkim_attributes_model['verification'] = 'SUCCESSFUL'
+
+        en_auth_attributes_model = {}  # ENAuthAttributes
+        en_auth_attributes_model['verification'] = 'SUCCESSFUL'
+
+        spf_attributes_model = {}  # SPFAttributes
+        spf_attributes_model['txt_name'] = 'maily.event-notifications.test.cloud.ibm.com'
+        spf_attributes_model['txt_value'] = 'v=spf1 include:mail.event-notifications.test.cloud.ibm.com -all'
+        spf_attributes_model['verification'] = 'PENDING'
+
+        smtp_config_model = {}  # SMTPConfig
+        smtp_config_model['dkim'] = dkim_attributes_model
+        smtp_config_model['en_authorization'] = en_auth_attributes_model
+        smtp_config_model['spf'] = spf_attributes_model
+
+        # Construct a json representation of a SMTPConfiguration model
+        smtp_configuration_model_json = {}
+        smtp_configuration_model_json['id'] = 'testString'
+        smtp_configuration_model_json['name'] = 'testString'
+        smtp_configuration_model_json['description'] = 'testString'
+        smtp_configuration_model_json['domain'] = 'testString'
+        smtp_configuration_model_json['config'] = smtp_config_model
+        smtp_configuration_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of SMTPConfiguration by calling from_dict on the json representation
+        smtp_configuration_model = SMTPConfiguration.from_dict(smtp_configuration_model_json)
+        assert smtp_configuration_model != False
+
+        # Construct a model instance of SMTPConfiguration by calling from_dict on the json representation
+        smtp_configuration_model_dict = SMTPConfiguration.from_dict(smtp_configuration_model_json).__dict__
+        smtp_configuration_model2 = SMTPConfiguration(**smtp_configuration_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_configuration_model == smtp_configuration_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_configuration_model_json2 = smtp_configuration_model.to_dict()
+        assert smtp_configuration_model_json2 == smtp_configuration_model_json
+
+
+class TestModel_SMTPConfigurationsList:
+    """
+    Test Class for SMTPConfigurationsList
+    """
+
+    def test_smtp_configurations_list_serialization(self):
+        """
+        Test serialization/deserialization for SMTPConfigurationsList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        dkim_attributes_model = {}  # DKIMAttributes
+        dkim_attributes_model['public_key'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsn16JPTzYhlfGTgmeL3vgDpC+R9Unsx/sF56BFyZsyrNp6kTcCy2UrK+EyXcuFEvuE0Lh8T6QNIWk4kXc9viyraYVx6E7+yDWKtBiJsPBEUzM2jKOVPzcDUN27bxOmHzXRVqgRu1K0MdWkjX99p7/7FblW5lun7sZwuA7uqtkB6b71YvsQlln58W7zsF/7N06o6HTt0AhEcPTJt373+ltgZ3fN4Fo0r/p55ODFSACS1yXcbFKdIsA8KGRrAJBg1uTDe0gbrUES7mKFG7E1lfCdON5954mZloN1zt3YgQ/cfDv0Zfs9tdzRbYap5Tw8NsC8s2yrUnZP7sXeqkNqwtaQIDAQAB'
+        )
+        dkim_attributes_model['selector'] = '133a2a4e-830e-4b41-ac3f-1a3edbbb72ff'
+        dkim_attributes_model['verification'] = 'SUCCESSFUL'
+
+        en_auth_attributes_model = {}  # ENAuthAttributes
+        en_auth_attributes_model['verification'] = 'SUCCESSFUL'
+
+        spf_attributes_model = {}  # SPFAttributes
+        spf_attributes_model['txt_name'] = 'test.event-notifications.test.cloud.ibm.com'
+        spf_attributes_model['txt_value'] = 'v=spf1 include:mail.event-notifications.test.cloud.ibm.com -all'
+        spf_attributes_model['verification'] = 'SUCCESSFUL'
+
+        smtp_config_model = {}  # SMTPConfig
+        smtp_config_model['dkim'] = dkim_attributes_model
+        smtp_config_model['en_authorization'] = en_auth_attributes_model
+        smtp_config_model['spf'] = spf_attributes_model
+
+        smtp_configuration_model = {}  # SMTPConfiguration
+        smtp_configuration_model['id'] = 'accec70c-752d-4920-bf86-146b2eade10f'
+        smtp_configuration_model['name'] = 'revolutionize front-end markets'
+        smtp_configuration_model['description'] = 'disintermediate clicks-and-mortar channels'
+        smtp_configuration_model['domain'] = 'test.event-notifications.test.cloud.ibm.com'
+        smtp_configuration_model['config'] = smtp_config_model
+        smtp_configuration_model['updated_at'] = '2024-04-16T20:04:40.055000Z'
+
+        page_href_response_model = {}  # PageHrefResponse
+        page_href_response_model['href'] = 'testString'
+
+        # Construct a json representation of a SMTPConfigurationsList model
+        smtp_configurations_list_model_json = {}
+        smtp_configurations_list_model_json['total_count'] = 38
+        smtp_configurations_list_model_json['offset'] = 38
+        smtp_configurations_list_model_json['limit'] = 38
+        smtp_configurations_list_model_json['smtp_configurations'] = [smtp_configuration_model]
+        smtp_configurations_list_model_json['first'] = page_href_response_model
+        smtp_configurations_list_model_json['previous'] = page_href_response_model
+        smtp_configurations_list_model_json['next'] = page_href_response_model
+
+        # Construct a model instance of SMTPConfigurationsList by calling from_dict on the json representation
+        smtp_configurations_list_model = SMTPConfigurationsList.from_dict(smtp_configurations_list_model_json)
+        assert smtp_configurations_list_model != False
+
+        # Construct a model instance of SMTPConfigurationsList by calling from_dict on the json representation
+        smtp_configurations_list_model_dict = SMTPConfigurationsList.from_dict(
+            smtp_configurations_list_model_json
+        ).__dict__
+        smtp_configurations_list_model2 = SMTPConfigurationsList(**smtp_configurations_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_configurations_list_model == smtp_configurations_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_configurations_list_model_json2 = smtp_configurations_list_model.to_dict()
+        assert smtp_configurations_list_model_json2 == smtp_configurations_list_model_json
+
+
+class TestModel_SMTPCreateResponse:
+    """
+    Test Class for SMTPCreateResponse
+    """
+
+    def test_smtp_create_response_serialization(self):
+        """
+        Test serialization/deserialization for SMTPCreateResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        dkim_attributes_model = {}  # DKIMAttributes
+        dkim_attributes_model['public_key'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsn16JPTzYhlfGTgmeL3vgDpC+R9Unsx/sF56BFyZsyrNp6kTcCy2UrK+EyXcuFEvuE0Lh8T6QNIWk4kXc9viyraYVx6E7+yDWKtBiJsPBEUzM2jKOVPzcDUN27bxOmHzXRVqgRu1K0MdWkjX99p7/7FblW5lun7sZwuA7uqtkB6b71YvsQlln58W7zsF/7N06o6HTt0AhEcPTJt373+ltgZ3fN4Fo0r/p55ODFSACS1yXcbFKdIsA8KGRrAJBg1uTDe0gbrUES7mKFG7E1lfCdON5954mZloN1zt3YgQ/cfDv0Zfs9tdzRbYap5Tw8NsC8s2yrUnZP7sXeqkNqwtaQIDAQAB'
+        )
+        dkim_attributes_model['selector'] = '133a2a4e-830e-4b41-ac3f-1a3edbbb72ff'
+        dkim_attributes_model['verification'] = 'SUCCESSFUL'
+
+        en_auth_attributes_model = {}  # ENAuthAttributes
+        en_auth_attributes_model['verification'] = 'PENDING'
+
+        spf_attributes_model = {}  # SPFAttributes
+        spf_attributes_model['txt_name'] = 'cloudflare-ipfs.com'
+        spf_attributes_model['txt_value'] = 'v=spf1 include:mail.event-notifications.test.cloud.ibm.com -all'
+        spf_attributes_model['verification'] = 'SUCCESSFUL'
+
+        smtp_config_model = {}  # SMTPConfig
+        smtp_config_model['dkim'] = dkim_attributes_model
+        smtp_config_model['en_authorization'] = en_auth_attributes_model
+        smtp_config_model['spf'] = spf_attributes_model
+
+        # Construct a json representation of a SMTPCreateResponse model
+        smtp_create_response_model_json = {}
+        smtp_create_response_model_json['id'] = 'testString'
+        smtp_create_response_model_json['name'] = 'testString'
+        smtp_create_response_model_json['description'] = 'testString'
+        smtp_create_response_model_json['domain'] = 'testString'
+        smtp_create_response_model_json['config'] = smtp_config_model
+        smtp_create_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of SMTPCreateResponse by calling from_dict on the json representation
+        smtp_create_response_model = SMTPCreateResponse.from_dict(smtp_create_response_model_json)
+        assert smtp_create_response_model != False
+
+        # Construct a model instance of SMTPCreateResponse by calling from_dict on the json representation
+        smtp_create_response_model_dict = SMTPCreateResponse.from_dict(smtp_create_response_model_json).__dict__
+        smtp_create_response_model2 = SMTPCreateResponse(**smtp_create_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_create_response_model == smtp_create_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_create_response_model_json2 = smtp_create_response_model.to_dict()
+        assert smtp_create_response_model_json2 == smtp_create_response_model_json
+
+
+class TestModel_SMTPUser:
+    """
+    Test Class for SMTPUser
+    """
+
+    def test_smtp_user_serialization(self):
+        """
+        Test serialization/deserialization for SMTPUser
+        """
+
+        # Construct a json representation of a SMTPUser model
+        smtp_user_model_json = {}
+        smtp_user_model_json['id'] = 'testString'
+        smtp_user_model_json['smtp_config_id'] = 'testString'
+        smtp_user_model_json['description'] = 'testString'
+        smtp_user_model_json['domain'] = 'testString'
+        smtp_user_model_json['username'] = 'testString'
+        smtp_user_model_json['created_at'] = '2019-01-01T12:00:00Z'
+        smtp_user_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of SMTPUser by calling from_dict on the json representation
+        smtp_user_model = SMTPUser.from_dict(smtp_user_model_json)
+        assert smtp_user_model != False
+
+        # Construct a model instance of SMTPUser by calling from_dict on the json representation
+        smtp_user_model_dict = SMTPUser.from_dict(smtp_user_model_json).__dict__
+        smtp_user_model2 = SMTPUser(**smtp_user_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_user_model == smtp_user_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_user_model_json2 = smtp_user_model.to_dict()
+        assert smtp_user_model_json2 == smtp_user_model_json
+
+
+class TestModel_SMTPUserResponse:
+    """
+    Test Class for SMTPUserResponse
+    """
+
+    def test_smtp_user_response_serialization(self):
+        """
+        Test serialization/deserialization for SMTPUserResponse
+        """
+
+        # Construct a json representation of a SMTPUserResponse model
+        smtp_user_response_model_json = {}
+        smtp_user_response_model_json['id'] = 'testString'
+        smtp_user_response_model_json['description'] = 'testString'
+        smtp_user_response_model_json['domain'] = 'testString'
+        smtp_user_response_model_json['smtp_config_id'] = 'testString'
+        smtp_user_response_model_json['username'] = 'testString'
+        smtp_user_response_model_json['password'] = 'testString'
+        smtp_user_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of SMTPUserResponse by calling from_dict on the json representation
+        smtp_user_response_model = SMTPUserResponse.from_dict(smtp_user_response_model_json)
+        assert smtp_user_response_model != False
+
+        # Construct a model instance of SMTPUserResponse by calling from_dict on the json representation
+        smtp_user_response_model_dict = SMTPUserResponse.from_dict(smtp_user_response_model_json).__dict__
+        smtp_user_response_model2 = SMTPUserResponse(**smtp_user_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_user_response_model == smtp_user_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_user_response_model_json2 = smtp_user_response_model.to_dict()
+        assert smtp_user_response_model_json2 == smtp_user_response_model_json
+
+
+class TestModel_SMTPUsersList:
+    """
+    Test Class for SMTPUsersList
+    """
+
+    def test_smtp_users_list_serialization(self):
+        """
+        Test serialization/deserialization for SMTPUsersList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        smtp_user_model = {}  # SMTPUser
+        smtp_user_model['id'] = '68e541cb-72b1-4eb6-ae51-766b3eaf8fd9'
+        smtp_user_model['smtp_config_id'] = 'accec70c-752d-4920-bf86-146b2eade10f'
+        smtp_user_model['description'] = 'disintermediate turn-key lifetime value'
+        smtp_user_model['domain'] = 'ashwin.event-notifications.test.cloud.ibm.com'
+        smtp_user_model['username'] = '39083891827184zey101'
+        smtp_user_model['created_at'] = '2024-04-16T17:36:24.562000Z'
+        smtp_user_model['updated_at'] = '2024-04-16T17:36:24.562000Z'
+
+        page_href_response_model = {}  # PageHrefResponse
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        )
+
+        # Construct a json representation of a SMTPUsersList model
+        smtp_users_list_model_json = {}
+        smtp_users_list_model_json['total_count'] = 38
+        smtp_users_list_model_json['offset'] = 38
+        smtp_users_list_model_json['limit'] = 38
+        smtp_users_list_model_json['users'] = [smtp_user_model]
+        smtp_users_list_model_json['first'] = page_href_response_model
+        smtp_users_list_model_json['previous'] = page_href_response_model
+        smtp_users_list_model_json['next'] = page_href_response_model
+
+        # Construct a model instance of SMTPUsersList by calling from_dict on the json representation
+        smtp_users_list_model = SMTPUsersList.from_dict(smtp_users_list_model_json)
+        assert smtp_users_list_model != False
+
+        # Construct a model instance of SMTPUsersList by calling from_dict on the json representation
+        smtp_users_list_model_dict = SMTPUsersList.from_dict(smtp_users_list_model_json).__dict__
+        smtp_users_list_model2 = SMTPUsersList(**smtp_users_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_users_list_model == smtp_users_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_users_list_model_json2 = smtp_users_list_model.to_dict()
+        assert smtp_users_list_model_json2 == smtp_users_list_model_json
+
+
+class TestModel_SMTPVerificationResponse:
+    """
+    Test Class for SMTPVerificationResponse
+    """
+
+    def test_smtp_verification_response_serialization(self):
+        """
+        Test serialization/deserialization for SMTPVerificationResponse
+        """
+
+        # Construct a json representation of a SMTPVerificationResponse model
+        smtp_verification_response_model_json = {}
+        smtp_verification_response_model_json['type'] = 'testString'
+        smtp_verification_response_model_json['verification'] = 'testString'
+
+        # Construct a model instance of SMTPVerificationResponse by calling from_dict on the json representation
+        smtp_verification_response_model = SMTPVerificationResponse.from_dict(smtp_verification_response_model_json)
+        assert smtp_verification_response_model != False
+
+        # Construct a model instance of SMTPVerificationResponse by calling from_dict on the json representation
+        smtp_verification_response_model_dict = SMTPVerificationResponse.from_dict(
+            smtp_verification_response_model_json
+        ).__dict__
+        smtp_verification_response_model2 = SMTPVerificationResponse(**smtp_verification_response_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtp_verification_response_model == smtp_verification_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_verification_response_model_json2 = smtp_verification_response_model.to_dict()
+        assert smtp_verification_response_model_json2 == smtp_verification_response_model_json
+
+
+class TestModel_SMTPVerificationUpdateResponse:
+    """
+    Test Class for SMTPVerificationUpdateResponse
+    """
+
+    def test_smtp_verification_update_response_serialization(self):
+        """
+        Test serialization/deserialization for SMTPVerificationUpdateResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        smtp_verification_response_model = {}  # SMTPVerificationResponse
+        smtp_verification_response_model['type'] = 'spf'
+        smtp_verification_response_model['verification'] = 'SUCCESSFUL'
+
+        # Construct a json representation of a SMTPVerificationUpdateResponse model
+        smtp_verification_update_response_model_json = {}
+        smtp_verification_update_response_model_json['status'] = [smtp_verification_response_model]
+
+        # Construct a model instance of SMTPVerificationUpdateResponse by calling from_dict on the json representation
+        smtp_verification_update_response_model = SMTPVerificationUpdateResponse.from_dict(
+            smtp_verification_update_response_model_json
+        )
+        assert smtp_verification_update_response_model != False
+
+        # Construct a model instance of SMTPVerificationUpdateResponse by calling from_dict on the json representation
+        smtp_verification_update_response_model_dict = SMTPVerificationUpdateResponse.from_dict(
+            smtp_verification_update_response_model_json
+        ).__dict__
+        smtp_verification_update_response_model2 = SMTPVerificationUpdateResponse(
+            **smtp_verification_update_response_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert smtp_verification_update_response_model == smtp_verification_update_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtp_verification_update_response_model_json2 = smtp_verification_update_response_model.to_dict()
+        assert smtp_verification_update_response_model_json2 == smtp_verification_update_response_model_json
 
 
 class TestModel_SPFAttributes:
@@ -6429,37 +8362,6 @@ class TestModel_Template:
         assert template_model_json2 == template_model_json
 
 
-class TestModel_TemplateConfig:
-    """
-    Test Class for TemplateConfig
-    """
-
-    def test_template_config_serialization(self):
-        """
-        Test serialization/deserialization for TemplateConfig
-        """
-
-        # Construct a json representation of a TemplateConfig model
-        template_config_model_json = {}
-        template_config_model_json['body'] = 'testString'
-        template_config_model_json['subject'] = 'testString'
-
-        # Construct a model instance of TemplateConfig by calling from_dict on the json representation
-        template_config_model = TemplateConfig.from_dict(template_config_model_json)
-        assert template_config_model != False
-
-        # Construct a model instance of TemplateConfig by calling from_dict on the json representation
-        template_config_model_dict = TemplateConfig.from_dict(template_config_model_json).__dict__
-        template_config_model2 = TemplateConfig(**template_config_model_dict)
-
-        # Verify the model instances are equivalent
-        assert template_config_model == template_config_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        template_config_model_json2 = template_config_model.to_dict()
-        assert template_config_model_json2 == template_config_model_json
-
-
 class TestModel_TemplateList:
     """
     Test Class for TemplateList
@@ -6524,9 +8426,9 @@ class TestModel_TemplateResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        template_config_model = {}  # TemplateConfig
-        template_config_model['body'] = 'PGh0bWw+CiAgaGVsbG8gd29ybGQKPC9odG1sPg=='
-        template_config_model['subject'] = 'This is the template subject'
+        template_config_one_of_model = {}  # TemplateConfigOneOfEmailTemplateConfig
+        template_config_one_of_model['body'] = 'PGh0bWw+CiAgaGVsbG8gd29ybGQKPC9odG1sPg=='
+        template_config_one_of_model['subject'] = 'This is the template subject'
 
         # Construct a json representation of a TemplateResponse model
         template_response_model_json = {}
@@ -6534,7 +8436,7 @@ class TestModel_TemplateResponse:
         template_response_model_json['name'] = 'testString'
         template_response_model_json['description'] = 'testString'
         template_response_model_json['type'] = 'testString'
-        template_response_model_json['params'] = template_config_model
+        template_response_model_json['params'] = template_config_one_of_model
         template_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
 
         # Construct a model instance of TemplateResponse by calling from_dict on the json representation
@@ -8079,6 +9981,7 @@ class TestModel_SubscriptionAttributesSlackAttributesResponse:
         # Construct a json representation of a SubscriptionAttributesSlackAttributesResponse model
         subscription_attributes_slack_attributes_response_model_json = {}
         subscription_attributes_slack_attributes_response_model_json['attachment_color'] = 'testString'
+        subscription_attributes_slack_attributes_response_model_json['template_id_notification'] = 'testString'
         subscription_attributes_slack_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesSlackAttributesResponse by calling from_dict on the json representation
@@ -8487,6 +10390,7 @@ class TestModel_SubscriptionCreateAttributesSlackAttributes:
         # Construct a json representation of a SubscriptionCreateAttributesSlackAttributes model
         subscription_create_attributes_slack_attributes_model_json = {}
         subscription_create_attributes_slack_attributes_model_json['attachment_color'] = 'testString'
+        subscription_create_attributes_slack_attributes_model_json['template_id_notification'] = 'testString'
 
         # Construct a model instance of SubscriptionCreateAttributesSlackAttributes by calling from_dict on the json representation
         subscription_create_attributes_slack_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
@@ -8919,6 +10823,7 @@ class TestModel_SubscriptionUpdateAttributesSlackAttributes:
         # Construct a json representation of a SubscriptionUpdateAttributesSlackAttributes model
         subscription_update_attributes_slack_attributes_model_json = {}
         subscription_update_attributes_slack_attributes_model_json['attachment_color'] = 'testString'
+        subscription_update_attributes_slack_attributes_model_json['template_id_notification'] = 'testString'
 
         # Construct a model instance of SubscriptionUpdateAttributesSlackAttributes by calling from_dict on the json representation
         subscription_update_attributes_slack_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(
@@ -8997,6 +10902,89 @@ class TestModel_SubscriptionUpdateAttributesWebhookAttributes:
         assert (
             subscription_update_attributes_webhook_attributes_model_json2
             == subscription_update_attributes_webhook_attributes_model_json
+        )
+
+
+class TestModel_TemplateConfigOneOfEmailTemplateConfig:
+    """
+    Test Class for TemplateConfigOneOfEmailTemplateConfig
+    """
+
+    def test_template_config_one_of_email_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfigOneOfEmailTemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfigOneOfEmailTemplateConfig model
+        template_config_one_of_email_template_config_model_json = {}
+        template_config_one_of_email_template_config_model_json['body'] = 'testString'
+        template_config_one_of_email_template_config_model_json['subject'] = 'testString'
+
+        # Construct a model instance of TemplateConfigOneOfEmailTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_email_template_config_model = TemplateConfigOneOfEmailTemplateConfig.from_dict(
+            template_config_one_of_email_template_config_model_json
+        )
+        assert template_config_one_of_email_template_config_model != False
+
+        # Construct a model instance of TemplateConfigOneOfEmailTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_email_template_config_model_dict = TemplateConfigOneOfEmailTemplateConfig.from_dict(
+            template_config_one_of_email_template_config_model_json
+        ).__dict__
+        template_config_one_of_email_template_config_model2 = TemplateConfigOneOfEmailTemplateConfig(
+            **template_config_one_of_email_template_config_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert template_config_one_of_email_template_config_model == template_config_one_of_email_template_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_one_of_email_template_config_model_json2 = (
+            template_config_one_of_email_template_config_model.to_dict()
+        )
+        assert (
+            template_config_one_of_email_template_config_model_json2
+            == template_config_one_of_email_template_config_model_json
+        )
+
+
+class TestModel_TemplateConfigOneOfSlackTemplateConfig:
+    """
+    Test Class for TemplateConfigOneOfSlackTemplateConfig
+    """
+
+    def test_template_config_one_of_slack_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfigOneOfSlackTemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfigOneOfSlackTemplateConfig model
+        template_config_one_of_slack_template_config_model_json = {}
+        template_config_one_of_slack_template_config_model_json['body'] = 'testString'
+
+        # Construct a model instance of TemplateConfigOneOfSlackTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_slack_template_config_model = TemplateConfigOneOfSlackTemplateConfig.from_dict(
+            template_config_one_of_slack_template_config_model_json
+        )
+        assert template_config_one_of_slack_template_config_model != False
+
+        # Construct a model instance of TemplateConfigOneOfSlackTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_slack_template_config_model_dict = TemplateConfigOneOfSlackTemplateConfig.from_dict(
+            template_config_one_of_slack_template_config_model_json
+        ).__dict__
+        template_config_one_of_slack_template_config_model2 = TemplateConfigOneOfSlackTemplateConfig(
+            **template_config_one_of_slack_template_config_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert template_config_one_of_slack_template_config_model == template_config_one_of_slack_template_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_one_of_slack_template_config_model_json2 = (
+            template_config_one_of_slack_template_config_model.to_dict()
+        )
+        assert (
+            template_config_one_of_slack_template_config_model_json2
+            == template_config_one_of_slack_template_config_model_json
         )
 
 
