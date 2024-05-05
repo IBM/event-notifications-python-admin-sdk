@@ -629,45 +629,45 @@ class TestEventNotificationsV1:
 
         destination_id4 = destination.id
 
-        # safari_config_params = {
-        #     "cert_type": "p12",
-        #     "password": "password",
-        #     "website_url": "https://ensafaripush.mybluemix.net",
-        #     "website_name": "NodeJS Starter Application",
-        #     "url_format_string": "https://ensafaripush.mybluemix.net/%@/?flight=%@",
-        #     "website_push_id": "web.net.mybluemix.ensafaripush",
-        # }
-        #
-        # destination_config_model = {
-        #     "params": safari_config_params,
-        # }
-        #
-        # name = "Safari_destination"
-        # typeval = "push_safari"
-        # description = "Safari Destination"
-        #
-        # certificatefile = open(safariCertificatePath, "rb")
-        # create_destination_response = self.event_notifications_service.create_destination(
-        #     instance_id,
-        #     name,
-        #     type=typeval,
-        #     description=description,
-        #     config=destination_config_model,
-        #     certificate=certificatefile,
-        # )
-        #
-        # assert create_destination_response.get_status_code() == 201
-        # destination_response = create_destination_response.get_result()
-        # assert destination_response is not None
-        #
-        # destination = DestinationResponse.from_dict(destination_response)
-        #
-        # assert destination is not None
-        # assert destination.name == name
-        # assert destination.description == description
-        # assert destination.type == typeval
-        #
-        # destination_id5 = destination.id
+        safari_config_params = {
+            "cert_type": "p12",
+            "password": "password",
+            "website_url": "https://ensafaripush.mybluemix.net",
+            "website_name": "NodeJS Starter Application",
+            "url_format_string": "https://ensafaripush.mybluemix.net/%@/?flight=%@",
+            "website_push_id": "web.net.mybluemix.ensafaripush",
+        }
+
+        destination_config_model = {
+            "params": safari_config_params,
+        }
+
+        name = "Safari_destination"
+        typeval = "push_safari"
+        description = "Safari Destination"
+
+        certificatefile = open(safariCertificatePath, "rb")
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
+            certificate=certificatefile,
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id5 = destination.id
 
         msteams_config_params = {
             "url": teams_url,
@@ -1004,56 +1004,56 @@ class TestEventNotificationsV1:
 
         destination_id15 = destination.id
 
-        # destination_config_model = {
-        #     "params": {
-        #         "domain": "test.event-notifications.test.cloud.ibm.com",
-        #     }
-        # }
-        #
-        # name = "custom_email_destination"
-        # typeval = "smtp_custom"
-        # description = "Custom Email Destination"
-        #
-        # create_destination_response = self.event_notifications_service.create_destination(
-        #     instance_id,
-        #     name,
-        #     type=typeval,
-        #     description=description,
-        #     config=destination_config_model,
-        # )
-        #
-        # assert create_destination_response.get_status_code() == 201
-        # destination_response = create_destination_response.get_result()
-        # assert destination_response is not None
-        #
-        # destination = DestinationResponse.from_dict(destination_response)
-        #
-        # assert destination is not None
-        # assert destination.name == name
-        # assert destination.description == description
-        # assert destination.type == typeval
-        #
-        # destination_id16 = destination.id
-        #
-        # name = "custom_sms_destination"
-        # typeval = "sms_custom"
-        # description = "Custom sms Destination"
-        #
-        # create_destination_response = self.event_notifications_service.create_destination(
-        #     instance_id,
-        #     name,
-        #     type=typeval,
-        #     description=description,
-        #     collect_failed_events=False,
-        # )
-        #
-        # assert create_destination_response.get_status_code() == 201
-        # destination_response = create_destination_response.get_result()
-        # assert destination_response is not None
-        # destination_id17 = destination_response.get('id')
-        # assert destination_response.get('name') == name
-        # assert destination_response.get('description') == description
-        # assert destination_response.get('type') == typeval
+        destination_config_model = {
+            "params": {
+                "domain": "test.event-notifications.test.cloud.ibm.com",
+            }
+        }
+
+        name = "custom_email_destination"
+        typeval = "smtp_custom"
+        description = "Custom Email Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id16 = destination.id
+
+        name = "custom_sms_destination"
+        typeval = "sms_custom"
+        description = "Custom sms Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            collect_failed_events=False,
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+        destination_id17 = destination_response.get('id')
+        assert destination_response.get('name') == name
+        assert destination_response.get('description') == description
+        assert destination_response.get('type') == typeval
 
         destination_config_params_model = {
             "type": "job",

@@ -1401,7 +1401,7 @@ class TestEventNotificationsV1Examples:
         global template_notification_id, template_invitation_id
         try:
             print("\nupdate_template() result:")
-            # begin-update_template
+            # begin-replace_template
 
             template_config_model = {
                 "body": template_body,
@@ -1458,7 +1458,7 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(replace_template_response, indent=2))
 
-            # end-update_template
+            # end-replace_template
         except ApiException as e:
             pytest.fail(str(e))
 
@@ -2008,14 +2008,14 @@ class TestEventNotificationsV1Examples:
     def test_verify_smtp_example(self):
         try:
             print("\nverify_smtp() result:")
-            # begin-verify_smtp
+            # begin-update_verify_smtp
             update_verify_smtp_response = self.event_notifications_service.update_verify_smtp(
                 instance_id, type="dkim,spf,en_authorization", id=smtp_config_id
             )
 
             verify_response = update_verify_smtp_response.get_result()
             print(json.dumps(verify_response, indent=2))
-            # end-verify_smtp
+            # end-update_verify_smtp
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -2024,7 +2024,7 @@ class TestEventNotificationsV1Examples:
     def test_update_smtp_allowed_ips_example(self):
         try:
             print("\n test_update_smtp_allowed_ips_example() result:")
-            # begin-update_smtp_allowed_ip
+            # begin-update_smtp_allowed_ips
             subnets = ['192.168.1.64']
             update_smtp_allowed_ip_response = self.event_notifications_service.update_smtp_allowed_ips(
                 instance_id, id=smtp_config_id, subnets=subnets
@@ -2032,7 +2032,7 @@ class TestEventNotificationsV1Examples:
 
             allowed_ip_response = update_smtp_allowed_ip_response.get_result()
             print(json.dumps(allowed_ip_response, indent=2))
-            # end-update_smtp_allowed_ip
+            # end-update_smtp_allowed_ips
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -2122,7 +2122,7 @@ class TestEventNotificationsV1Examples:
     def test_get_smtp_allowed_ip_example(self):
         try:
             print("\n test_get_smtp_allowed_ip_example() result:")
-            # begin-get_smtp_allowed_ip
+            # begin-get_smtp_allowed_ips
             get_smtp_allowed_ip_response = self.event_notifications_service.get_smtp_allowed_ips(
                 instance_id,
                 id=smtp_config_id,
@@ -2130,7 +2130,7 @@ class TestEventNotificationsV1Examples:
 
             get_smtp_allowed_ip_response = get_smtp_allowed_ip_response.get_result()
             print(json.dumps(get_smtp_allowed_ip_response, indent=2))
-            # end-get_smtp_allowed_ip
+            # end-get_smtp_allowed_ips
 
         except ApiException as e:
             pytest.fail(str(e))
