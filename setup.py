@@ -19,7 +19,7 @@ import os
 import sys
 import pkg_resources
 
-__version__ = '0.5.0'
+__version__ = '0.5.1'
 PACKAGE_NAME = 'ibm_eventnotifications'
 PACKAGE_DESC = 'Python server SDK for IBM Cloud Event Notifications service'
 
