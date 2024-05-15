@@ -3243,6 +3243,9 @@ class TestEventNotificationsV1:
 
         smtp_config = SMTPConfiguration.from_dict(get_smtp_config_response)
         assert smtp_config is not None
+        assert smtp_config.config.dkim is not None
+        assert smtp_config.config.spf is not None
+        assert smtp_config.config.en_authorization is not None
 
     @needscredentials
     def test_get_smtp_allowed_ip(self):

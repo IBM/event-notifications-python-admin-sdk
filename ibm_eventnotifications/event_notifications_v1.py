@@ -5805,7 +5805,7 @@ class SMTPConfig:
     """
     Payload describing a SMTP configuration.
 
-    :attr DKIMAttributes dkim: (optional) The DKIM attributes.
+    :attr SMTPDKIMAttributes dkim: (optional) The SMTP DKIM attributes.
     :attr ENAuthAttributes en_authorization: (optional) The en_authorization
           attributes.
     :attr SPFAttributes spf: (optional) The SPF attributes.
@@ -5814,14 +5814,14 @@ class SMTPConfig:
     def __init__(
         self,
         *,
-        dkim: 'DKIMAttributes' = None,
+        dkim: 'SMTPDKIMAttributes' = None,
         en_authorization: 'ENAuthAttributes' = None,
         spf: 'SPFAttributes' = None,
     ) -> None:
         """
         Initialize a SMTPConfig object.
 
-        :param DKIMAttributes dkim: (optional) The DKIM attributes.
+        :param SMTPDKIMAttributes dkim: (optional) The SMTP DKIM attributes.
         :param ENAuthAttributes en_authorization: (optional) The en_authorization
                attributes.
         :param SPFAttributes spf: (optional) The SPF attributes.
@@ -5835,7 +5835,7 @@ class SMTPConfig:
         """Initialize a SMTPConfig object from a json dictionary."""
         args = {}
         if 'dkim' in _dict:
-            args['dkim'] = DKIMAttributes.from_dict(_dict.get('dkim'))
+            args['dkim'] = SMTPDKIMAttributes.from_dict(_dict.get('dkim'))
         if 'en_authorization' in _dict:
             args['en_authorization'] = ENAuthAttributes.from_dict(_dict.get('en_authorization'))
         if 'spf' in _dict:
@@ -6235,6 +6235,80 @@ class SMTPCreateResponse:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SMTPCreateResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SMTPDKIMAttributes:
+    """
+    The SMTP DKIM attributes.
+
+    :attr str txt_name: (optional) DMIM text name.
+    :attr str txt_value: (optional) DMIM text value.
+    :attr str verification: (optional) DKIM verification.
+    """
+
+    def __init__(
+        self,
+        *,
+        txt_name: str = None,
+        txt_value: str = None,
+        verification: str = None,
+    ) -> None:
+        """
+        Initialize a SMTPDKIMAttributes object.
+
+        :param str txt_name: (optional) DMIM text name.
+        :param str txt_value: (optional) DMIM text value.
+        :param str verification: (optional) DKIM verification.
+        """
+        self.txt_name = txt_name
+        self.txt_value = txt_value
+        self.verification = verification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SMTPDKIMAttributes':
+        """Initialize a SMTPDKIMAttributes object from a json dictionary."""
+        args = {}
+        if 'txt_name' in _dict:
+            args['txt_name'] = _dict.get('txt_name')
+        if 'txt_value' in _dict:
+            args['txt_value'] = _dict.get('txt_value')
+        if 'verification' in _dict:
+            args['verification'] = _dict.get('verification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SMTPDKIMAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'txt_name') and self.txt_name is not None:
+            _dict['txt_name'] = self.txt_name
+        if hasattr(self, 'txt_value') and self.txt_value is not None:
+            _dict['txt_value'] = self.txt_value
+        if hasattr(self, 'verification') and self.verification is not None:
+            _dict['verification'] = self.verification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SMTPDKIMAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SMTPDKIMAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SMTPDKIMAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

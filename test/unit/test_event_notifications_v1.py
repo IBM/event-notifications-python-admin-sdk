@@ -4962,7 +4962,7 @@ class TestCreateSmtpConfiguration:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
             url,
@@ -5011,7 +5011,7 @@ class TestCreateSmtpConfiguration:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
             url,
@@ -5059,7 +5059,7 @@ class TestListSmtpConfigurations:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -5109,7 +5109,7 @@ class TestListSmtpConfigurations:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -5147,7 +5147,7 @@ class TestListSmtpConfigurations:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "smtp_configurations": [{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -5184,8 +5184,8 @@ class TestListSmtpConfigurations:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/instances/testString/smtp/config')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
         responses.add(
             responses.GET,
             url,
@@ -5222,8 +5222,8 @@ class TestListSmtpConfigurations:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/instances/testString/smtp/config')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
-        mock_response2 = '{"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"public_key":"public_key","selector":"selector","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
+        mock_response2 = '{"total_count":2,"limit":1,"smtp_configurations":[{"id":"id","name":"name","description":"description","domain":"domain","config":{"dkim":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"},"en_authorization":{"verification":"verification"},"spf":{"txt_name":"txt_name","txt_value":"txt_value","verification":"verification"}},"updated_at":"2019-01-01T12:00:00.000Z"}]}'
         responses.add(
             responses.GET,
             url,
@@ -5566,7 +5566,7 @@ class TestGetSmtpConfiguration:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.GET,
             url,
@@ -5606,7 +5606,7 @@ class TestGetSmtpConfiguration:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.GET,
             url,
@@ -5651,7 +5651,7 @@ class TestUpdateSmtpConfiguration:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.PATCH,
             url,
@@ -5699,7 +5699,7 @@ class TestUpdateSmtpConfiguration:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/smtp/config/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "domain": "domain", "config": {"dkim": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}, "en_authorization": {"verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}, "updated_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.PATCH,
             url,
@@ -7401,10 +7401,14 @@ class TestModel_SMTPConfig:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        dkim_attributes_model = {}  # DKIMAttributes
-        dkim_attributes_model['public_key'] = 'publickey'
-        dkim_attributes_model['selector'] = 'd1dcfc74-76f8-4dce-xxxx-d99ecc75exxx'
-        dkim_attributes_model['verification'] = 'PENDING'
+        smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
+        smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
         en_auth_attributes_model['verification'] = 'PENDING'
@@ -7416,7 +7420,7 @@ class TestModel_SMTPConfig:
 
         # Construct a json representation of a SMTPConfig model
         smtp_config_model_json = {}
-        smtp_config_model_json['dkim'] = dkim_attributes_model
+        smtp_config_model_json['dkim'] = smtpdkim_attributes_model
         smtp_config_model_json['en_authorization'] = en_auth_attributes_model
         smtp_config_model_json['spf'] = spf_attributes_model
 
@@ -7448,12 +7452,14 @@ class TestModel_SMTPConfiguration:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        dkim_attributes_model = {}  # DKIMAttributes
-        dkim_attributes_model['public_key'] = (
-            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsn16JPTzYhlfGTgmeL3vgDpC+R9Unsx/sF56BFyZsyrNp6kTcCy2UrK+EyXcuFEvuE0Lh8T6QNIWk4kXc9viyraYVx6E7+yDWKtBiJsPBEUzM2jKOVPzcDUN27bxOmHzXRVqgRu1K0MdWkjX99p7/7FblW5lun7sZwuA7uqtkB6b71YvsQlln58W7zsF/7N06o6HTt0AhEcPTJt373+ltgZ3fN4Fo0r/p55ODFSACS1yXcbFKdIsA8KGRrAJBg1uTDe0gbrUES7mKFG7E1lfCdON5954mZloN1zt3YgQ/cfDv0Zfs9tdzRbYap5Tw8NsC8s2yrUnZP7sXeqkNqwtaQIDAQAB'
+        smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
         )
-        dkim_attributes_model['selector'] = '133a2a4e-830e-4b41-ac3f-1a3edbbb72ff'
-        dkim_attributes_model['verification'] = 'SUCCESSFUL'
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
+        smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
         en_auth_attributes_model['verification'] = 'SUCCESSFUL'
@@ -7464,7 +7470,7 @@ class TestModel_SMTPConfiguration:
         spf_attributes_model['verification'] = 'PENDING'
 
         smtp_config_model = {}  # SMTPConfig
-        smtp_config_model['dkim'] = dkim_attributes_model
+        smtp_config_model['dkim'] = smtpdkim_attributes_model
         smtp_config_model['en_authorization'] = en_auth_attributes_model
         smtp_config_model['spf'] = spf_attributes_model
 
@@ -7505,12 +7511,14 @@ class TestModel_SMTPConfigurationsList:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        dkim_attributes_model = {}  # DKIMAttributes
-        dkim_attributes_model['public_key'] = (
-            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsn16JPTzYhlfGTgmeL3vgDpC+R9Unsx/sF56BFyZsyrNp6kTcCy2UrK+EyXcuFEvuE0Lh8T6QNIWk4kXc9viyraYVx6E7+yDWKtBiJsPBEUzM2jKOVPzcDUN27bxOmHzXRVqgRu1K0MdWkjX99p7/7FblW5lun7sZwuA7uqtkB6b71YvsQlln58W7zsF/7N06o6HTt0AhEcPTJt373+ltgZ3fN4Fo0r/p55ODFSACS1yXcbFKdIsA8KGRrAJBg1uTDe0gbrUES7mKFG7E1lfCdON5954mZloN1zt3YgQ/cfDv0Zfs9tdzRbYap5Tw8NsC8s2yrUnZP7sXeqkNqwtaQIDAQAB'
+        smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
         )
-        dkim_attributes_model['selector'] = '133a2a4e-830e-4b41-ac3f-1a3edbbb72ff'
-        dkim_attributes_model['verification'] = 'SUCCESSFUL'
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
+        smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
         en_auth_attributes_model['verification'] = 'SUCCESSFUL'
@@ -7521,7 +7529,7 @@ class TestModel_SMTPConfigurationsList:
         spf_attributes_model['verification'] = 'SUCCESSFUL'
 
         smtp_config_model = {}  # SMTPConfig
-        smtp_config_model['dkim'] = dkim_attributes_model
+        smtp_config_model['dkim'] = smtpdkim_attributes_model
         smtp_config_model['en_authorization'] = en_auth_attributes_model
         smtp_config_model['spf'] = spf_attributes_model
 
@@ -7576,12 +7584,14 @@ class TestModel_SMTPCreateResponse:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
-        dkim_attributes_model = {}  # DKIMAttributes
-        dkim_attributes_model['public_key'] = (
-            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsn16JPTzYhlfGTgmeL3vgDpC+R9Unsx/sF56BFyZsyrNp6kTcCy2UrK+EyXcuFEvuE0Lh8T6QNIWk4kXc9viyraYVx6E7+yDWKtBiJsPBEUzM2jKOVPzcDUN27bxOmHzXRVqgRu1K0MdWkjX99p7/7FblW5lun7sZwuA7uqtkB6b71YvsQlln58W7zsF/7N06o6HTt0AhEcPTJt373+ltgZ3fN4Fo0r/p55ODFSACS1yXcbFKdIsA8KGRrAJBg1uTDe0gbrUES7mKFG7E1lfCdON5954mZloN1zt3YgQ/cfDv0Zfs9tdzRbYap5Tw8NsC8s2yrUnZP7sXeqkNqwtaQIDAQAB'
+        smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
         )
-        dkim_attributes_model['selector'] = '133a2a4e-830e-4b41-ac3f-1a3edbbb72ff'
-        dkim_attributes_model['verification'] = 'SUCCESSFUL'
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
+        smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
         en_auth_attributes_model['verification'] = 'PENDING'
@@ -7592,7 +7602,7 @@ class TestModel_SMTPCreateResponse:
         spf_attributes_model['verification'] = 'SUCCESSFUL'
 
         smtp_config_model = {}  # SMTPConfig
-        smtp_config_model['dkim'] = dkim_attributes_model
+        smtp_config_model['dkim'] = smtpdkim_attributes_model
         smtp_config_model['en_authorization'] = en_auth_attributes_model
         smtp_config_model['spf'] = spf_attributes_model
 
@@ -7619,6 +7629,38 @@ class TestModel_SMTPCreateResponse:
         # Convert model instance back to dict and verify no loss of data
         smtp_create_response_model_json2 = smtp_create_response_model.to_dict()
         assert smtp_create_response_model_json2 == smtp_create_response_model_json
+
+
+class TestModel_SMTPDKIMAttributes:
+    """
+    Test Class for SMTPDKIMAttributes
+    """
+
+    def test_smtpdkim_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SMTPDKIMAttributes
+        """
+
+        # Construct a json representation of a SMTPDKIMAttributes model
+        smtpdkim_attributes_model_json = {}
+        smtpdkim_attributes_model_json['txt_name'] = 'testString'
+        smtpdkim_attributes_model_json['txt_value'] = 'testString'
+        smtpdkim_attributes_model_json['verification'] = 'testString'
+
+        # Construct a model instance of SMTPDKIMAttributes by calling from_dict on the json representation
+        smtpdkim_attributes_model = SMTPDKIMAttributes.from_dict(smtpdkim_attributes_model_json)
+        assert smtpdkim_attributes_model != False
+
+        # Construct a model instance of SMTPDKIMAttributes by calling from_dict on the json representation
+        smtpdkim_attributes_model_dict = SMTPDKIMAttributes.from_dict(smtpdkim_attributes_model_json).__dict__
+        smtpdkim_attributes_model2 = SMTPDKIMAttributes(**smtpdkim_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert smtpdkim_attributes_model == smtpdkim_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        smtpdkim_attributes_model_json2 = smtpdkim_attributes_model.to_dict()
+        assert smtpdkim_attributes_model_json2 == smtpdkim_attributes_model_json
 
 
 class TestModel_SMTPUser:
