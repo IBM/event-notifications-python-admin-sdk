@@ -1,3 +1,10 @@
+## [0.5.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.5.0...v0.5.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* smtp response fix ([#54](https://github.com/IBM/event-notifications-python-admin-sdk/issues/54)) ([b3c9426](https://github.com/IBM/event-notifications-python-admin-sdk/commit/b3c9426262e9f4098900802f33bd8c279d670bd3))
+
 # [0.5.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.4.0...v0.5.0) (2024-04-30)
 
 
