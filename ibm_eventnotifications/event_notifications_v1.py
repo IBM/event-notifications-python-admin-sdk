@@ -2668,9 +2668,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Update details of SMTP.
+        Update details of SMTP Configuration.
 
-        Update details of SMTP.
+        Update details of SMTP Configuration.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -2832,9 +2832,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Update details of SMTP User.
+        Update details of a SMTP User.
 
-        Update details of SMTP User.
+        Update details of a SMTP User.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -2945,9 +2945,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Get details of a SMTP allowed IPs.
+        Get details of SMTP configuration allowed IPs.
 
-        Get details of a SMTP allowed IPs.
+        Get details of SMTP configuration allowed IPs.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -2995,9 +2995,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Update details of SMTP allowed IP.
+        Update SMTP configuration allowed IPs.
 
-        Update details of SMTP.
+        Update SMTP configuration allowed IPs.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -3056,14 +3056,14 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Verify SPF and DKIM records of SMTP.
+        Verify SMTP configuration domain.
 
-        Verify SPF and DKIM records of SMTP.
+        Verify SMTP configuration domain.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str id: Unique identifier for SMTP.
-        :param str type: SMTP Verification type.
+        :param str type: SMTP verification type.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SMTPVerificationUpdateResponse` object
@@ -6243,8 +6243,8 @@ class SMTPDKIMAttributes:
     """
     The SMTP DKIM attributes.
 
-    :attr str txt_name: (optional) DMIM text name.
-    :attr str txt_value: (optional) DMIM text value.
+    :attr str txt_name: (optional) DKIM text name.
+    :attr str txt_value: (optional) DKIM text value.
     :attr str verification: (optional) DKIM verification.
     """
 
@@ -6258,8 +6258,8 @@ class SMTPDKIMAttributes:
         """
         Initialize a SMTPDKIMAttributes object.
 
-        :param str txt_name: (optional) DMIM text name.
-        :param str txt_value: (optional) DMIM text value.
+        :param str txt_name: (optional) DKIM text name.
+        :param str txt_value: (optional) DKIM text value.
         :param str verification: (optional) DKIM verification.
         """
         self.txt_name = txt_name
@@ -10756,19 +10756,24 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
     Payload describing a Slack destination configuration.
 
     :attr str url: URL of Slack Incoming Notifications.
+    :attr str token: (optional) Token of slack application.
     """
 
     def __init__(
         self,
         url: str,
+        *,
+        token: str = None,
     ) -> None:
         """
         Initialize a DestinationConfigOneOfSlackDestinationConfig object.
 
         :param str url: URL of Slack Incoming Notifications.
+        :param str token: (optional) Token of slack application.
         """
         # pylint: disable=super-init-not-called
         self.url = url
+        self.token = token
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfSlackDestinationConfig':
@@ -10780,6 +10785,8 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
             raise ValueError(
                 'Required property \'url\' not present in DestinationConfigOneOfSlackDestinationConfig JSON'
             )
+        if 'token' in _dict:
+            args['token'] = _dict.get('token')
         return cls(**args)
 
     @classmethod
@@ -10792,6 +10799,8 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
         _dict = {}
         if hasattr(self, 'url') and self.url is not None:
             _dict['url'] = self.url
+        if hasattr(self, 'token') and self.token is not None:
+            _dict['token'] = self.token
         return _dict
 
     def _to_dict(self):
@@ -11700,16 +11709,18 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
     :attr str attachment_color: (optional) Attachment Color for Slack Notification.
     :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
           Blocks w/o Handlebars.
+    :attr List[str] to: (optional) Slack Member ID and Channel ID.
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(['attachment_color', 'template_id_notification'])
+    _properties = frozenset(['attachment_color', 'template_id_notification', 'to'])
 
     def __init__(
         self,
         *,
         attachment_color: str = None,
         template_id_notification: str = None,
+        to: List[str] = None,
         **kwargs,
     ) -> None:
         """
@@ -11719,11 +11730,13 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
                Notification.
         :param str template_id_notification: (optional) ID of Base64 converted JSON
                Slack Blocks w/o Handlebars.
+        :param List[str] to: (optional) Slack Member ID and Channel ID.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
         self.attachment_color = attachment_color
         self.template_id_notification = template_id_notification
+        self.to = to
         for _key, _value in kwargs.items():
             setattr(self, _key, _value)
 
@@ -11735,6 +11748,8 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
             args['attachment_color'] = _dict.get('attachment_color')
         if 'template_id_notification' in _dict:
             args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'to' in _dict:
+            args['to'] = _dict.get('to')
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -11750,6 +11765,8 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
             _dict['attachment_color'] = self.attachment_color
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'to') and self.to is not None:
+            _dict['to'] = self.to
         for _key in [
             k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties
         ]:
@@ -12410,6 +12427,7 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
     :attr str attachment_color: (optional) Attachment Color for the slack message.
     :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
           Blocks w/o Handlebars.
+    :attr List[str] to: (optional) Array of Slack Member ID or Channel ID.
     """
 
     def __init__(
@@ -12417,6 +12435,7 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
         *,
         attachment_color: str = None,
         template_id_notification: str = None,
+        to: List[str] = None,
     ) -> None:
         """
         Initialize a SubscriptionCreateAttributesSlackAttributes object.
@@ -12425,10 +12444,12 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
                message.
         :param str template_id_notification: (optional) ID of Base64 converted JSON
                Slack Blocks w/o Handlebars.
+        :param List[str] to: (optional) Array of Slack Member ID or Channel ID.
         """
         # pylint: disable=super-init-not-called
         self.attachment_color = attachment_color
         self.template_id_notification = template_id_notification
+        self.to = to
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesSlackAttributes':
@@ -12438,6 +12459,8 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
             args['attachment_color'] = _dict.get('attachment_color')
         if 'template_id_notification' in _dict:
             args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'to' in _dict:
+            args['to'] = _dict.get('to')
         return cls(**args)
 
     @classmethod
@@ -12452,6 +12475,8 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
             _dict['attachment_color'] = self.attachment_color
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'to') and self.to is not None:
+            _dict['to'] = self.to
         return _dict
 
     def _to_dict(self):
@@ -13103,6 +13128,7 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
     :attr str attachment_color: (optional) Attachment Color for the slack message.
     :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
           Blocks w/o Handlebars.
+    :attr List[str] to: (optional) Array of Slack Member ID or Channel ID.
     """
 
     def __init__(
@@ -13110,6 +13136,7 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
         *,
         attachment_color: str = None,
         template_id_notification: str = None,
+        to: List[str] = None,
     ) -> None:
         """
         Initialize a SubscriptionUpdateAttributesSlackAttributes object.
@@ -13118,10 +13145,12 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
                message.
         :param str template_id_notification: (optional) ID of Base64 converted JSON
                Slack Blocks w/o Handlebars.
+        :param List[str] to: (optional) Array of Slack Member ID or Channel ID.
         """
         # pylint: disable=super-init-not-called
         self.attachment_color = attachment_color
         self.template_id_notification = template_id_notification
+        self.to = to
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesSlackAttributes':
@@ -13131,6 +13160,8 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
             args['attachment_color'] = _dict.get('attachment_color')
         if 'template_id_notification' in _dict:
             args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'to' in _dict:
+            args['to'] = _dict.get('to')
         return cls(**args)
 
     @classmethod
@@ -13145,6 +13176,8 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
             _dict['attachment_color'] = self.attachment_color
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'to') and self.to is not None:
+            _dict['to'] = self.to
         return _dict
 
     def _to_dict(self):

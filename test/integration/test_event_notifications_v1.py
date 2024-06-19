@@ -102,6 +102,7 @@ cos_instance_crn = ""
 cos_integration_id = ""
 smtp_config_id = ""
 smtp_user_id = ""
+slack_token = ""
 
 
 class TestEventNotificationsV1:
@@ -111,7 +112,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_token
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -149,6 +150,7 @@ class TestEventNotificationsV1:
             template_body = cls.config["TEMPLATE_BODY"]
             slack_template_body = cls.config["SLACK_TEMPLATE_BODY"]
             code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
+            slack_token = cls.config["SLACK_TOKEN"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -169,6 +171,7 @@ class TestEventNotificationsV1:
             assert cos_instance_crn is not None
             assert code_engine_project_CRN is not None
             assert slack_template_body is not None
+            assert slack_token is not None
 
         print("Setup complete.")
 
@@ -598,6 +601,7 @@ class TestEventNotificationsV1:
 
         slack_config_params = {
             "url": slack_url,
+            "token": slack_token,
         }
 
         destination_config_model = {
@@ -1349,6 +1353,7 @@ class TestEventNotificationsV1:
 
         slack_config_params = {
             "url": slack_url,
+            "token": slack_token,
         }
 
         destination_config_model = {
@@ -2031,6 +2036,7 @@ class TestEventNotificationsV1:
         subscription_create_attributes_model_json = {
             'attachment_color': '#0000FF',
             'template_id_notification': slack_template_id,
+            'to': [""],
         }
 
         subscription_create_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
@@ -2566,6 +2572,7 @@ class TestEventNotificationsV1:
         subscription_update_attributes_model_json = {
             'attachment_color': '#0000FF',
             'template_id_notification': slack_template_id,
+            'to': [""],
         }
         subscription_update_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(
             subscription_update_attributes_model_json

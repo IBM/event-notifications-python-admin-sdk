@@ -103,6 +103,7 @@ cos_integration_id = ""
 code_engine_project_CRN = ""
 smtp_user_id = ""
 smtp_config_id = ""
+slack_token = ""
 
 
 ##############################################################################
@@ -116,7 +117,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_token
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -154,6 +155,7 @@ class TestEventNotificationsV1Examples:
             template_body = cls.config["TEMPLATE_BODY"]
             slack_template_body = cls.config["SLACK_TEMPLATE_BODY"]
             code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
+            slack_token = cls.config["SLACK_TOKEN"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -168,6 +170,7 @@ class TestEventNotificationsV1Examples:
             assert template_body is not None
             assert cos_instance_crn is not None
             assert code_engine_project_CRN is not None
+            assert slack_token is not None
 
         print("Setup complete.")
 
@@ -445,6 +448,7 @@ class TestEventNotificationsV1Examples:
             # slack
             slack_config_params = {
                 "url": "https://api.slack.com/myslack",
+                "token": slack_token,
             }
 
             destination_config_model = {
@@ -1061,6 +1065,7 @@ class TestEventNotificationsV1Examples:
             # Slack
             slack_config_params = {
                 "url": "https://api.slack.com/myslack",
+                "token": slack_token,
             }
 
             destination_config_model = {
@@ -1573,6 +1578,7 @@ class TestEventNotificationsV1Examples:
             subscription_create_attributes_model_json = {
                 'attachment_color': '#0000FF',
                 'template_id_notification': slack_template_id,
+                'to': [""],
             }
 
             subscription_create_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
@@ -1788,6 +1794,7 @@ class TestEventNotificationsV1Examples:
             subscription_update_attributes_model_json = {
                 'attachment_color': '#0000FF',
                 'template_id_notification': slack_template_id,
+                'to': [""],
             }
             subscription_update_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(
                 subscription_update_attributes_model_json

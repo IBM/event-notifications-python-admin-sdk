@@ -9543,6 +9543,7 @@ class TestModel_DestinationConfigOneOfSlackDestinationConfig:
         # Construct a json representation of a DestinationConfigOneOfSlackDestinationConfig model
         destination_config_one_of_slack_destination_config_model_json = {}
         destination_config_one_of_slack_destination_config_model_json['url'] = 'testString'
+        destination_config_one_of_slack_destination_config_model_json['token'] = 'testString'
 
         # Construct a model instance of DestinationConfigOneOfSlackDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_slack_destination_config_model = (
@@ -10024,6 +10025,7 @@ class TestModel_SubscriptionAttributesSlackAttributesResponse:
         subscription_attributes_slack_attributes_response_model_json = {}
         subscription_attributes_slack_attributes_response_model_json['attachment_color'] = 'testString'
         subscription_attributes_slack_attributes_response_model_json['template_id_notification'] = 'testString'
+        subscription_attributes_slack_attributes_response_model_json['to'] = ['testString']
         subscription_attributes_slack_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesSlackAttributesResponse by calling from_dict on the json representation
@@ -10433,6 +10435,7 @@ class TestModel_SubscriptionCreateAttributesSlackAttributes:
         subscription_create_attributes_slack_attributes_model_json = {}
         subscription_create_attributes_slack_attributes_model_json['attachment_color'] = 'testString'
         subscription_create_attributes_slack_attributes_model_json['template_id_notification'] = 'testString'
+        subscription_create_attributes_slack_attributes_model_json['to'] = ['testString']
 
         # Construct a model instance of SubscriptionCreateAttributesSlackAttributes by calling from_dict on the json representation
         subscription_create_attributes_slack_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
@@ -10866,6 +10869,7 @@ class TestModel_SubscriptionUpdateAttributesSlackAttributes:
         subscription_update_attributes_slack_attributes_model_json = {}
         subscription_update_attributes_slack_attributes_model_json['attachment_color'] = 'testString'
         subscription_update_attributes_slack_attributes_model_json['template_id_notification'] = 'testString'
+        subscription_update_attributes_slack_attributes_model_json['to'] = ['testString']
 
         # Construct a model instance of SubscriptionUpdateAttributesSlackAttributes by calling from_dict on the json representation
         subscription_update_attributes_slack_attributes_model = SubscriptionUpdateAttributesSlackAttributes.from_dict(
