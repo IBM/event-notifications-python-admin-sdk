@@ -55,7 +55,6 @@ destination_id3 = ""
 destination_id4 = ""
 destination_id5 = ""
 destination_id6 = ""
-destination_id7 = ""
 destination_id8 = ""
 destination_id9 = ""
 destination_id10 = ""
@@ -381,7 +380,7 @@ class TestEventNotificationsV1Examples:
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18
         try:
             print("\ncreate_destination() result:")
             # begin-create_destination
@@ -522,30 +521,6 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(destination, indent=2))
             destination = DestinationResponse.from_dict(destination)
             destination_id6 = destination.id
-
-            # cloud functions
-            cf_config_params = {
-                "url": "https://www.ibmcfendpoint.com/",
-                "api_key": "apikey",
-            }
-
-            destination_config_model = {
-                "params": cf_config_params,
-            }
-            name = "Cloud_Functions_destination"
-            typeVal = "ibmcf"
-            description = "This is a Cloud Functions Destination for actions"
-
-            destination = event_notifications_service.create_destination(
-                instance_id,
-                name,
-                type=typeVal,
-                description=description,
-                config=destination_config_model,
-            ).get_result()
-            print(json.dumps(destination, indent=2))
-            destination = DestinationResponse.from_dict(destination)
-            destination_id7 = destination.id
 
             # chrome
             chrome_config_params = {
@@ -1130,28 +1105,6 @@ class TestEventNotificationsV1Examples:
             ).get_result()
 
             print(json.dumps(destination, indent=2))
-
-            # Cloud Functions
-            destination_config_params_model = {
-                "url": "https://www.ibmcfendpoint.com/",
-                "api_key": "apikey",
-            }
-
-            destination_config_model = {
-                "params": destination_config_params_model,
-            }
-            name = "Cloud_Functions_dest"
-            description = "This is a Cloud Functions Destination"
-
-            update_destination_response = event_notifications_service.update_destination(
-                instance_id,
-                id=destination_id7,
-                name=name,
-                description=description,
-                config=destination_config_model,
-            ).get_result()
-
-            print(json.dumps(update_destination_response, indent=2))
 
             # Chrome
             chrome_config_params = {
@@ -1945,6 +1898,7 @@ class TestEventNotificationsV1Examples:
             )
             mailto = '["abc@ibm.com", "def@us.ibm.com"]'
             smsto = '["+911234567890", "+911224567890"]'
+            mms = '{"content": "iVBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO9TAAAAAXNSR0IArs4c6QAAActpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgSW1hZ2VSZWFkeTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KKS7NPQAABO9JREFUeAHtW81x2zoQBhgn46NLYCpISpA6cCowfYjn3ZJUELmC5Og4h0AVPKeC8HWgDh5L8DGTTMR8KxoSBCzAX3us8WKGJrg/34KfqF2AkJWSJgwIA8KAMCAMCAPCgDAgDAgDwoAw8LQZ0GfFRT2egrpcmq9zwpkGzx9RXWqllsZ8Nb7GXg+Pq83SfDm3OKlzUVy8B1mfUjYxXRZTPC65ntVKfwOZ/xfFP7Npx1afFkVx0gUTJJ91seNsjvCkXHKKnrLK2k+EZ+GY83oGYlbGmFtXOS7uMRG9h+di2z5ifEefDmmPlQE9zVfxzy3y54puchq8rnT93D7Z4+PusLjoY/GParX+wQH3lJWwn5PPRHgE1dq0evEBRp/JcGxcrZ6fA8YQlt+K4u3rsfgHUgz9W2+uxxQnHxHF9p0vs9fQDS6CFgPFMNs8iVYw7PxnW0imwes/ivuMq1W9VOqZFMH+H8vDe2guJCbmC07eyLLSmKsyrg81aby6Si1E0r4UK8NM76oKo1JhTt0H56FQ1K83Od9qkZ8LpXSuerVwTEecP3LfR05OMq3WdCrpT9eWwgNGicPgYFuLL8Yz3JcLiNnFjfvBIT/TSvCEs43JMKYSusrVH3QxpBtxSXFvbHh/fWp98Y2gfi+Sra9/Zp/olsJS+SBt12m8XSHlcO7Pl4tGMnc82QpP5zxmGZf/XMV1orlXBvCBhe2sePsjlDYSOCTfonF+KTzOvotMK/3dL1y+39C4hA2sqlZ1dG7tx3KvwdEHu1K2cjZ1oOTNrAFz/o+RtYiSeC2+rLpS6pdhNXvCYXFRgHPA4Osf9b+FPpG7s0B3iMUQebN+gzkd3eyIVpdwriIAOeSnER3E+iauE40w8BQYQN4OW2pbCA6XKEKL0CsuSeHFvaIaSh3nfrHhrNNxm+032rWBb875czJMN18qtS6Qxz9yepLRlNRfPR9ijsYrS/0vdlmCghO78RZ5n3y7t2pswd1TR2Ydm0KxZ+hcVE6/YzeJ1xHDN3vxHpKFL92/TsXVK7KlN3N4Ol/v+/FXmPYtG01d4Vw2fe6vu+jh9CK7NwaQcsPWsm2Dt21XVegVl6TxdttgHMJD+DZp6Ljtqd7eN8aUY6x0RFq4LcamjtS2DT6ZS6AvIhFYcQoPDiWOOesIYdoXo6Fvf6Slfd24z/MWW0ox5whjmlBtxfCY7qdsbJu/h1gM3fHTZnC+JxhwcTeDqdKuv2/S+rSWfaLxiFzG3bIyruM1abzo6mwD1uLLB7yTtvhWrjNsaaM3kj5oc8JdiWbl3Xt5F8LtV+6F9B+QAfyu42IxPt5uO2oavO4jsoun/nF3Y7bRYttWNsbOjn6WtsbRveF3HfEVTneYTeI3ZD8RXtfQKxguyHhA3BJuBofT9AmDw+Tm9Yyxc3DC7kEXQ+TVZXhLYyRZQOpUMQ78dx27LaP0lhdHfrh6o/UBZjFz19p/Z9HoMoMPoHTtpP9IGMAP0ePbVt3HqFdLc03TI/wQfQq8dGStnuHt3VXlWvWPuxuzi0N9i4WnNtiSIj0VTeToM+p3bZhHR7drumLADmG3bQq8LZjfqZAiApIbo75x3TH7YfQJJDlmG1RsmaZzCGc4Ojd2wdLZ++EMb7AExmZs/F8rphwKFUC8in01JaZgCQPCgDAgDAgDwoAwIAwIA8KAMCAMPHUG/gKC0oz7fm25ogAAAABJRU5ErkJggg==", "content_type": "image/png"}'
             templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
 
             notification_create_model = {
@@ -1961,6 +1915,7 @@ class TestEventNotificationsV1Examples:
                 "ibmensubject": "Findings on IBM Cloud Security Advisor",
                 "ibmenmailto": mailto,
                 "ibmensmsto": smsto,
+                "ibmenmms": mms,
                 "ibmentemplates": templates,
                 "id": notification_id,
                 "source": notifications_source,
@@ -2292,7 +2247,6 @@ class TestEventNotificationsV1Examples:
                 destination_id4,
                 destination_id5,
                 destination_id6,
-                destination_id7,
                 destination_id8,
                 destination_id9,
                 destination_id10,

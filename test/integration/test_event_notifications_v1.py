@@ -59,7 +59,6 @@ subscription_id3 = ""
 subscription_id4 = ""
 subscription_id5 = ""
 subscription_id6 = ""
-subscription_id7 = ""
 subscription_id8 = ""
 subscription_id9 = ""
 subscription_id10 = ""
@@ -722,16 +721,11 @@ class TestEventNotificationsV1:
             config=destination_config_model,
         )
 
-        assert create_destination_response.get_status_code() == 201
+        assert create_destination_response.get_status_code() == 410
         destination_response = create_destination_response.get_result()
         assert destination_response is not None
 
         destination = DestinationResponse.from_dict(destination_response)
-
-        assert destination is not None
-        assert destination.name == name
-        assert destination.description == description
-        assert destination.type == typeval
 
         destination_id7 = destination.id
 
@@ -1447,37 +1441,6 @@ class TestEventNotificationsV1:
         assert res_name == name
         assert res_description == description
 
-        destination_config_params_model = {
-            "url": "https://www.ibmcfendpoint.com/",
-            "api_key": "apikey",
-        }
-
-        destination_config_model = {
-            "params": destination_config_params_model,
-        }
-        name = "Cloud_Functions_dest"
-        description = "This is a Cloud Functions Destination"
-
-        update_destination_response = self.event_notifications_service.update_destination(
-            instance_id,
-            id=destination_id7,
-            name=name,
-            description=description,
-            config=destination_config_model,
-        )
-
-        assert update_destination_response.get_status_code() == 200
-        destination_response = update_destination_response.get_result()
-        assert destination_response is not None
-
-        res_id = destination_response.get("id")
-        res_name = destination_response.get("name")
-        res_description = destination_response.get("description")
-
-        assert res_id == destination_id7
-        assert res_name == name
-        assert res_description == description
-
         chrome_config_params = {
             "website_url": "https://www.xyz.pqr",
             "api_key": "AAxxxxxxxxxxxxxxxxx4z",
@@ -1920,7 +1883,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18
         subscription_create_attributes_model = {
             "signing_enabled": False,
         }
@@ -2097,28 +2060,6 @@ class TestEventNotificationsV1:
         subscription_name = subscription_response.get("name")
         subscription_description = subscription_response.get("description")
         subscription_id6 = subscription_response.get("id")
-
-        assert subscription_name == name
-        assert subscription_description == description
-
-        name = "cloud functions subscription"
-        description = "Subscription for the cloud functions"
-
-        create_subscription_response = self.event_notifications_service.create_subscription(
-            instance_id,
-            name,
-            destination_id=destination_id7,
-            topic_id=topic_id,
-            description=description,
-        )
-
-        assert create_subscription_response.get_status_code() == 201
-        subscription_response = create_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-        subscription_id7 = subscription_response.get("id")
 
         assert subscription_name == name
         assert subscription_description == description
@@ -2627,19 +2568,6 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        name = "cloud functions update"
-        description = "Subscription for cloud functions updated"
-        update_subscription_response = self.event_notifications_service.update_subscription(
-            instance_id,
-            id=subscription_id7,
-            name=name,
-            description=description,
-        )
-
-        assert update_subscription_response.get_status_code() == 200
-        subscription_response = update_subscription_response.get_result()
-        assert subscription_response is not None
-
         subscription_name = subscription_response.get("name")
         subscription_description = subscription_response.get("description")
 
@@ -3034,6 +2962,7 @@ class TestEventNotificationsV1:
         )
         mailto = '["abc@ibm.com", "def@us.ibm.com"]'
         smsto = '["+911234567890", "+911224567890"]'
+        mms = '{"content": "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", "content_type": "image/png"}'
         templates = '["' + slack_template_id + '"]'
 
         notification_create_model = {
@@ -3046,6 +2975,7 @@ class TestEventNotificationsV1:
             "ibmensubject": "Findings on IBM Cloud Security Advisor",
             "ibmenmailto": mailto,
             "ibmensmsto": smsto,
+            "ibmenmms": mms,
             "ibmentemplates": templates,
             "ibmensourceid": source_id,
             "ibmendefaultshort": "Alert Message",
@@ -3346,7 +3276,6 @@ class TestEventNotificationsV1:
             subscription_id4,
             subscription_id5,
             subscription_id6,
-            subscription_id7,
             subscription_id8,
             subscription_id9,
             subscription_id10,
@@ -3396,7 +3325,6 @@ class TestEventNotificationsV1:
             destination_id4,
             destination_id5,
             destination_id6,
-            destination_id7,
             destination_id8,
             destination_id9,
             destination_id10,
