@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.5.1...v0.6.0) (2024-07-29)
+
+
+### Features
+
+* cf destination deprecation, mms support enabled ([#55](https://github.com/IBM/event-notifications-python-admin-sdk/issues/55)) ([55f2d8d](https://github.com/IBM/event-notifications-python-admin-sdk/commit/55f2d8d549c431c4d76ca17ec08bf47b04f8495a))
+
 ## [0.5.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.5.0...v0.5.1) (2024-05-15)
 
 
