@@ -137,6 +137,7 @@ class TestSendNotifications:
         notification_create_model['ibmensmsto'] = 'testString'
         notification_create_model['ibmenhtmlbody'] = 'testString'
         notification_create_model['subject'] = 'testString'
+        notification_create_model['ibmenmms'] = 'testString'
         notification_create_model['data'] = {'foo': 'bar'}
         notification_create_model['datacontenttype'] = 'application/json'
         notification_create_model['ibmenpushto'] = '{"platforms":["push_android"]}'
@@ -7096,6 +7097,7 @@ class TestModel_NotificationCreate:
         notification_create_model_json['ibmensmsto'] = 'testString'
         notification_create_model_json['ibmenhtmlbody'] = 'testString'
         notification_create_model_json['subject'] = 'testString'
+        notification_create_model_json['ibmenmms'] = 'testString'
         notification_create_model_json['data'] = {'foo': 'bar'}
         notification_create_model_json['datacontenttype'] = 'application/json'
         notification_create_model_json['ibmenpushto'] = '{"platforms":["push_android"]}'

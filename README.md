@@ -946,6 +946,7 @@ htmlbody = '"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to
            'Security and Complaince dashboard</a> to find more information<br/>"'
 mailto = '[\"abc@ibm.com\", \"def@us.ibm.com\"]'
 smsto = '[\"+911234567890\", \"+911224567890\"]'
+mms = '{"content": "akajdklahl", "content_type": "image/png"}'
 templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
 
 notification_create_model = {
@@ -961,6 +962,7 @@ notification_create_model = {
     'ibmensubject': 'Findings on IBM Cloud Security Advisor',
     'ibmenmailto': mailto,
     'ibmensmsto': smsto,
+    'ibmenmms': mms,
     "ibmentemplates": templates,
     'id': notification_id,
     'source': notifications_source,

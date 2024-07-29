@@ -2668,9 +2668,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Update details of SMTP.
+        Update details of SMTP Configuration.
 
-        Update details of SMTP.
+        Update details of SMTP Configuration.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -2832,9 +2832,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Update details of SMTP User.
+        Update details of a SMTP User.
 
-        Update details of SMTP User.
+        Update details of a SMTP User.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -2945,9 +2945,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Get details of a SMTP allowed IPs.
+        Get details of SMTP configuration allowed IPs.
 
-        Get details of a SMTP allowed IPs.
+        Get details of SMTP configuration allowed IPs.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -2995,9 +2995,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Update details of SMTP allowed IP.
+        Update SMTP configuration allowed IPs.
 
-        Update details of SMTP.
+        Update SMTP configuration allowed IPs.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -3056,14 +3056,14 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Verify SPF and DKIM records of SMTP.
+        Verify SMTP configuration domain.
 
-        Verify SPF and DKIM records of SMTP.
+        Verify SMTP configuration domain.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str id: Unique identifier for SMTP.
-        :param str type: SMTP Verification type.
+        :param str type: SMTP verification type.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SMTPVerificationUpdateResponse` object
@@ -4891,6 +4891,7 @@ class NotificationCreate:
     :attr str ibmensmsto: (optional) The SMS number string.
     :attr str ibmenhtmlbody: (optional) The html body of notification.
     :attr str subject: (optional) The subject of the notification.
+    :attr str ibmenmms: (optional) Stringified MMS Attachment JSON.
     :attr dict data: (optional) The payload for webhook notification.
     :attr str datacontenttype: (optional) The notification content type.
     :attr str ibmenpushto: (optional) If platforms or tags or user_ids is used then
@@ -4934,6 +4935,7 @@ class NotificationCreate:
             'ibmensmsto',
             'ibmenhtmlbody',
             'subject',
+            'ibmenmms',
             'data',
             'datacontenttype',
             'ibmenpushto',
@@ -4967,6 +4969,7 @@ class NotificationCreate:
         ibmensmsto: str = None,
         ibmenhtmlbody: str = None,
         subject: str = None,
+        ibmenmms: str = None,
         data: dict = None,
         datacontenttype: str = None,
         ibmenpushto: str = None,
@@ -4999,6 +5002,7 @@ class NotificationCreate:
         :param str ibmensmsto: (optional) The SMS number string.
         :param str ibmenhtmlbody: (optional) The html body of notification.
         :param str subject: (optional) The subject of the notification.
+        :param str ibmenmms: (optional) Stringified MMS Attachment JSON.
         :param dict data: (optional) The payload for webhook notification.
         :param str datacontenttype: (optional) The notification content type.
         :param str ibmenpushto: (optional) If platforms or tags or user_ids is used
@@ -5039,6 +5043,7 @@ class NotificationCreate:
         self.ibmensmsto = ibmensmsto
         self.ibmenhtmlbody = ibmenhtmlbody
         self.subject = subject
+        self.ibmenmms = ibmenmms
         self.data = data
         self.datacontenttype = datacontenttype
         self.ibmenpushto = ibmenpushto
@@ -5102,6 +5107,8 @@ class NotificationCreate:
             args['ibmenhtmlbody'] = _dict.get('ibmenhtmlbody')
         if 'subject' in _dict:
             args['subject'] = _dict.get('subject')
+        if 'ibmenmms' in _dict:
+            args['ibmenmms'] = _dict.get('ibmenmms')
         if 'data' in _dict:
             args['data'] = _dict.get('data')
         if 'datacontenttype' in _dict:
@@ -5167,6 +5174,8 @@ class NotificationCreate:
             _dict['ibmenhtmlbody'] = self.ibmenhtmlbody
         if hasattr(self, 'subject') and self.subject is not None:
             _dict['subject'] = self.subject
+        if hasattr(self, 'ibmenmms') and self.ibmenmms is not None:
+            _dict['ibmenmms'] = self.ibmenmms
         if hasattr(self, 'data') and self.data is not None:
             _dict['data'] = self.data
         if hasattr(self, 'datacontenttype') and self.datacontenttype is not None:
@@ -6243,8 +6252,8 @@ class SMTPDKIMAttributes:
     """
     The SMTP DKIM attributes.
 
-    :attr str txt_name: (optional) DMIM text name.
-    :attr str txt_value: (optional) DMIM text value.
+    :attr str txt_name: (optional) DKIM text name.
+    :attr str txt_value: (optional) DKIM text value.
     :attr str verification: (optional) DKIM verification.
     """
 
@@ -6258,8 +6267,8 @@ class SMTPDKIMAttributes:
         """
         Initialize a SMTPDKIMAttributes object.
 
-        :param str txt_name: (optional) DMIM text name.
-        :param str txt_value: (optional) DMIM text value.
+        :param str txt_name: (optional) DKIM text name.
+        :param str txt_value: (optional) DKIM text value.
         :param str verification: (optional) DKIM verification.
         """
         self.txt_name = txt_name
