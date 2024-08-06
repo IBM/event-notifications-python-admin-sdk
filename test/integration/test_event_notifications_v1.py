@@ -700,7 +700,6 @@ class TestEventNotificationsV1:
 
         destination_id6 = destination.id
 
-
         chrome_config_params = {
             "website_url": "https://www.xyz.pqr",
             "api_key": "AAxxxxxxxxxxxxxxxxx4z",
@@ -3032,13 +3031,19 @@ class TestEventNotificationsV1:
         subject = "The Metric Test"
 
         get_metrics_response = self.event_notifications_service.get_metrics(
-            instance_id, destination_type, gte, lte, id=destination_id16, email_to=email_to, notification_id=notificationID, subject=subject
+            instance_id,
+            destination_type,
+            gte,
+            lte,
+            id=destination_id16,
+            email_to=email_to,
+            notification_id=notificationID,
+            subject=subject,
         )
 
         assert get_metrics_response.get_status_code() == 200
         metric_response = get_metrics_response.get_result()
         assert metric_response is not None
-
 
     @needscredentials
     def test_create_smtp_configuration(self):

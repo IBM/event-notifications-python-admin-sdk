@@ -1951,8 +1951,14 @@ class TestEventNotificationsV1Examples:
             subject = "The Metric Test"
 
             get_metrics_response = self.event_notifications_service.get_metrics(
-                instance_id, destination_type, gte, lte, id=destination_id16, email_to=email_to,
-                notification_id=notificationID, subject=subject
+                instance_id,
+                destination_type,
+                gte,
+                lte,
+                id=destination_id16,
+                email_to=email_to,
+                notification_id=notificationID,
+                subject=subject,
             )
 
             metric_response = get_metrics_response.get_result()
@@ -1960,8 +1966,7 @@ class TestEventNotificationsV1Examples:
             # end-metrics
 
         except ApiException as e:
-            pytest.fail(str(e))    
-       
+            pytest.fail(str(e))
 
     @needscredentials
     def test_create_smtp_configuration_example(self):
