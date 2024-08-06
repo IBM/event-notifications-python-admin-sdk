@@ -6644,9 +6644,9 @@ class TestModel_DestinationList:
         destination_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a DestinationList model
         destination_list_model_json = {}
@@ -7040,9 +7040,9 @@ class TestModel_IntegrationCreateResponse:
 
         integration_create_metadata_model = {}  # IntegrationCreateMetadata
         integration_create_metadata_model['endpoint'] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        integration_create_metadata_model[
-            'crn'
-        ] = 'crn:v1:bluemix:public:cloud-object-storage:global:a/xxxxxxx6db359a81a1dde8f44bxxxxxx:xxxxxxxx-1d48-xxxx-xxxx-xxxxxxxxxxxx:bucket:cloud-object-storage'
+        integration_create_metadata_model['crn'] = (
+            'crn:v1:bluemix:public:cloud-object-storage:global:a/xxxxxxx6db359a81a1dde8f44bxxxxxx:xxxxxxxx-1d48-xxxx-xxxx-xxxxxxxxxxxx:bucket:cloud-object-storage'
+        )
         integration_create_metadata_model['bucket_name'] = 'cloud-object-storage'
 
         # Construct a json representation of a IntegrationCreateResponse model
@@ -7140,9 +7140,9 @@ class TestModel_IntegrationList:
         integration_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a IntegrationList model
         integration_list_model_json = {}
@@ -7664,12 +7664,12 @@ class TestModel_SMTPConfig:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -7715,12 +7715,12 @@ class TestModel_SMTPConfiguration:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -7774,12 +7774,12 @@ class TestModel_SMTPConfigurationsList:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -7847,12 +7847,12 @@ class TestModel_SMTPCreateResponse:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -8019,9 +8019,9 @@ class TestModel_SMTPUsersList:
         smtp_user_model['updated_at'] = '2024-04-16T17:36:24.562000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SMTPUsersList model
         smtp_users_list_model_json = {}
@@ -8215,9 +8215,9 @@ class TestModel_SourceList:
         source_list_item_model['topic_count'] = 0
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SourceList model
         source_list_model_json = {}
@@ -8476,9 +8476,9 @@ class TestModel_SubscriptionList:
         subscription_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SubscriptionList model
         subscription_list_model_json = {}
@@ -8564,9 +8564,9 @@ class TestModel_TagsSubscriptionList:
         tags_subscription_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TagsSubscriptionList model
         tags_subscription_list_model_json = {}
@@ -8688,9 +8688,9 @@ class TestModel_TemplateList:
         template_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/templates?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/templates?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TemplateList model
         template_list_model_json = {}
@@ -8818,9 +8818,9 @@ class TestModel_Topic:
         subscription_list_item_model = {}  # SubscriptionListItem
         subscription_list_item_model['id'] = '87bef75e-f826-4aa9-b64d-91af9be5e12b'
         subscription_list_item_model['name'] = 'SMS Subscription on new change'
-        subscription_list_item_model[
-            'description'
-        ] = 'This subscription is to send events from SCC to EN Admins via sms'
+        subscription_list_item_model['description'] = (
+            'This subscription is to send events from SCC to EN Admins via sms'
+        )
         subscription_list_item_model['destination_id'] = 'ec28efee-2236-4c2d-8839-d34f697cfc69'
         subscription_list_item_model['destination_name'] = 'testString'
         subscription_list_item_model['destination_type'] = 'sms_ibm'
@@ -8876,9 +8876,9 @@ class TestModel_TopicList:
         topics_list_item_model['subscription_count'] = 3
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TopicList model
         topic_list_model_json = {}
@@ -10800,26 +10800,26 @@ class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesCustomEmailUpdateAttributes model
         subscription_update_attributes_custom_email_update_attributes_model_json = {}
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'invited'
-        ] = update_attributes_invited_model
+        subscription_update_attributes_custom_email_update_attributes_model_json['invited'] = (
+            update_attributes_invited_model
+        )
         subscription_update_attributes_custom_email_update_attributes_model_json['add_notification_payload'] = False
         subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_name'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['from_name'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['from_email'] = 'testString'
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'template_id_notification'
-        ] = 'testString'
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'template_id_invitation'
-        ] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_invitation'] = (
+            'testString'
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_email_update_attributes_model = (
@@ -10881,15 +10881,15 @@ class TestModel_SubscriptionUpdateAttributesCustomSMSUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesCustomSMSUpdateAttributes model
         subscription_update_attributes_custom_sms_update_attributes_model_json = {}
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'invited'
-        ] = update_attributes_invited_model
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_custom_sms_update_attributes_model_json['invited'] = (
+            update_attributes_invited_model
+        )
+        subscription_update_attributes_custom_sms_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_custom_sms_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomSMSUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_sms_update_attributes_model = (
@@ -10956,12 +10956,12 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes:
         subscription_update_attributes_email_update_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['reply_to_name'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['from_name'] = 'testString'
-        subscription_update_attributes_email_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_email_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_email_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_email_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_email_update_attributes_model = (
@@ -11024,12 +11024,12 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes:
         # Construct a json representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_sms_update_attributes_model_json = {}
         subscription_update_attributes_sms_update_attributes_model_json['invited'] = update_attributes_invited_model
-        subscription_update_attributes_sms_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_sms_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_sms_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_sms_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesSMSUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_sms_update_attributes_model = (
