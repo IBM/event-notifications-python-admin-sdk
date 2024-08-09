@@ -1,3 +1,10 @@
+# [0.7.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.6.0...v0.7.0) (2024-08-09)
+
+
+### Features
+
+* SMTP allowed IP Update unsupported, Metrics Feature enabled ([#56](https://github.com/IBM/event-notifications-python-admin-sdk/issues/56)) ([faf221e](https://github.com/IBM/event-notifications-python-admin-sdk/commit/faf221ebbced8d9fb90a722039d05ae24b9279b9))
+
 # [0.6.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.5.1...v0.6.0) (2024-07-29)
 
 
