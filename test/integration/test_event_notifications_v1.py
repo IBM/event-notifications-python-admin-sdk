@@ -39,7 +39,6 @@ destination_id3 = ""
 destination_id4 = ""
 destination_id5 = ""
 destination_id6 = ""
-destination_id7 = ""
 destination_id8 = ""
 destination_id9 = ""
 destination_id10 = ""
@@ -700,34 +699,6 @@ class TestEventNotificationsV1:
         assert destination.type == typeval
 
         destination_id6 = destination.id
-
-        cf_config_params = {
-            "url": "https://www.ibmcfendpoint.com/",
-            "api_key": "apikey",
-        }
-
-        destination_config_model = {
-            "params": cf_config_params,
-        }
-        name = "Cloud_Functions_destination"
-        typeval = "ibmcf"
-        description = "This is a Cloud Functions Destination for actions"
-
-        create_destination_response = self.event_notifications_service.create_destination(
-            instance_id,
-            name,
-            type=typeval,
-            description=description,
-            config=destination_config_model,
-        )
-
-        assert create_destination_response.get_status_code() == 410
-        destination_response = create_destination_response.get_result()
-        assert destination_response is not None
-
-        destination = DestinationResponse.from_dict(destination_response)
-
-        destination_id7 = destination.id
 
         chrome_config_params = {
             "website_url": "https://www.xyz.pqr",
@@ -2250,7 +2221,7 @@ class TestEventNotificationsV1:
         assert subscription_description == description
 
         subscription_create_attributes_model = {
-            "invited": ["nitishkulkarni005@gmail.com", "tester3@ibm.com"],
+            "invited": ["testuser@in.ibm.com"],
             "add_notification_payload": True,
             "reply_to_mail": "reply_to_mail@us.com",
             "reply_to_name": "US News",
@@ -2854,6 +2825,8 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_send_notifications(self):
+
+        global notificationID
         # Construct a dict representation of a NotificationDevices model
         notification_devices_model = {
             "platforms": [
@@ -3036,6 +3009,7 @@ class TestEventNotificationsV1:
         assert send_notifications_response.get_status_code() == 202
         notification_response = send_notifications_response.get_result()
         assert notification_response is not None
+        notificationID = notification_response.get('notification_id')
 
         #
         # The following status codes aren't covered by tests.
@@ -3048,11 +3022,35 @@ class TestEventNotificationsV1:
         #
 
     @needscredentials
+    def test_get_metrics(self):
+
+        destination_type = "smtp_custom"
+        gte = "2024-08-01T17:18:43Z"
+        lte = "2024-08-02T11:55:22Z"
+        email_to = "testuser@in.ibm.com"
+        subject = "The Metric Test"
+
+        get_metrics_response = self.event_notifications_service.get_metrics(
+            instance_id,
+            destination_type,
+            gte,
+            lte,
+            destination_id=destination_id16,
+            email_to=email_to,
+            notification_id=notificationID,
+            subject=subject,
+        )
+
+        assert get_metrics_response.get_status_code() == 200
+        metric_response = get_metrics_response.get_result()
+        assert metric_response is not None
+
+    @needscredentials
     def test_create_smtp_configuration(self):
 
         global smtp_config_id
         name = "SMTP configuration"
-        domain = "mailx.event-notifications.test.cloud.ibm.com"
+        domain = "test.event-notifications.test.cloud.ibm.com"
         description = "SMTP description"
 
         create_smtp_config_response = self.event_notifications_service.create_smtp_configuration(

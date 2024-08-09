@@ -74,6 +74,91 @@ class EventNotificationsV1(BaseService):
         BaseService.__init__(self, service_url=self.DEFAULT_SERVICE_URL, authenticator=authenticator)
 
     #########################
+    # Metrics
+    #########################
+
+    def get_metrics(
+        self,
+        instance_id: str,
+        destination_type: str,
+        gte: str,
+        lte: str,
+        *,
+        destination_id: str = None,
+        source_id: str = None,
+        email_to: str = None,
+        notification_id: str = None,
+        subject: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get metrics.
+
+        Get metrics.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str destination_type: Destination type. Allowed values are
+               [smtp_custom].
+        :param str gte: GTE (greater than equal), start timestamp in UTC.
+        :param str lte: LTE (less than equal), end timestamp in UTC.
+        :param str destination_id: (optional) Unique identifier for Destination.
+        :param str source_id: (optional) Unique identifier for Source.
+        :param str email_to: (optional) Receiver email id.
+        :param str notification_id: (optional) Notification Id.
+        :param str subject: (optional) Email subject.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `Metrics` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not destination_type:
+            raise ValueError('destination_type must be provided')
+        if not gte:
+            raise ValueError('gte must be provided')
+        if not lte:
+            raise ValueError('lte must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_metrics',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'destination_type': destination_type,
+            'gte': gte,
+            'lte': lte,
+            'destination_id': destination_id,
+            'source_id': source_id,
+            'email_to': email_to,
+            'notification_id': notification_id,
+            'subject': subject,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/metrics'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    #########################
     # Send Notifications
     #########################
 
@@ -2987,67 +3072,6 @@ class EventNotificationsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def update_smtp_allowed_ips(
-        self,
-        instance_id: str,
-        id: str,
-        subnets: List[str],
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        Update SMTP configuration allowed IPs.
-
-        Update SMTP configuration allowed IPs.
-
-        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
-               instance.
-        :param str id: Unique identifier for SMTP.
-        :param List[str] subnets: The SMTP allowed Ips.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `SMTPAllowedIPs` object
-        """
-
-        if not instance_id:
-            raise ValueError('instance_id must be provided')
-        if not id:
-            raise ValueError('id must be provided')
-        if subnets is None:
-            raise ValueError('subnets must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='update_smtp_allowed_ips',
-        )
-        headers.update(sdk_headers)
-
-        data = {
-            'subnets': subnets,
-        }
-        data = {k: v for (k, v) in data.items() if v is not None}
-        data = json.dumps(data)
-        headers['content-type'] = 'application/json'
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['instance_id', 'id']
-        path_param_values = self.encode_path_vars(instance_id, id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/instances/{instance_id}/smtp/config/{id}/allowed_ips'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='PATCH',
-            url=url,
-            headers=headers,
-            data=data,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
     def update_verify_smtp(
         self,
         instance_id: str,
@@ -3107,6 +3131,19 @@ class EventNotificationsV1(BaseService):
         return response
 
 
+class GetMetricsEnums:
+    """
+    Enums for get_metrics parameters.
+    """
+
+    class DestinationType(str, Enum):
+        """
+        Destination type. Allowed values are [smtp_custom].
+        """
+
+        SMTP_CUSTOM = 'smtp_custom'
+
+
 class CreateDestinationEnums:
     """
     Enums for create_destination parameters.
@@ -3138,6 +3175,72 @@ class CreateDestinationEnums:
 ##############################################################################
 # Models
 ##############################################################################
+
+
+class Buckets:
+    """
+    Bucket object.
+
+    :attr int doc_count: (optional) Total count.
+    :attr datetime key_as_string: (optional) Timestamp.
+    """
+
+    def __init__(
+        self,
+        *,
+        doc_count: int = None,
+        key_as_string: datetime = None,
+    ) -> None:
+        """
+        Initialize a Buckets object.
+
+        :param int doc_count: (optional) Total count.
+        :param datetime key_as_string: (optional) Timestamp.
+        """
+        self.doc_count = doc_count
+        self.key_as_string = key_as_string
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Buckets':
+        """Initialize a Buckets object from a json dictionary."""
+        args = {}
+        if 'doc_count' in _dict:
+            args['doc_count'] = _dict.get('doc_count')
+        if 'key_as_string' in _dict:
+            args['key_as_string'] = string_to_datetime(_dict.get('key_as_string'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Buckets object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'doc_count') and self.doc_count is not None:
+            _dict['doc_count'] = self.doc_count
+        if hasattr(self, 'key_as_string') and self.key_as_string is not None:
+            _dict['key_as_string'] = datetime_to_string(self.key_as_string)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Buckets object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Buckets') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Buckets') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class DKIMAttributes:
@@ -4281,6 +4384,70 @@ class EnabledCountriesResponse:
         return not self == other
 
 
+class Histrogram:
+    """
+    Payload describing histogram.
+
+    :attr List[Buckets] buckets: (optional) List of buckets.
+    """
+
+    def __init__(
+        self,
+        *,
+        buckets: List['Buckets'] = None,
+    ) -> None:
+        """
+        Initialize a Histrogram object.
+
+        :param List[Buckets] buckets: (optional) List of buckets.
+        """
+        self.buckets = buckets
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Histrogram':
+        """Initialize a Histrogram object from a json dictionary."""
+        args = {}
+        if 'buckets' in _dict:
+            args['buckets'] = [Buckets.from_dict(v) for v in _dict.get('buckets')]
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Histrogram object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'buckets') and self.buckets is not None:
+            buckets_list = []
+            for v in self.buckets:
+                if isinstance(v, dict):
+                    buckets_list.append(v)
+                else:
+                    buckets_list.append(v.to_dict())
+            _dict['buckets'] = buckets_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Histrogram object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Histrogram') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Histrogram') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class IntegrationCreateMetadata:
     """
     Integration Metadata object.
@@ -4868,6 +5035,159 @@ class IntegrationMetadata:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'IntegrationMetadata') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class Metric:
+    """
+    Payload describing metrics request.
+
+    :attr str key: (optional) key.
+    :attr int doc_count: (optional) doc count.
+    :attr Histrogram histogram: (optional) Payload describing histogram.
+    """
+
+    def __init__(
+        self,
+        *,
+        key: str = None,
+        doc_count: int = None,
+        histogram: 'Histrogram' = None,
+    ) -> None:
+        """
+        Initialize a Metric object.
+
+        :param str key: (optional) key.
+        :param int doc_count: (optional) doc count.
+        :param Histrogram histogram: (optional) Payload describing histogram.
+        """
+        self.key = key
+        self.doc_count = doc_count
+        self.histogram = histogram
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Metric':
+        """Initialize a Metric object from a json dictionary."""
+        args = {}
+        if 'key' in _dict:
+            args['key'] = _dict.get('key')
+        if 'doc_count' in _dict:
+            args['doc_count'] = _dict.get('doc_count')
+        if 'histogram' in _dict:
+            args['histogram'] = Histrogram.from_dict(_dict.get('histogram'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Metric object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'key') and self.key is not None:
+            _dict['key'] = self.key
+        if hasattr(self, 'doc_count') and self.doc_count is not None:
+            _dict['doc_count'] = self.doc_count
+        if hasattr(self, 'histogram') and self.histogram is not None:
+            if isinstance(self.histogram, dict):
+                _dict['histogram'] = self.histogram
+            else:
+                _dict['histogram'] = self.histogram.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Metric object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Metric') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Metric') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class KeyEnum(str, Enum):
+        """
+        key.
+        """
+
+        BOUNCED = 'bounced'
+        DEFERRED = 'deferred'
+        OPENED = 'opened'
+        SUCCESS = 'success'
+        SUBMITTED = 'submitted'
+
+
+class Metrics:
+    """
+    Payload describing a metrics.
+
+    :attr List[Metric] metrics: array of metrics.
+    """
+
+    def __init__(
+        self,
+        metrics: List['Metric'],
+    ) -> None:
+        """
+        Initialize a Metrics object.
+
+        :param List[Metric] metrics: array of metrics.
+        """
+        self.metrics = metrics
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'Metrics':
+        """Initialize a Metrics object from a json dictionary."""
+        args = {}
+        if 'metrics' in _dict:
+            args['metrics'] = [Metric.from_dict(v) for v in _dict.get('metrics')]
+        else:
+            raise ValueError('Required property \'metrics\' not present in Metrics JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a Metrics object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'metrics') and self.metrics is not None:
+            metrics_list = []
+            for v in self.metrics:
+                if isinstance(v, dict):
+                    metrics_list.append(v)
+                else:
+                    metrics_list.append(v.to_dict())
+            _dict['metrics'] = metrics_list
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this Metrics object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'Metrics') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'Metrics') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

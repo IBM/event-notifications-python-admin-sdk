@@ -102,6 +102,7 @@ cos_integration_id = ""
 code_engine_project_CRN = ""
 smtp_user_id = ""
 smtp_config_id = ""
+notificationID = ""
 
 
 ##############################################################################
@@ -1830,6 +1831,8 @@ class TestEventNotificationsV1Examples:
         """
         send_notifications request example
         """
+        global notificationID
+
         try:
             print("\nsend_notifications() result:")
 
@@ -1927,10 +1930,40 @@ class TestEventNotificationsV1Examples:
             send_notifications_response = event_notifications_service.send_notifications(
                 instance_id, body=notification_create_model
             ).get_result()
+            notificationID = send_notifications_response.get('notification_id')
 
             print(json.dumps(send_notifications_response, indent=2))
 
             # end-send_notifications
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_metrics(self):
+        try:
+            print("\nget_metrics() result:")
+            # begin-metrics
+            destination_type = "smtp_custom"
+            gte = "2024-08-01T17:18:43Z"
+            lte = "2024-08-02T11:55:22Z"
+            email_to = "testuser@in.ibm.com"
+            subject = "The Metric Test"
+
+            get_metrics_response = self.event_notifications_service.get_metrics(
+                instance_id,
+                destination_type,
+                gte,
+                lte,
+                destination_id=destination_id16,
+                email_to=email_to,
+                notification_id=notificationID,
+                subject=subject,
+            )
+
+            metric_response = get_metrics_response.get_result()
+            print(json.dumps(metric_response, indent=2))
+            # end-metrics
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1971,23 +2004,6 @@ class TestEventNotificationsV1Examples:
             verify_response = update_verify_smtp_response.get_result()
             print(json.dumps(verify_response, indent=2))
             # end-update_verify_smtp
-
-        except ApiException as e:
-            pytest.fail(str(e))
-
-    @needscredentials
-    def test_update_smtp_allowed_ips_example(self):
-        try:
-            print("\n test_update_smtp_allowed_ips_example() result:")
-            # begin-update_smtp_allowed_ips
-            subnets = ['192.168.1.64']
-            update_smtp_allowed_ip_response = self.event_notifications_service.update_smtp_allowed_ips(
-                instance_id, id=smtp_config_id, subnets=subnets
-            )
-
-            allowed_ip_response = update_smtp_allowed_ip_response.get_result()
-            print(json.dumps(allowed_ip_response, indent=2))
-            # end-update_smtp_allowed_ips
 
         except ApiException as e:
             pytest.fail(str(e))

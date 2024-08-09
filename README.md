@@ -142,10 +142,11 @@ SDK Methods to consume
 	- [List SMTP Users](#list-smtp-users)
 	- [Update SMTP Configuration](#update-smtp-configuration)
 	- [Update SMTP User](#update-smtp-user)
-	- [Update SMTP Allowed Ips](#update-smtp-allowed-ips)
 	- [Delete SMTP User](#delete-smtp-user)
 	- [Delete SMTP Configuration](#delete-smtp-user)
 	- [Verify SMTP](#verify-smtp)
+- [Metrics](#Metrics) 
+    - [Get Metrics](#get-metrics)  
 - [Send Notifications](#send-notifications)
 
 ## Source 
@@ -836,21 +837,6 @@ update_smtp_user_response = update_smtp_user_response.get_result()
 
 ```
 
-### Update SMTP Allowed IPs
-
-```py
-
-subnets = ['<subnet-ips>']
-update_smtp_allowed_ip_response = self.event_notifications_service.update_smtp_allowed_ips(
-    instance_id=<instance-id>,
-    id=<smtp_config_id>,
-    subnets=subnets
-)
-
-allowed_ip_response = update_smtp_allowed_ip_response.get_result()
-
-```
-
 ### Delete SMTP User
 
 ```py
@@ -892,6 +878,27 @@ verify_response = update_verify_smtp_response.get_result()
 
 ```
 supported verification types are dkim,spf and en_authorization.
+
+## Metrics
+
+### Get Metrics
+
+```py
+
+get_metrics_response = self.event_notifications_service.get_metrics(
+    instance_id=<instance-id>,
+    destination_type="smtp_custom",
+    gte=<gte-timestamp>,
+    lte=<lte-timestamp>, 
+    destination_id=<destination-id>,
+    email_to=<email-to>,
+    notification_id=<notification-id>,
+    subject=<subject>
+)
+
+metric_response = get_metrics_response.get_result()
+
+```
 
 ### Send Notifications
 

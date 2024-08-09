@@ -66,6 +66,209 @@ def preprocess_url(operation_path: str):
 
 
 ##############################################################################
+# Start of Service: Metrics
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestGetMetrics:
+    """
+    Test Class for get_metrics
+    """
+
+    @responses.activate
+    def test_get_metrics_all_params(self):
+        """
+        get_metrics()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/metrics')
+        mock_response = '{"metrics": [{"key": "bounced", "doc_count": 9, "histogram": {"buckets": [{"doc_count": 9, "key_as_string": "2019-01-01T12:00:00.000Z"}]}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        destination_type = 'smtp_custom'
+        gte = 'testString'
+        lte = 'testString'
+        destination_id = 'testString'
+        source_id = 'testString'
+        email_to = 'testString'
+        notification_id = 'testString'
+        subject = 'testString'
+
+        # Invoke method
+        response = _service.get_metrics(
+            instance_id,
+            destination_type,
+            gte,
+            lte,
+            destination_id=destination_id,
+            source_id=source_id,
+            email_to=email_to,
+            notification_id=notification_id,
+            subject=subject,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'destination_type={}'.format(destination_type) in query_string
+        assert 'gte={}'.format(gte) in query_string
+        assert 'lte={}'.format(lte) in query_string
+        assert 'destination_id={}'.format(destination_id) in query_string
+        assert 'source_id={}'.format(source_id) in query_string
+        assert 'email_to={}'.format(email_to) in query_string
+        assert 'notification_id={}'.format(notification_id) in query_string
+        assert 'subject={}'.format(subject) in query_string
+
+    def test_get_metrics_all_params_with_retries(self):
+        # Enable retries and run test_get_metrics_all_params.
+        _service.enable_retries()
+        self.test_get_metrics_all_params()
+
+        # Disable retries and run test_get_metrics_all_params.
+        _service.disable_retries()
+        self.test_get_metrics_all_params()
+
+    @responses.activate
+    def test_get_metrics_required_params(self):
+        """
+        test_get_metrics_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/metrics')
+        mock_response = '{"metrics": [{"key": "bounced", "doc_count": 9, "histogram": {"buckets": [{"doc_count": 9, "key_as_string": "2019-01-01T12:00:00.000Z"}]}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        destination_type = 'smtp_custom'
+        gte = 'testString'
+        lte = 'testString'
+
+        # Invoke method
+        response = _service.get_metrics(
+            instance_id,
+            destination_type,
+            gte,
+            lte,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'destination_type={}'.format(destination_type) in query_string
+        assert 'gte={}'.format(gte) in query_string
+        assert 'lte={}'.format(lte) in query_string
+
+    def test_get_metrics_required_params_with_retries(self):
+        # Enable retries and run test_get_metrics_required_params.
+        _service.enable_retries()
+        self.test_get_metrics_required_params()
+
+        # Disable retries and run test_get_metrics_required_params.
+        _service.disable_retries()
+        self.test_get_metrics_required_params()
+
+    @responses.activate
+    def test_get_metrics_value_error(self):
+        """
+        test_get_metrics_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/metrics')
+        mock_response = '{"metrics": [{"key": "bounced", "doc_count": 9, "histogram": {"buckets": [{"doc_count": 9, "key_as_string": "2019-01-01T12:00:00.000Z"}]}}]}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        destination_type = 'smtp_custom'
+        gte = 'testString'
+        lte = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "destination_type": destination_type,
+            "gte": gte,
+            "lte": lte,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_metrics(**req_copy)
+
+    def test_get_metrics_value_error_with_retries(self):
+        # Enable retries and run test_get_metrics_value_error.
+        _service.enable_retries()
+        self.test_get_metrics_value_error()
+
+        # Disable retries and run test_get_metrics_value_error.
+        _service.disable_retries()
+        self.test_get_metrics_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: Metrics
+##############################################################################
+
+##############################################################################
 # Start of Service: SendNotifications
 ##############################################################################
 # region
@@ -6166,98 +6369,6 @@ class TestGetSmtpAllowedIps:
         self.test_get_smtp_allowed_ips_value_error()
 
 
-class TestUpdateSmtpAllowedIps:
-    """
-    Test Class for update_smtp_allowed_ips
-    """
-
-    @responses.activate
-    def test_update_smtp_allowed_ips_all_params(self):
-        """
-        update_smtp_allowed_ips()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/smtp/config/testString/allowed_ips')
-        mock_response = '{"subnets": ["subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(
-            responses.PATCH,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        subnets = ['testString']
-
-        # Invoke method
-        response = _service.update_smtp_allowed_ips(
-            instance_id,
-            id,
-            subnets,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate body params
-        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
-        assert req_body['subnets'] == ['testString']
-
-    def test_update_smtp_allowed_ips_all_params_with_retries(self):
-        # Enable retries and run test_update_smtp_allowed_ips_all_params.
-        _service.enable_retries()
-        self.test_update_smtp_allowed_ips_all_params()
-
-        # Disable retries and run test_update_smtp_allowed_ips_all_params.
-        _service.disable_retries()
-        self.test_update_smtp_allowed_ips_all_params()
-
-    @responses.activate
-    def test_update_smtp_allowed_ips_value_error(self):
-        """
-        test_update_smtp_allowed_ips_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/smtp/config/testString/allowed_ips')
-        mock_response = '{"subnets": ["subnets"], "updated_at": "2019-01-01T12:00:00.000Z"}'
-        responses.add(
-            responses.PATCH,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        instance_id = 'testString'
-        id = 'testString'
-        subnets = ['testString']
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-            "id": id,
-            "subnets": subnets,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.update_smtp_allowed_ips(**req_copy)
-
-    def test_update_smtp_allowed_ips_value_error_with_retries(self):
-        # Enable retries and run test_update_smtp_allowed_ips_value_error.
-        _service.enable_retries()
-        self.test_update_smtp_allowed_ips_value_error()
-
-        # Disable retries and run test_update_smtp_allowed_ips_value_error.
-        _service.disable_retries()
-        self.test_update_smtp_allowed_ips_value_error()
-
-
 class TestUpdateVerifySmtp:
     """
     Test Class for update_verify_smtp
@@ -6361,6 +6472,37 @@ class TestUpdateVerifySmtp:
 # Start of Model Tests
 ##############################################################################
 # region
+
+
+class TestModel_Buckets:
+    """
+    Test Class for Buckets
+    """
+
+    def test_buckets_serialization(self):
+        """
+        Test serialization/deserialization for Buckets
+        """
+
+        # Construct a json representation of a Buckets model
+        buckets_model_json = {}
+        buckets_model_json['doc_count'] = 38
+        buckets_model_json['key_as_string'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of Buckets by calling from_dict on the json representation
+        buckets_model = Buckets.from_dict(buckets_model_json)
+        assert buckets_model != False
+
+        # Construct a model instance of Buckets by calling from_dict on the json representation
+        buckets_model_dict = Buckets.from_dict(buckets_model_json).__dict__
+        buckets_model2 = Buckets(**buckets_model_dict)
+
+        # Verify the model instances are equivalent
+        assert buckets_model == buckets_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        buckets_model_json2 = buckets_model.to_dict()
+        assert buckets_model_json2 == buckets_model_json
 
 
 class TestModel_DKIMAttributes:
@@ -6817,6 +6959,42 @@ class TestModel_EnabledCountriesResponse:
         assert enabled_countries_response_model_json2 == enabled_countries_response_model_json
 
 
+class TestModel_Histrogram:
+    """
+    Test Class for Histrogram
+    """
+
+    def test_histrogram_serialization(self):
+        """
+        Test serialization/deserialization for Histrogram
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        buckets_model = {}  # Buckets
+        buckets_model['doc_count'] = 38
+        buckets_model['key_as_string'] = '2019-01-01T12:00:00Z'
+
+        # Construct a json representation of a Histrogram model
+        histrogram_model_json = {}
+        histrogram_model_json['buckets'] = [buckets_model]
+
+        # Construct a model instance of Histrogram by calling from_dict on the json representation
+        histrogram_model = Histrogram.from_dict(histrogram_model_json)
+        assert histrogram_model != False
+
+        # Construct a model instance of Histrogram by calling from_dict on the json representation
+        histrogram_model_dict = Histrogram.from_dict(histrogram_model_json).__dict__
+        histrogram_model2 = Histrogram(**histrogram_model_dict)
+
+        # Verify the model instances are equivalent
+        assert histrogram_model == histrogram_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        histrogram_model_json2 = histrogram_model.to_dict()
+        assert histrogram_model_json2 == histrogram_model_json
+
+
 class TestModel_IntegrationCreateMetadata:
     """
     Test Class for IntegrationCreateMetadata
@@ -7068,6 +7246,91 @@ class TestModel_IntegrationMetadata:
         # Convert model instance back to dict and verify no loss of data
         integration_metadata_model_json2 = integration_metadata_model.to_dict()
         assert integration_metadata_model_json2 == integration_metadata_model_json
+
+
+class TestModel_Metric:
+    """
+    Test Class for Metric
+    """
+
+    def test_metric_serialization(self):
+        """
+        Test serialization/deserialization for Metric
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        buckets_model = {}  # Buckets
+        buckets_model['doc_count'] = 38
+        buckets_model['key_as_string'] = '2019-01-01T12:00:00Z'
+
+        histrogram_model = {}  # Histrogram
+        histrogram_model['buckets'] = [buckets_model]
+
+        # Construct a json representation of a Metric model
+        metric_model_json = {}
+        metric_model_json['key'] = 'bounced'
+        metric_model_json['doc_count'] = 38
+        metric_model_json['histogram'] = histrogram_model
+
+        # Construct a model instance of Metric by calling from_dict on the json representation
+        metric_model = Metric.from_dict(metric_model_json)
+        assert metric_model != False
+
+        # Construct a model instance of Metric by calling from_dict on the json representation
+        metric_model_dict = Metric.from_dict(metric_model_json).__dict__
+        metric_model2 = Metric(**metric_model_dict)
+
+        # Verify the model instances are equivalent
+        assert metric_model == metric_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        metric_model_json2 = metric_model.to_dict()
+        assert metric_model_json2 == metric_model_json
+
+
+class TestModel_Metrics:
+    """
+    Test Class for Metrics
+    """
+
+    def test_metrics_serialization(self):
+        """
+        Test serialization/deserialization for Metrics
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        buckets_model = {}  # Buckets
+        buckets_model['doc_count'] = 1
+        buckets_model['key_as_string'] = '2024-06-16T09:00:00Z'
+
+        histrogram_model = {}  # Histrogram
+        histrogram_model['buckets'] = [buckets_model]
+
+        metric_model = {}  # Metric
+        metric_model['key'] = 'bounced'
+        metric_model['doc_count'] = 1
+        metric_model['histogram'] = histrogram_model
+
+        # Construct a json representation of a Metrics model
+        metrics_model_json = {}
+        metrics_model_json['metrics'] = [metric_model]
+
+        # Construct a model instance of Metrics by calling from_dict on the json representation
+        metrics_model = Metrics.from_dict(metrics_model_json)
+        assert metrics_model != False
+
+        # Construct a model instance of Metrics by calling from_dict on the json representation
+        metrics_model_dict = Metrics.from_dict(metrics_model_json).__dict__
+        metrics_model2 = Metrics(**metrics_model_dict)
+
+        # Verify the model instances are equivalent
+        assert metrics_model == metrics_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        metrics_model_json2 = metrics_model.to_dict()
+        assert metrics_model_json2 == metrics_model_json
 
 
 class TestModel_NotificationCreate:
