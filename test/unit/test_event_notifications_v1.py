@@ -125,7 +125,8 @@ class TestGetMetrics:
         destination_type = 'smtp_custom'
         gte = 'testString'
         lte = 'testString'
-        id = 'testString'
+        destination_id = 'testString'
+        source_id = 'testString'
         email_to = 'testString'
         notification_id = 'testString'
         subject = 'testString'
@@ -136,7 +137,8 @@ class TestGetMetrics:
             destination_type,
             gte,
             lte,
-            id=id,
+            destination_id=destination_id,
+            source_id=source_id,
             email_to=email_to,
             notification_id=notification_id,
             subject=subject,
@@ -152,7 +154,8 @@ class TestGetMetrics:
         assert 'destination_type={}'.format(destination_type) in query_string
         assert 'gte={}'.format(gte) in query_string
         assert 'lte={}'.format(lte) in query_string
-        assert 'id={}'.format(id) in query_string
+        assert 'destination_id={}'.format(destination_id) in query_string
+        assert 'source_id={}'.format(source_id) in query_string
         assert 'email_to={}'.format(email_to) in query_string
         assert 'notification_id={}'.format(notification_id) in query_string
         assert 'subject={}'.format(subject) in query_string

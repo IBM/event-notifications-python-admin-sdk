@@ -84,7 +84,8 @@ class EventNotificationsV1(BaseService):
         gte: str,
         lte: str,
         *,
-        id: str = None,
+        destination_id: str = None,
+        source_id: str = None,
         email_to: str = None,
         notification_id: str = None,
         subject: str = None,
@@ -101,7 +102,8 @@ class EventNotificationsV1(BaseService):
                [smtp_custom].
         :param str gte: GTE (greater than equal), start timestamp in UTC.
         :param str lte: LTE (less than equal), end timestamp in UTC.
-        :param str id: (optional) Unique identifier for Source.
+        :param str destination_id: (optional) Unique identifier for Destination.
+        :param str source_id: (optional) Unique identifier for Source.
         :param str email_to: (optional) Receiver email id.
         :param str notification_id: (optional) Notification Id.
         :param str subject: (optional) Email subject.
@@ -130,7 +132,8 @@ class EventNotificationsV1(BaseService):
             'destination_type': destination_type,
             'gte': gte,
             'lte': lte,
-            'id': id,
+            'destination_id': destination_id,
+            'source_id': source_id,
             'email_to': email_to,
             'notification_id': notification_id,
             'subject': subject,

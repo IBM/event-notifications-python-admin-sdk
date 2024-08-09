@@ -3035,7 +3035,7 @@ class TestEventNotificationsV1:
             destination_type,
             gte,
             lte,
-            id=destination_id16,
+            destination_id=destination_id16,
             email_to=email_to,
             notification_id=notificationID,
             subject=subject,
