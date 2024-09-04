@@ -953,6 +953,7 @@ htmlbody = '"Hi  ,<br/>Certificate expiring in 90 days.<br/><br/>Please login to
            'Security and Complaince dashboard</a> to find more information<br/>"'
 mailto = '[\"abc@ibm.com\", \"def@us.ibm.com\"]'
 smsto = '[\"+911234567890\", \"+911224567890\"]'
+slackto = '[\"C07FALXBH4G\"]'
 mms = '{"content": "akajdklahl", "content_type": "image/png"}'
 templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
 
@@ -969,6 +970,7 @@ notification_create_model = {
     'ibmensubject': 'Findings on IBM Cloud Security Advisor',
     'ibmenmailto': mailto,
     'ibmensmsto': smsto,
+    'ibmenslackto': slackto,
     'ibmenmms': mms,
     "ibmentemplates": templates,
     'id': notification_id,
@@ -1027,6 +1029,7 @@ send_notifications_response = event_notifications_service.send_notifications(
   - **ibmenhtmlbody*** (_string_) - The html body of notification for email.
   - **ibmenmailto*** (_Array of string_) - Array of email ids to which the notification to be sent.
   - **ibmensmsto*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
+  - **ibmenslackto*** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
   - **ibmentemplates*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
 
 Note: variable with * represents the mandatory attribute.

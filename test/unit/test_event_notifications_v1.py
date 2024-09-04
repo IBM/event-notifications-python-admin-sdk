@@ -337,6 +337,7 @@ class TestSendNotifications:
         notification_create_model['ibmensubject'] = 'testString'
         notification_create_model['ibmentemplates'] = 'testString'
         notification_create_model['ibmenmailto'] = 'testString'
+        notification_create_model['ibmenslackto'] = 'testString'
         notification_create_model['ibmensmsto'] = 'testString'
         notification_create_model['ibmenhtmlbody'] = 'testString'
         notification_create_model['subject'] = 'testString'
@@ -6505,6 +6506,71 @@ class TestModel_Buckets:
         assert buckets_model_json2 == buckets_model_json
 
 
+class TestModel_ChannelCreateAttributes:
+    """
+    Test Class for ChannelCreateAttributes
+    """
+
+    def test_channel_create_attributes_serialization(self):
+        """
+        Test serialization/deserialization for ChannelCreateAttributes
+        """
+
+        # Construct a json representation of a ChannelCreateAttributes model
+        channel_create_attributes_model_json = {}
+        channel_create_attributes_model_json['id'] = 'testString'
+
+        # Construct a model instance of ChannelCreateAttributes by calling from_dict on the json representation
+        channel_create_attributes_model = ChannelCreateAttributes.from_dict(channel_create_attributes_model_json)
+        assert channel_create_attributes_model != False
+
+        # Construct a model instance of ChannelCreateAttributes by calling from_dict on the json representation
+        channel_create_attributes_model_dict = ChannelCreateAttributes.from_dict(
+            channel_create_attributes_model_json
+        ).__dict__
+        channel_create_attributes_model2 = ChannelCreateAttributes(**channel_create_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert channel_create_attributes_model == channel_create_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        channel_create_attributes_model_json2 = channel_create_attributes_model.to_dict()
+        assert channel_create_attributes_model_json2 == channel_create_attributes_model_json
+
+
+class TestModel_ChannelUpdateAttributes:
+    """
+    Test Class for ChannelUpdateAttributes
+    """
+
+    def test_channel_update_attributes_serialization(self):
+        """
+        Test serialization/deserialization for ChannelUpdateAttributes
+        """
+
+        # Construct a json representation of a ChannelUpdateAttributes model
+        channel_update_attributes_model_json = {}
+        channel_update_attributes_model_json['id'] = 'testString'
+        channel_update_attributes_model_json['operation'] = 'add'
+
+        # Construct a model instance of ChannelUpdateAttributes by calling from_dict on the json representation
+        channel_update_attributes_model = ChannelUpdateAttributes.from_dict(channel_update_attributes_model_json)
+        assert channel_update_attributes_model != False
+
+        # Construct a model instance of ChannelUpdateAttributes by calling from_dict on the json representation
+        channel_update_attributes_model_dict = ChannelUpdateAttributes.from_dict(
+            channel_update_attributes_model_json
+        ).__dict__
+        channel_update_attributes_model2 = ChannelUpdateAttributes(**channel_update_attributes_model_dict)
+
+        # Verify the model instances are equivalent
+        assert channel_update_attributes_model == channel_update_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        channel_update_attributes_model_json2 = channel_update_attributes_model.to_dict()
+        assert channel_update_attributes_model_json2 == channel_update_attributes_model_json
+
+
 class TestModel_DKIMAttributes:
     """
     Test Class for DKIMAttributes
@@ -7357,6 +7423,7 @@ class TestModel_NotificationCreate:
         notification_create_model_json['ibmensubject'] = 'testString'
         notification_create_model_json['ibmentemplates'] = 'testString'
         notification_create_model_json['ibmenmailto'] = 'testString'
+        notification_create_model_json['ibmenslackto'] = 'testString'
         notification_create_model_json['ibmensmsto'] = 'testString'
         notification_create_model_json['ibmenhtmlbody'] = 'testString'
         notification_create_model_json['subject'] = 'testString'
@@ -9808,6 +9875,7 @@ class TestModel_DestinationConfigOneOfSlackDestinationConfig:
         # Construct a json representation of a DestinationConfigOneOfSlackDestinationConfig model
         destination_config_one_of_slack_destination_config_model_json = {}
         destination_config_one_of_slack_destination_config_model_json['url'] = 'testString'
+        destination_config_one_of_slack_destination_config_model_json['type'] = 'incoming_webhook'
 
         # Construct a model instance of DestinationConfigOneOfSlackDestinationConfig by calling from_dict on the json representation
         destination_config_one_of_slack_destination_config_model = (
@@ -9840,6 +9908,57 @@ class TestModel_DestinationConfigOneOfSlackDestinationConfig:
         assert (
             destination_config_one_of_slack_destination_config_model_json2
             == destination_config_one_of_slack_destination_config_model_json
+        )
+
+
+class TestModel_DestinationConfigOneOfSlackDirectMessageDestinationConfig:
+    """
+    Test Class for DestinationConfigOneOfSlackDirectMessageDestinationConfig
+    """
+
+    def test_destination_config_one_of_slack_direct_message_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfSlackDirectMessageDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfSlackDirectMessageDestinationConfig model
+        destination_config_one_of_slack_direct_message_destination_config_model_json = {}
+        destination_config_one_of_slack_direct_message_destination_config_model_json['token'] = 'testString'
+        destination_config_one_of_slack_direct_message_destination_config_model_json['type'] = 'direct_message'
+
+        # Construct a model instance of DestinationConfigOneOfSlackDirectMessageDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_slack_direct_message_destination_config_model = (
+            DestinationConfigOneOfSlackDirectMessageDestinationConfig.from_dict(
+                destination_config_one_of_slack_direct_message_destination_config_model_json
+            )
+        )
+        assert destination_config_one_of_slack_direct_message_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfSlackDirectMessageDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_slack_direct_message_destination_config_model_dict = (
+            DestinationConfigOneOfSlackDirectMessageDestinationConfig.from_dict(
+                destination_config_one_of_slack_direct_message_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_slack_direct_message_destination_config_model2 = (
+            DestinationConfigOneOfSlackDirectMessageDestinationConfig(
+                **destination_config_one_of_slack_direct_message_destination_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            destination_config_one_of_slack_direct_message_destination_config_model
+            == destination_config_one_of_slack_direct_message_destination_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_slack_direct_message_destination_config_model_json2 = (
+            destination_config_one_of_slack_direct_message_destination_config_model.to_dict()
+        )
+        assert (
+            destination_config_one_of_slack_direct_message_destination_config_model_json2
+            == destination_config_one_of_slack_direct_message_destination_config_model_json
         )
 
 
@@ -10335,6 +10454,77 @@ class TestModel_SubscriptionAttributesSlackAttributesResponse:
         assert actual_dict == expected_dict
 
 
+class TestModel_SubscriptionAttributesSlackDirectMessageAttributesResponse:
+    """
+    Test Class for SubscriptionAttributesSlackDirectMessageAttributesResponse
+    """
+
+    def test_subscription_attributes_slack_direct_message_attributes_response_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionAttributesSlackDirectMessageAttributesResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        channel_create_attributes_model = {}  # ChannelCreateAttributes
+        channel_create_attributes_model['id'] = 'testString'
+
+        # Construct a json representation of a SubscriptionAttributesSlackDirectMessageAttributesResponse model
+        subscription_attributes_slack_direct_message_attributes_response_model_json = {}
+        subscription_attributes_slack_direct_message_attributes_response_model_json['channels'] = [
+            channel_create_attributes_model
+        ]
+        subscription_attributes_slack_direct_message_attributes_response_model_json['template_id_notification'] = (
+            'testString'
+        )
+        subscription_attributes_slack_direct_message_attributes_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of SubscriptionAttributesSlackDirectMessageAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_slack_direct_message_attributes_response_model = (
+            SubscriptionAttributesSlackDirectMessageAttributesResponse.from_dict(
+                subscription_attributes_slack_direct_message_attributes_response_model_json
+            )
+        )
+        assert subscription_attributes_slack_direct_message_attributes_response_model != False
+
+        # Construct a model instance of SubscriptionAttributesSlackDirectMessageAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_slack_direct_message_attributes_response_model_dict = (
+            SubscriptionAttributesSlackDirectMessageAttributesResponse.from_dict(
+                subscription_attributes_slack_direct_message_attributes_response_model_json
+            ).__dict__
+        )
+        subscription_attributes_slack_direct_message_attributes_response_model2 = (
+            SubscriptionAttributesSlackDirectMessageAttributesResponse(
+                **subscription_attributes_slack_direct_message_attributes_response_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_attributes_slack_direct_message_attributes_response_model
+            == subscription_attributes_slack_direct_message_attributes_response_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_attributes_slack_direct_message_attributes_response_model_json2 = (
+            subscription_attributes_slack_direct_message_attributes_response_model.to_dict()
+        )
+        assert (
+            subscription_attributes_slack_direct_message_attributes_response_model_json2
+            == subscription_attributes_slack_direct_message_attributes_response_model_json
+        )
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_slack_direct_message_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_slack_direct_message_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_slack_direct_message_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_slack_direct_message_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
+
 class TestModel_SubscriptionAttributesWebhookAttributesResponse:
     """
     Test Class for SubscriptionAttributesWebhookAttributesResponse
@@ -10728,6 +10918,66 @@ class TestModel_SubscriptionCreateAttributesSlackAttributes:
         assert (
             subscription_create_attributes_slack_attributes_model_json2
             == subscription_create_attributes_slack_attributes_model_json
+        )
+
+
+class TestModel_SubscriptionCreateAttributesSlackDirectMessageAttributes:
+    """
+    Test Class for SubscriptionCreateAttributesSlackDirectMessageAttributes
+    """
+
+    def test_subscription_create_attributes_slack_direct_message_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesSlackDirectMessageAttributes
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        channel_create_attributes_model = {}  # ChannelCreateAttributes
+        channel_create_attributes_model['id'] = 'testString'
+
+        # Construct a json representation of a SubscriptionCreateAttributesSlackDirectMessageAttributes model
+        subscription_create_attributes_slack_direct_message_attributes_model_json = {}
+        subscription_create_attributes_slack_direct_message_attributes_model_json['channels'] = [
+            channel_create_attributes_model
+        ]
+        subscription_create_attributes_slack_direct_message_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+
+        # Construct a model instance of SubscriptionCreateAttributesSlackDirectMessageAttributes by calling from_dict on the json representation
+        subscription_create_attributes_slack_direct_message_attributes_model = (
+            SubscriptionCreateAttributesSlackDirectMessageAttributes.from_dict(
+                subscription_create_attributes_slack_direct_message_attributes_model_json
+            )
+        )
+        assert subscription_create_attributes_slack_direct_message_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesSlackDirectMessageAttributes by calling from_dict on the json representation
+        subscription_create_attributes_slack_direct_message_attributes_model_dict = (
+            SubscriptionCreateAttributesSlackDirectMessageAttributes.from_dict(
+                subscription_create_attributes_slack_direct_message_attributes_model_json
+            ).__dict__
+        )
+        subscription_create_attributes_slack_direct_message_attributes_model2 = (
+            SubscriptionCreateAttributesSlackDirectMessageAttributes(
+                **subscription_create_attributes_slack_direct_message_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_create_attributes_slack_direct_message_attributes_model
+            == subscription_create_attributes_slack_direct_message_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_slack_direct_message_attributes_model_json2 = (
+            subscription_create_attributes_slack_direct_message_attributes_model.to_dict()
+        )
+        assert (
+            subscription_create_attributes_slack_direct_message_attributes_model_json2
+            == subscription_create_attributes_slack_direct_message_attributes_model_json
         )
 
 
@@ -11161,6 +11411,67 @@ class TestModel_SubscriptionUpdateAttributesSlackAttributes:
         assert (
             subscription_update_attributes_slack_attributes_model_json2
             == subscription_update_attributes_slack_attributes_model_json
+        )
+
+
+class TestModel_SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes:
+    """
+    Test Class for SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes
+    """
+
+    def test_subscription_update_attributes_slack_direct_message_update_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        channel_update_attributes_model = {}  # ChannelUpdateAttributes
+        channel_update_attributes_model['id'] = 'testString'
+        channel_update_attributes_model['operation'] = 'add'
+
+        # Construct a json representation of a SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes model
+        subscription_update_attributes_slack_direct_message_update_attributes_model_json = {}
+        subscription_update_attributes_slack_direct_message_update_attributes_model_json['channels'] = [
+            channel_update_attributes_model
+        ]
+        subscription_update_attributes_slack_direct_message_update_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+
+        # Construct a model instance of SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_slack_direct_message_update_attributes_model = (
+            SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes.from_dict(
+                subscription_update_attributes_slack_direct_message_update_attributes_model_json
+            )
+        )
+        assert subscription_update_attributes_slack_direct_message_update_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_slack_direct_message_update_attributes_model_dict = (
+            SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes.from_dict(
+                subscription_update_attributes_slack_direct_message_update_attributes_model_json
+            ).__dict__
+        )
+        subscription_update_attributes_slack_direct_message_update_attributes_model2 = (
+            SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes(
+                **subscription_update_attributes_slack_direct_message_update_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_update_attributes_slack_direct_message_update_attributes_model
+            == subscription_update_attributes_slack_direct_message_update_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_slack_direct_message_update_attributes_model_json2 = (
+            subscription_update_attributes_slack_direct_message_update_attributes_model.to_dict()
+        )
+        assert (
+            subscription_update_attributes_slack_direct_message_update_attributes_model_json2
+            == subscription_update_attributes_slack_direct_message_update_attributes_model_json
         )
 
 
