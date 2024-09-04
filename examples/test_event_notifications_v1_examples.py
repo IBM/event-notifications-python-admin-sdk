@@ -66,6 +66,7 @@ destination_id15 = ""
 destination_id16 = ""
 destination_id17 = ""
 destination_id18 = ""
+destination_id19 = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -75,6 +76,7 @@ subscription_id4 = ""
 subscription_id5 = ""
 subscription_id6 = ""
 subscription_id7 = ""
+subscription_id8 = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -103,6 +105,8 @@ code_engine_project_CRN = ""
 smtp_user_id = ""
 smtp_config_id = ""
 notificationID = ""
+slack_dm_token = ""
+slack_channel_id = ""
 
 
 ##############################################################################
@@ -116,7 +120,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -154,6 +158,8 @@ class TestEventNotificationsV1Examples:
             template_body = cls.config["TEMPLATE_BODY"]
             slack_template_body = cls.config["SLACK_TEMPLATE_BODY"]
             code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
+            slack_dm_token = cls.config["SLACK_DM_TOKEN"]
+            slack_channel_id = cls.config["SLACK_CHANNEL_ID"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -168,6 +174,8 @@ class TestEventNotificationsV1Examples:
             assert template_body is not None
             assert cos_instance_crn is not None
             assert code_engine_project_CRN is not None
+            assert slack_dm_token is not None
+            assert slack_channel_id is not None
 
         print("Setup complete.")
 
@@ -381,7 +389,7 @@ class TestEventNotificationsV1Examples:
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19
         try:
             print("\ncreate_destination() result:")
             # begin-create_destination
@@ -443,9 +451,7 @@ class TestEventNotificationsV1Examples:
             destination_id3 = destination.id
 
             # slack
-            slack_config_params = {
-                "url": "https://api.slack.com/myslack",
-            }
+            slack_config_params = {"url": "https://api.slack.com/myslack", "type": "incoming_webhook"}
 
             destination_config_model = {
                 "params": slack_config_params,
@@ -789,6 +795,27 @@ class TestEventNotificationsV1Examples:
             destination_response = create_destination_response.get_result()
             destination_id18 = destination_response.get('id')
 
+            slack_config_params = {"token": slack_dm_token, "type": "direct_message"}
+
+            destination_config_model = {
+                "params": slack_config_params,
+            }
+
+            name = "Slack_DM_destination"
+            typeval = "slack"
+            description = "Slack DM Destination"
+
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model,
+            )
+            destination_response = create_destination_response.get_result()
+            destination = DestinationResponse.from_dict(destination_response)
+            destination_id19 = destination.id
+
             # end-create_destination
 
         except ApiException as e:
@@ -1035,9 +1062,7 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(destination, indent=2))
 
             # Slack
-            slack_config_params = {
-                "url": "https://api.slack.com/myslack",
-            }
+            slack_config_params = {"url": "https://api.slack.com/myslack", "type": "incoming_webhook"}
 
             destination_config_model = {
                 "params": slack_config_params,
@@ -1340,7 +1365,26 @@ class TestEventNotificationsV1Examples:
                 config=destination_config_model,
             ).get_result()
 
-            print(json.dumps(destination, indent=2))
+            print(json.dumps(update_destination_response, indent=2))
+
+            slack_config_params = {"token": slack_dm_token, "type": "direct_message"}
+
+            destination_config_model = {
+                "params": slack_config_params,
+            }
+
+            name = "Slack_DM_destination_update"
+            description = "Slack DM Destination update"
+
+            update_destination_response = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id19,
+                name=name,
+                description=description,
+                config=destination_config_model,
+            ).get_result()
+
+            print(json.dumps(update_destination_response, indent=2))
 
             # end-update_destination
 
@@ -1421,7 +1465,7 @@ class TestEventNotificationsV1Examples:
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8
         try:
             print("\ncreate_subscription() result:")
             # begin-create_subscription
@@ -1588,6 +1632,29 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(create_subscription_response, indent=2))
             subscription_id7 = create_subscription_response.get("id")
+
+            channel_create_attributes_model_array = [{'id': slack_channel_id}]
+
+            subscription_create_attributes_model_json = {
+                'channels': channel_create_attributes_model_array,
+                'template_id_notification': slack_template_id,
+            }
+
+            subscription_create_attributes_model = SubscriptionCreateAttributesSlackDirectMessageAttributes.from_dict(
+                subscription_create_attributes_model_json
+            )
+
+            create_subscription_response = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id19,
+                topic_id=topic_id,
+                description=description,
+                attributes=subscription_create_attributes_model,
+            )
+
+            subscription_response = create_subscription_response.get_result()
+            subscription_id8 = subscription_response.get("id")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1809,6 +1876,33 @@ class TestEventNotificationsV1Examples:
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
 
+            name = "Slack DM subscription update"
+            description = "Subscription for slack DM updated"
+
+            channel_update_attributes_model_array = [{'id': slack_channel_id, 'operation': 'add'}]
+
+            subscription_update_attributes_model_json = {
+                'channels': channel_update_attributes_model_array,
+                'template_id_notification': slack_template_id,
+            }
+
+            subscription_update_attributes_model = (
+                SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes.from_dict(
+                    subscription_update_attributes_model_json
+                )
+            )
+
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id8,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+
             # end-update_subscription
         except ApiException as e:
             pytest.fail(str(e))
@@ -1901,6 +1995,7 @@ class TestEventNotificationsV1Examples:
             )
             mailto = '["abc@ibm.com", "def@us.ibm.com"]'
             smsto = '["+911234567890", "+911224567890"]'
+            slackto = '["C07FALXBH4G"]'
             mms = '{"content": "iVBORw0KGgoAAAANSUhEUgAAAFoAAAA4CAYAAAB9lO9TAAAAAXNSR0IArs4c6QAAActpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+QWRvYmUgSW1hZ2VSZWFkeTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KKS7NPQAABO9JREFUeAHtW81x2zoQBhgn46NLYCpISpA6cCowfYjn3ZJUELmC5Og4h0AVPKeC8HWgDh5L8DGTTMR8KxoSBCzAX3us8WKGJrg/34KfqF2AkJWSJgwIA8KAMCAMCAPCgDAgDAgDwoAw8LQZ0GfFRT2egrpcmq9zwpkGzx9RXWqllsZ8Nb7GXg+Pq83SfDm3OKlzUVy8B1mfUjYxXRZTPC65ntVKfwOZ/xfFP7Npx1afFkVx0gUTJJ91seNsjvCkXHKKnrLK2k+EZ+GY83oGYlbGmFtXOS7uMRG9h+di2z5ifEefDmmPlQE9zVfxzy3y54puchq8rnT93D7Z4+PusLjoY/GParX+wQH3lJWwn5PPRHgE1dq0evEBRp/JcGxcrZ6fA8YQlt+K4u3rsfgHUgz9W2+uxxQnHxHF9p0vs9fQDS6CFgPFMNs8iVYw7PxnW0imwes/ivuMq1W9VOqZFMH+H8vDe2guJCbmC07eyLLSmKsyrg81aby6Si1E0r4UK8NM76oKo1JhTt0H56FQ1K83Od9qkZ8LpXSuerVwTEecP3LfR05OMq3WdCrpT9eWwgNGicPgYFuLL8Yz3JcLiNnFjfvBIT/TSvCEs43JMKYSusrVH3QxpBtxSXFvbHh/fWp98Y2gfi+Sra9/Zp/olsJS+SBt12m8XSHlcO7Pl4tGMnc82QpP5zxmGZf/XMV1orlXBvCBhe2sePsjlDYSOCTfonF+KTzOvotMK/3dL1y+39C4hA2sqlZ1dG7tx3KvwdEHu1K2cjZ1oOTNrAFz/o+RtYiSeC2+rLpS6pdhNXvCYXFRgHPA4Osf9b+FPpG7s0B3iMUQebN+gzkd3eyIVpdwriIAOeSnER3E+iauE40w8BQYQN4OW2pbCA6XKEKL0CsuSeHFvaIaSh3nfrHhrNNxm+032rWBb875czJMN18qtS6Qxz9yepLRlNRfPR9ijsYrS/0vdlmCghO78RZ5n3y7t2pswd1TR2Ydm0KxZ+hcVE6/YzeJ1xHDN3vxHpKFL92/TsXVK7KlN3N4Ol/v+/FXmPYtG01d4Vw2fe6vu+jh9CK7NwaQcsPWsm2Dt21XVegVl6TxdttgHMJD+DZp6Ljtqd7eN8aUY6x0RFq4LcamjtS2DT6ZS6AvIhFYcQoPDiWOOesIYdoXo6Fvf6Slfd24z/MWW0ox5whjmlBtxfCY7qdsbJu/h1gM3fHTZnC+JxhwcTeDqdKuv2/S+rSWfaLxiFzG3bIyruM1abzo6mwD1uLLB7yTtvhWrjNsaaM3kj5oc8JdiWbl3Xt5F8LtV+6F9B+QAfyu42IxPt5uO2oavO4jsoun/nF3Y7bRYttWNsbOjn6WtsbRveF3HfEVTneYTeI3ZD8RXtfQKxguyHhA3BJuBofT9AmDw+Tm9Yyxc3DC7kEXQ+TVZXhLYyRZQOpUMQ78dx27LaP0lhdHfrh6o/UBZjFz19p/Z9HoMoMPoHTtpP9IGMAP0ePbVt3HqFdLc03TI/wQfQq8dGStnuHt3VXlWvWPuxuzi0N9i4WnNtiSIj0VTeToM+p3bZhHR7drumLADmG3bQq8LZjfqZAiApIbo75x3TH7YfQJJDlmG1RsmaZzCGc4Ojd2wdLZ++EMb7AExmZs/F8rphwKFUC8in01JaZgCQPCgDAgDAgDwoAwIAwIA8KAMCAMPHUG/gKC0oz7fm25ogAAAABJRU5ErkJggg==", "content_type": "image/png"}'
             templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
 
@@ -1918,6 +2013,7 @@ class TestEventNotificationsV1Examples:
                 "ibmensubject": "Findings on IBM Cloud Security Advisor",
                 "ibmenmailto": mailto,
                 "ibmensmsto": smsto,
+                "ibmenslackto": slackto,
                 "ibmenmms": mms,
                 "ibmentemplates": templates,
                 "id": notification_id,
@@ -2216,6 +2312,7 @@ class TestEventNotificationsV1Examples:
                 subscription_id5,
                 subscription_id6,
                 subscription_id7,
+                subscription_id8,
             ]:
                 delete_subscription_response = event_notifications_service.delete_subscription(instance_id, id)
             print(
@@ -2274,6 +2371,7 @@ class TestEventNotificationsV1Examples:
                 destination_id16,
                 destination_id17,
                 destination_id18,
+                destination_id19,
             ]:
                 delete_destination_response = event_notifications_service.delete_destination(instance_id, id)
             print(

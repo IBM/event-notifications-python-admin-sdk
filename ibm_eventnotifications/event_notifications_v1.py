@@ -3243,6 +3243,142 @@ class Buckets:
         return not self == other
 
 
+class ChannelCreateAttributes:
+    """
+    Payload describing a Slack Direct Message chennel configuration.
+
+    :attr str id: channel id.
+    """
+
+    def __init__(
+        self,
+        id: str,
+    ) -> None:
+        """
+        Initialize a ChannelCreateAttributes object.
+
+        :param str id: channel id.
+        """
+        self.id = id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ChannelCreateAttributes':
+        """Initialize a ChannelCreateAttributes object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in ChannelCreateAttributes JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ChannelCreateAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ChannelCreateAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ChannelCreateAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ChannelCreateAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class ChannelUpdateAttributes:
+    """
+    Payload describing a Slack Direct Message chennel configuration.
+
+    :attr str id: channel id.
+    :attr str operation: The channel operation type.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        operation: str,
+    ) -> None:
+        """
+        Initialize a ChannelUpdateAttributes object.
+
+        :param str id: channel id.
+        :param str operation: The channel operation type.
+        """
+        self.id = id
+        self.operation = operation
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'ChannelUpdateAttributes':
+        """Initialize a ChannelUpdateAttributes object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in ChannelUpdateAttributes JSON')
+        if 'operation' in _dict:
+            args['operation'] = _dict.get('operation')
+        else:
+            raise ValueError('Required property \'operation\' not present in ChannelUpdateAttributes JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a ChannelUpdateAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'operation') and self.operation is not None:
+            _dict['operation'] = self.operation
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this ChannelUpdateAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'ChannelUpdateAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'ChannelUpdateAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class OperationEnum(str, Enum):
+        """
+        The channel operation type.
+        """
+
+        ADD = 'add'
+        REMOVE = 'remove'
+
+
 class DKIMAttributes:
     """
     The DKIM attributes.
@@ -3571,6 +3707,7 @@ class DestinationConfigOneOf:
                     'DestinationConfigOneOfChromeDestinationConfig',
                     'DestinationConfigOneOfFirefoxDestinationConfig',
                     'DestinationConfigOneOfSlackDestinationConfig',
+                    'DestinationConfigOneOfSlackDirectMessageDestinationConfig',
                     'DestinationConfigOneOfSafariDestinationConfig',
                     'DestinationConfigOneOfMSTeamsDestinationConfig',
                     'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig',
@@ -5208,6 +5345,8 @@ class NotificationCreate:
     :attr str ibmensubject: (optional) The subject of the notification.
     :attr str ibmentemplates: (optional) The template id Array of string.
     :attr str ibmenmailto: (optional) The email id string.
+    :attr str ibmenslackto: (optional) The slack channel id/member id stringified
+          array.
     :attr str ibmensmsto: (optional) The SMS number string.
     :attr str ibmenhtmlbody: (optional) The html body of notification.
     :attr str subject: (optional) The subject of the notification.
@@ -5252,6 +5391,7 @@ class NotificationCreate:
             'ibmensubject',
             'ibmentemplates',
             'ibmenmailto',
+            'ibmenslackto',
             'ibmensmsto',
             'ibmenhtmlbody',
             'subject',
@@ -5286,6 +5426,7 @@ class NotificationCreate:
         ibmensubject: str = None,
         ibmentemplates: str = None,
         ibmenmailto: str = None,
+        ibmenslackto: str = None,
         ibmensmsto: str = None,
         ibmenhtmlbody: str = None,
         subject: str = None,
@@ -5319,6 +5460,8 @@ class NotificationCreate:
         :param str ibmensubject: (optional) The subject of the notification.
         :param str ibmentemplates: (optional) The template id Array of string.
         :param str ibmenmailto: (optional) The email id string.
+        :param str ibmenslackto: (optional) The slack channel id/member id
+               stringified array.
         :param str ibmensmsto: (optional) The SMS number string.
         :param str ibmenhtmlbody: (optional) The html body of notification.
         :param str subject: (optional) The subject of the notification.
@@ -5360,6 +5503,7 @@ class NotificationCreate:
         self.ibmensubject = ibmensubject
         self.ibmentemplates = ibmentemplates
         self.ibmenmailto = ibmenmailto
+        self.ibmenslackto = ibmenslackto
         self.ibmensmsto = ibmensmsto
         self.ibmenhtmlbody = ibmenhtmlbody
         self.subject = subject
@@ -5421,6 +5565,8 @@ class NotificationCreate:
             args['ibmentemplates'] = _dict.get('ibmentemplates')
         if 'ibmenmailto' in _dict:
             args['ibmenmailto'] = _dict.get('ibmenmailto')
+        if 'ibmenslackto' in _dict:
+            args['ibmenslackto'] = _dict.get('ibmenslackto')
         if 'ibmensmsto' in _dict:
             args['ibmensmsto'] = _dict.get('ibmensmsto')
         if 'ibmenhtmlbody' in _dict:
@@ -5488,6 +5634,8 @@ class NotificationCreate:
             _dict['ibmentemplates'] = self.ibmentemplates
         if hasattr(self, 'ibmenmailto') and self.ibmenmailto is not None:
             _dict['ibmenmailto'] = self.ibmenmailto
+        if hasattr(self, 'ibmenslackto') and self.ibmenslackto is not None:
+            _dict['ibmenslackto'] = self.ibmenslackto
         if hasattr(self, 'ibmensmsto') and self.ibmensmsto is not None:
             _dict['ibmensmsto'] = self.ibmensmsto
         if hasattr(self, 'ibmenhtmlbody') and self.ibmenhtmlbody is not None:
@@ -8102,6 +8250,7 @@ class SubscriptionAttributes:
                     'SubscriptionAttributesCustomEmailAttributesResponse',
                     'SubscriptionAttributesWebhookAttributesResponse',
                     'SubscriptionAttributesSlackAttributesResponse',
+                    'SubscriptionAttributesSlackDirectMessageAttributesResponse',
                     'SubscriptionAttributesServiceNowAttributesResponse',
                 ]
             )
@@ -8132,6 +8281,7 @@ class SubscriptionCreateAttributes:
                     'SubscriptionCreateAttributesWebhookAttributes',
                     'SubscriptionCreateAttributesFCMAttributes',
                     'SubscriptionCreateAttributesSlackAttributes',
+                    'SubscriptionCreateAttributesSlackDirectMessageAttributes',
                     'SubscriptionCreateAttributesServiceNowAttributes',
                 ]
             )
@@ -8451,6 +8601,7 @@ class SubscriptionUpdateAttributes:
                     'SubscriptionUpdateAttributesCustomEmailUpdateAttributes',
                     'SubscriptionUpdateAttributesWebhookAttributes',
                     'SubscriptionUpdateAttributesSlackAttributes',
+                    'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes',
                     'SubscriptionUpdateAttributesServiceNowAttributes',
                 ]
             )
@@ -11082,22 +11233,26 @@ class DestinationConfigOneOfServiceNowDestinationConfig(DestinationConfigOneOf):
 
 class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
     """
-    Payload describing a Slack destination configuration.
+    Payload describing a Slack webhook destination configuration.
 
     :attr str url: URL of Slack Incoming Notifications.
+    :attr str type: The Slack Destination type.
     """
 
     def __init__(
         self,
         url: str,
+        type: str,
     ) -> None:
         """
         Initialize a DestinationConfigOneOfSlackDestinationConfig object.
 
         :param str url: URL of Slack Incoming Notifications.
+        :param str type: The Slack Destination type.
         """
         # pylint: disable=super-init-not-called
         self.url = url
+        self.type = type
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfSlackDestinationConfig':
@@ -11108,6 +11263,12 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
         else:
             raise ValueError(
                 'Required property \'url\' not present in DestinationConfigOneOfSlackDestinationConfig JSON'
+            )
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError(
+                'Required property \'type\' not present in DestinationConfigOneOfSlackDestinationConfig JSON'
             )
         return cls(**args)
 
@@ -11121,6 +11282,8 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
         _dict = {}
         if hasattr(self, 'url') and self.url is not None:
             _dict['url'] = self.url
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
         return _dict
 
     def _to_dict(self):
@@ -11140,6 +11303,94 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
     def __ne__(self, other: 'DestinationConfigOneOfSlackDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        The Slack Destination type.
+        """
+
+        INCOMING_WEBHOOK = 'incoming_webhook'
+
+
+class DestinationConfigOneOfSlackDirectMessageDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a Slack direct message destination configuration.
+
+    :attr str token: Token of slack application.
+    :attr str type: The Slack Destination type.
+    """
+
+    def __init__(
+        self,
+        token: str,
+        type: str,
+    ) -> None:
+        """
+        Initialize a DestinationConfigOneOfSlackDirectMessageDestinationConfig object.
+
+        :param str token: Token of slack application.
+        :param str type: The Slack Destination type.
+        """
+        # pylint: disable=super-init-not-called
+        self.token = token
+        self.type = type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfSlackDirectMessageDestinationConfig':
+        """Initialize a DestinationConfigOneOfSlackDirectMessageDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'token' in _dict:
+            args['token'] = _dict.get('token')
+        else:
+            raise ValueError(
+                'Required property \'token\' not present in DestinationConfigOneOfSlackDirectMessageDestinationConfig JSON'
+            )
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError(
+                'Required property \'type\' not present in DestinationConfigOneOfSlackDirectMessageDestinationConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfSlackDirectMessageDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'token') and self.token is not None:
+            _dict['token'] = self.token
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfSlackDirectMessageDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfSlackDirectMessageDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfSlackDirectMessageDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        The Slack Destination type.
+        """
+
+        DIRECT_MESSAGE = 'direct_message'
 
 
 class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
@@ -12125,6 +12376,120 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
         return not self == other
 
 
+class SubscriptionAttributesSlackDirectMessageAttributesResponse(SubscriptionAttributes):
+    """
+    The attributes for a slack direct message.
+
+    :attr List[ChannelCreateAttributes] channels: (optional) List of channels.
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
+          Blocks w/o Handlebars.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['channels', 'template_id_notification'])
+
+    def __init__(
+        self,
+        *,
+        channels: List['ChannelCreateAttributes'] = None,
+        template_id_notification: str = None,
+        **kwargs,
+    ) -> None:
+        """
+        Initialize a SubscriptionAttributesSlackDirectMessageAttributesResponse object.
+
+        :param List[ChannelCreateAttributes] channels: (optional) List of channels.
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Slack Blocks w/o Handlebars.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        # pylint: disable=super-init-not-called
+        self.channels = channels
+        self.template_id_notification = template_id_notification
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesSlackDirectMessageAttributesResponse':
+        """Initialize a SubscriptionAttributesSlackDirectMessageAttributesResponse object from a json dictionary."""
+        args = {}
+        if 'channels' in _dict:
+            args['channels'] = [ChannelCreateAttributes.from_dict(v) for v in _dict.get('channels')]
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionAttributesSlackDirectMessageAttributesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'channels') and self.channels is not None:
+            channels_list = []
+            for v in self.channels:
+                if isinstance(v, dict):
+                    channels_list.append(v)
+                else:
+                    channels_list.append(v.to_dict())
+            _dict['channels'] = channels_list
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        for _key in [
+            k
+            for k in vars(self).keys()
+            if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesSlackDirectMessageAttributesResponse"""
+        _dict = {}
+
+        for _key in [
+            k
+            for k in vars(self).keys()
+            if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesSlackDirectMessageAttributesResponse"""
+        for _key in [
+            k
+            for k in vars(self).keys()
+            if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties
+        ]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionAttributesSlackDirectMessageAttributesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionAttributesSlackDirectMessageAttributesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionAttributesSlackDirectMessageAttributesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
     """
     The attributes for a webhook notification.
@@ -12798,6 +13163,81 @@ class SubscriptionCreateAttributesSlackAttributes(SubscriptionCreateAttributes):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionCreateAttributesSlackAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SubscriptionCreateAttributesSlackDirectMessageAttributes(SubscriptionCreateAttributes):
+    """
+    The attributes for a slack direct message.
+
+    :attr List[ChannelCreateAttributes] channels: (optional) List of channels.
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
+          Blocks w/o Handlebars.
+    """
+
+    def __init__(
+        self,
+        *,
+        channels: List['ChannelCreateAttributes'] = None,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionCreateAttributesSlackDirectMessageAttributes object.
+
+        :param List[ChannelCreateAttributes] channels: (optional) List of channels.
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Slack Blocks w/o Handlebars.
+        """
+        # pylint: disable=super-init-not-called
+        self.channels = channels
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesSlackDirectMessageAttributes':
+        """Initialize a SubscriptionCreateAttributesSlackDirectMessageAttributes object from a json dictionary."""
+        args = {}
+        if 'channels' in _dict:
+            args['channels'] = [ChannelCreateAttributes.from_dict(v) for v in _dict.get('channels')]
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionCreateAttributesSlackDirectMessageAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'channels') and self.channels is not None:
+            channels_list = []
+            for v in self.channels:
+                if isinstance(v, dict):
+                    channels_list.append(v)
+                else:
+                    channels_list.append(v.to_dict())
+            _dict['channels'] = channels_list
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionCreateAttributesSlackDirectMessageAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionCreateAttributesSlackDirectMessageAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionCreateAttributesSlackDirectMessageAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -13491,6 +13931,81 @@ class SubscriptionUpdateAttributesSlackAttributes(SubscriptionUpdateAttributes):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionUpdateAttributesSlackAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for a slack direct message.
+
+    :attr List[ChannelUpdateAttributes] channels: (optional) List of channels.
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
+          Blocks w/o Handlebars.
+    """
+
+    def __init__(
+        self,
+        *,
+        channels: List['ChannelUpdateAttributes'] = None,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes object.
+
+        :param List[ChannelUpdateAttributes] channels: (optional) List of channels.
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Slack Blocks w/o Handlebars.
+        """
+        # pylint: disable=super-init-not-called
+        self.channels = channels
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes':
+        """Initialize a SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes object from a json dictionary."""
+        args = {}
+        if 'channels' in _dict:
+            args['channels'] = [ChannelUpdateAttributes.from_dict(v) for v in _dict.get('channels')]
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'channels') and self.channels is not None:
+            channels_list = []
+            for v in self.channels:
+                if isinstance(v, dict):
+                    channels_list.append(v)
+                else:
+                    channels_list.append(v.to_dict())
+            _dict['channels'] = channels_list
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
