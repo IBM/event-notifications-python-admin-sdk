@@ -1,3 +1,10 @@
+# [0.8.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.7.0...v0.8.0) (2024-09-04)
+
+
+### Features
+
+* add slack direct message support ([#57](https://github.com/IBM/event-notifications-python-admin-sdk/issues/57)) ([b8d6c6e](https://github.com/IBM/event-notifications-python-admin-sdk/commit/b8d6c6e993a45d5f3c78419ad21e33ac5946b48e))
+
 # [0.7.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.6.0...v0.7.0) (2024-08-09)
 
 
