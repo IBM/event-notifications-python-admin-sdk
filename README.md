@@ -472,6 +472,22 @@ create_template_response = event_notifications_service.create_template(
 ```
 For slack template supported template type value: slack.notification
 
+#### Webhook Template
+```py
+template_config_model = {
+    'body': 'base 64 encoded json body',
+}
+
+create_template_response = event_notifications_service.create_template(
+    instance_id=<instance-id>,
+    name=<template-name>,
+    type=<template-type>,
+    params=template_config_model,
+    description=<template-description>
+).get_result()
+```
+For webhook template supported template type value: webhook.notification
+
 ### List Templates
 ```py
 list_templates_response = event_notifications_service.list_templates(
@@ -493,10 +509,26 @@ get_template_response = event_notifications_service.get_template(
 ```
 
 ### Update Template
+#### Update Email Template
 ```py
 template_config_model = {
     'body': 'base 64 encode html content',
     'subject': 'Hi this is invitation for invitation message',
+}
+
+replace_template_response = event_notifications_service.replace_template(
+    instance_id=<instance-id>,
+    id=<template_id>
+    name=<template_name>,
+    type=<template-type>,
+    description=<template-description>,
+    params=template_config_model
+).get_result()
+```
+#### Update slack/webhook Template
+```py
+template_config_model = {
+    'body': 'base 64 encode html content',
 }
 
 replace_template_response = event_notifications_service.replace_template(
@@ -560,6 +592,7 @@ print(json.dumps(response, indent=2))
 
 subscription_create_attributes_model = {
     'signing_enabled': False,
+    'template_id_notification': '<webhook-template-id>',
 }
 
             
@@ -602,6 +635,7 @@ print(json.dumps(subscription, indent=2))
 
  subscription_update_attributes_model = {
      'signing_enabled': True,
+     'template_id_notification': '<webhook-template-id>',
  }
 
  subscription = event_notifications_service.update_subscription(
@@ -1074,6 +1108,7 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_PD_API_KEY` - pagerduty api key
 - `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
+- `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
 
 ## Questions
 

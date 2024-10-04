@@ -8971,7 +8971,13 @@ class TemplateConfigOneOf:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(['TemplateConfigOneOfEmailTemplateConfig', 'TemplateConfigOneOfSlackTemplateConfig'])
+            ", ".join(
+                [
+                    'TemplateConfigOneOfEmailTemplateConfig',
+                    'TemplateConfigOneOfSlackTemplateConfig',
+                    'TemplateConfigOneOfWebhookTemplateConfig',
+                ]
+            )
         )
         raise Exception(msg)
 
@@ -13246,20 +13252,27 @@ class SubscriptionCreateAttributesWebhookAttributes(SubscriptionCreateAttributes
     """
     The attributes for a webhook notification.
 
-    :attr bool signing_enabled: Signing webhook attributes.
+    :attr bool signing_enabled: (optional) Signing webhook attributes.
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON
+          webhook Blocks w/o Handlebars.
     """
 
     def __init__(
         self,
-        signing_enabled: bool,
+        *,
+        signing_enabled: bool = None,
+        template_id_notification: str = None,
     ) -> None:
         """
         Initialize a SubscriptionCreateAttributesWebhookAttributes object.
 
-        :param bool signing_enabled: Signing webhook attributes.
+        :param bool signing_enabled: (optional) Signing webhook attributes.
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               webhook Blocks w/o Handlebars.
         """
         # pylint: disable=super-init-not-called
         self.signing_enabled = signing_enabled
+        self.template_id_notification = template_id_notification
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesWebhookAttributes':
@@ -13267,10 +13280,8 @@ class SubscriptionCreateAttributesWebhookAttributes(SubscriptionCreateAttributes
         args = {}
         if 'signing_enabled' in _dict:
             args['signing_enabled'] = _dict.get('signing_enabled')
-        else:
-            raise ValueError(
-                'Required property \'signing_enabled\' not present in SubscriptionCreateAttributesWebhookAttributes JSON'
-            )
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
         return cls(**args)
 
     @classmethod
@@ -13283,6 +13294,8 @@ class SubscriptionCreateAttributesWebhookAttributes(SubscriptionCreateAttributes
         _dict = {}
         if hasattr(self, 'signing_enabled') and self.signing_enabled is not None:
             _dict['signing_enabled'] = self.signing_enabled
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
         return _dict
 
     def _to_dict(self):
@@ -14014,20 +14027,27 @@ class SubscriptionUpdateAttributesWebhookAttributes(SubscriptionUpdateAttributes
     """
     The attributes for a webhook notification.
 
-    :attr bool signing_enabled: Signing webhook attributes.
+    :attr bool signing_enabled: (optional) Signing webhook attributes.
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON
+          webhook Blocks w/o Handlebars.
     """
 
     def __init__(
         self,
-        signing_enabled: bool,
+        *,
+        signing_enabled: bool = None,
+        template_id_notification: str = None,
     ) -> None:
         """
         Initialize a SubscriptionUpdateAttributesWebhookAttributes object.
 
-        :param bool signing_enabled: Signing webhook attributes.
+        :param bool signing_enabled: (optional) Signing webhook attributes.
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               webhook Blocks w/o Handlebars.
         """
         # pylint: disable=super-init-not-called
         self.signing_enabled = signing_enabled
+        self.template_id_notification = template_id_notification
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesWebhookAttributes':
@@ -14035,10 +14055,8 @@ class SubscriptionUpdateAttributesWebhookAttributes(SubscriptionUpdateAttributes
         args = {}
         if 'signing_enabled' in _dict:
             args['signing_enabled'] = _dict.get('signing_enabled')
-        else:
-            raise ValueError(
-                'Required property \'signing_enabled\' not present in SubscriptionUpdateAttributesWebhookAttributes JSON'
-            )
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
         return cls(**args)
 
     @classmethod
@@ -14051,6 +14069,8 @@ class SubscriptionUpdateAttributesWebhookAttributes(SubscriptionUpdateAttributes
         _dict = {}
         if hasattr(self, 'signing_enabled') and self.signing_enabled is not None:
             _dict['signing_enabled'] = self.signing_enabled
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
         return _dict
 
     def _to_dict(self):
@@ -14076,7 +14096,7 @@ class TemplateConfigOneOfEmailTemplateConfig(TemplateConfigOneOf):
     """
     Payload describing an email template configuration.
 
-    :attr str body: Template body.
+    :attr str body: Template body(Base64 encoded).
     :attr str subject: (optional) The template subject.
     """
 
@@ -14089,7 +14109,7 @@ class TemplateConfigOneOfEmailTemplateConfig(TemplateConfigOneOf):
         """
         Initialize a TemplateConfigOneOfEmailTemplateConfig object.
 
-        :param str body: Template body.
+        :param str body: Template body(Base64 encoded).
         :param str subject: (optional) The template subject.
         """
         # pylint: disable=super-init-not-called
@@ -14145,7 +14165,7 @@ class TemplateConfigOneOfSlackTemplateConfig(TemplateConfigOneOf):
     """
     Payload describing a slack template configuration.
 
-    :attr str body: Template body.
+    :attr str body: Template body(Base64 encoded).
     """
 
     def __init__(
@@ -14155,7 +14175,7 @@ class TemplateConfigOneOfSlackTemplateConfig(TemplateConfigOneOf):
         """
         Initialize a TemplateConfigOneOfSlackTemplateConfig object.
 
-        :param str body: Template body.
+        :param str body: Template body(Base64 encoded).
         """
         # pylint: disable=super-init-not-called
         self.body = body
@@ -14197,6 +14217,66 @@ class TemplateConfigOneOfSlackTemplateConfig(TemplateConfigOneOf):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TemplateConfigOneOfSlackTemplateConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateConfigOneOfWebhookTemplateConfig(TemplateConfigOneOf):
+    """
+    Payload describing a webhook template configuration.
+
+    :attr str body: Template body(Base64 encoded).
+    """
+
+    def __init__(
+        self,
+        body: str,
+    ) -> None:
+        """
+        Initialize a TemplateConfigOneOfWebhookTemplateConfig object.
+
+        :param str body: Template body(Base64 encoded).
+        """
+        # pylint: disable=super-init-not-called
+        self.body = body
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateConfigOneOfWebhookTemplateConfig':
+        """Initialize a TemplateConfigOneOfWebhookTemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError('Required property \'body\' not present in TemplateConfigOneOfWebhookTemplateConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateConfigOneOfWebhookTemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateConfigOneOfWebhookTemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateConfigOneOfWebhookTemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateConfigOneOfWebhookTemplateConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

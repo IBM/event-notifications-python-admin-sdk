@@ -10994,6 +10994,7 @@ class TestModel_SubscriptionCreateAttributesWebhookAttributes:
         # Construct a json representation of a SubscriptionCreateAttributesWebhookAttributes model
         subscription_create_attributes_webhook_attributes_model_json = {}
         subscription_create_attributes_webhook_attributes_model_json['signing_enabled'] = True
+        subscription_create_attributes_webhook_attributes_model_json['template_id_notification'] = 'testString'
 
         # Construct a model instance of SubscriptionCreateAttributesWebhookAttributes by calling from_dict on the json representation
         subscription_create_attributes_webhook_attributes_model = (
@@ -11488,6 +11489,7 @@ class TestModel_SubscriptionUpdateAttributesWebhookAttributes:
         # Construct a json representation of a SubscriptionUpdateAttributesWebhookAttributes model
         subscription_update_attributes_webhook_attributes_model_json = {}
         subscription_update_attributes_webhook_attributes_model_json['signing_enabled'] = True
+        subscription_update_attributes_webhook_attributes_model_json['template_id_notification'] = 'testString'
 
         # Construct a model instance of SubscriptionUpdateAttributesWebhookAttributes by calling from_dict on the json representation
         subscription_update_attributes_webhook_attributes_model = (
@@ -11603,6 +11605,50 @@ class TestModel_TemplateConfigOneOfSlackTemplateConfig:
         assert (
             template_config_one_of_slack_template_config_model_json2
             == template_config_one_of_slack_template_config_model_json
+        )
+
+
+class TestModel_TemplateConfigOneOfWebhookTemplateConfig:
+    """
+    Test Class for TemplateConfigOneOfWebhookTemplateConfig
+    """
+
+    def test_template_config_one_of_webhook_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfigOneOfWebhookTemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfigOneOfWebhookTemplateConfig model
+        template_config_one_of_webhook_template_config_model_json = {}
+        template_config_one_of_webhook_template_config_model_json['body'] = 'testString'
+
+        # Construct a model instance of TemplateConfigOneOfWebhookTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_webhook_template_config_model = TemplateConfigOneOfWebhookTemplateConfig.from_dict(
+            template_config_one_of_webhook_template_config_model_json
+        )
+        assert template_config_one_of_webhook_template_config_model != False
+
+        # Construct a model instance of TemplateConfigOneOfWebhookTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_webhook_template_config_model_dict = TemplateConfigOneOfWebhookTemplateConfig.from_dict(
+            template_config_one_of_webhook_template_config_model_json
+        ).__dict__
+        template_config_one_of_webhook_template_config_model2 = TemplateConfigOneOfWebhookTemplateConfig(
+            **template_config_one_of_webhook_template_config_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            template_config_one_of_webhook_template_config_model
+            == template_config_one_of_webhook_template_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_one_of_webhook_template_config_model_json2 = (
+            template_config_one_of_webhook_template_config_model.to_dict()
+        )
+        assert (
+            template_config_one_of_webhook_template_config_model_json2
+            == template_config_one_of_webhook_template_config_model_json
         )
 
 

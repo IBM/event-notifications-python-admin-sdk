@@ -107,6 +107,8 @@ smtp_config_id = ""
 notificationID = ""
 slack_dm_token = ""
 slack_channel_id = ""
+webhook_template_id = ""
+webhook_template_body = ""
 
 
 ##############################################################################
@@ -120,7 +122,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -160,6 +162,7 @@ class TestEventNotificationsV1Examples:
             code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
             slack_dm_token = cls.config["SLACK_DM_TOKEN"]
             slack_channel_id = cls.config["SLACK_CHANNEL_ID"]
+            webhook_template_body = cls.config["WEBHOOK_TEMPLATE_BODY"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -176,6 +179,7 @@ class TestEventNotificationsV1Examples:
             assert code_engine_project_CRN is not None
             assert slack_dm_token is not None
             assert slack_channel_id is not None
+            assert webhook_template_body is not None
 
         print("Setup complete.")
 
@@ -839,7 +843,7 @@ class TestEventNotificationsV1Examples:
         """
         create_template request example
         """
-        global template_notification_id, template_invitation_id, slack_template_id
+        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id
         try:
             print("\ncreate_template() result:")
             # begin-create_template
@@ -903,6 +907,28 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(create_template_response, indent=2))
             template = TemplateResponse.from_dict(create_template_response)
             slack_template_id = template.id
+
+            webhook_template_config_model_json = {'body': webhook_template_body}
+
+            webhook_template_config_model = TemplateConfigOneOfWebhookTemplateConfig.from_dict(
+                webhook_template_config_model_json
+            )
+
+            name = "template_webhook"
+            typeval = "webhook.notification"
+            description = "webhook template"
+
+            create_template_response = self.event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=webhook_template_config_model,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(create_template_response, indent=2))
+            template = TemplateResponse.from_dict(create_template_response)
+            webhook_template_id = template.id
             # end-create_template
 
         except ApiException as e:
@@ -1456,6 +1482,27 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(replace_template_response, indent=2))
 
+            webhook_template_config_model_json = {'body': webhook_template_body}
+
+            webhook_template_config_model = TemplateConfigOneOfWebhookTemplateConfig.from_dict(
+                webhook_template_config_model_json
+            )
+
+            name = "template_webhook"
+            typeval = "webhook.notification"
+            description = "webhook template"
+
+            replace_template_response = self.event_notifications_service.replace_template(
+                instance_id,
+                id=webhook_template_id,
+                name=name,
+                description=description,
+                type=typeval,
+                params=webhook_template_config_model,
+            ).get_result()
+
+            print(json.dumps(replace_template_response, indent=2))
+
             # end-replace_template
         except ApiException as e:
             pytest.fail(str(e))
@@ -1527,6 +1574,7 @@ class TestEventNotificationsV1Examples:
             # webhook
             subscription_create_attributes_model = {
                 "signing_enabled": False,
+                "template_id_notification": webhook_template_id,
             }
 
             name = "subscription_web"
@@ -1771,6 +1819,7 @@ class TestEventNotificationsV1Examples:
             # webhook
             subscription_update_attributes_model = {
                 "signing_enabled": True,
+                "template_id_notification": webhook_template_id,
             }
 
             name = "Webhook_sub_updated"
@@ -2387,7 +2436,7 @@ class TestEventNotificationsV1Examples:
         """
         delete_template request example
         """
-        for id in [template_invitation_id, template_notification_id, slack_template_id]:
+        for id in [template_invitation_id, template_notification_id, slack_template_id, webhook_template_id]:
             # begin-delete_template
             delete_template_response = event_notifications_service.delete_template(instance_id, id).get_result()
             # end-delete_template

@@ -104,6 +104,8 @@ smtp_config_id = ""
 smtp_user_id = ""
 slack_dm_token = ""
 slack_channel_id = ""
+webhook_template_id = ""
+webhook_template_body = ""
 
 
 class TestEventNotificationsV1:
@@ -113,7 +115,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -153,6 +155,7 @@ class TestEventNotificationsV1:
             code_engine_project_CRN = cls.config["CODE_ENGINE_PROJECT_CRN"]
             slack_dm_token = cls.config["SLACK_DM_TOKEN"]
             slack_channel_id = cls.config["SLACK_CHANNEL_ID"]
+            webhook_template_body = cls.config["WEBHOOK_TEMPLATE_BODY"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -175,6 +178,7 @@ class TestEventNotificationsV1:
             assert slack_template_body is not None
             assert slack_dm_token is not None
             assert slack_channel_id is not None
+            assert webhook_template_body is not None
 
         print("Setup complete.")
 
@@ -537,8 +541,8 @@ class TestEventNotificationsV1:
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
         global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19
         destination_config_params_model = {
-            "url": "https://gcm.com",
-            "verb": "get",
+            "url": code_engine_URL,
+            "verb": "post",
             "custom_headers": {"gcm_apikey": "apikey"},
             "sensitive_headers": ["gcm_apikey"],
         }
@@ -1111,7 +1115,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_create_template(self):
-        global template_invitation_id, template_notification_id, slack_template_id
+        global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id
 
         template_config_model_json = {'body': template_body, 'subject': 'Hi this is invitation for invitation message'}
 
@@ -1195,6 +1199,37 @@ class TestEventNotificationsV1:
         assert template.type == typeval
 
         slack_template_id = template.id
+
+        webhook_template_config_model_json = {'body': webhook_template_body}
+
+        webhook_template_config_model = TemplateConfigOneOfWebhookTemplateConfig.from_dict(
+            webhook_template_config_model_json
+        )
+
+        name = "template_webhook"
+        typeval = "webhook.notification"
+        description = "webhook template"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=webhook_template_config_model,
+            description=description,
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+
+        webhook_template_id = template.id
 
     @needscredentials
     def test_list_destinations(self):
@@ -1288,7 +1323,7 @@ class TestEventNotificationsV1:
     def test_update_destination(self):
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
         destination_config_params_model = {
-            "url": "https://cloud.ibm.com/nhwebhook/sendwebhook",
+            "url": code_engine_URL,
             "verb": "post",
             "custom_headers": {"authorization": "authorization token"},
             "sensitive_headers": ["authorization"],
@@ -1915,12 +1950,41 @@ class TestEventNotificationsV1:
         assert template_response.get("type") == typeval
         assert template_response.get("id") == slack_template_id
 
+        webhook_template_config_model_json = {'body': webhook_template_body}
+
+        webhook_template_config_model = TemplateConfigOneOfWebhookTemplateConfig.from_dict(
+            webhook_template_config_model_json
+        )
+
+        name = "template_webhook"
+        typeval = "webhook.notification"
+        description = "webhook template"
+
+        update_template_response = self.event_notifications_service.replace_template(
+            instance_id,
+            id=webhook_template_id,
+            name=name,
+            description=description,
+            type=typeval,
+            params=webhook_template_config_model,
+        )
+
+        assert update_template_response.get_status_code() == 200
+        template_response = update_template_response.get_result()
+
+        assert template_response is not None
+        assert template_response.get("name") == name
+        assert template_response.get("description") == description
+        assert template_response.get("type") == typeval
+        assert template_response.get("id") == webhook_template_id
+
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
         global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18, subscription_id19
         subscription_create_attributes_model = {
             "signing_enabled": False,
+            "template_id_notification": webhook_template_id,
         }
 
         name = "subscription_web"
@@ -2464,6 +2528,7 @@ class TestEventNotificationsV1:
         # Construct a dict representation of a SubscriptionUpdateAttributesSMSAttributes model
         subscription_update_attributes_model = {
             "signing_enabled": True,
+            "template_id_notification": webhook_template_id,
         }
 
         name = "Webhook_sub_updated"
@@ -3486,7 +3551,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_delete_template(self):
-        for id in [template_invitation_id, template_notification_id, slack_template_id]:
+        for id in [template_invitation_id, template_notification_id, slack_template_id, webhook_template_id]:
             delete_template_response = self.event_notifications_service.delete_template(instance_id, id)
         print(
             "\ndelete_template() response status code: ",
