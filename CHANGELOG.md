@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.8.0...v0.9.0) (2024-10-04)
+
+
+### Features
+
+* webhook template support ([#58](https://github.com/IBM/event-notifications-python-admin-sdk/issues/58)) ([70a8775](https://github.com/IBM/event-notifications-python-admin-sdk/commit/70a87756929d0f150c3b6645e1994dfe01cd6e06))
+
 # [0.8.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.7.0...v0.8.0) (2024-09-04)
 
 
