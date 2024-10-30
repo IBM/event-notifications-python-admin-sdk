@@ -9500,57 +9500,6 @@ class TestModel_DestinationConfigOneOfHuaweiDestinationConfig:
         )
 
 
-class TestModel_DestinationConfigOneOfIBMCloudFunctionsDestinationConfig:
-    """
-    Test Class for DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
-    """
-
-    def test_destination_config_one_of_ibm_cloud_functions_destination_config_serialization(self):
-        """
-        Test serialization/deserialization for DestinationConfigOneOfIBMCloudFunctionsDestinationConfig
-        """
-
-        # Construct a json representation of a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig model
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_json = {}
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_json['url'] = 'testString'
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_json['api_key'] = 'testString'
-
-        # Construct a model instance of DestinationConfigOneOfIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_ibm_cloud_functions_destination_config_model = (
-            DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(
-                destination_config_one_of_ibm_cloud_functions_destination_config_model_json
-            )
-        )
-        assert destination_config_one_of_ibm_cloud_functions_destination_config_model != False
-
-        # Construct a model instance of DestinationConfigOneOfIBMCloudFunctionsDestinationConfig by calling from_dict on the json representation
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_dict = (
-            DestinationConfigOneOfIBMCloudFunctionsDestinationConfig.from_dict(
-                destination_config_one_of_ibm_cloud_functions_destination_config_model_json
-            ).__dict__
-        )
-        destination_config_one_of_ibm_cloud_functions_destination_config_model2 = (
-            DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(
-                **destination_config_one_of_ibm_cloud_functions_destination_config_model_dict
-            )
-        )
-
-        # Verify the model instances are equivalent
-        assert (
-            destination_config_one_of_ibm_cloud_functions_destination_config_model
-            == destination_config_one_of_ibm_cloud_functions_destination_config_model2
-        )
-
-        # Convert model instance back to dict and verify no loss of data
-        destination_config_one_of_ibm_cloud_functions_destination_config_model_json2 = (
-            destination_config_one_of_ibm_cloud_functions_destination_config_model.to_dict()
-        )
-        assert (
-            destination_config_one_of_ibm_cloud_functions_destination_config_model_json2
-            == destination_config_one_of_ibm_cloud_functions_destination_config_model_json
-        )
-
-
 class TestModel_DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig:
     """
     Test Class for DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig

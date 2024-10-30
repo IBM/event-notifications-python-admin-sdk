@@ -3160,7 +3160,6 @@ class CreateDestinationEnums:
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
-        IBMCF = 'ibmcf'
         IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
@@ -3461,7 +3460,7 @@ class Destination:
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
     :attr bool collect_failed_events: (optional) Whether to collect the failed event
           in Cloud Object Storage bucket.
     :attr DestinationConfig config: (optional) Payload describing a destination
@@ -3491,7 +3490,7 @@ class Destination:
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -3600,7 +3599,7 @@ class Destination:
     class TypeEnum(str, Enum):
         """
         Destination type
-        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCloudFunctions/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
         """
 
         WEBHOOK = 'webhook'
@@ -3609,7 +3608,6 @@ class Destination:
         PUSH_ANDROID = 'push_android'
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
-        IBMCF = 'ibmcf'
         IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
@@ -3710,7 +3708,6 @@ class DestinationConfigOneOf:
                     'DestinationConfigOneOfSlackDirectMessageDestinationConfig',
                     'DestinationConfigOneOfSafariDestinationConfig',
                     'DestinationConfigOneOfMSTeamsDestinationConfig',
-                    'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig',
                     'DestinationConfigOneOfPagerDutyDestinationConfig',
                     'DestinationConfigOneOfServiceNowDestinationConfig',
                     'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig',
@@ -3991,7 +3988,6 @@ class DestinationListItem:
         PUSH_ANDROID = 'push_android'
         PUSH_IOS = 'push_ios'
         SLACK = 'slack'
-        IBMCF = 'ibmcf'
         IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
@@ -4137,7 +4133,6 @@ class DestinationResponse:
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
-        IBMCF = 'ibmcf'
         IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
@@ -8214,7 +8209,6 @@ class Subscription:
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
-        IBMCF = 'ibmcf'
         IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
@@ -8567,7 +8561,6 @@ class SubscriptionListItem:
         PUSH_CHROME = 'push_chrome'
         PUSH_FIREFOX = 'push_firefox'
         SLACK = 'slack'
-        IBMCF = 'ibmcf'
         IBMCE = 'ibmce'
         PAGERDUTY = 'pagerduty'
         PUSH_SAFARI = 'push_safari'
@@ -10573,79 +10566,6 @@ class DestinationConfigOneOfHuaweiDestinationConfig(DestinationConfigOneOf):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigOneOfHuaweiDestinationConfig') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
-
-
-class DestinationConfigOneOfIBMCloudFunctionsDestinationConfig(DestinationConfigOneOf):
-    """
-    Payload describing an IBM Cloud Functions destination configuration.
-
-    :attr str url: URL of IBM Cloud Functions Trigger EndPoint.
-    :attr str api_key: (optional) API Key with access of IBM Cloud Functions IAM
-          Namespace.
-    """
-
-    def __init__(
-        self,
-        url: str,
-        *,
-        api_key: str = None,
-    ) -> None:
-        """
-        Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object.
-
-        :param str url: URL of IBM Cloud Functions Trigger EndPoint.
-        :param str api_key: (optional) API Key with access of IBM Cloud Functions
-               IAM Namespace.
-        """
-        # pylint: disable=super-init-not-called
-        self.url = url
-        self.api_key = api_key
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig':
-        """Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object from a json dictionary."""
-        args = {}
-        if 'url' in _dict:
-            args['url'] = _dict.get('url')
-        else:
-            raise ValueError(
-                'Required property \'url\' not present in DestinationConfigOneOfIBMCloudFunctionsDestinationConfig JSON'
-            )
-        if 'api_key' in _dict:
-            args['api_key'] = _dict.get('api_key')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'url') and self.url is not None:
-            _dict['url'] = self.url
-        if hasattr(self, 'api_key') and self.api_key is not None:
-            _dict['api_key'] = self.api_key
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this DestinationConfigOneOfIBMCloudFunctionsDestinationConfig object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'DestinationConfigOneOfIBMCloudFunctionsDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
