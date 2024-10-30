@@ -1,3 +1,10 @@
+# [0.10.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.9.0...v0.10.0) (2024-10-30)
+
+
+### Features
+
+* removed cloud functions support ([#59](https://github.com/IBM/event-notifications-python-admin-sdk/issues/59)) ([f5b1904](https://github.com/IBM/event-notifications-python-admin-sdk/commit/f5b1904e9cd7fe0b490ccce5e33ba0dec54932ad))
+
 # [0.9.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.8.0...v0.9.0) (2024-10-04)
 
 
