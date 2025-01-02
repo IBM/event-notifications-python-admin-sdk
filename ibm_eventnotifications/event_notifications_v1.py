@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -2391,7 +2391,8 @@ class EventNotificationsV1(BaseService):
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str id: Unique identifier for integration.
-        :param str type: Integration type. Allowed values are kms and hs-crypto.
+        :param str type: Integration type. Allowed values are kms, hs-crypto and
+               collect_failed_events.
         :param IntegrationMetadata metadata: Integration Metadata object.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -4516,6 +4517,80 @@ class EnabledCountriesResponse:
         return not self == other
 
 
+class EventScheduleFilterAttributes:
+    """
+    Event schedule filter attributes.
+
+    :attr datetime starts_at: (optional) event schedule start time.
+    :attr datetime ends_at: (optional) event schedule end time.
+    :attr str expression: (optional) cron schedule expression.
+    """
+
+    def __init__(
+        self,
+        *,
+        starts_at: datetime = None,
+        ends_at: datetime = None,
+        expression: str = None,
+    ) -> None:
+        """
+        Initialize a EventScheduleFilterAttributes object.
+
+        :param datetime starts_at: (optional) event schedule start time.
+        :param datetime ends_at: (optional) event schedule end time.
+        :param str expression: (optional) cron schedule expression.
+        """
+        self.starts_at = starts_at
+        self.ends_at = ends_at
+        self.expression = expression
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'EventScheduleFilterAttributes':
+        """Initialize a EventScheduleFilterAttributes object from a json dictionary."""
+        args = {}
+        if 'starts_at' in _dict:
+            args['starts_at'] = string_to_datetime(_dict.get('starts_at'))
+        if 'ends_at' in _dict:
+            args['ends_at'] = string_to_datetime(_dict.get('ends_at'))
+        if 'expression' in _dict:
+            args['expression'] = _dict.get('expression')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a EventScheduleFilterAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'starts_at') and self.starts_at is not None:
+            _dict['starts_at'] = datetime_to_string(self.starts_at)
+        if hasattr(self, 'ends_at') and self.ends_at is not None:
+            _dict['ends_at'] = datetime_to_string(self.ends_at)
+        if hasattr(self, 'expression') and self.expression is not None:
+            _dict['expression'] = self.expression
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this EventScheduleFilterAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'EventScheduleFilterAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'EventScheduleFilterAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class Histrogram:
     """
     Payload describing histogram.
@@ -5342,6 +5417,7 @@ class NotificationCreate:
     :attr str ibmenmailto: (optional) The email id string.
     :attr str ibmenslackto: (optional) The slack channel id/member id stringified
           array.
+    :attr str ibmensmstext: (optional) The SMS text.
     :attr str ibmensmsto: (optional) The SMS number string.
     :attr str ibmenhtmlbody: (optional) The html body of notification.
     :attr str subject: (optional) The subject of the notification.
@@ -5387,6 +5463,7 @@ class NotificationCreate:
             'ibmentemplates',
             'ibmenmailto',
             'ibmenslackto',
+            'ibmensmstext',
             'ibmensmsto',
             'ibmenhtmlbody',
             'subject',
@@ -5422,6 +5499,7 @@ class NotificationCreate:
         ibmentemplates: str = None,
         ibmenmailto: str = None,
         ibmenslackto: str = None,
+        ibmensmstext: str = None,
         ibmensmsto: str = None,
         ibmenhtmlbody: str = None,
         subject: str = None,
@@ -5457,6 +5535,7 @@ class NotificationCreate:
         :param str ibmenmailto: (optional) The email id string.
         :param str ibmenslackto: (optional) The slack channel id/member id
                stringified array.
+        :param str ibmensmstext: (optional) The SMS text.
         :param str ibmensmsto: (optional) The SMS number string.
         :param str ibmenhtmlbody: (optional) The html body of notification.
         :param str subject: (optional) The subject of the notification.
@@ -5499,6 +5578,7 @@ class NotificationCreate:
         self.ibmentemplates = ibmentemplates
         self.ibmenmailto = ibmenmailto
         self.ibmenslackto = ibmenslackto
+        self.ibmensmstext = ibmensmstext
         self.ibmensmsto = ibmensmsto
         self.ibmenhtmlbody = ibmenhtmlbody
         self.subject = subject
@@ -5562,6 +5642,8 @@ class NotificationCreate:
             args['ibmenmailto'] = _dict.get('ibmenmailto')
         if 'ibmenslackto' in _dict:
             args['ibmenslackto'] = _dict.get('ibmenslackto')
+        if 'ibmensmstext' in _dict:
+            args['ibmensmstext'] = _dict.get('ibmensmstext')
         if 'ibmensmsto' in _dict:
             args['ibmensmsto'] = _dict.get('ibmensmsto')
         if 'ibmenhtmlbody' in _dict:
@@ -5631,6 +5713,8 @@ class NotificationCreate:
             _dict['ibmenmailto'] = self.ibmenmailto
         if hasattr(self, 'ibmenslackto') and self.ibmenslackto is not None:
             _dict['ibmenslackto'] = self.ibmenslackto
+        if hasattr(self, 'ibmensmstext') and self.ibmensmstext is not None:
+            _dict['ibmensmstext'] = self.ibmensmstext
         if hasattr(self, 'ibmensmsto') and self.ibmensmsto is not None:
             _dict['ibmensmsto'] = self.ibmensmsto
         if hasattr(self, 'ibmenhtmlbody') and self.ibmenhtmlbody is not None:
@@ -5825,27 +5909,33 @@ class Rules:
     Rule object.
 
     :attr bool enabled: (optional) Whether the rule is enabled or not.
-    :attr str event_type_filter: Event type filter.
+    :attr str event_type_filter: (optional) Event type filter.
     :attr str notification_filter: (optional) Notification filter.
+    :attr EventScheduleFilterAttributes event_schedule_filter: (optional) Event
+          schedule filter attributes.
     """
 
     def __init__(
         self,
-        event_type_filter: str,
         *,
         enabled: bool = None,
+        event_type_filter: str = None,
         notification_filter: str = None,
+        event_schedule_filter: 'EventScheduleFilterAttributes' = None,
     ) -> None:
         """
         Initialize a Rules object.
 
-        :param str event_type_filter: Event type filter.
         :param bool enabled: (optional) Whether the rule is enabled or not.
+        :param str event_type_filter: (optional) Event type filter.
         :param str notification_filter: (optional) Notification filter.
+        :param EventScheduleFilterAttributes event_schedule_filter: (optional)
+               Event schedule filter attributes.
         """
         self.enabled = enabled
         self.event_type_filter = event_type_filter
         self.notification_filter = notification_filter
+        self.event_schedule_filter = event_schedule_filter
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'Rules':
@@ -5855,10 +5945,10 @@ class Rules:
             args['enabled'] = _dict.get('enabled')
         if 'event_type_filter' in _dict:
             args['event_type_filter'] = _dict.get('event_type_filter')
-        else:
-            raise ValueError('Required property \'event_type_filter\' not present in Rules JSON')
         if 'notification_filter' in _dict:
             args['notification_filter'] = _dict.get('notification_filter')
+        if 'event_schedule_filter' in _dict:
+            args['event_schedule_filter'] = EventScheduleFilterAttributes.from_dict(_dict.get('event_schedule_filter'))
         return cls(**args)
 
     @classmethod
@@ -5875,6 +5965,11 @@ class Rules:
             _dict['event_type_filter'] = self.event_type_filter
         if hasattr(self, 'notification_filter') and self.notification_filter is not None:
             _dict['notification_filter'] = self.notification_filter
+        if hasattr(self, 'event_schedule_filter') and self.event_schedule_filter is not None:
+            if isinstance(self.event_schedule_filter, dict):
+                _dict['event_schedule_filter'] = self.event_schedule_filter
+            else:
+                _dict['event_schedule_filter'] = self.event_schedule_filter.to_dict()
         return _dict
 
     def _to_dict(self):
@@ -5901,8 +5996,10 @@ class RulesGet:
     Rule object.
 
     :attr bool enabled: Whether the rule is enabled or not.
-    :attr str event_type_filter: Event type filter.
-    :attr str notification_filter: Notification filter.
+    :attr str event_type_filter: (optional) Event type filter.
+    :attr str notification_filter: (optional) Notification filter.
+    :attr EventScheduleFilterAttributes event_schedule_filter: (optional) Event
+          schedule filter attributes.
     :attr str updated_at: Last time the topic was updated.
     :attr str id: Autogenerated rule ID.
     """
@@ -5910,23 +6007,28 @@ class RulesGet:
     def __init__(
         self,
         enabled: bool,
-        event_type_filter: str,
-        notification_filter: str,
         updated_at: str,
         id: str,
+        *,
+        event_type_filter: str = None,
+        notification_filter: str = None,
+        event_schedule_filter: 'EventScheduleFilterAttributes' = None,
     ) -> None:
         """
         Initialize a RulesGet object.
 
         :param bool enabled: Whether the rule is enabled or not.
-        :param str event_type_filter: Event type filter.
-        :param str notification_filter: Notification filter.
         :param str updated_at: Last time the topic was updated.
         :param str id: Autogenerated rule ID.
+        :param str event_type_filter: (optional) Event type filter.
+        :param str notification_filter: (optional) Notification filter.
+        :param EventScheduleFilterAttributes event_schedule_filter: (optional)
+               Event schedule filter attributes.
         """
         self.enabled = enabled
         self.event_type_filter = event_type_filter
         self.notification_filter = notification_filter
+        self.event_schedule_filter = event_schedule_filter
         self.updated_at = updated_at
         self.id = id
 
@@ -5940,12 +6042,10 @@ class RulesGet:
             raise ValueError('Required property \'enabled\' not present in RulesGet JSON')
         if 'event_type_filter' in _dict:
             args['event_type_filter'] = _dict.get('event_type_filter')
-        else:
-            raise ValueError('Required property \'event_type_filter\' not present in RulesGet JSON')
         if 'notification_filter' in _dict:
             args['notification_filter'] = _dict.get('notification_filter')
-        else:
-            raise ValueError('Required property \'notification_filter\' not present in RulesGet JSON')
+        if 'event_schedule_filter' in _dict:
+            args['event_schedule_filter'] = EventScheduleFilterAttributes.from_dict(_dict.get('event_schedule_filter'))
         if 'updated_at' in _dict:
             args['updated_at'] = _dict.get('updated_at')
         else:
@@ -5970,6 +6070,11 @@ class RulesGet:
             _dict['event_type_filter'] = self.event_type_filter
         if hasattr(self, 'notification_filter') and self.notification_filter is not None:
             _dict['notification_filter'] = self.notification_filter
+        if hasattr(self, 'event_schedule_filter') and self.event_schedule_filter is not None:
+            if isinstance(self.event_schedule_filter, dict):
+                _dict['event_schedule_filter'] = self.event_schedule_filter
+            else:
+                _dict['event_schedule_filter'] = self.event_schedule_filter.to_dict()
         if hasattr(self, 'updated_at') and self.updated_at is not None:
             _dict['updated_at'] = self.updated_at
         if hasattr(self, 'id') and self.id is not None:

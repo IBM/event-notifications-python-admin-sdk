@@ -216,6 +216,21 @@ response = event_notifications_service.delete_source(
 
 ### Create Topic
 
+Filters applied in case of periodic-timer as source. EventTypeFilter, NotificationFilter are mutually exclusive with EventScheduleFilter
+
+```py
+ event_schedule_filter_attributes_model = {
+    'starts_at': '2025-01-01T05:15:00.000Z',
+    'ends_at': '2025-01-01T05:15:00.000Z',
+    'expression': '* * * * *'
+}
+
+rules_model = {
+    "enabled": True,
+    "event_schedule_filter": event_schedule_filter_attributes_model,
+}
+```
+
 ```py
 
 rules_model = {
@@ -1062,6 +1077,7 @@ send_notifications_response = event_notifications_service.send_notifications(
   - **ibmenhtmlbody*** (_string_) - The html body of notification for email.
   - **ibmenmailto*** (_Array of string_) - Array of email ids to which the notification to be sent.
   - **ibmensmsto*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
+  - **ibmensmstext*** (_string_) - SMS text to be sent.
   - **ibmenslackto*** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
   - **ibmentemplates*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
 
@@ -1108,7 +1124,7 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_TEMPLATE_BODY` - base 64 encoded html content
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
-
+- `EVENT_NOTIFICATIONS_SCHEDULER_SOURCE_ID` - periodic timer source id
 ## Questions
 
 If you are having difficulties using this SDK or have a question about the IBM Cloud services,

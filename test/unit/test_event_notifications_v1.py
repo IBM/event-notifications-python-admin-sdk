@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2024.
+# (C) Copyright IBM Corp. 2025.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -338,13 +338,16 @@ class TestSendNotifications:
         notification_create_model['ibmentemplates'] = 'testString'
         notification_create_model['ibmenmailto'] = 'testString'
         notification_create_model['ibmenslackto'] = 'testString'
+        notification_create_model['ibmensmstext'] = 'testString'
         notification_create_model['ibmensmsto'] = 'testString'
         notification_create_model['ibmenhtmlbody'] = 'testString'
         notification_create_model['subject'] = 'testString'
         notification_create_model['ibmenmms'] = 'testString'
         notification_create_model['data'] = {'foo': 'bar'}
         notification_create_model['datacontenttype'] = 'application/json'
-        notification_create_model['ibmenpushto'] = '{"platforms":["push_android"]}'
+        notification_create_model['ibmenpushto'] = (
+            '{"platforms":["push_android", "push_ios", "push_firefox", "push_chrome", "push_safari", "push_huawei"]}'
+        )
         notification_create_model['ibmenfcmbody'] = 'testString'
         notification_create_model['ibmenapnsbody'] = 'testString'
         notification_create_model['ibmenapnsheaders'] = 'testString'
@@ -1122,11 +1125,18 @@ class TestCreateTopic:
             status=201,
         )
 
+        # Construct a dict representation of a EventScheduleFilterAttributes model
+        event_schedule_filter_attributes_model = {}
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model['enabled'] = True
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
+        rules_model['event_schedule_filter'] = event_schedule_filter_attributes_model
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -1182,11 +1192,18 @@ class TestCreateTopic:
             status=201,
         )
 
+        # Construct a dict representation of a EventScheduleFilterAttributes model
+        event_schedule_filter_attributes_model = {}
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model['enabled'] = True
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
+        rules_model['event_schedule_filter'] = event_schedule_filter_attributes_model
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -1435,7 +1452,7 @@ class TestGetTopic:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
-        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "expression"}, "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(
             responses.GET,
             url,
@@ -1481,7 +1498,7 @@ class TestGetTopic:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
-        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "expression"}, "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(
             responses.GET,
             url,
@@ -1521,7 +1538,7 @@ class TestGetTopic:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
-        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "expression"}, "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(
             responses.GET,
             url,
@@ -1566,7 +1583,7 @@ class TestReplaceTopic:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
-        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "expression"}, "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(
             responses.PUT,
             url,
@@ -1575,11 +1592,18 @@ class TestReplaceTopic:
             status=200,
         )
 
+        # Construct a dict representation of a EventScheduleFilterAttributes model
+        event_schedule_filter_attributes_model = {}
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model['enabled'] = True
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
+        rules_model['event_schedule_filter'] = event_schedule_filter_attributes_model
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -1628,7 +1652,7 @@ class TestReplaceTopic:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/topics/testString')
-        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
+        mock_response = '{"id": "id", "description": "description", "name": "name", "updated_at": "updated_at", "source_count": 12, "sources": [{"id": "id", "name": "name", "rules": [{"enabled": false, "event_type_filter": "$.*", "notification_filter": "notification_filter", "event_schedule_filter": {"starts_at": "2019-01-01T12:00:00.000Z", "ends_at": "2019-01-01T12:00:00.000Z", "expression": "expression"}, "updated_at": "updated_at", "id": "id"}]}], "subscription_count": 18, "subscriptions": [{"id": "id", "name": "name", "description": "description", "destination_id": "destination_id", "destination_name": "destination_name", "destination_type": "sms_ibm", "topic_id": "topic_id", "topic_name": "topic_name", "updated_at": "2019-01-01T12:00:00.000Z"}]}'
         responses.add(
             responses.PUT,
             url,
@@ -1637,11 +1661,18 @@ class TestReplaceTopic:
             status=200,
         )
 
+        # Construct a dict representation of a EventScheduleFilterAttributes model
+        event_schedule_filter_attributes_model = {}
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         # Construct a dict representation of a Rules model
         rules_model = {}
         rules_model['enabled'] = True
         rules_model['event_type_filter'] = '$.notification_event_info.event_type == \'cert_manager\''
         rules_model['notification_filter'] = '$.notification.findings[0].severity == \'MODERATE\''
+        rules_model['event_schedule_filter'] = event_schedule_filter_attributes_model
 
         # Construct a dict representation of a SourcesItems model
         sources_items_model = {}
@@ -7025,6 +7056,44 @@ class TestModel_EnabledCountriesResponse:
         assert enabled_countries_response_model_json2 == enabled_countries_response_model_json
 
 
+class TestModel_EventScheduleFilterAttributes:
+    """
+    Test Class for EventScheduleFilterAttributes
+    """
+
+    def test_event_schedule_filter_attributes_serialization(self):
+        """
+        Test serialization/deserialization for EventScheduleFilterAttributes
+        """
+
+        # Construct a json representation of a EventScheduleFilterAttributes model
+        event_schedule_filter_attributes_model_json = {}
+        event_schedule_filter_attributes_model_json['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model_json['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model_json['expression'] = 'testString'
+
+        # Construct a model instance of EventScheduleFilterAttributes by calling from_dict on the json representation
+        event_schedule_filter_attributes_model = EventScheduleFilterAttributes.from_dict(
+            event_schedule_filter_attributes_model_json
+        )
+        assert event_schedule_filter_attributes_model != False
+
+        # Construct a model instance of EventScheduleFilterAttributes by calling from_dict on the json representation
+        event_schedule_filter_attributes_model_dict = EventScheduleFilterAttributes.from_dict(
+            event_schedule_filter_attributes_model_json
+        ).__dict__
+        event_schedule_filter_attributes_model2 = EventScheduleFilterAttributes(
+            **event_schedule_filter_attributes_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert event_schedule_filter_attributes_model == event_schedule_filter_attributes_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        event_schedule_filter_attributes_model_json2 = event_schedule_filter_attributes_model.to_dict()
+        assert event_schedule_filter_attributes_model_json2 == event_schedule_filter_attributes_model_json
+
+
 class TestModel_Histrogram:
     """
     Test Class for Histrogram
@@ -7424,13 +7493,16 @@ class TestModel_NotificationCreate:
         notification_create_model_json['ibmentemplates'] = 'testString'
         notification_create_model_json['ibmenmailto'] = 'testString'
         notification_create_model_json['ibmenslackto'] = 'testString'
+        notification_create_model_json['ibmensmstext'] = 'testString'
         notification_create_model_json['ibmensmsto'] = 'testString'
         notification_create_model_json['ibmenhtmlbody'] = 'testString'
         notification_create_model_json['subject'] = 'testString'
         notification_create_model_json['ibmenmms'] = 'testString'
         notification_create_model_json['data'] = {'foo': 'bar'}
         notification_create_model_json['datacontenttype'] = 'application/json'
-        notification_create_model_json['ibmenpushto'] = '{"platforms":["push_android"]}'
+        notification_create_model_json['ibmenpushto'] = (
+            '{"platforms":["push_android", "push_ios", "push_firefox", "push_chrome", "push_safari", "push_huawei"]}'
+        )
         notification_create_model_json['ibmenfcmbody'] = 'testString'
         notification_create_model_json['ibmenapnsbody'] = 'testString'
         notification_create_model_json['ibmenapnsheaders'] = 'testString'
@@ -7538,11 +7610,19 @@ class TestModel_Rules:
         Test serialization/deserialization for Rules
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        event_schedule_filter_attributes_model = {}  # EventScheduleFilterAttributes
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         # Construct a json representation of a Rules model
         rules_model_json = {}
         rules_model_json['enabled'] = True
         rules_model_json['event_type_filter'] = '$.*'
         rules_model_json['notification_filter'] = 'testString'
+        rules_model_json['event_schedule_filter'] = event_schedule_filter_attributes_model
 
         # Construct a model instance of Rules by calling from_dict on the json representation
         rules_model = Rules.from_dict(rules_model_json)
@@ -7570,11 +7650,19 @@ class TestModel_RulesGet:
         Test serialization/deserialization for RulesGet
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        event_schedule_filter_attributes_model = {}  # EventScheduleFilterAttributes
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         # Construct a json representation of a RulesGet model
         rules_get_model_json = {}
         rules_get_model_json['enabled'] = True
         rules_get_model_json['event_type_filter'] = '$.*'
         rules_get_model_json['notification_filter'] = 'testString'
+        rules_get_model_json['event_schedule_filter'] = event_schedule_filter_attributes_model
         rules_get_model_json['updated_at'] = 'testString'
         rules_get_model_json['id'] = 'testString'
 
@@ -8397,10 +8485,16 @@ class TestModel_SourcesItems:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        event_schedule_filter_attributes_model = {}  # EventScheduleFilterAttributes
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         rules_model = {}  # Rules
         rules_model['enabled'] = True
         rules_model['event_type_filter'] = '$.*'
         rules_model['notification_filter'] = 'testString'
+        rules_model['event_schedule_filter'] = event_schedule_filter_attributes_model
 
         # Construct a json representation of a SourcesItems model
         sources_items_model_json = {}
@@ -8435,10 +8529,16 @@ class TestModel_SourcesListItems:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        event_schedule_filter_attributes_model = {}  # EventScheduleFilterAttributes
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         rules_get_model = {}  # RulesGet
         rules_get_model['enabled'] = True
         rules_get_model['event_type_filter'] = '$.notification_event_info.event_type == \'test\''
         rules_get_model['notification_filter'] = '$.notification.findings[0].severity == \'LOW\''
+        rules_get_model['event_schedule_filter'] = event_schedule_filter_attributes_model
         rules_get_model['updated_at'] = '2021-09-08T13:25:20.523533Z'
         rules_get_model['id'] = '218f4e30-9af2-4f70-b38b-738f923b0c4b'
 
@@ -8873,10 +8973,16 @@ class TestModel_Topic:
 
         # Construct dict forms of any model objects needed in order to build this model.
 
+        event_schedule_filter_attributes_model = {}  # EventScheduleFilterAttributes
+        event_schedule_filter_attributes_model['starts_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['ends_at'] = '2019-01-01T12:00:00Z'
+        event_schedule_filter_attributes_model['expression'] = 'testString'
+
         rules_get_model = {}  # RulesGet
         rules_get_model['enabled'] = True
         rules_get_model['event_type_filter'] = '$.notification_event_info.event_type == \'test\''
         rules_get_model['notification_filter'] = '$.notification.findings[0].severity == \'LOW\''
+        rules_get_model['event_schedule_filter'] = event_schedule_filter_attributes_model
         rules_get_model['updated_at'] = '2021-09-08T13:25:20.523533Z'
         rules_get_model['id'] = '218f4e30-9af2-4f70-b38b-738f923b0c4b'
 

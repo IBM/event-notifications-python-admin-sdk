@@ -2062,6 +2062,7 @@ class TestEventNotificationsV1Examples:
                 "ibmensubject": "Findings on IBM Cloud Security Advisor",
                 "ibmenmailto": mailto,
                 "ibmensmsto": smsto,
+                "ibmensmsto": "this is a sample text message",
                 "ibmenslackto": slackto,
                 "ibmenmms": mms,
                 "ibmentemplates": templates,
