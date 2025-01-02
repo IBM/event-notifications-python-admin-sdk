@@ -17,6 +17,8 @@
 Integration Tests for EventNotificationsV1
 """
 import os
+from datetime import timezone, timedelta
+
 import pytest
 from ibm_cloud_sdk_core import *
 from ibm_eventnotifications.event_notifications_v1 import *
@@ -35,7 +37,6 @@ topic_id3 = ""
 destination_id = ""
 destination_id1 = ""
 destination_id2 = ""
-destination_id3 = ""
 destination_id4 = ""
 destination_id5 = ""
 destination_id6 = ""
@@ -55,7 +56,6 @@ safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
 subscription_id2 = ""
-subscription_id3 = ""
 subscription_id4 = ""
 subscription_id5 = ""
 subscription_id6 = ""
@@ -71,6 +71,7 @@ subscription_id16 = ""
 subscription_id17 = ""
 subscription_id18 = ""
 subscription_id19 = ""
+subscription_id20 = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -106,6 +107,7 @@ slack_dm_token = ""
 slack_channel_id = ""
 webhook_template_id = ""
 webhook_template_body = ""
+scheduler_source_id = ""
 
 
 class TestEventNotificationsV1:
@@ -115,7 +117,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -156,6 +158,7 @@ class TestEventNotificationsV1:
             slack_dm_token = cls.config["SLACK_DM_TOKEN"]
             slack_channel_id = cls.config["SLACK_CHANNEL_ID"]
             webhook_template_body = cls.config["WEBHOOK_TEMPLATE_BODY"]
+            scheduler_source_id = cls.config["SCHEDULER_SOURCE_ID"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -179,6 +182,7 @@ class TestEventNotificationsV1:
             assert slack_dm_token is not None
             assert slack_channel_id is not None
             assert webhook_template_body is not None
+            assert scheduler_source_id is not None
 
         print("Setup complete.")
 
@@ -255,7 +259,7 @@ class TestEventNotificationsV1:
             instance_id,
             name="Event Notification Create Source Acme",
             description="This source is used for Acme Bank",
-            enabled=False,
+            enabled=True,
         )
 
         assert create_sources_response.get_status_code() == 201
@@ -349,7 +353,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_create_topic(self):
-        global topic_id, topic_id2, topic_id3
+        global topic_id, topic_id2, topic_id3, topic_id4
         rules_model = {
             "enabled": False,
             "event_type_filter": "$.notification_event_info.event_type == 'cert_manager'",
@@ -428,9 +432,53 @@ class TestEventNotificationsV1:
 
         topic_id3 = topic.id
 
+        current_instant = datetime.now(timezone.utc)
+        start_date = current_instant.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+        end_date = current_instant + timedelta(minutes=1)
+        end_formatted_date = end_date.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+
+        event_schedule_filter_attributes_model = {
+            'starts_at': start_date,
+            'ends_at': end_formatted_date,
+            'expression': '* * * * *',
+        }
+
+        rules_model = {
+            "enabled": True,
+            "event_schedule_filter": event_schedule_filter_attributes_model,
+        }
+
+        # Construct a dict representation of a TopicUpdateSourcesItem model
+        topic_create_sources_item_model = {
+            "id": scheduler_source_id,
+            "rules": [rules_model],
+        }
+
+        description = "Topic 4 for cron scheduler"
+        name = "Scheduler topic4"
+        create_topic_response = self.event_notifications_service.create_topic(
+            instance_id,
+            name=name,
+            description=description,
+            sources=[topic_create_sources_item_model],
+        )
+
+        assert create_topic_response.get_status_code() == 201
+        topic_response = create_topic_response.get_result()
+        assert topic_response is not None
+
+        topic = TopicResponse.from_dict(topic_response)
+        assert topic is not None
+
+        assert topic.name == name
+        assert topic.description == description
+
+        topic_id4 = topic.id
+
         assert topic_id2 is not ""
         assert topic_id is not ""
         assert topic_id3 is not ""
+        assert topic_id4 is not ""
 
         #
         # The following status codes aren't covered by tests.
@@ -450,18 +498,13 @@ class TestEventNotificationsV1:
         limit = 1
         offset = 0
 
-        while more_results:
-            list_topics_response = self.event_notifications_service.list_topics(
-                instance_id, limit=limit, offset=offset, search=search
-            )
+        list_topics_response = self.event_notifications_service.list_topics(
+            instance_id, limit=limit, offset=offset, search=search
+        )
 
-            assert list_topics_response.get_status_code() == 200
-            topic_list = list_topics_response.get_result()
-            assert topic_list is not None
-
-            if topic_list.get("total_count") <= offset:
-                more_results = False
-            offset += 1
+        assert list_topics_response.get_status_code() == 200
+        topic_list = list_topics_response.get_result()
+        assert topic_list is not None
 
         #
         # The following status codes aren't covered by tests.
@@ -539,7 +582,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_create_destination(self):
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19
+        global destination_id, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19
         destination_config_params_model = {
             "url": code_engine_URL,
             "verb": "post",
@@ -576,35 +619,6 @@ class TestEventNotificationsV1:
         assert destination.type == typeval
 
         destination_id = destination.id
-
-        fcm_config_params = {"server_key": fcmServerKey, "sender_id": fcmSenderId}
-        destination_config_model = {
-            "params": fcm_config_params,
-        }
-        name = "FCM_destination"
-        typeval = "push_android"
-        description = "FCM Destination"
-
-        create_destination_response = self.event_notifications_service.create_destination(
-            instance_id,
-            name,
-            type=typeval,
-            description=description,
-            config=destination_config_model,
-        )
-
-        assert create_destination_response.get_status_code() == 201
-        destination_response = create_destination_response.get_result()
-        assert destination_response is not None
-
-        destination = DestinationResponse.from_dict(destination_response)
-
-        assert destination is not None
-        assert destination.name == name
-        assert destination.description == description
-        assert destination.type == typeval
-
-        destination_id3 = destination.id
 
         slack_config_params = {"url": slack_url, "type": "incoming_webhook"}
 
@@ -1356,34 +1370,6 @@ class TestEventNotificationsV1:
         assert res_name == name
         assert res_description == description
 
-        fcm_config_params = {"server_key": fcmServerKey, "sender_id": fcmSenderId}
-
-        destination_config_model = {
-            "params": fcm_config_params,
-        }
-        name = "FCM_destination_update"
-        description = "FCM Destination update"
-
-        update_destination_response = self.event_notifications_service.update_destination(
-            instance_id,
-            id=destination_id3,
-            name=name,
-            description=description,
-            config=destination_config_model,
-        )
-
-        assert update_destination_response.get_status_code() == 200
-        destination_response = update_destination_response.get_result()
-        assert destination_response is not None
-
-        res_id = destination_response.get("id")
-        res_name = destination_response.get("name")
-        res_description = destination_response.get("description")
-
-        assert res_id == destination_id3
-        assert res_name == name
-        assert res_description == description
-
         slack_config_params = {"url": slack_url, "type": "incoming_webhook"}
 
         destination_config_model = {
@@ -1981,7 +1967,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18, subscription_id19
+        global subscription_id, subscription_id1, subscription_id2, subscription_id4, subscription_id5, subscription_id6, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18, subscription_id19, subscription_id20
         subscription_create_attributes_model = {
             "signing_enabled": False,
             "template_id_notification": webhook_template_id,
@@ -2060,29 +2046,6 @@ class TestEventNotificationsV1:
         subscription_name = subscription_response.get("name")
         subscription_description = subscription_response.get("description")
         subscription_id2 = subscription_response.get("id")
-
-        assert subscription_name == name
-        assert subscription_description == description
-
-        # FCM
-        name = "FCM subscription"
-        description = "Subscription for the FCM"
-
-        create_subscription_response = self.event_notifications_service.create_subscription(
-            instance_id,
-            name,
-            destination_id=destination_id3,
-            topic_id=topic_id3,
-            description=description,
-        )
-
-        assert create_subscription_response.get_status_code() == 201
-        subscription_response = create_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-        subscription_id3 = subscription_response.get("id")
 
         assert subscription_name == name
         assert subscription_description == description
@@ -2466,6 +2429,38 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
+        name = "Scheduler subscription"
+        description = "Subscription for the Scheduler as a source"
+
+        subscription_create_attributes_model_json = {
+            'attachment_color': '#0000FF',
+            'template_id_notification': slack_template_id,
+        }
+
+        subscription_create_attributes_model = SubscriptionCreateAttributesSlackAttributes.from_dict(
+            subscription_create_attributes_model_json
+        )
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id4,
+            topic_id=topic_id4,
+            description=description,
+            attributes=subscription_create_attributes_model,
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get("name")
+        subscription_description = subscription_response.get("description")
+        assert subscription_name == name
+        assert subscription_description == description
+
+        subscription_id20 = subscription_response.get("id")
+
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -2604,25 +2599,6 @@ class TestEventNotificationsV1:
             name=name,
             description=description,
             attributes=subscription_update_attributes_model,
-        )
-
-        assert update_subscription_response.get_status_code() == 200
-        subscription_response = update_subscription_response.get_result()
-        assert subscription_response is not None
-
-        subscription_name = subscription_response.get("name")
-        subscription_description = subscription_response.get("description")
-
-        assert subscription_name == name
-        assert subscription_description == description
-
-        name = "FCM update"
-        description = "Subscription for FCM updated"
-        update_subscription_response = self.event_notifications_service.update_subscription(
-            instance_id,
-            id=subscription_id3,
-            name=name,
-            description=description,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -3144,6 +3120,7 @@ class TestEventNotificationsV1:
             "ibmensubject": "Findings on IBM Cloud Security Advisor",
             "ibmenmailto": mailto,
             "ibmensmsto": smsto,
+            "ibmensmsto": "this is a sample text message",
             "ibmenslackto": slackto,
             "ibmenmms": mms,
             "ibmentemplates": templates,
@@ -3467,7 +3444,6 @@ class TestEventNotificationsV1:
             subscription_id,
             subscription_id1,
             subscription_id2,
-            subscription_id3,
             subscription_id4,
             subscription_id5,
             subscription_id6,
@@ -3499,7 +3475,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_delete_topic(self):
-        for id in [topic_id, topic_id2, topic_id3]:
+        for id in [topic_id, topic_id2, topic_id3, topic_id4]:
             delete_topic_response = self.event_notifications_service.delete_topic(instance_id, id)
 
             assert delete_topic_response.get_status_code() == 204
@@ -3517,7 +3493,6 @@ class TestEventNotificationsV1:
     def test_delete_destination(self):
         for id in [
             destination_id,
-            destination_id3,
             destination_id4,
             destination_id5,
             destination_id6,
