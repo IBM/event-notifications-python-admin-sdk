@@ -1,3 +1,11 @@
+# [0.11.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.10.0...v0.11.0) (2025-01-06)
+
+
+### Features
+
+* cron scheduler support ([4c3b4f6](https://github.com/IBM/event-notifications-python-admin-sdk/commit/4c3b4f620cb9c8420de4f3af3b0c52832914f4b9))
+* cron scheduler support ([#60](https://github.com/IBM/event-notifications-python-admin-sdk/issues/60)) ([6247999](https://github.com/IBM/event-notifications-python-admin-sdk/commit/624799901ecd0c5709e926ecc3737627ed6ec216))
+
 # [0.10.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.9.0...v0.10.0) (2024-10-30)
 
 
