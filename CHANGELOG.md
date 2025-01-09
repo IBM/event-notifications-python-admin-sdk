@@ -1,3 +1,16 @@
+# [0.12.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.11.0...v0.12.0) (2025-01-09)
+
+
+### Bug Fixes
+
+* workflow actions migration ([#62](https://github.com/IBM/event-notifications-python-admin-sdk/issues/62)) ([b55116b](https://github.com/IBM/event-notifications-python-admin-sdk/commit/b55116b5842dfe47570c1e52c57f19e29df2855f))
+
+
+### Features
+
+* workflow migration ([#63](https://github.com/IBM/event-notifications-python-admin-sdk/issues/63)) ([4022327](https://github.com/IBM/event-notifications-python-admin-sdk/commit/4022327994e597becfe7ce5f2f69e067ff5d8182))
+* workflow migration ([#64](https://github.com/IBM/event-notifications-python-admin-sdk/issues/64)) ([8ad8307](https://github.com/IBM/event-notifications-python-admin-sdk/commit/8ad830727435d40a01dd50dd2c6d4c1caec5b0c2))
+
 # [0.11.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.10.0...v0.11.0) (2025-01-06)
 
 
