@@ -108,6 +108,8 @@ slack_channel_id = ""
 webhook_template_id = ""
 webhook_template_body = ""
 scheduler_source_id = ""
+pagerduty_template_body = ""
+pagerduty_template_id = ""
 
 
 class TestEventNotificationsV1:
@@ -117,7 +119,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id, pagerduty_template_body
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -159,6 +161,7 @@ class TestEventNotificationsV1:
             slack_channel_id = cls.config["SLACK_CHANNEL_ID"]
             webhook_template_body = cls.config["WEBHOOK_TEMPLATE_BODY"]
             scheduler_source_id = cls.config["SCHEDULER_SOURCE_ID"]
+            pagerduty_template_body = cls.config["PAGERDUTY_TEMPLATE_BODY"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -183,6 +186,7 @@ class TestEventNotificationsV1:
             assert slack_channel_id is not None
             assert webhook_template_body is not None
             assert scheduler_source_id is not None
+            assert pagerduty_template_body is not None
 
         print("Setup complete.")
 
@@ -1129,7 +1133,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_create_template(self):
-        global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id
+        global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id
 
         template_config_model_json = {'body': template_body, 'subject': 'Hi this is invitation for invitation message'}
 
@@ -1244,6 +1248,37 @@ class TestEventNotificationsV1:
         assert template.type == typeval
 
         webhook_template_id = template.id
+
+        pagerduty_template_config_model_json = {'body': pagerduty_template_body}
+
+        pagerduty_template_config_model = TemplateConfigOneOfPagerdutyTemplateConfig.from_dict(
+            pagerduty_template_config_model_json
+        )
+
+        name = "template_pagerduty"
+        typeval = "pagerduty.notification"
+        description = "pagerduty template create"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=pagerduty_template_config_model,
+            description=description,
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+
+        pagerduty_template_id = template.id
 
     @needscredentials
     def test_list_destinations(self):
@@ -1964,6 +1999,34 @@ class TestEventNotificationsV1:
         assert template_response.get("type") == typeval
         assert template_response.get("id") == webhook_template_id
 
+        pagerduty_template_config_model_json = {'body': pagerduty_template_body}
+
+        pagerduty_template_config_model = TemplateConfigOneOfPagerdutyTemplateConfig.from_dict(
+            pagerduty_template_config_model_json
+        )
+
+        name = "template_pagerduty"
+        typeval = "pagerduty.notification"
+        description = "pagerduty template"
+
+        update_template_response = self.event_notifications_service.replace_template(
+            instance_id,
+            id=pagerduty_template_id,
+            name=name,
+            description=description,
+            type=typeval,
+            params=pagerduty_template_config_model,
+        )
+
+        assert update_template_response.get_status_code() == 200
+        template_response = update_template_response.get_result()
+
+        assert template_response is not None
+        assert template_response.get("name") == name
+        assert template_response.get("description") == description
+        assert template_response.get("type") == typeval
+        assert template_response.get("id") == pagerduty_template_id
+
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
@@ -2173,12 +2236,21 @@ class TestEventNotificationsV1:
         name = "PagerDuty subscription"
         description = "Subscription for the PagerDuty"
 
+        subscription_create_attributes_model_json = {
+            'template_id_notification': pagerduty_template_id,
+        }
+
+        subscription_create_attributes_model = SubscriptionCreateAttributesPagerDutyAttributes.from_dict(
+            subscription_create_attributes_model_json
+        )
+
         create_subscription_response = self.event_notifications_service.create_subscription(
             instance_id,
             name,
             destination_id=destination_id10,
             topic_id=topic_id,
             description=description,
+            attributes=subscription_create_attributes_model,
         )
 
         assert create_subscription_response.get_status_code() == 201
@@ -2724,11 +2796,20 @@ class TestEventNotificationsV1:
 
         name = "PagerDuty update"
         description = "Subscription for PagerDuty updated"
+
+        subscription_update_attributes_model_json = {
+            'template_id_notification': pagerduty_template_id,
+        }
+        subscription_update_attributes_model = SubscriptionUpdateAttributesPagerDutyAttributes.from_dict(
+            subscription_update_attributes_model_json
+        )
+
         update_subscription_response = self.event_notifications_service.update_subscription(
             instance_id,
             id=subscription_id10,
             name=name,
             description=description,
+            attributes=subscription_update_attributes_model,
         )
 
         assert update_subscription_response.get_status_code() == 200
@@ -3526,7 +3607,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_delete_template(self):
-        for id in [template_invitation_id, template_notification_id, slack_template_id, webhook_template_id]:
+        for id in [template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id]:
             delete_template_response = self.event_notifications_service.delete_template(instance_id, id)
         print(
             "\ndelete_template() response status code: ",

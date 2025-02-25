@@ -9,7 +9,7 @@ Python client library to interact with various [IBM Cloud Event Notifications AP
 - [Overview](#overview)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Initialize SDK](#initialize-sdk)  
+- [Initialize SDK](#initialize-sdk)
 - [Using the SDK](#using-the-sdk)
 - [Set Environment](#set-environment)
 - [Questions](#questions)
@@ -24,31 +24,34 @@ Python client library to interact with various [IBM Cloud Event Notifications AP
 
 The IBM Cloud Event Notifications Python SDK allows developers to programmatically interact with Event Notifications service in IBM cloud.
 
-Service Name | Module Name | Imported Class Name
---- | --- | ---
-[Event Notifications Service](https://cloud.ibm.com/apidocs/event-notifications) | ibm_eventnotifications | EventNotificationsV1
+| Service Name                                                                     | Module Name            | Imported Class Name  |
+| -------------------------------------------------------------------------------- | ---------------------- | -------------------- |
+| [Event Notifications Service](https://cloud.ibm.com/apidocs/event-notifications) | ibm_eventnotifications | EventNotificationsV1 |
 
 ## Prerequisites
 
 [ibm-cloud-onboarding]: https://cloud.ibm.com/registration
 
-* An [IBM Cloud][ibm-cloud-onboarding] account.
-* An Event Notifications Instance
-* Python 3.6 or above.
+- An [IBM Cloud][ibm-cloud-onboarding] account.
+- An Event Notifications Instance
+- Python 3.6 or above.
 
 ## Installation
 
-
 To install, use pip or easy_install:
+
 ```bash
 pip install --upgrade "ibm_eventnotifications>=0.12.0"
 ```
+
 or
+
 ```bash
 easy_install --upgrade "ibm_eventnotifications>=0.12.0"
 ```
 
 ## Initialize SDK
+
 Initialize the sdk to connect with your Event Notifications service instance.
 
 ```py
@@ -67,10 +70,13 @@ event_notifications_service.set_service_url('https://' + region + '.event-notifi
 
 
 ```
+
 **To configure service URL for Private Endpoint**
 
 If you enabled service endpoints in your account, you can send API requests over the IBM Cloud private network. In the initialisation, the base endpoint URLs of the IAM(authenticator) & Event Notification(service) should be modified to point to private endpoints.
-1) Setting client options programmatically
+
+1. Setting client options programmatically
+
 ```py
  # Create an IAM authenticator.
 authenticator = IAMAuthenticator('<iam-api-key>', 'https://private.iam.cloud.ibm.com')
@@ -80,7 +86,9 @@ event_notifications_service = EventNotificationsV1(authenticator=authenticator)
 # To configure service URL for Private Endpoint
 event_notifications_service.set_service_url('https://private.' + region + '.event-notifications.cloud.ibm.com/event-notifications')
 ```
-2) Using external configuration properties
+
+2. Using external configuration properties
+
 ```py
  EVENT_NOTIFICATIONS_AUTH_URL = https://private.iam.cloud.ibm.com/identity/token
 ```
@@ -92,64 +100,64 @@ event_notifications_service.set_service_url('https://private.' + region + '.even
 SDK Methods to consume
 
 - [Source](#source)
-    - [Create Source](#create-source)
-    - [List Sources](#list-sources)
-    - [Get Source](#get-source)
-    - [Update Source](#update-source)
-    - [Delete Source](#delete-source)
+  - [Create Source](#create-source)
+  - [List Sources](#list-sources)
+  - [Get Source](#get-source)
+  - [Update Source](#update-source)
+  - [Delete Source](#delete-source)
 - [Topics](#topics)
-    - [Create Topics](#create-topic)
-    - [List Topics](#list-topics)
-    - [Get Topic](#get-topic)
-    - [Update Topics](#update-topic)
-    - [Delete Topics](#delete-topic)
+  - [Create Topics](#create-topic)
+  - [List Topics](#list-topics)
+  - [Get Topic](#get-topic)
+  - [Update Topics](#update-topic)
+  - [Delete Topics](#delete-topic)
 - [Destinations](#destinations)
-    - [Create Destination](#create-destination)
-    - [List Destinations](#list-destinations)
-    - [Get Destination](#get-destination)
-    - [Update Destination](#update-destination)
-    - [Delete Destination](#delete-destination)
-    - [Custom Domain_Name_verification](#custom-domain-name-verification)
-    - [Test Destination](#test-destination)
+  - [Create Destination](#create-destination)
+  - [List Destinations](#list-destinations)
+  - [Get Destination](#get-destination)
+  - [Update Destination](#update-destination)
+  - [Delete Destination](#delete-destination)
+  - [Custom Domain_Name_verification](#custom-domain-name-verification)
+  - [Test Destination](#test-destination)
 - [Templates](#templates)
-    - [Create Template](#create-template)
-    - [List Templates](#list-templates)
-    - [Get Template](#get-template)
-    - [Update Template](#update-template)
-    - [Delete Template](#delete-template)
+  - [Create Template](#create-template)
+  - [List Templates](#list-templates)
+  - [Get Template](#get-template)
+  - [Update Template](#update-template)
+  - [Delete Template](#delete-template)
 - [Push Destination APIs](#push-destination-apis)
-    - [Create Destination tag subscription](#create-destination-tag-subscription)
-    - [List Destination tag subscription](#list-destination-tag-subscription)
-    - [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
+  - [Create Destination tag subscription](#create-destination-tag-subscription)
+  - [List Destination tag subscription](#list-destination-tag-subscription)
+  - [Delete Destination device tag subscription](#delete-destination-device-tag-subscription)
 - [Subscriptions](#subscriptions)
-    - [Create Subscription](#create-subscription)
-    - [List Subscriptions](#list-subscriptions)
-    - [Get Subscription](#get-subscription)
-    - [Update Subscription](#update-subscription)
-    - [Delete Subscription](#delete-subscription)
+  - [Create Subscription](#create-subscription)
+  - [List Subscriptions](#list-subscriptions)
+  - [Get Subscription](#get-subscription)
+  - [Update Subscription](#update-subscription)
+  - [Delete Subscription](#delete-subscription)
 - [Integration](#integration)
-    - [Create Integration](#create-integration)
-    - [List Integrations](#list-integrations)
-    - [Get Integrations](#get-integration)
-    - [Update Integration](#update-integration)
+  - [Create Integration](#create-integration)
+  - [List Integrations](#list-integrations)
+  - [Get Integrations](#get-integration)
+  - [Update Integration](#update-integration)
 - [SMTP Configurations](#SMTPConfigurations)
-	- [Create SMTP Configuration](#create-smtp-configuration)
-	- [Create SMTP User](#create-smtp-user)
-	- [Get SMTP Configuration](#get-smtp-configuration)
-	- [Get SMTP User](#get-smtp-user)	
-	- [Get SMTP Allowed Ips](#get-smtp-allowed-ips)
-	- [List SMTP Configurations](#list-smtp-configurations)
-	- [List SMTP Users](#list-smtp-users)
-	- [Update SMTP Configuration](#update-smtp-configuration)
-	- [Update SMTP User](#update-smtp-user)
-	- [Delete SMTP User](#delete-smtp-user)
-	- [Delete SMTP Configuration](#delete-smtp-user)
-	- [Verify SMTP](#verify-smtp)
-- [Metrics](#Metrics) 
-    - [Get Metrics](#get-metrics)  
+  - [Create SMTP Configuration](#create-smtp-configuration)
+  - [Create SMTP User](#create-smtp-user)
+  - [Get SMTP Configuration](#get-smtp-configuration)
+  - [Get SMTP User](#get-smtp-user)
+  - [Get SMTP Allowed Ips](#get-smtp-allowed-ips)
+  - [List SMTP Configurations](#list-smtp-configurations)
+  - [List SMTP Users](#list-smtp-users)
+  - [Update SMTP Configuration](#update-smtp-configuration)
+  - [Update SMTP User](#update-smtp-user)
+  - [Delete SMTP User](#delete-smtp-user)
+  - [Delete SMTP Configuration](#delete-smtp-user)
+  - [Verify SMTP](#verify-smtp)
+- [Metrics](#Metrics)
+  - [Get Metrics](#get-metrics)
 - [Send Notifications](#send-notifications)
 
-## Source 
+## Source
 
 ### Create Source
 
@@ -212,7 +220,7 @@ response = event_notifications_service.delete_source(
 
 ```
 
-## Topics 
+## Topics
 
 ### Create Topic
 
@@ -277,6 +285,7 @@ print(json.dumps(topic, indent=2))
 ```
 
 ### Update Topic
+
 ```py
 
 rules_model = {
@@ -309,7 +318,9 @@ rulesModel := &eventnotificationsv1.Rules{
 	NotificationFilter: core.StringPtr("$.notification.findings[0].severity == 'SEVERE'"), # Add your notification filter here.
 }
 ```
+
 ### Delete Topic
+
 ```py
 response = event_notifications_service.delete_topic(
       <instance-id>,
@@ -317,7 +328,8 @@ response = event_notifications_service.delete_topic(
   )
 
 ```
-## Destinations 
+
+## Destinations
 
 ### Create Destination
 
@@ -345,8 +357,9 @@ destination = event_notifications_service.create_destination(
 
 print(json.dumps(destination, indent=2))
 ```
+
 Among the supported destinations, if you need to create Push Notification destinations, you have the additional option of choosing a destination of production type or pre-production type.
-Set `pre_prod` boolean parameter to *true* to configure destination as pre-production destination else set the value as *false*.
+Set `pre_prod` boolean parameter to _true_ to configure destination as pre-production destination else set the value as _false_.
 Supported destinations are Android, iOS, Chrome, Firefox, and Safari.
 
 ### List Destinations
@@ -396,6 +409,7 @@ destination = event_notifications_service.update_destination(
 print(json.dumps(destination, indent=2))
 
 ```
+
 ### Delete Destination
 
 ```py
@@ -407,8 +421,9 @@ response = event_notifications_service.delete_destination(
 
 ### Test Destination
 
-This functionality allows you to test a destination. The feature simplifies the process of verifying whether a destination is functioning correctly. 
+This functionality allows you to test a destination. The feature simplifies the process of verifying whether a destination is functioning correctly.
 Currently, this functionality supports following destinations:
+
 1. Slack
 2. PagerDuty
 3. ServiceNow
@@ -422,6 +437,7 @@ test_destination_response = event_notifications_service.test_destination(
     id=<destination-id>
 )
 ```
+
 Once the test is completed, you will be presented with the results. These results will typically include:
 
 - **Status**: Whether the test is successful or failed
@@ -432,9 +448,11 @@ Once the test is completed, you will be presented with the results. These result
 
 After creation of the custom email destination with your domain name, make sure its validated for the right ownership.
 This can be done with SPF and DKIM verification.
-* Sender Policy Framework (SPF), which is used to authenticate the sender of an email. SPF specifies the mail servers that are allowed to send email for your domain.
-* DomainKeys Identified Mail (DKIM), which allows an organization to take responsibility for transmitting a message by signing it. DKIM allows
+
+- Sender Policy Framework (SPF), which is used to authenticate the sender of an email. SPF specifies the mail servers that are allowed to send email for your domain.
+- DomainKeys Identified Mail (DKIM), which allows an organization to take responsibility for transmitting a message by signing it. DKIM allows
   the receiver to check the email that claimed to have come from a specific domain, is authorized by the owner of that domain.
+
 ```py
 verification_response = event_notifications_service.update_verify_destination(
       <instance-id>,		    # Event notifications service instance GUID
@@ -445,7 +463,7 @@ verification_response = event_notifications_service.update_verify_destination(
 
 ## Templates
 
-Template is a pre-defined layout, that may include content like images, text and dynamic content based on event. Rather than creating a new content from scratch each time, you can use a template as a base and configure them in subscription. 
+Template is a pre-defined layout, that may include content like images, text and dynamic content based on event. Rather than creating a new content from scratch each time, you can use a template as a base and configure them in subscription.
 supports the following templates:
 
 - Custom Email notification
@@ -454,6 +472,7 @@ supports the following templates:
 ### Create Template
 
 #### Custom Email Template
+
 ```py
 template_config_model = {
     'body': 'base 64 encoded html content',
@@ -468,9 +487,11 @@ create_template_response = event_notifications_service.create_template(
     description=<template-description>
 ).get_result()
 ```
-For custom email supported template type values: smtp_custom.invitation, smtp_custom.notification 
+
+For custom email supported template type values: smtp_custom.invitation, smtp_custom.notification
 
 #### Slack Template
+
 ```py
 template_config_model = {
     'body': 'base 64 encoded json body',
@@ -484,9 +505,11 @@ create_template_response = event_notifications_service.create_template(
     description=<template-description>
 ).get_result()
 ```
+
 For slack template supported template type value: slack.notification
 
 #### Webhook Template
+
 ```py
 template_config_model = {
     'body': 'base 64 encoded json body',
@@ -500,9 +523,29 @@ create_template_response = event_notifications_service.create_template(
     description=<template-description>
 ).get_result()
 ```
+
 For webhook template supported template type value: webhook.notification
 
+#### PagerDuty Template
+
+```py
+template_config_model = {
+    'body': 'base 64 encoded json body',
+}
+
+create_template_response = event_notifications_service.create_template(
+    instance_id=<instance-id>,
+    name=<template-name>,
+    type=<template-type>,
+    params=template_config_model,
+    description=<template-description>
+).get_result()
+```
+
+For pagerduty template supported template type value: pagerduty.notification
+
 ### List Templates
+
 ```py
 list_templates_response = event_notifications_service.list_templates(
     instance_id=<instance-id>,
@@ -515,6 +558,7 @@ templates_list = list_templates_response.get_result()
 ```
 
 ### Get Template
+
 ```py
 get_template_response = event_notifications_service.get_template(
     instance_id=<instance-id>,
@@ -523,7 +567,9 @@ get_template_response = event_notifications_service.get_template(
 ```
 
 ### Update Template
+
 #### Update Email Template
+
 ```py
 template_config_model = {
     'body': 'base 64 encode html content',
@@ -539,7 +585,9 @@ replace_template_response = event_notifications_service.replace_template(
     params=template_config_model
 ).get_result()
 ```
-#### Update slack/webhook Template
+
+#### Update slack/webhook Template/PagerDuty Template
+
 ```py
 template_config_model = {
     'body': 'base 64 encode html content',
@@ -556,6 +604,7 @@ replace_template_response = event_notifications_service.replace_template(
 ```
 
 ### Delete Template
+
 ```py
 delete_template_response = event_notifications_service.delete_template(
     instance_id=<instance-id>,
@@ -566,6 +615,7 @@ delete_template_response = event_notifications_service.delete_template(
 ## Push Destination APIs
 
 ### Create Destination tag subscription
+
 ```py
 tag_subscription = _event_notifications_service.create_tags_subscription(
     <instance-id>,      # Event notifications service instance GUID
@@ -576,7 +626,9 @@ tag_subscription = _event_notifications_service.create_tags_subscription(
 
 print(json.dumps(tag_subscription, indent=2))
 ```
+
 ### List Destination tag subscription
+
 ```py
 subscription = _event_notifications_service.list_tags_subscription(
   <instance-id>,   # Event notifications service instance GUID
@@ -585,7 +637,9 @@ subscription = _event_notifications_service.list_tags_subscription(
 
 print(json.dumps(subscription, indent=2))
 ```
+
 ### Delete Destination device tag subscription
+
 ```py
 response = _event_notifications_service.delete_tags_subscription(
   <instance-id>,      # Event notifications service instance GUID
@@ -597,7 +651,7 @@ response = _event_notifications_service.delete_tags_subscription(
 print(json.dumps(response, indent=2))
 ```
 
-## Subscriptions 
+## Subscriptions
 
 ### Create Subscription
 
@@ -609,7 +663,7 @@ subscription_create_attributes_model = {
     'template_id_notification': '<webhook-template-id>',
 }
 
-            
+
 subscription = event_notifications_service.create_subscription(
     <instance-id>,	# Event notifications service instance GUID
     name,
@@ -645,6 +699,7 @@ print(json.dumps(subscription, indent=2))
 ```
 
 ### Update Subscription
+
 ```py
 
  subscription_update_attributes_model = {
@@ -662,7 +717,9 @@ print(json.dumps(subscription, indent=2))
 
  print(json.dumps(subscription, indent=2))
 ```
+
 ### Delete Subscription
+
 ```py
 response = event_notifications_service.delete_subscription(
      <instance-id>,	# Event notifications service instance GUID
@@ -673,6 +730,7 @@ response = event_notifications_service.delete_subscription(
 # Integration
 
 ### Create Integration
+
 ```py
 
 integration_metadata = {
@@ -703,6 +761,7 @@ list_integrations_response = event_notifications_service.list_integrations(
 integration_response = list_integrations_response.get_result()
 
 ```
+
 ### Get Integration
 
 ```py
@@ -717,6 +776,7 @@ integration_response = get_integration_response.get_result()
 ### Update Integration
 
 For kms/hs-crypto
+
 ```py
 
 integration_metadata = {
@@ -734,7 +794,9 @@ update_integration_response = event_notifications_service.replace_integration(
 
 integration_response = update_integration_response.get_result()
 ```
+
 For Cloud Object Storage
+
 ```py
 
 integration_metadata = {
@@ -925,6 +987,7 @@ update_verify_smtp_response = self.event_notifications_service.update_verify_smt
 verify_response = update_verify_smtp_response.get_result()
 
 ```
+
 supported verification types are dkim,spf and en_authorization.
 
 ## Metrics
@@ -937,7 +1000,7 @@ get_metrics_response = self.event_notifications_service.get_metrics(
     instance_id=<instance-id>,
     destination_type="smtp_custom",
     gte=<gte-timestamp>,
-    lte=<lte-timestamp>, 
+    lte=<lte-timestamp>,
     destination_id=<destination-id>,
     email_to=<email-to>,
     notification_id=<notification-id>,
@@ -949,7 +1012,6 @@ metric_response = get_metrics_response.get_result()
 ```
 
 ### Send Notifications
-
 
 ```py
 notification_devices_model = {
@@ -970,7 +1032,7 @@ notification_fcm_body_model = {
     'message': {
         'android': {
             'notification': {
-                'title': '<notification-title>', 
+                'title': '<notification-title>',
                 'body': '<notification-message>',
             },
             'data': {
@@ -1046,24 +1108,24 @@ send_notifications_response = event_notifications_service.send_notifications(
   - **chrome_devices** (_Array of String_) - Send notification to the list of specified Chrome devices.
   - **firefox_devices** (_Array of string_) - Send notification to the list of specified Firefox devices.
   - **tags** (_Array of string_) - Send notification to the devices that have subscribed to any of these tags.
-  - **platforms** (_Array of string_) - Send notification to the devices of the specified platforms. 
-  	- Pass 'G' for google (Android) devices.
-	- Pass 'A' for iOS devices.
-	- Pass 'WEB_FIREFOX' for Firefox browser.
-	- Pass 'WEB_CHROME' for Chrome browser.
-- **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method. 
+  - **platforms** (_Array of string_) - Send notification to the devices of the specified platforms.
+    - Pass 'G' for google (Android) devices.
+  - Pass 'A' for iOS devices.
+  - Pass 'WEB_FIREFOX' for Firefox browser.
+  - Pass 'WEB_CHROME' for Chrome browser.
+- **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method.
   - **instance_id** (_string_) - Unique identifier for IBM Cloud Event Notifications instance.
   - **ibmenseverity** (_string_) - Severity for the notifications. Some sources can have the concept of an Event severity. Hence a handy way is provided to specify a severity of the event. example: LOW, HIGH, MEDIUM
-  - **id*** (_string_) - A unique identifier that identifies each event. source+id must be unique. The backend should be able to uniquely track this id in logs and other records. Send unique ID for each send notification. Same ID can be sent in case of failure of send notification. source+id will be logged in IBM Cloud Logging service. Using this combination we will be able to trace the event movement from one system to another and will aid in debugging and tracing.
-  - **source*** (_string_) - Source of the notifications. This is the identifier of the event producer. A way to uniquely identify the source of the event. For IBM Cloud services this is the crn of the service instance producing the events. For API sources this can be something the event producer backend can uniquely identify itself with. 
-  - **ibmensourceid*** (_string_) - This is the ID of the source created in EN. This is available in the EN UI in the "Sources" section.
-  - **type** (_string_) - This describes the type of event. It is of the form <event-type-name>:<sub-type> This type is defined by the producer. The event type name has to be prefixed with the reverse DNS names so the event type is uniquely identified. The same event type can be produced by 2 different sources. It is highly recommended to use hyphen - as a separator instead of _. 
+  - **id\*** (_string_) - A unique identifier that identifies each event. source+id must be unique. The backend should be able to uniquely track this id in logs and other records. Send unique ID for each send notification. Same ID can be sent in case of failure of send notification. source+id will be logged in IBM Cloud Logging service. Using this combination we will be able to trace the event movement from one system to another and will aid in debugging and tracing.
+  - **source\*** (_string_) - Source of the notifications. This is the identifier of the event producer. A way to uniquely identify the source of the event. For IBM Cloud services this is the crn of the service instance producing the events. For API sources this can be something the event producer backend can uniquely identify itself with.
+  - **ibmensourceid\*** (_string_) - This is the ID of the source created in EN. This is available in the EN UI in the "Sources" section.
+  - **type** (_string_) - This describes the type of event. It is of the form <event-type-name>:<sub-type> This type is defined by the producer. The event type name has to be prefixed with the reverse DNS names so the event type is uniquely identified. The same event type can be produced by 2 different sources. It is highly recommended to use hyphen - as a separator instead of \_.
   - **data** (_string_) - The payload for webhook notification. If data is added as part of payload then its mandatory to add **datacontenttype**.
   - **datacontenttype** - The notification content type. example: application/json
   - **time** (_string_) - Time of the notifications. UTC time stamp when the event occurred. Must be in the RFC 3339 format.
   - **ibmenpushto** (_string_) - Targets for the FCM notifications. This contains details about the destination where you want to send push notification. This attribute is mandatory for successful delivery from an Android FCM or APNS destination.
-  - **ibmenfcmbody** (_string_) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. 
-  - **ibmenhuaweibody** (_string_) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)]. 
+  - **ibmenfcmbody** (_string_) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
+  - **ibmenhuaweibody** (_string_) - Set payload string specific to Android platform [Refer this FCM official [link](https://firebase.google.com/docs/cloud-messaging/http-server-ref#notification-payload-support)].
   - **ibmenapnsbody** (_string_) - Set payload string specific to iOS platform [Refer this APNs official doc [link](https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/CreatingtheNotificationPayload.html)].
   - **ibmensafaribody** (_string_) - Set payload string specific to safari platform [Refer this Safari official doc [link](https://developer.huawei.com/consumer/en/hms/huawei-pushkit)].
   - **ibmenapnsheaders** (_string_) - Set headers required for the APNs message [Refer this APNs official [link](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)(Table 1 Header fields for a POST request)]
@@ -1071,17 +1133,18 @@ send_notifications_response = event_notifications_service.send_notifications(
   - **ibmenfirefoxbody** (_string_) - Message body for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - **ibmenchromeheaders** (_string_) - Headers for the Chrome notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
   - **ibmenfirefoxheaders** (_string_) - Headers for the Firefox notifications. Refer [this official documentation](https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification) for more.
-  - **ibmendefaultshort*** (_string_) - Default short text for the message.
-  - **ibmendefaultlong*** (_string_) - Default long text for the message.
-  - **specversion*** (_string_) - Spec version of the Event Notifications. Default value is `1.0`. 
-  - **ibmenhtmlbody*** (_string_) - The html body of notification for email.
-  - **ibmenmailto*** (_Array of string_) - Array of email ids to which the notification to be sent.
-  - **ibmensmsto*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
-  - **ibmensmstext*** (_string_) - SMS text to be sent.
-  - **ibmenslackto*** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
-  - **ibmentemplates*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
+  - **ibmendefaultshort\*** (_string_) - Default short text for the message.
+  - **ibmendefaultlong\*** (_string_) - Default long text for the message.
+  - **specversion\*** (_string_) - Spec version of the Event Notifications. Default value is `1.0`.
+  - **ibmenhtmlbody\*** (_string_) - The html body of notification for email.
+  - **ibmenmailto\*** (_Array of string_) - Array of email ids to which the notification to be sent.
+  - **ibmensmsto\*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
+  - **ibmensmstext\*** (_string_) - SMS text to be sent.
+  - **ibmenslackto\*** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
+  - **ibmentemplates\*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
 
-Note: variable with * represents the mandatory attribute.
+Note: variable with \* represents the mandatory attribute.
+
 </details>
 
 ## Set Environment
@@ -1093,6 +1156,7 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_GUID` - Add the Event Notifications service instance GUID.
 
 **Optional**
+
 - `EVENT_NOTIFICATIONS_AUTH_URL` - Add the IAM url if you are using IBM test cloud.
 - `EVENT_NOTIFICATIONS_FCM_KEY` - Add firebase server key for Android FCM destination.
 - `EVENT_NOTIFICATIONS_FCM_ID` - Add firebase sender Id for Android FCM destination.
@@ -1125,6 +1189,7 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_SCHEDULER_SOURCE_ID` - periodic timer source id
+
 ## Questions
 
 If you are having difficulties using this SDK or have a question about the IBM Cloud services,
@@ -1132,14 +1197,17 @@ please ask a question
 [Stack Overflow](http://stackoverflow.com/questions/ask?tags=ibm-cloud).
 
 ## Issues
+
 If you encounter an issue with the project, you are welcome to submit a
 [bug report](https://github.com/IBM/event-notifications-python-admin-sdk/issues).
 Before that, please search for similar issues. It's possible that someone has already reported the problem.
 
 ## Open source @ IBM
+
 Find more open source projects on the [IBM Github Page](http://ibm.github.io/)
 
 ## Contributing
+
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
