@@ -8349,6 +8349,7 @@ class SubscriptionAttributes:
                     'SubscriptionAttributesCustomEmailAttributesResponse',
                     'SubscriptionAttributesWebhookAttributesResponse',
                     'SubscriptionAttributesSlackAttributesResponse',
+                    'SubscriptionAttributesPagerDutyAttributesResponse',
                     'SubscriptionAttributesSlackDirectMessageAttributesResponse',
                     'SubscriptionAttributesServiceNowAttributesResponse',
                 ]
@@ -8380,6 +8381,7 @@ class SubscriptionCreateAttributes:
                     'SubscriptionCreateAttributesWebhookAttributes',
                     'SubscriptionCreateAttributesFCMAttributes',
                     'SubscriptionCreateAttributesSlackAttributes',
+                    'SubscriptionCreateAttributesPagerDutyAttributes',
                     'SubscriptionCreateAttributesSlackDirectMessageAttributes',
                     'SubscriptionCreateAttributesServiceNowAttributes',
                 ]
@@ -8699,6 +8701,7 @@ class SubscriptionUpdateAttributes:
                     'SubscriptionUpdateAttributesCustomEmailUpdateAttributes',
                     'SubscriptionUpdateAttributesWebhookAttributes',
                     'SubscriptionUpdateAttributesSlackAttributes',
+                    'SubscriptionUpdateAttributesPagerDutyAttributes',
                     'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes',
                     'SubscriptionUpdateAttributesServiceNowAttributes',
                 ]
@@ -9074,6 +9077,7 @@ class TemplateConfigOneOf:
                     'TemplateConfigOneOfEmailTemplateConfig',
                     'TemplateConfigOneOfSlackTemplateConfig',
                     'TemplateConfigOneOfWebhookTemplateConfig',
+                    'TemplateConfigOneOfPagerdutyTemplateConfig',
                 ]
             )
         )
@@ -12080,6 +12084,100 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
         return not self == other
 
 
+class SubscriptionAttributesPagerDutyAttributesResponse(SubscriptionAttributes):
+    """
+    The attributes for a PagerDuty notification.
+
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON
+          Pagerduty Blocks w/o Handlebars.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['template_id_notification'])
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+        **kwargs,
+    ) -> None:
+        """
+        Initialize a SubscriptionAttributesPagerDutyAttributesResponse object.
+
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Pagerduty Blocks w/o Handlebars.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesPagerDutyAttributesResponse':
+        """Initialize a SubscriptionAttributesPagerDutyAttributesResponse object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionAttributesPagerDutyAttributesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesPagerDutyAttributesResponse"""
+        _dict = {}
+
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesPagerDutyAttributesResponse"""
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties
+        ]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in SubscriptionAttributesPagerDutyAttributesResponse._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionAttributesPagerDutyAttributesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionAttributesPagerDutyAttributesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionAttributesPagerDutyAttributesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionAttributesSMSAttributesResponse(SubscriptionAttributes):
     """
     SMS attributes object.
@@ -12995,6 +13093,67 @@ class SubscriptionCreateAttributesFCMAttributes(SubscriptionCreateAttributes):
         return not self == other
 
 
+class SubscriptionCreateAttributesPagerDutyAttributes(SubscriptionCreateAttributes):
+    """
+    The attributes for a pagerduty notification.
+
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
+          Blocks w/o Handlebars.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionCreateAttributesPagerDutyAttributes object.
+
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Slack Blocks w/o Handlebars.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesPagerDutyAttributes':
+        """Initialize a SubscriptionCreateAttributesPagerDutyAttributes object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionCreateAttributesPagerDutyAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionCreateAttributesPagerDutyAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionCreateAttributesPagerDutyAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionCreateAttributesPagerDutyAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
     """
     The attributes for an sms notification.
@@ -13742,6 +13901,67 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
         return not self == other
 
 
+class SubscriptionUpdateAttributesPagerDutyAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for a pagerduty notification.
+
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
+          Blocks w/o Handlebars.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesPagerDutyAttributes object.
+
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Slack Blocks w/o Handlebars.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesPagerDutyAttributes':
+        """Initialize a SubscriptionUpdateAttributesPagerDutyAttributes object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesPagerDutyAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesPagerDutyAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesPagerDutyAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesPagerDutyAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionUpdateAttributesSMSUpdateAttributes(SubscriptionUpdateAttributes):
     """
     SMS attributes object.
@@ -14182,6 +14402,68 @@ class TemplateConfigOneOfEmailTemplateConfig(TemplateConfigOneOf):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TemplateConfigOneOfEmailTemplateConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateConfigOneOfPagerdutyTemplateConfig(TemplateConfigOneOf):
+    """
+    Payload describing a pagerduty template configuration.
+
+    :attr str body: Template body(Base64 encoded).
+    """
+
+    def __init__(
+        self,
+        body: str,
+    ) -> None:
+        """
+        Initialize a TemplateConfigOneOfPagerdutyTemplateConfig object.
+
+        :param str body: Template body(Base64 encoded).
+        """
+        # pylint: disable=super-init-not-called
+        self.body = body
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateConfigOneOfPagerdutyTemplateConfig':
+        """Initialize a TemplateConfigOneOfPagerdutyTemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError(
+                'Required property \'body\' not present in TemplateConfigOneOfPagerdutyTemplateConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateConfigOneOfPagerdutyTemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateConfigOneOfPagerdutyTemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateConfigOneOfPagerdutyTemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateConfigOneOfPagerdutyTemplateConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

@@ -109,6 +109,8 @@ slack_dm_token = ""
 slack_channel_id = ""
 webhook_template_id = ""
 webhook_template_body = ""
+agerduty_template_body = ""
+pagerduty_template_id = ""
 
 
 ##############################################################################
@@ -163,6 +165,7 @@ class TestEventNotificationsV1Examples:
             slack_dm_token = cls.config["SLACK_DM_TOKEN"]
             slack_channel_id = cls.config["SLACK_CHANNEL_ID"]
             webhook_template_body = cls.config["WEBHOOK_TEMPLATE_BODY"]
+            pagerduty_template_body = cls.config["PAGERDUTY_TEMPLATE_BODY"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -180,6 +183,7 @@ class TestEventNotificationsV1Examples:
             assert slack_dm_token is not None
             assert slack_channel_id is not None
             assert webhook_template_body is not None
+            assert pagerduty_template_body is not None
 
         print("Setup complete.")
 
@@ -843,7 +847,7 @@ class TestEventNotificationsV1Examples:
         """
         create_template request example
         """
-        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id
+        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id, pagerduty_template_id
         try:
             print("\ncreate_template() result:")
             # begin-create_template
@@ -929,6 +933,29 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(create_template_response, indent=2))
             template = TemplateResponse.from_dict(create_template_response)
             webhook_template_id = template.id
+
+            pagerduty_template_config_model_json = {'body': pagerduty_template_body}
+
+            pagerduty_template_config_model = TemplateConfigOneOfPagerdutyTemplateConfig.from_dict(
+                pagerduty_template_config_model_json
+            )
+
+            name = "template_pagerduty"
+            typeval = "pagerduty.notification"
+            description = "pagerduty template create"
+
+            create_template_response = self.event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=pagerduty_template_config_model,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(create_template_response, indent=2))
+            template = TemplateResponse.from_dict(create_template_response)
+            pagerduty_template_id = template.id
+
             # end-create_template
 
         except ApiException as e:
@@ -1503,6 +1530,27 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(replace_template_response, indent=2))
 
+            pagerduty_template_config_model_json = {'body': pagerduty_template_body}
+
+            pagerduty_template_config_model = TemplateConfigOneOfPagerdutyTemplateConfig.from_dict(
+                pagerduty_template_config_model_json
+            )
+
+            name = "template_pagerduty_update"
+            typeval = "pagerduty.notification"
+            description = "pagerduty template updated description"
+
+            update_template_response = self.event_notifications_service.replace_template(
+                instance_id,
+                id=pagerduty_template_id,
+                name=name,
+                description=description,
+                type=typeval,
+                params=pagerduty_template_config_model,
+            ).get_result()
+
+            print(json.dumps(replace_template_response, indent=2))
+
             # end-replace_template
         except ApiException as e:
             pytest.fail(str(e))
@@ -1700,9 +1748,34 @@ class TestEventNotificationsV1Examples:
                 description=description,
                 attributes=subscription_create_attributes_model,
             )
+            
 
             subscription_response = create_subscription_response.get_result()
             subscription_id8 = subscription_response.get("id")
+
+            name = "PagerDuty subscription"
+            description = "Subscription for the PagerDuty"
+
+            subscription_create_attributes_model_json = {
+            'template_id_notification': pagerduty_template_id,
+            }
+
+            subscription_create_attributes_model = SubscriptionCreateAttributesPagerDutyAttributes.from_dict(
+                subscription_create_attributes_model_json
+            )
+
+            create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id10,
+            topic_id=topic_id,
+            description=description,
+            attributes=subscription_create_attributes_model,
+            )
+
+            subscription_response = create_subscription_response.get_result()
+            subscription_id9 = subscription_response.get("id")
+
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1944,6 +2017,27 @@ class TestEventNotificationsV1Examples:
             update_subscription_response = self.event_notifications_service.update_subscription(
                 instance_id,
                 id=subscription_id8,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+
+            name = "PagerDuty update"
+            description = "Subscription for PagerDuty updated"
+
+            subscription_update_attributes_model_json = {
+                'template_id_notification': pagerduty_template_id,
+            }
+            subscription_update_attributes_model = SubscriptionUpdateAttributesPagerDutyAttributes.from_dict(
+                subscription_update_attributes_model_json
+            )
+
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id9,
                 name=name,
                 description=description,
                 attributes=subscription_update_attributes_model,
