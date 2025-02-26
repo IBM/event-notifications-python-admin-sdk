@@ -13,7 +13,7 @@ jobs:
     environment: ci
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11']
+        python-version: ['3.9', '3.10', '3.11']
     steps:
     - uses: actions/checkout@v3
       with:
@@ -39,7 +39,7 @@ jobs:
       run: tox
 
     - name: Install release dependencies
-      if: github.ref == 'refs/heads/main' && matrix.python-version == '3.8'
+      if: github.ref == 'refs/heads/main' && matrix.python-version == '3.9'
       run: |
         pip install bump-my-version build twine
         sudo npm install -g semantic-release \
@@ -49,7 +49,7 @@ jobs:
           @semantic-release/github
 
     - name: Semantic Release and Publish
-      if: github.ref == 'refs/heads/main' && matrix.python-version == '3.8'
+      if: github.ref == 'refs/heads/main' && matrix.python-version == '3.9'
       env:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
