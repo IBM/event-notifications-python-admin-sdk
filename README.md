@@ -530,7 +530,7 @@ For webhook template supported template type value: webhook.notification
 
 ```py
 template_config_model = {
-    'body': 'base 64 encoded  json body',
+    'body': 'base 64 encoded json body',
 }
 
 create_template_response = event_notifications_service.create_template(
@@ -1096,7 +1096,6 @@ send_notifications_response = event_notifications_service.send_notifications(
     ).get_result()
 
 ```
-
 <details open>
 <summary>Send Notifications Variables</summary>
 <br>
