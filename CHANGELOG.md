@@ -1,3 +1,12 @@
+# [0.13.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.12.0...v0.13.0) (2025-02-26)
+
+
+### Features
+
+* Pagerduty template release ([#65](https://github.com/IBM/event-notifications-python-admin-sdk/issues/65)) ([f00891f](https://github.com/IBM/event-notifications-python-admin-sdk/commit/f00891faa4b3ac9af41030fd078a5fd5ad01038f))
+* pagerduty template support ([e23d27e](https://github.com/IBM/event-notifications-python-admin-sdk/commit/e23d27efc9f291ba6e7a017dbbe7c79f0844376e))
+* pagerduty template support ([651a76f](https://github.com/IBM/event-notifications-python-admin-sdk/commit/651a76fd295410e0d4c0cc8d15654a3701b8556a))
+
 # [0.12.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.11.0...v0.12.0) (2025-01-09)
 
 
