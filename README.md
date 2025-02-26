@@ -1096,7 +1096,6 @@ send_notifications_response = event_notifications_service.send_notifications(
     ).get_result()
 
 ```
-
 <details open>
 <summary>Send Notifications Variables</summary>
 <br>
