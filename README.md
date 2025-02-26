@@ -67,8 +67,6 @@ event_notifications_service = EventNotificationsV1(authenticator=authenticator)
 # Set our custom service URL (optional)
 event_notifications_service.set_service_url('https://' + region + '.event-notifications.cloud.ibm.com/event-notifications')
 
-
-
 ```
 
 **To configure service URL for Private Endpoint**
