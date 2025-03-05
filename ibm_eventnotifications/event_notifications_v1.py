@@ -3170,6 +3170,7 @@ class CreateDestinationEnums:
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
+        EVENT_STREAMS = 'event_streams'
 
 
 ##############################################################################
@@ -3461,7 +3462,7 @@ class Destination:
     :attr str name: Destination name.
     :attr str description: Destination description.
     :attr str type: Destination type
-          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+          Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei/CustomEmail/CustomSMS/EventStreams.
     :attr bool collect_failed_events: (optional) Whether to collect the failed event
           in Cloud Object Storage bucket.
     :attr DestinationConfig config: (optional) Payload describing a destination
@@ -3491,7 +3492,7 @@ class Destination:
         :param str name: Destination name.
         :param str description: Destination description.
         :param str type: Destination type
-               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+               Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei/CustomEmail/CustomSMS/EventStreams.
         :param datetime updated_at: Last updated time.
         :param int subscription_count: Number of subscriptions.
         :param List[str] subscription_names: List of subscriptions.
@@ -3600,7 +3601,7 @@ class Destination:
     class TypeEnum(str, Enum):
         """
         Destination type
-        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei.
+        Email/SMS/Webhook/FCM/Slack/MSTeams/PagerDuty/IBMCodeEngine/ServiceNow/IBMCloudObjectStorage/Huawei/CustomEmail/CustomSMS/EventStreams.
         """
 
         WEBHOOK = 'webhook'
@@ -3618,6 +3619,7 @@ class Destination:
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
+        EVENT_STREAMS = 'event_streams'
 
 
 class DestinationConfig:
@@ -3713,6 +3715,7 @@ class DestinationConfigOneOf:
                     'DestinationConfigOneOfServiceNowDestinationConfig',
                     'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig',
                     'DestinationConfigOneOfHuaweiDestinationConfig',
+                    'DestinationConfigOneOfEventStreamsDestinationConfig',
                 ]
             )
         )
@@ -3998,6 +4001,7 @@ class DestinationListItem:
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
+        EVENT_STREAMS = 'event_streams'
 
 
 class DestinationResponse:
@@ -4143,6 +4147,7 @@ class DestinationResponse:
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
+        EVENT_STREAMS = 'event_streams'
 
 
 class DestinationTagsSubscriptionResponse:
@@ -8323,6 +8328,7 @@ class Subscription:
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
+        EVENT_STREAMS = 'event_streams'
 
 
 class SubscriptionAttributes:
@@ -8352,6 +8358,7 @@ class SubscriptionAttributes:
                     'SubscriptionAttributesPagerDutyAttributesResponse',
                     'SubscriptionAttributesSlackDirectMessageAttributesResponse',
                     'SubscriptionAttributesServiceNowAttributesResponse',
+                    'SubscriptionAttributesEventStreamsAttributesResponse',
                 ]
             )
         )
@@ -8384,6 +8391,7 @@ class SubscriptionCreateAttributes:
                     'SubscriptionCreateAttributesPagerDutyAttributes',
                     'SubscriptionCreateAttributesSlackDirectMessageAttributes',
                     'SubscriptionCreateAttributesServiceNowAttributes',
+                    'SubscriptionCreateAttributesEventstreamsAttributes',
                 ]
             )
         )
@@ -8677,6 +8685,7 @@ class SubscriptionListItem:
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
+        EVENT_STREAMS = 'event_streams'
 
 
 class SubscriptionUpdateAttributes:
@@ -8704,6 +8713,7 @@ class SubscriptionUpdateAttributes:
                     'SubscriptionUpdateAttributesPagerDutyAttributes',
                     'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes',
                     'SubscriptionUpdateAttributesServiceNowAttributes',
+                    'SubscriptionUpdateAttributesEventstreamsAttributes',
                 ]
             )
         )
@@ -9078,6 +9088,7 @@ class TemplateConfigOneOf:
                     'TemplateConfigOneOfSlackTemplateConfig',
                     'TemplateConfigOneOfWebhookTemplateConfig',
                     'TemplateConfigOneOfPagerdutyTemplateConfig',
+                    'TemplateConfigOneOfEventStreamsTemplateConfig',
                 ]
             )
         )
@@ -10413,6 +10424,92 @@ class DestinationConfigOneOfCustomDomainEmailDestinationConfig(DestinationConfig
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigOneOfCustomDomainEmailDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class DestinationConfigOneOfEventStreamsDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a Event Streams destination configuration.
+
+    :attr str crn: CRN of the Event Streans instance.
+    :attr str endpoint: End Point of Event Streams.
+    :attr str topic: Topic of Event Streams.
+    """
+
+    def __init__(
+        self,
+        crn: str,
+        endpoint: str,
+        topic: str,
+    ) -> None:
+        """
+        Initialize a DestinationConfigOneOfEventStreamsDestinationConfig object.
+
+        :param str crn: CRN of the Event Streans instance.
+        :param str endpoint: End Point of Event Streams.
+        :param str topic: Topic of Event Streams.
+        """
+        # pylint: disable=super-init-not-called
+        self.crn = crn
+        self.endpoint = endpoint
+        self.topic = topic
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfEventStreamsDestinationConfig':
+        """Initialize a DestinationConfigOneOfEventStreamsDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError(
+                'Required property \'crn\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON'
+            )
+        if 'endpoint' in _dict:
+            args['endpoint'] = _dict.get('endpoint')
+        else:
+            raise ValueError(
+                'Required property \'endpoint\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON'
+            )
+        if 'topic' in _dict:
+            args['topic'] = _dict.get('topic')
+        else:
+            raise ValueError(
+                'Required property \'topic\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfEventStreamsDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'endpoint') and self.endpoint is not None:
+            _dict['endpoint'] = self.endpoint
+        if hasattr(self, 'topic') and self.topic is not None:
+            _dict['topic'] = self.topic
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfEventStreamsDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfEventStreamsDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfEventStreamsDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -12084,6 +12181,100 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
         return not self == other
 
 
+class SubscriptionAttributesEventStreamsAttributesResponse(SubscriptionAttributes):
+    """
+    The attributes for a Event Streams response.
+
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON
+          Pagerduty Blocks w/o Handlebars.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['template_id_notification'])
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+        **kwargs,
+    ) -> None:
+        """
+        Initialize a SubscriptionAttributesEventStreamsAttributesResponse object.
+
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Pagerduty Blocks w/o Handlebars.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesEventStreamsAttributesResponse':
+        """Initialize a SubscriptionAttributesEventStreamsAttributesResponse object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionAttributesEventStreamsAttributesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesEventStreamsAttributesResponse"""
+        _dict = {}
+
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesEventStreamsAttributesResponse"""
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties
+        ]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in SubscriptionAttributesEventStreamsAttributesResponse._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionAttributesEventStreamsAttributesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionAttributesEventStreamsAttributesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionAttributesEventStreamsAttributesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionAttributesPagerDutyAttributesResponse(SubscriptionAttributes):
     """
     The attributes for a PagerDuty notification.
@@ -13045,6 +13236,67 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
         return not self == other
 
 
+class SubscriptionCreateAttributesEventstreamsAttributes(SubscriptionCreateAttributes):
+    """
+    The attributes for a Event Streams subscription.
+
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
+          Blocks w/o Handlebars.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionCreateAttributesEventstreamsAttributes object.
+
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Slack Blocks w/o Handlebars.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesEventstreamsAttributes':
+        """Initialize a SubscriptionCreateAttributesEventstreamsAttributes object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionCreateAttributesEventstreamsAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionCreateAttributesEventstreamsAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionCreateAttributesEventstreamsAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionCreateAttributesEventstreamsAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionCreateAttributesFCMAttributes(SubscriptionCreateAttributes):
     """
     The attributes for an FCM notification.
@@ -13901,6 +14153,67 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
         return not self == other
 
 
+class SubscriptionUpdateAttributesEventstreamsAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for a Event Streams subscription.
+
+    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
+          Blocks w/o Handlebars.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesEventstreamsAttributes object.
+
+        :param str template_id_notification: (optional) ID of Base64 converted JSON
+               Slack Blocks w/o Handlebars.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesEventstreamsAttributes':
+        """Initialize a SubscriptionUpdateAttributesEventstreamsAttributes object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesEventstreamsAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesEventstreamsAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesEventstreamsAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesEventstreamsAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionUpdateAttributesPagerDutyAttributes(SubscriptionUpdateAttributes):
     """
     The attributes for a pagerduty notification.
@@ -14402,6 +14715,68 @@ class TemplateConfigOneOfEmailTemplateConfig(TemplateConfigOneOf):
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'TemplateConfigOneOfEmailTemplateConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateConfigOneOfEventStreamsTemplateConfig(TemplateConfigOneOf):
+    """
+    Payload describing a event streams template configuration.
+
+    :attr str body: Template body(Base64 encoded).
+    """
+
+    def __init__(
+        self,
+        body: str,
+    ) -> None:
+        """
+        Initialize a TemplateConfigOneOfEventStreamsTemplateConfig object.
+
+        :param str body: Template body(Base64 encoded).
+        """
+        # pylint: disable=super-init-not-called
+        self.body = body
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateConfigOneOfEventStreamsTemplateConfig':
+        """Initialize a TemplateConfigOneOfEventStreamsTemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError(
+                'Required property \'body\' not present in TemplateConfigOneOfEventStreamsTemplateConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateConfigOneOfEventStreamsTemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateConfigOneOfEventStreamsTemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateConfigOneOfEventStreamsTemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateConfigOneOfEventStreamsTemplateConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 

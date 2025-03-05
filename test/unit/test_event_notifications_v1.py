@@ -345,9 +345,9 @@ class TestSendNotifications:
         notification_create_model['ibmenmms'] = 'testString'
         notification_create_model['data'] = {'foo': 'bar'}
         notification_create_model['datacontenttype'] = 'application/json'
-        notification_create_model[
-            'ibmenpushto'
-        ] = '{"platforms":["push_android", "push_ios", "push_firefox", "push_chrome", "push_safari", "push_huawei"]}'
+        notification_create_model['ibmenpushto'] = (
+            '{"platforms":["push_android", "push_ios", "push_firefox", "push_chrome", "push_safari", "push_huawei"]}'
+        )
         notification_create_model['ibmenfcmbody'] = 'testString'
         notification_create_model['ibmenapnsbody'] = 'testString'
         notification_create_model['ibmenapnsheaders'] = 'testString'
@@ -6744,9 +6744,9 @@ class TestModel_DestinationList:
         destination_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a DestinationList model
         destination_list_model_json = {}
@@ -7178,9 +7178,9 @@ class TestModel_IntegrationCreateResponse:
 
         integration_create_metadata_model = {}  # IntegrationCreateMetadata
         integration_create_metadata_model['endpoint'] = 'https://s3.us-west.cloud-object-storage.test.appdomain.cloud'
-        integration_create_metadata_model[
-            'crn'
-        ] = 'crn:v1:bluemix:public:cloud-object-storage:global:a/xxxxxxx6db359a81a1dde8f44bxxxxxx:xxxxxxxx-1d48-xxxx-xxxx-xxxxxxxxxxxx:bucket:cloud-object-storage'
+        integration_create_metadata_model['crn'] = (
+            'crn:v1:bluemix:public:cloud-object-storage:global:a/xxxxxxx6db359a81a1dde8f44bxxxxxx:xxxxxxxx-1d48-xxxx-xxxx-xxxxxxxxxxxx:bucket:cloud-object-storage'
+        )
         integration_create_metadata_model['bucket_name'] = 'cloud-object-storage'
 
         # Construct a json representation of a IntegrationCreateResponse model
@@ -7278,9 +7278,9 @@ class TestModel_IntegrationList:
         integration_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/integrations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a IntegrationList model
         integration_list_model_json = {}
@@ -7500,9 +7500,9 @@ class TestModel_NotificationCreate:
         notification_create_model_json['ibmenmms'] = 'testString'
         notification_create_model_json['data'] = {'foo': 'bar'}
         notification_create_model_json['datacontenttype'] = 'application/json'
-        notification_create_model_json[
-            'ibmenpushto'
-        ] = '{"platforms":["push_android", "push_ios", "push_firefox", "push_chrome", "push_safari", "push_huawei"]}'
+        notification_create_model_json['ibmenpushto'] = (
+            '{"platforms":["push_android", "push_ios", "push_firefox", "push_chrome", "push_safari", "push_huawei"]}'
+        )
         notification_create_model_json['ibmenfcmbody'] = 'testString'
         notification_create_model_json['ibmenapnsbody'] = 'testString'
         notification_create_model_json['ibmenapnsheaders'] = 'testString'
@@ -7822,12 +7822,12 @@ class TestModel_SMTPConfig:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -7873,12 +7873,12 @@ class TestModel_SMTPConfiguration:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -7932,12 +7932,12 @@ class TestModel_SMTPConfigurationsList:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -8005,12 +8005,12 @@ class TestModel_SMTPCreateResponse:
         # Construct dict forms of any model objects needed in order to build this model.
 
         smtpdkim_attributes_model = {}  # SMTPDKIMAttributes
-        smtpdkim_attributes_model[
-            'txt_name'
-        ] = '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
-        smtpdkim_attributes_model[
-            'txt_value'
-        ] = 'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        smtpdkim_attributes_model['txt_name'] = (
+            '35ef4bc3-a7a6-48e9-882a-6fd70c162ec2._domainkey.abc.event-notifications.test.cloud.ibm.com'
+        )
+        smtpdkim_attributes_model['txt_value'] = (
+            'v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuzCOM3TfCHGzZ6myd5DIQPjahLjkbK15aiq7ElDhqHQwNq/5EnPutNptFg7LurV2o9Tl9GSrPFC9GGJn8+5wtJRoeHfSm//dPXB9dpQb4rRjono8obaAbc2A6tVBXdFf814tw04ZDw6JzCmn3RvVmAy5+mwQ+SL6oqbU62CMv6eLtF26MEagbUZKmp5mpru0natkV/mwPk/vudJ8eVoOyjTfwRws9dLc3JaTdT77wSkyKqW64nYePO4j8kVHXj2bQTm4M+GJL2bzc8RwPKPvdy/FiK4Op2qzbzHNGL/V9Fj9xhYE4p1sopLJtZaTvkbZqbvB1KZJ1YqByHl4zcL/uQIDAQAB'
+        )
         smtpdkim_attributes_model['verification'] = 'PENDING'
 
         en_auth_attributes_model = {}  # ENAuthAttributes
@@ -8177,9 +8177,9 @@ class TestModel_SMTPUsersList:
         smtp_user_model['updated_at'] = '2024-04-16T17:36:24.562000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SMTPUsersList model
         smtp_users_list_model_json = {}
@@ -8373,9 +8373,9 @@ class TestModel_SourceList:
         source_list_item_model['topic_count'] = 0
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/sources?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SourceList model
         source_list_model_json = {}
@@ -8646,9 +8646,9 @@ class TestModel_SubscriptionList:
         subscription_list_item_model['updated_at'] = '2021-08-18T09:50:32.133000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/subscriptions?limit=10&offset=0'
+        )
 
         # Construct a json representation of a SubscriptionList model
         subscription_list_model_json = {}
@@ -8734,9 +8734,9 @@ class TestModel_TagsSubscriptionList:
         tags_subscription_list_item_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/destinations/axxxxx-xxxxx-xxxxx-rtc4-xxxxx/tag_subscriptions?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TagsSubscriptionList model
         tags_subscription_list_model_json = {}
@@ -8858,9 +8858,9 @@ class TestModel_TemplateList:
         template_model['updated_at'] = '2021-09-05T00:25:19.599000Z'
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/templates?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/templates?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TemplateList model
         template_list_model_json = {}
@@ -8994,9 +8994,9 @@ class TestModel_Topic:
         subscription_list_item_model = {}  # SubscriptionListItem
         subscription_list_item_model['id'] = '87bef75e-f826-4aa9-b64d-91af9be5e12b'
         subscription_list_item_model['name'] = 'SMS Subscription on new change'
-        subscription_list_item_model[
-            'description'
-        ] = 'This subscription is to send events from SCC to EN Admins via sms'
+        subscription_list_item_model['description'] = (
+            'This subscription is to send events from SCC to EN Admins via sms'
+        )
         subscription_list_item_model['destination_id'] = 'ec28efee-2236-4c2d-8839-d34f697cfc69'
         subscription_list_item_model['destination_name'] = 'testString'
         subscription_list_item_model['destination_type'] = 'sms_ibm'
@@ -9052,9 +9052,9 @@ class TestModel_TopicList:
         topics_list_item_model['subscription_count'] = 3
 
         page_href_response_model = {}  # PageHrefResponse
-        page_href_response_model[
-            'href'
-        ] = 'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
+        page_href_response_model['href'] = (
+            'https://us-south.event-notifications.cloud.ibm.com/event-notifications/v1/instances/9xxxxx-xxxxx-xxxxx-b3cd-xxxxx/topics?limit=10&offset=0'
+        )
 
         # Construct a json representation of a TopicList model
         topic_list_model_json = {}
@@ -9452,6 +9452,58 @@ class TestModel_DestinationConfigOneOfCustomDomainEmailDestinationConfig:
         assert (
             destination_config_one_of_custom_domain_email_destination_config_model_json2
             == destination_config_one_of_custom_domain_email_destination_config_model_json
+        )
+
+
+class TestModel_DestinationConfigOneOfEventStreamsDestinationConfig:
+    """
+    Test Class for DestinationConfigOneOfEventStreamsDestinationConfig
+    """
+
+    def test_destination_config_one_of_event_streams_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfEventStreamsDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfEventStreamsDestinationConfig model
+        destination_config_one_of_event_streams_destination_config_model_json = {}
+        destination_config_one_of_event_streams_destination_config_model_json['crn'] = 'testString'
+        destination_config_one_of_event_streams_destination_config_model_json['endpoint'] = 'testString'
+        destination_config_one_of_event_streams_destination_config_model_json['topic'] = 'testString'
+
+        # Construct a model instance of DestinationConfigOneOfEventStreamsDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_event_streams_destination_config_model = (
+            DestinationConfigOneOfEventStreamsDestinationConfig.from_dict(
+                destination_config_one_of_event_streams_destination_config_model_json
+            )
+        )
+        assert destination_config_one_of_event_streams_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfEventStreamsDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_event_streams_destination_config_model_dict = (
+            DestinationConfigOneOfEventStreamsDestinationConfig.from_dict(
+                destination_config_one_of_event_streams_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_event_streams_destination_config_model2 = (
+            DestinationConfigOneOfEventStreamsDestinationConfig(
+                **destination_config_one_of_event_streams_destination_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            destination_config_one_of_event_streams_destination_config_model
+            == destination_config_one_of_event_streams_destination_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_event_streams_destination_config_model_json2 = (
+            destination_config_one_of_event_streams_destination_config_model.to_dict()
+        )
+        assert (
+            destination_config_one_of_event_streams_destination_config_model_json2
+            == destination_config_one_of_event_streams_destination_config_model_json
         )
 
 
@@ -10317,6 +10369,67 @@ class TestModel_SubscriptionAttributesEmailAttributesResponse:
         assert actual_dict == expected_dict
 
 
+class TestModel_SubscriptionAttributesEventStreamsAttributesResponse:
+    """
+    Test Class for SubscriptionAttributesEventStreamsAttributesResponse
+    """
+
+    def test_subscription_attributes_event_streams_attributes_response_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionAttributesEventStreamsAttributesResponse
+        """
+
+        # Construct a json representation of a SubscriptionAttributesEventStreamsAttributesResponse model
+        subscription_attributes_event_streams_attributes_response_model_json = {}
+        subscription_attributes_event_streams_attributes_response_model_json['template_id_notification'] = 'testString'
+        subscription_attributes_event_streams_attributes_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of SubscriptionAttributesEventStreamsAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_event_streams_attributes_response_model = (
+            SubscriptionAttributesEventStreamsAttributesResponse.from_dict(
+                subscription_attributes_event_streams_attributes_response_model_json
+            )
+        )
+        assert subscription_attributes_event_streams_attributes_response_model != False
+
+        # Construct a model instance of SubscriptionAttributesEventStreamsAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_event_streams_attributes_response_model_dict = (
+            SubscriptionAttributesEventStreamsAttributesResponse.from_dict(
+                subscription_attributes_event_streams_attributes_response_model_json
+            ).__dict__
+        )
+        subscription_attributes_event_streams_attributes_response_model2 = (
+            SubscriptionAttributesEventStreamsAttributesResponse(
+                **subscription_attributes_event_streams_attributes_response_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_attributes_event_streams_attributes_response_model
+            == subscription_attributes_event_streams_attributes_response_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_attributes_event_streams_attributes_response_model_json2 = (
+            subscription_attributes_event_streams_attributes_response_model.to_dict()
+        )
+        assert (
+            subscription_attributes_event_streams_attributes_response_model_json2
+            == subscription_attributes_event_streams_attributes_response_model_json
+        )
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_event_streams_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_event_streams_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_event_streams_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_event_streams_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
+
 class TestModel_SubscriptionAttributesPagerDutyAttributesResponse:
     """
     Test Class for SubscriptionAttributesPagerDutyAttributesResponse
@@ -10590,9 +10703,9 @@ class TestModel_SubscriptionAttributesSlackDirectMessageAttributesResponse:
         subscription_attributes_slack_direct_message_attributes_response_model_json['channels'] = [
             channel_create_attributes_model
         ]
-        subscription_attributes_slack_direct_message_attributes_response_model_json[
-            'template_id_notification'
-        ] = 'testString'
+        subscription_attributes_slack_direct_message_attributes_response_model_json['template_id_notification'] = (
+            'testString'
+        )
         subscription_attributes_slack_direct_message_attributes_response_model_json['foo'] = 'testString'
 
         # Construct a model instance of SubscriptionAttributesSlackDirectMessageAttributesResponse by calling from_dict on the json representation
@@ -10856,6 +10969,56 @@ class TestModel_SubscriptionCreateAttributesEmailAttributes:
         )
 
 
+class TestModel_SubscriptionCreateAttributesEventstreamsAttributes:
+    """
+    Test Class for SubscriptionCreateAttributesEventstreamsAttributes
+    """
+
+    def test_subscription_create_attributes_eventstreams_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesEventstreamsAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesEventstreamsAttributes model
+        subscription_create_attributes_eventstreams_attributes_model_json = {}
+        subscription_create_attributes_eventstreams_attributes_model_json['template_id_notification'] = 'testString'
+
+        # Construct a model instance of SubscriptionCreateAttributesEventstreamsAttributes by calling from_dict on the json representation
+        subscription_create_attributes_eventstreams_attributes_model = (
+            SubscriptionCreateAttributesEventstreamsAttributes.from_dict(
+                subscription_create_attributes_eventstreams_attributes_model_json
+            )
+        )
+        assert subscription_create_attributes_eventstreams_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesEventstreamsAttributes by calling from_dict on the json representation
+        subscription_create_attributes_eventstreams_attributes_model_dict = (
+            SubscriptionCreateAttributesEventstreamsAttributes.from_dict(
+                subscription_create_attributes_eventstreams_attributes_model_json
+            ).__dict__
+        )
+        subscription_create_attributes_eventstreams_attributes_model2 = (
+            SubscriptionCreateAttributesEventstreamsAttributes(
+                **subscription_create_attributes_eventstreams_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_create_attributes_eventstreams_attributes_model
+            == subscription_create_attributes_eventstreams_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_eventstreams_attributes_model_json2 = (
+            subscription_create_attributes_eventstreams_attributes_model.to_dict()
+        )
+        assert (
+            subscription_create_attributes_eventstreams_attributes_model_json2
+            == subscription_create_attributes_eventstreams_attributes_model_json
+        )
+
+
 class TestModel_SubscriptionCreateAttributesFCMAttributes:
     """
     Test Class for SubscriptionCreateAttributesFCMAttributes
@@ -11105,9 +11268,9 @@ class TestModel_SubscriptionCreateAttributesSlackDirectMessageAttributes:
         subscription_create_attributes_slack_direct_message_attributes_model_json['channels'] = [
             channel_create_attributes_model
         ]
-        subscription_create_attributes_slack_direct_message_attributes_model_json[
-            'template_id_notification'
-        ] = 'testString'
+        subscription_create_attributes_slack_direct_message_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
 
         # Construct a model instance of SubscriptionCreateAttributesSlackDirectMessageAttributes by calling from_dict on the json representation
         subscription_create_attributes_slack_direct_message_attributes_model = (
@@ -11218,26 +11381,26 @@ class TestModel_SubscriptionUpdateAttributesCustomEmailUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesCustomEmailUpdateAttributes model
         subscription_update_attributes_custom_email_update_attributes_model_json = {}
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'invited'
-        ] = update_attributes_invited_model
+        subscription_update_attributes_custom_email_update_attributes_model_json['invited'] = (
+            update_attributes_invited_model
+        )
         subscription_update_attributes_custom_email_update_attributes_model_json['add_notification_payload'] = False
         subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['reply_to_name'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['from_name'] = 'testString'
         subscription_update_attributes_custom_email_update_attributes_model_json['from_email'] = 'testString'
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'template_id_notification'
-        ] = 'testString'
-        subscription_update_attributes_custom_email_update_attributes_model_json[
-            'template_id_invitation'
-        ] = 'testString'
+        subscription_update_attributes_custom_email_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+        subscription_update_attributes_custom_email_update_attributes_model_json['template_id_invitation'] = (
+            'testString'
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_email_update_attributes_model = (
@@ -11299,15 +11462,15 @@ class TestModel_SubscriptionUpdateAttributesCustomSMSUpdateAttributes:
 
         # Construct a json representation of a SubscriptionUpdateAttributesCustomSMSUpdateAttributes model
         subscription_update_attributes_custom_sms_update_attributes_model_json = {}
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'invited'
-        ] = update_attributes_invited_model
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_custom_sms_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_custom_sms_update_attributes_model_json['invited'] = (
+            update_attributes_invited_model
+        )
+        subscription_update_attributes_custom_sms_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_custom_sms_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesCustomSMSUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_custom_sms_update_attributes_model = (
@@ -11374,12 +11537,12 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes:
         subscription_update_attributes_email_update_attributes_model_json['reply_to_mail'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['reply_to_name'] = 'testString'
         subscription_update_attributes_email_update_attributes_model_json['from_name'] = 'testString'
-        subscription_update_attributes_email_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_email_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_email_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_email_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesEmailUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_email_update_attributes_model = (
@@ -11414,6 +11577,56 @@ class TestModel_SubscriptionUpdateAttributesEmailUpdateAttributes:
         assert (
             subscription_update_attributes_email_update_attributes_model_json2
             == subscription_update_attributes_email_update_attributes_model_json
+        )
+
+
+class TestModel_SubscriptionUpdateAttributesEventstreamsAttributes:
+    """
+    Test Class for SubscriptionUpdateAttributesEventstreamsAttributes
+    """
+
+    def test_subscription_update_attributes_eventstreams_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesEventstreamsAttributes
+        """
+
+        # Construct a json representation of a SubscriptionUpdateAttributesEventstreamsAttributes model
+        subscription_update_attributes_eventstreams_attributes_model_json = {}
+        subscription_update_attributes_eventstreams_attributes_model_json['template_id_notification'] = 'testString'
+
+        # Construct a model instance of SubscriptionUpdateAttributesEventstreamsAttributes by calling from_dict on the json representation
+        subscription_update_attributes_eventstreams_attributes_model = (
+            SubscriptionUpdateAttributesEventstreamsAttributes.from_dict(
+                subscription_update_attributes_eventstreams_attributes_model_json
+            )
+        )
+        assert subscription_update_attributes_eventstreams_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesEventstreamsAttributes by calling from_dict on the json representation
+        subscription_update_attributes_eventstreams_attributes_model_dict = (
+            SubscriptionUpdateAttributesEventstreamsAttributes.from_dict(
+                subscription_update_attributes_eventstreams_attributes_model_json
+            ).__dict__
+        )
+        subscription_update_attributes_eventstreams_attributes_model2 = (
+            SubscriptionUpdateAttributesEventstreamsAttributes(
+                **subscription_update_attributes_eventstreams_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_update_attributes_eventstreams_attributes_model
+            == subscription_update_attributes_eventstreams_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_eventstreams_attributes_model_json2 = (
+            subscription_update_attributes_eventstreams_attributes_model.to_dict()
+        )
+        assert (
+            subscription_update_attributes_eventstreams_attributes_model_json2
+            == subscription_update_attributes_eventstreams_attributes_model_json
         )
 
 
@@ -11490,12 +11703,12 @@ class TestModel_SubscriptionUpdateAttributesSMSUpdateAttributes:
         # Construct a json representation of a SubscriptionUpdateAttributesSMSUpdateAttributes model
         subscription_update_attributes_sms_update_attributes_model_json = {}
         subscription_update_attributes_sms_update_attributes_model_json['invited'] = update_attributes_invited_model
-        subscription_update_attributes_sms_update_attributes_model_json[
-            'subscribed'
-        ] = update_attributes_subscribed_model
-        subscription_update_attributes_sms_update_attributes_model_json[
-            'unsubscribed'
-        ] = update_attributes_unsubscribed_model
+        subscription_update_attributes_sms_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_sms_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesSMSUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_sms_update_attributes_model = (
@@ -11648,9 +11861,9 @@ class TestModel_SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes:
         subscription_update_attributes_slack_direct_message_update_attributes_model_json['channels'] = [
             channel_update_attributes_model
         ]
-        subscription_update_attributes_slack_direct_message_update_attributes_model_json[
-            'template_id_notification'
-        ] = 'testString'
+        subscription_update_attributes_slack_direct_message_update_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
 
         # Construct a model instance of SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes by calling from_dict on the json representation
         subscription_update_attributes_slack_direct_message_update_attributes_model = (
@@ -11776,6 +11989,54 @@ class TestModel_TemplateConfigOneOfEmailTemplateConfig:
         assert (
             template_config_one_of_email_template_config_model_json2
             == template_config_one_of_email_template_config_model_json
+        )
+
+
+class TestModel_TemplateConfigOneOfEventStreamsTemplateConfig:
+    """
+    Test Class for TemplateConfigOneOfEventStreamsTemplateConfig
+    """
+
+    def test_template_config_one_of_event_streams_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfigOneOfEventStreamsTemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfigOneOfEventStreamsTemplateConfig model
+        template_config_one_of_event_streams_template_config_model_json = {}
+        template_config_one_of_event_streams_template_config_model_json['body'] = 'testString'
+
+        # Construct a model instance of TemplateConfigOneOfEventStreamsTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_event_streams_template_config_model = (
+            TemplateConfigOneOfEventStreamsTemplateConfig.from_dict(
+                template_config_one_of_event_streams_template_config_model_json
+            )
+        )
+        assert template_config_one_of_event_streams_template_config_model != False
+
+        # Construct a model instance of TemplateConfigOneOfEventStreamsTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_event_streams_template_config_model_dict = (
+            TemplateConfigOneOfEventStreamsTemplateConfig.from_dict(
+                template_config_one_of_event_streams_template_config_model_json
+            ).__dict__
+        )
+        template_config_one_of_event_streams_template_config_model2 = TemplateConfigOneOfEventStreamsTemplateConfig(
+            **template_config_one_of_event_streams_template_config_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            template_config_one_of_event_streams_template_config_model
+            == template_config_one_of_event_streams_template_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_one_of_event_streams_template_config_model_json2 = (
+            template_config_one_of_event_streams_template_config_model.to_dict()
+        )
+        assert (
+            template_config_one_of_event_streams_template_config_model_json2
+            == template_config_one_of_event_streams_template_config_model_json
         )
 
 

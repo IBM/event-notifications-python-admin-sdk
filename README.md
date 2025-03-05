@@ -542,6 +542,24 @@ create_template_response = event_notifications_service.create_template(
 
 For pagerduty template supported template type value: pagerduty.notification
 
+#### EventStreams Template
+
+```py
+template_config_model = {
+    'body': 'base 64 encoded json body',
+}
+
+create_template_response = event_notifications_service.create_template(
+    instance_id=<instance-id>,
+    name=<template-name>,
+    type=<template-type>,
+    params=template_config_model,
+    description=<template-description>
+).get_result()
+```
+
+For Event Streams template supported template type value: event_streams.notification
+
 ### List Templates
 
 ```py
@@ -588,7 +606,7 @@ replace_template_response = event_notifications_service.replace_template(
 
 ```py
 template_config_model = {
-    'body': 'base 64 encode html content',
+    'body': 'base 64 encode json content',
 }
 
 replace_template_response = event_notifications_service.replace_template(
@@ -600,6 +618,26 @@ replace_template_response = event_notifications_service.replace_template(
     params=template_config_model
 ).get_result()
 ```
+For webhook template supported template type value: webhook.notification
+For pagerduty template supported template type value: pagerduty.notification
+
+#### Update EventStreams Template
+
+```py
+template_config_model = {
+    'body': 'base 64 encode json content',
+}
+
+replace_template_response = event_notifications_service.replace_template(
+    instance_id=<instance-id>,
+    id=<template_id>
+    name=<template_name>,
+    type=<template-type>,
+    description=<template-description>,
+    params=template_config_model
+).get_result()
+```
+For Event Streams template supported template type value: event_streams.notification
 
 ### Delete Template
 
@@ -1186,6 +1224,11 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_SLACK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_WEBHOOK_TEMPLATE_BODY` - base 64 encoded json body
 - `EVENT_NOTIFICATIONS_SCHEDULER_SOURCE_ID` - periodic timer source id
+- `EVENT_NOTIFICATIONS_PAGERDUTY_TEMPLATE_BODY` - base 64 encoded json body for pagerduty destination
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_TEMPLATE_BODY` - base 64 encoded json body for event streams destination
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_CRN` - Event Streams instance CRN
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_TOPIC` - Event Streams instance Topic name
+- `EVENT_NOTIFICATIONS_EVENT_STREAMS_ENDPOINT` - Event streams end point
 
 ## Questions
 
