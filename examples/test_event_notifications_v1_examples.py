@@ -67,6 +67,7 @@ destination_id16 = ""
 destination_id17 = ""
 destination_id18 = ""
 destination_id19 = ""
+destination_id20 = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -77,6 +78,8 @@ subscription_id5 = ""
 subscription_id6 = ""
 subscription_id7 = ""
 subscription_id8 = ""
+subscription_id9 = ""
+subscription_id10 = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -109,8 +112,13 @@ slack_dm_token = ""
 slack_channel_id = ""
 webhook_template_id = ""
 webhook_template_body = ""
-agerduty_template_body = ""
+pagerduty_template_body = ""
 pagerduty_template_id = ""
+event_streams_template_body = ""
+event_streams_template_id = ""
+event_streams_crn = ""
+event_streams_topic = ""
+event_streams_endpoint = ""
 
 
 ##############################################################################
@@ -124,7 +132,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, event_streams_template_body
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -166,6 +174,13 @@ class TestEventNotificationsV1Examples:
             slack_channel_id = cls.config["SLACK_CHANNEL_ID"]
             webhook_template_body = cls.config["WEBHOOK_TEMPLATE_BODY"]
             pagerduty_template_body = cls.config["PAGERDUTY_TEMPLATE_BODY"]
+            event_streams_template_body = cls.config["EVENT_STREAMS_TEMPLATE_BODY"]
+            event_streams_crn = cls.config["EVENT_STREAMS_CRN"]
+            event_streams_endpoint = cls.config["EVENT_STREAMS_ENDPOINT"]
+            event_streams_topic = cls.config["EVENT_STREAMS_TOPIC"]
+            assert event_streams_crn is not None
+            assert event_streams_endpoint is not None
+            assert event_streams_topic is not None
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -397,7 +412,7 @@ class TestEventNotificationsV1Examples:
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19, destination_id20
         try:
             print("\ncreate_destination() result:")
             # begin-create_destination
@@ -824,6 +839,29 @@ class TestEventNotificationsV1Examples:
             destination = DestinationResponse.from_dict(destination_response)
             destination_id19 = destination.id
 
+            destination_config_model = {
+                "params": {
+                    "crn": event_streams_crn,
+                    "endpoint": event_streams_endpoint,
+                    "topic": event_streams_topic,
+                }
+            }
+
+            name = "Event_Streams_destination"
+            typeval = "event_streams"
+            description = "Event Streams Destination"
+
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model,
+            )
+            destination_response = create_destination_response.get_result()
+            destination = DestinationResponse.from_dict(destination_response)
+            destination_id20 = destination.id
+
             # end-create_destination
 
         except ApiException as e:
@@ -847,7 +885,7 @@ class TestEventNotificationsV1Examples:
         """
         create_template request example
         """
-        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id, pagerduty_template_id
+        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id
         try:
             print("\ncreate_template() result:")
             # begin-create_template
@@ -955,6 +993,28 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(create_template_response, indent=2))
             template = TemplateResponse.from_dict(create_template_response)
             pagerduty_template_id = template.id
+
+            event_streams_template_config_model_json = {'body': event_streams_template_body}
+
+            event_streams_template_config_model = TemplateConfigOneOfEventStreamsTemplateConfig.from_dict(
+                event_streams_template_config_model_json
+            )
+
+            name = "template_event_streams"
+            typeval = "event_streams.notification"
+            description = "event streams template create"
+
+            create_template_response = self.event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=event_streams_template_config_model,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(create_template_response, indent=2))
+            template = TemplateResponse.from_dict(create_template_response)
+            event_streams_template_id = template.id
 
             # end-create_template
 
@@ -1439,6 +1499,27 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(update_destination_response, indent=2))
 
+            destination_config_model = {
+                "params": {
+                    "crn": event_streams_crn,
+                    "endpoint": event_streams_endpoint,
+                    "topic": event_streams_topic,
+                }
+            }
+
+            name = "event_streams_destination_update"
+            description = "Event Streams Destination update"
+
+            update_destination_response = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id20,
+                name=name,
+                description=description,
+                config=destination_config_model,
+            ).get_result()
+
+            print(json.dumps(update_destination_response, indent=2))
+
             # end-update_destination
 
         except ApiException as e:
@@ -1560,7 +1641,7 @@ class TestEventNotificationsV1Examples:
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10
         try:
             print("\ncreate_subscription() result:")
             # begin-create_subscription
@@ -1748,7 +1829,6 @@ class TestEventNotificationsV1Examples:
                 description=description,
                 attributes=subscription_create_attributes_model,
             )
-            
 
             subscription_response = create_subscription_response.get_result()
             subscription_id8 = subscription_response.get("id")
@@ -1757,7 +1837,7 @@ class TestEventNotificationsV1Examples:
             description = "Subscription for the PagerDuty"
 
             subscription_create_attributes_model_json = {
-            'template_id_notification': pagerduty_template_id,
+                'template_id_notification': pagerduty_template_id,
             }
 
             subscription_create_attributes_model = SubscriptionCreateAttributesPagerDutyAttributes.from_dict(
@@ -1765,17 +1845,39 @@ class TestEventNotificationsV1Examples:
             )
 
             create_subscription_response = self.event_notifications_service.create_subscription(
-            instance_id,
-            name,
-            destination_id=destination_id10,
-            topic_id=topic_id,
-            description=description,
-            attributes=subscription_create_attributes_model,
+                instance_id,
+                name,
+                destination_id=destination_id10,
+                topic_id=topic_id,
+                description=description,
+                attributes=subscription_create_attributes_model,
             )
 
             subscription_response = create_subscription_response.get_result()
             subscription_id9 = subscription_response.get("id")
 
+            name = "Event Streams subscription"
+            description = "Subscription for the Event Streams"
+
+            subscription_create_attributes_model_json = {
+                'template_id_notification': event_streams_template_id,
+            }
+
+            subscription_create_attributes_model = SubscriptionCreateAttributesEventstreamsAttributes.from_dict(
+                subscription_create_attributes_model_json
+            )
+
+            create_subscription_response = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id20,
+                topic_id=topic_id,
+                description=description,
+                attributes=subscription_create_attributes_model,
+            )
+
+            subscription_response = create_subscription_response.get_result()
+            subscription_idq10 = subscription_response.get("id")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -2038,6 +2140,28 @@ class TestEventNotificationsV1Examples:
             update_subscription_response = self.event_notifications_service.update_subscription(
                 instance_id,
                 id=subscription_id9,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+
+            name = "Event Streams subscription update"
+            description = "Subscription for Event Streams updated"
+
+            subscription_update_attributes_model_json = {
+                'template_id_notification': event_streams_template_id,
+            }
+
+            subscription_update_attributes_model = SubscriptionUpdateAttributesEventstreamsAttributes.from_dict(
+                subscription_update_attributes_model_json
+            )
+
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id10,
                 name=name,
                 description=description,
                 attributes=subscription_update_attributes_model,
@@ -2457,6 +2581,8 @@ class TestEventNotificationsV1Examples:
                 subscription_id6,
                 subscription_id7,
                 subscription_id8,
+                subscription_id9,
+                subscription_id10,
             ]:
                 delete_subscription_response = event_notifications_service.delete_subscription(instance_id, id)
             print(
@@ -2516,6 +2642,7 @@ class TestEventNotificationsV1Examples:
                 destination_id17,
                 destination_id18,
                 destination_id19,
+                destination_id20,
             ]:
                 delete_destination_response = event_notifications_service.delete_destination(instance_id, id)
             print(
@@ -2531,7 +2658,14 @@ class TestEventNotificationsV1Examples:
         """
         delete_template request example
         """
-        for id in [template_invitation_id, template_notification_id, slack_template_id, webhook_template_id]:
+        for id in [
+            template_invitation_id,
+            template_notification_id,
+            slack_template_id,
+            webhook_template_id,
+            pagerduty_template_id,
+            event_streams_template_id,
+        ]:
             # begin-delete_template
             delete_template_response = event_notifications_service.delete_template(instance_id, id).get_result()
             # end-delete_template
