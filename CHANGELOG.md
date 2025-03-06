@@ -1,3 +1,10 @@
+# [0.14.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.13.0...v0.14.0) (2025-03-06)
+
+
+### Features
+
+* support for Event Streams and templates ([#69](https://github.com/IBM/event-notifications-python-admin-sdk/issues/69)) ([30b8ea6](https://github.com/IBM/event-notifications-python-admin-sdk/commit/30b8ea6dd54a965cd19003291955cdf38717aa39))
+
 # [0.13.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.12.0...v0.13.0) (2025-02-26)
 
 
