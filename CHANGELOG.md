@@ -1,3 +1,10 @@
+# [0.15.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.14.0...v0.15.0) (2025-04-23)
+
+
+### Features
+
+* making api_key as deprecated for pagerduty destination ([#70](https://github.com/IBM/event-notifications-python-admin-sdk/issues/70)) ([2e37768](https://github.com/IBM/event-notifications-python-admin-sdk/commit/2e37768c6aa0b3cd5ec5d96596d99bd32e1962ba))
+
 # [0.14.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.13.0...v0.14.0) (2025-03-06)
 
 
