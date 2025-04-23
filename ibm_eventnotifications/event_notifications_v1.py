@@ -10433,7 +10433,7 @@ class DestinationConfigOneOfEventStreamsDestinationConfig(DestinationConfigOneOf
     Payload describing a Event Streams destination configuration.
 
     :attr str crn: CRN of the Event Streans instance.
-    :attr str endpoint: End Point of Event Streams.
+    :attr str endpoint: Endpoint of Event Streams.
     :attr str topic: Topic of Event Streams.
     """
 
@@ -10447,7 +10447,7 @@ class DestinationConfigOneOfEventStreamsDestinationConfig(DestinationConfigOneOf
         Initialize a DestinationConfigOneOfEventStreamsDestinationConfig object.
 
         :param str crn: CRN of the Event Streans instance.
-        :param str endpoint: End Point of Event Streams.
+        :param str endpoint: Endpoint of Event Streams.
         :param str topic: Topic of Event Streams.
         """
         # pylint: disable=super-init-not-called
@@ -10782,7 +10782,7 @@ class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(DestinationCo
 
     :attr str bucket_name: Bucket Name for Cloud Object Storage.
     :attr str instance_id: Instance Id of Cloud Object Storage.
-    :attr str endpoint: End Point of Cloud Object Storage.
+    :attr str endpoint: Endpoint of Cloud Object Storage.
     """
 
     def __init__(
@@ -10796,7 +10796,7 @@ class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(DestinationCo
 
         :param str bucket_name: Bucket Name for Cloud Object Storage.
         :param str instance_id: Instance Id of Cloud Object Storage.
-        :param str endpoint: End Point of Cloud Object Storage.
+        :param str endpoint: Endpoint of Cloud Object Storage.
         """
         # pylint: disable=super-init-not-called
         self.bucket_name = bucket_name
@@ -11049,22 +11049,24 @@ class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a PagerDuty destination configuration.
 
-    :attr str api_key: API Key for the PagerDuty account.
+    :attr str api_key: (optional) Deprecated: API Key for the PagerDuty account.
     :attr str routing_key: Routing Key (Integration Key) for the team in PagerDuty
           account.
     """
 
     def __init__(
         self,
-        api_key: str,
         routing_key: str,
+        *,
+        api_key: str = None,
     ) -> None:
         """
         Initialize a DestinationConfigOneOfPagerDutyDestinationConfig object.
 
-        :param str api_key: API Key for the PagerDuty account.
         :param str routing_key: Routing Key (Integration Key) for the team in
                PagerDuty account.
+        :param str api_key: (optional) Deprecated: API Key for the PagerDuty
+               account.
         """
         # pylint: disable=super-init-not-called
         self.api_key = api_key
@@ -11076,10 +11078,6 @@ class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
         args = {}
         if 'api_key' in _dict:
             args['api_key'] = _dict.get('api_key')
-        else:
-            raise ValueError(
-                'Required property \'api_key\' not present in DestinationConfigOneOfPagerDutyDestinationConfig JSON'
-            )
         if 'routing_key' in _dict:
             args['routing_key'] = _dict.get('routing_key')
         else:
@@ -12185,8 +12183,7 @@ class SubscriptionAttributesEventStreamsAttributesResponse(SubscriptionAttribute
     """
     The attributes for a Event Streams response.
 
-    :attr str template_id_notification: (optional) ID of Base64 converted JSON
-          Pagerduty Blocks w/o Handlebars.
+    :attr str template_id_notification: (optional) Event Streams template id.
     """
 
     # The set of defined properties for the class
@@ -12201,8 +12198,7 @@ class SubscriptionAttributesEventStreamsAttributesResponse(SubscriptionAttribute
         """
         Initialize a SubscriptionAttributesEventStreamsAttributesResponse object.
 
-        :param str template_id_notification: (optional) ID of Base64 converted JSON
-               Pagerduty Blocks w/o Handlebars.
+        :param str template_id_notification: (optional) Event Streams template id.
         :param **kwargs: (optional) Any additional properties.
         """
         # pylint: disable=super-init-not-called
@@ -13240,8 +13236,7 @@ class SubscriptionCreateAttributesEventstreamsAttributes(SubscriptionCreateAttri
     """
     The attributes for a Event Streams subscription.
 
-    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
-          Blocks w/o Handlebars.
+    :attr str template_id_notification: (optional) Event Streams template id.
     """
 
     def __init__(
@@ -13252,8 +13247,7 @@ class SubscriptionCreateAttributesEventstreamsAttributes(SubscriptionCreateAttri
         """
         Initialize a SubscriptionCreateAttributesEventstreamsAttributes object.
 
-        :param str template_id_notification: (optional) ID of Base64 converted JSON
-               Slack Blocks w/o Handlebars.
+        :param str template_id_notification: (optional) Event Streams template id.
         """
         # pylint: disable=super-init-not-called
         self.template_id_notification = template_id_notification
@@ -14157,8 +14151,7 @@ class SubscriptionUpdateAttributesEventstreamsAttributes(SubscriptionUpdateAttri
     """
     The attributes for a Event Streams subscription.
 
-    :attr str template_id_notification: (optional) ID of Base64 converted JSON Slack
-          Blocks w/o Handlebars.
+    :attr str template_id_notification: (optional) Event Streams template id.
     """
 
     def __init__(
@@ -14169,8 +14162,7 @@ class SubscriptionUpdateAttributesEventstreamsAttributes(SubscriptionUpdateAttri
         """
         Initialize a SubscriptionUpdateAttributesEventstreamsAttributes object.
 
-        :param str template_id_notification: (optional) ID of Base64 converted JSON
-               Slack Blocks w/o Handlebars.
+        :param str template_id_notification: (optional) Event Streams template id.
         """
         # pylint: disable=super-init-not-called
         self.template_id_notification = template_id_notification

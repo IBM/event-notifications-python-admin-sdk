@@ -1242,6 +1242,16 @@ If you encounter an issue with the project, you are welcome to submit a
 [bug report](https://github.com/IBM/event-notifications-python-admin-sdk/issues).
 Before that, please search for similar issues. It's possible that someone has already reported the problem.
 
+## ⚠️ Deprecation Notice (Attributes)
+
+### Pagerduty Destination Configuration
+
+> The following attribute from interface DestinationConfigOneOfPagerDutyDestinationConfig is **deprecated** and will be removed in a future release:
+
+- `api_key`
+
+This attribute no longer recommended for use and may not be supported in upcoming versions of the SDK. Only `routing_key` is expected to be passed.
+
 ## Open source @ IBM
 
 Find more open source projects on the [IBM Github Page](http://ibm.github.io/)

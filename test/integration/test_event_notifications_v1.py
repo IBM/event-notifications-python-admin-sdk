@@ -3804,7 +3804,14 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_delete_template(self):
-        for id in [template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id]:
+        for id in [
+            template_invitation_id,
+            template_notification_id,
+            slack_template_id,
+            webhook_template_id,
+            pagerduty_template_id,
+            event_streams_template_id,
+        ]:
             delete_template_response = self.event_notifications_service.delete_template(instance_id, id)
         print(
             "\ndelete_template() response status code: ",
