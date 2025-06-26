@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.15.0...v0.16.0) (2025-06-26)
+
+
+### Features
+
+* adds markdown support from notification payload ([#72](https://github.com/IBM/event-notifications-python-admin-sdk/issues/72)) ([7aee965](https://github.com/IBM/event-notifications-python-admin-sdk/commit/7aee965a0beaad78ce60b3390c52ba2e9e3b027e))
+
 # [0.15.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.14.0...v0.15.0) (2025-04-23)
 
 
