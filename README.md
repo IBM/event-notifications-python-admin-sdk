@@ -1102,6 +1102,7 @@ smsto = '[\"+911234567890\", \"+911224567890\"]'
 slackto = '[\"C07FALXBH4G\"]'
 mms = '{"content": "akajdklahl", "content_type": "image/png"}'
 templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
+markdown_content = "**Event Summary** \n\n**Toolchain ID:** `4414af34-a5c7-47d3-8f05-add4af6d78a6`  \n**Content Type:** `application/json`\n\n---\n\n *Pipeline Run Details*\n\n- **Namespace:** `PR`\n- **Trigger Name:** `manual`\n- **Triggered By:** `nitish.kulkarni3@ibm.com`\n- **Build Number:** `343`\n- **Pipeline Link:** [View Pipeline Run](https://cloud.ibm.com/devops/pipelines/tekton/e9cd5aa3-a3f2-4776-8acc-26a35922386e/runs/f29ac6f5-bd2f-4a26-abb8-4249be8dbab7?env_id=ibm:yp:us-south)"
 
 notification_create_model = {
     'ibmenseverity': notification_severity,
@@ -1113,6 +1114,7 @@ notification_create_model = {
     'ibmendefaultlong': 'long info',
     'ibmensafaribody': json.dumps(notificationSafariBodymodel),
     'ibmenhtmlbody': htmlbody,
+    "ibmenmarkdown": markdown_content,
     'ibmensubject': 'Findings on IBM Cloud Security Advisor',
     'ibmenmailto': mailto,
     'ibmensmsto': smsto,
@@ -1149,7 +1151,7 @@ send_notifications_response = event_notifications_service.send_notifications(
   - Pass 'WEB_FIREFOX' for Firefox browser.
   - Pass 'WEB_CHROME' for Chrome browser.
 - **Event Notifications SendNotificationsOptions** - Event Notifications Send Notifications method.
-  - **instance_id** (_string_) - Unique identifier for IBM Cloud Event Notifications instance.
+  - **instance_id\*** (_string_) - Unique identifier for IBM Cloud Event Notifications instance.
   - **ibmenseverity** (_string_) - Severity for the notifications. Some sources can have the concept of an Event severity. Hence a handy way is provided to specify a severity of the event. example: LOW, HIGH, MEDIUM
   - **id\*** (_string_) - A unique identifier that identifies each event. source+id must be unique. The backend should be able to uniquely track this id in logs and other records. Send unique ID for each send notification. Same ID can be sent in case of failure of send notification. source+id will be logged in IBM Cloud Logging service. Using this combination we will be able to trace the event movement from one system to another and will aid in debugging and tracing.
   - **source\*** (_string_) - Source of the notifications. This is the identifier of the event producer. A way to uniquely identify the source of the event. For IBM Cloud services this is the crn of the service instance producing the events. For API sources this can be something the event producer backend can uniquely identify itself with.
@@ -1171,12 +1173,13 @@ send_notifications_response = event_notifications_service.send_notifications(
   - **ibmendefaultshort\*** (_string_) - Default short text for the message.
   - **ibmendefaultlong\*** (_string_) - Default long text for the message.
   - **specversion\*** (_string_) - Spec version of the Event Notifications. Default value is `1.0`.
-  - **ibmenhtmlbody\*** (_string_) - The html body of notification for email.
-  - **ibmenmailto\*** (_Array of string_) - Array of email ids to which the notification to be sent.
-  - **ibmensmsto\*** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
-  - **ibmensmstext\*** (_string_) - SMS text to be sent.
-  - **ibmenslackto\*** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
-  - **ibmentemplates\*** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
+  - **ibmenhtmlbody** (_string_) - The html body of notification for email.
+  - **ibmenmailto** (_Array of string_) - Array of email ids to which the notification to be sent.
+  - **ibmensmsto** (_Array of string_) - Array of SMS numbers to which the notification to be sent.
+  - **ibmensmstext** (_string_) - SMS text to be sent.
+  - **ibmenslackto** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
+  - **ibmentemplates** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
+  - **ibmenmarkdown** (_string_) - The markdown content of pretty formatting.
 
 Note: variable with \* represents the mandatory attribute.
 
