@@ -5427,6 +5427,7 @@ class NotificationCreate:
     :attr str ibmenhtmlbody: (optional) The html body of notification.
     :attr str subject: (optional) The subject of the notification.
     :attr str ibmenmms: (optional) Stringified MMS Attachment JSON.
+    :attr str ibmenmarkdown: (optional) The markdown content for notification.
     :attr dict data: (optional) The payload for webhook notification.
     :attr str datacontenttype: (optional) The notification content type.
     :attr str ibmenpushto: (optional) If platforms or tags or user_ids is used then
@@ -5473,6 +5474,7 @@ class NotificationCreate:
             'ibmenhtmlbody',
             'subject',
             'ibmenmms',
+            'ibmenmarkdown',
             'data',
             'datacontenttype',
             'ibmenpushto',
@@ -5509,6 +5511,7 @@ class NotificationCreate:
         ibmenhtmlbody: str = None,
         subject: str = None,
         ibmenmms: str = None,
+        ibmenmarkdown: str = None,
         data: dict = None,
         datacontenttype: str = None,
         ibmenpushto: str = None,
@@ -5545,6 +5548,7 @@ class NotificationCreate:
         :param str ibmenhtmlbody: (optional) The html body of notification.
         :param str subject: (optional) The subject of the notification.
         :param str ibmenmms: (optional) Stringified MMS Attachment JSON.
+        :param str ibmenmarkdown: (optional) The markdown content for notification.
         :param dict data: (optional) The payload for webhook notification.
         :param str datacontenttype: (optional) The notification content type.
         :param str ibmenpushto: (optional) If platforms or tags or user_ids is used
@@ -5588,6 +5592,7 @@ class NotificationCreate:
         self.ibmenhtmlbody = ibmenhtmlbody
         self.subject = subject
         self.ibmenmms = ibmenmms
+        self.ibmenmarkdown = ibmenmarkdown
         self.data = data
         self.datacontenttype = datacontenttype
         self.ibmenpushto = ibmenpushto
@@ -5657,6 +5662,8 @@ class NotificationCreate:
             args['subject'] = _dict.get('subject')
         if 'ibmenmms' in _dict:
             args['ibmenmms'] = _dict.get('ibmenmms')
+        if 'ibmenmarkdown' in _dict:
+            args['ibmenmarkdown'] = _dict.get('ibmenmarkdown')
         if 'data' in _dict:
             args['data'] = _dict.get('data')
         if 'datacontenttype' in _dict:
@@ -5728,6 +5735,8 @@ class NotificationCreate:
             _dict['subject'] = self.subject
         if hasattr(self, 'ibmenmms') and self.ibmenmms is not None:
             _dict['ibmenmms'] = self.ibmenmms
+        if hasattr(self, 'ibmenmarkdown') and self.ibmenmarkdown is not None:
+            _dict['ibmenmarkdown'] = self.ibmenmarkdown
         if hasattr(self, 'data') and self.data is not None:
             _dict['data'] = self.data
         if hasattr(self, 'datacontenttype') and self.datacontenttype is not None:
