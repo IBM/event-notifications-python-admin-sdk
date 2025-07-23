@@ -947,6 +947,75 @@ class EventNotificationsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    def list_pre_defined_templates(
+        self,
+        instance_id: str,
+        source: str,
+        type: str,
+        *,
+        limit: int = None,
+        offset: int = None,
+        search: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List all predefined templates.
+
+        List all predefined templates.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str source: Source type.
+        :param str type: Destination type.
+        :param int limit: (optional) Page limit for paginated results.
+        :param int offset: (optional) offset for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `PredefinedTemplatesList` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not source:
+            raise ValueError('source must be provided')
+        if not type:
+            raise ValueError('type must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_pre_defined_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'source': source,
+            'type': type,
+            'limit': limit,
+            'offset': offset,
+            'search': search,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/pre_defined_templates'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
     def get_template(
         self,
         instance_id: str,
@@ -1108,6 +1177,55 @@ class EventNotificationsV1(BaseService):
         url = '/v1/instances/{instance_id}/templates/{id}'.format(**path_param_dict)
         request = self.prepare_request(
             method='DELETE',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_pre_defined_template(
+        self,
+        instance_id: str,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get details of a Predefined Template.
+
+        Get details of a Predefined Template.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Template.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `GetPredefinedTemplate` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_pre_defined_template',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/pre_defined_templates/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
             url=url,
             headers=headers,
         )
@@ -4596,6 +4714,129 @@ class EventScheduleFilterAttributes:
         return not self == other
 
 
+class GetPredefinedTemplate:
+    """
+    Template object.
+
+    :attr str id: Template ID.
+    :attr str name: Template name.
+    :attr str description: Template description.
+    :attr str type: The type of template.
+    :attr str source: (optional) The type of source.
+    :attr datetime updated_at: Updated at.
+    :attr PredefinedTemplateConfig params: Payload describing a Predefined template
+          configuration.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        description: str,
+        type: str,
+        updated_at: datetime,
+        params: 'PredefinedTemplateConfig',
+        *,
+        source: str = None,
+    ) -> None:
+        """
+        Initialize a GetPredefinedTemplate object.
+
+        :param str id: Template ID.
+        :param str name: Template name.
+        :param str description: Template description.
+        :param str type: The type of template.
+        :param datetime updated_at: Updated at.
+        :param PredefinedTemplateConfig params: Payload describing a Predefined
+               template configuration.
+        :param str source: (optional) The type of source.
+        """
+        self.id = id
+        self.name = name
+        self.description = description
+        self.type = type
+        self.source = source
+        self.updated_at = updated_at
+        self.params = params
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'GetPredefinedTemplate':
+        """Initialize a GetPredefinedTemplate object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in GetPredefinedTemplate JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in GetPredefinedTemplate JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in GetPredefinedTemplate JSON')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in GetPredefinedTemplate JSON')
+        if 'source' in _dict:
+            args['source'] = _dict.get('source')
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        else:
+            raise ValueError('Required property \'updated_at\' not present in GetPredefinedTemplate JSON')
+        if 'params' in _dict:
+            args['params'] = PredefinedTemplateConfig.from_dict(_dict.get('params'))
+        else:
+            raise ValueError('Required property \'params\' not present in GetPredefinedTemplate JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a GetPredefinedTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'source') and self.source is not None:
+            _dict['source'] = self.source
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        if hasattr(self, 'params') and self.params is not None:
+            if isinstance(self.params, dict):
+                _dict['params'] = self.params
+            else:
+                _dict['params'] = self.params.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this GetPredefinedTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'GetPredefinedTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'GetPredefinedTemplate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class Histrogram:
     """
     Payload describing histogram.
@@ -5914,6 +6155,304 @@ class PageHrefResponse:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'PageHrefResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class PredefinedTemplate:
+    """
+    Predefined Template object.
+
+    :attr str id: Template ID.
+    :attr str name: Template name.
+    :attr str description: Template description.
+    :attr str source: The type of source.
+    :attr str type: The type of template.
+    :attr datetime updated_at: Updated at.
+    """
+
+    def __init__(
+        self,
+        id: str,
+        name: str,
+        description: str,
+        source: str,
+        type: str,
+        updated_at: datetime,
+    ) -> None:
+        """
+        Initialize a PredefinedTemplate object.
+
+        :param str id: Template ID.
+        :param str name: Template name.
+        :param str description: Template description.
+        :param str source: The type of source.
+        :param str type: The type of template.
+        :param datetime updated_at: Updated at.
+        """
+        self.id = id
+        self.name = name
+        self.description = description
+        self.source = source
+        self.type = type
+        self.updated_at = updated_at
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PredefinedTemplate':
+        """Initialize a PredefinedTemplate object from a json dictionary."""
+        args = {}
+        if 'id' in _dict:
+            args['id'] = _dict.get('id')
+        else:
+            raise ValueError('Required property \'id\' not present in PredefinedTemplate JSON')
+        if 'name' in _dict:
+            args['name'] = _dict.get('name')
+        else:
+            raise ValueError('Required property \'name\' not present in PredefinedTemplate JSON')
+        if 'description' in _dict:
+            args['description'] = _dict.get('description')
+        else:
+            raise ValueError('Required property \'description\' not present in PredefinedTemplate JSON')
+        if 'source' in _dict:
+            args['source'] = _dict.get('source')
+        else:
+            raise ValueError('Required property \'source\' not present in PredefinedTemplate JSON')
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError('Required property \'type\' not present in PredefinedTemplate JSON')
+        if 'updated_at' in _dict:
+            args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
+        else:
+            raise ValueError('Required property \'updated_at\' not present in PredefinedTemplate JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PredefinedTemplate object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'id') and self.id is not None:
+            _dict['id'] = self.id
+        if hasattr(self, 'name') and self.name is not None:
+            _dict['name'] = self.name
+        if hasattr(self, 'description') and self.description is not None:
+            _dict['description'] = self.description
+        if hasattr(self, 'source') and self.source is not None:
+            _dict['source'] = self.source
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'updated_at') and self.updated_at is not None:
+            _dict['updated_at'] = datetime_to_string(self.updated_at)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PredefinedTemplate object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PredefinedTemplate') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PredefinedTemplate') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class PredefinedTemplateConfig:
+    """
+    Payload describing a Predefined template configuration.
+
+    :attr str body: Template body(Base64 encoded).
+    """
+
+    def __init__(
+        self,
+        body: str,
+    ) -> None:
+        """
+        Initialize a PredefinedTemplateConfig object.
+
+        :param str body: Template body(Base64 encoded).
+        """
+        self.body = body
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PredefinedTemplateConfig':
+        """Initialize a PredefinedTemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError('Required property \'body\' not present in PredefinedTemplateConfig JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PredefinedTemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PredefinedTemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PredefinedTemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PredefinedTemplateConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class PredefinedTemplatesList:
+    """
+    Payload describing a pre-defined templates list request.
+
+    :attr int total_count: Total number of pre-defined templates.
+    :attr int offset: Current offset.
+    :attr int limit: limit to show templates.
+    :attr List[PredefinedTemplate] templates: List of pre-defined templates.
+    :attr PageHrefResponse first: (optional) Response having URL of the page.
+    :attr PageHrefResponse previous: (optional) Response having URL of the page.
+    :attr PageHrefResponse next: (optional) Response having URL of the page.
+    """
+
+    def __init__(
+        self,
+        total_count: int,
+        offset: int,
+        limit: int,
+        templates: List['PredefinedTemplate'],
+        *,
+        first: 'PageHrefResponse' = None,
+        previous: 'PageHrefResponse' = None,
+        next: 'PageHrefResponse' = None,
+    ) -> None:
+        """
+        Initialize a PredefinedTemplatesList object.
+
+        :param int total_count: Total number of pre-defined templates.
+        :param int offset: Current offset.
+        :param int limit: limit to show templates.
+        :param List[PredefinedTemplate] templates: List of pre-defined templates.
+        :param PageHrefResponse first: (optional) Response having URL of the page.
+        :param PageHrefResponse previous: (optional) Response having URL of the
+               page.
+        :param PageHrefResponse next: (optional) Response having URL of the page.
+        """
+        self.total_count = total_count
+        self.offset = offset
+        self.limit = limit
+        self.templates = templates
+        self.first = first
+        self.previous = previous
+        self.next = next
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'PredefinedTemplatesList':
+        """Initialize a PredefinedTemplatesList object from a json dictionary."""
+        args = {}
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in PredefinedTemplatesList JSON')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in PredefinedTemplatesList JSON')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in PredefinedTemplatesList JSON')
+        if 'templates' in _dict:
+            args['templates'] = [PredefinedTemplate.from_dict(v) for v in _dict.get('templates')]
+        else:
+            raise ValueError('Required property \'templates\' not present in PredefinedTemplatesList JSON')
+        if 'first' in _dict:
+            args['first'] = PageHrefResponse.from_dict(_dict.get('first'))
+        if 'previous' in _dict:
+            args['previous'] = PageHrefResponse.from_dict(_dict.get('previous'))
+        if 'next' in _dict:
+            args['next'] = PageHrefResponse.from_dict(_dict.get('next'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a PredefinedTemplatesList object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
+        if hasattr(self, 'templates') and self.templates is not None:
+            templates_list = []
+            for v in self.templates:
+                if isinstance(v, dict):
+                    templates_list.append(v)
+                else:
+                    templates_list.append(v.to_dict())
+            _dict['templates'] = templates_list
+        if hasattr(self, 'first') and self.first is not None:
+            if isinstance(self.first, dict):
+                _dict['first'] = self.first
+            else:
+                _dict['first'] = self.first.to_dict()
+        if hasattr(self, 'previous') and self.previous is not None:
+            if isinstance(self.previous, dict):
+                _dict['previous'] = self.previous
+            else:
+                _dict['previous'] = self.previous.to_dict()
+        if hasattr(self, 'next') and self.next is not None:
+            if isinstance(self.next, dict):
+                _dict['next'] = self.next
+            else:
+                _dict['next'] = self.next.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this PredefinedTemplatesList object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'PredefinedTemplatesList') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'PredefinedTemplatesList') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -11633,6 +12172,8 @@ class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
 
         GET = 'get'
         POST = 'post'
+        PUT = 'put'
+        PATCH = 'patch'
 
 
 class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes):
@@ -15179,6 +15720,87 @@ class TemplatesPager:
         Returns all results by invoking get_next() repeatedly
         until all pages of results have been retrieved.
         :return: A List[dict], where each element is a dict that represents an instance of Template.
+        :rtype: List[dict]
+        """
+        results = []
+        while self.has_next():
+            next_page = self.get_next()
+            results.extend(next_page)
+        return results
+
+
+class PreDefinedTemplatesPager:
+    """
+    PreDefinedTemplatesPager can be used to simplify the use of the "list_pre_defined_templates" method.
+    """
+
+    def __init__(
+        self,
+        *,
+        client: EventNotificationsV1,
+        instance_id: str,
+        source: str,
+        type: str,
+        limit: int = None,
+        search: str = None,
+    ) -> None:
+        """
+        Initialize a PreDefinedTemplatesPager object.
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str source: Source type.
+        :param str type: Destination type.
+        :param int limit: (optional) Page limit for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        """
+        self._has_next = True
+        self._client = client
+        self._page_context = {'next': None}
+        self._instance_id = instance_id
+        self._source = source
+        self._type = type
+        self._limit = limit
+        self._search = search
+
+    def has_next(self) -> bool:
+        """
+        Returns true if there are potentially more results to be retrieved.
+        """
+        return self._has_next
+
+    def get_next(self) -> List[dict]:
+        """
+        Returns the next page of results.
+        :return: A List[dict], where each element is a dict that represents an instance of PredefinedTemplate.
+        :rtype: List[dict]
+        """
+        if not self.has_next():
+            raise StopIteration(message='No more results available')
+
+        result = self._client.list_pre_defined_templates(
+            instance_id=self._instance_id,
+            source=self._source,
+            type=self._type,
+            limit=self._limit,
+            search=self._search,
+            offset=self._page_context.get('next'),
+        ).get_result()
+
+        next = None
+        next_page_link = result.get('next')
+        if next_page_link is not None:
+            next = get_query_param(next_page_link.get('href'), 'offset')
+        self._page_context['next'] = next
+        if next is None:
+            self._has_next = False
+
+        return result.get('templates')
+
+    def get_all(self) -> List[dict]:
+        """
+        Returns all results by invoking get_next() repeatedly
+        until all pages of results have been retrieved.
+        :return: A List[dict], where each element is a dict that represents an instance of PredefinedTemplate.
         :rtype: List[dict]
         """
         results = []
