@@ -123,6 +123,8 @@ SDK Methods to consume
   - [Get Template](#get-template)
   - [Update Template](#update-template)
   - [Delete Template](#delete-template)
+  - [List Predefined Templates](#list-predefined-templates)
+  - [Get Predefined Template](#get-predefined-template)
 - [Push Destination APIs](#push-destination-apis)
   - [Create Destination tag subscription](#create-destination-tag-subscription)
   - [List Destination tag subscription](#list-destination-tag-subscription)
@@ -580,6 +582,28 @@ get_template_response = event_notifications_service.get_template(
     instance_id=<instance-id>,
     id=<template_id>
 ).get_result()
+```
+
+### List Predefined Templates
+
+```py
+list_predefined_templates_response = self.event_notifications_service.list_pre_defined_templates(
+    instance_id=<instance-id>,
+    source=<source-type>,
+    type=<destination-type>,
+)
+list_predefined_templates = list_predefined_templates_response.get_result()
+```
+
+### Get Predefined Template
+
+```py
+get_predefined_template_response = self.event_notifications_service.get_pre_defined_template(
+    instance_id=<instance-id>,
+    id=<template_id>,
+)
+
+get_predefined_template = get_predefined_template_response.get_result()
 ```
 
 ### Update Template

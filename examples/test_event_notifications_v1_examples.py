@@ -2529,6 +2529,45 @@ class TestEventNotificationsV1Examples:
             pytest.fail(str(e))
 
     @needscredentials
+    def test_list_predefined_templates_example(self):
+        try:
+            print("\n test_list_predefined_templates_example() result:")
+            # begin-list_predefined_templates_example
+            source = 'logs'
+            type = 'slack.notification'
+            list_predefined_templates_response = self.event_notifications_service.list_pre_defined_templates(
+                instance_id,
+                source,
+                type,
+            )
+            list_predefined_templates_response = list_predefined_templates_response.get_result()
+            print(json.dumps(list_predefined_templates_response, indent=2))
+            # end-list_predefined_templates_example
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_predefined_template_example(self):
+        try:
+            print("\n test_list_predefined_templates_example() result:")
+            # begin-get_predefined_template_example
+            template_id = '0cacb9a0-d43a-4042-920d-d4a3f7d4cbd5'
+
+            get_predefined_template_response = self.event_notifications_service.get_pre_defined_template(
+                instance_id,
+                id=template_id,
+            )
+
+            assert get_predefined_template_response.get_status_code() == 200
+            get_predefined_template_response = get_predefined_template_response.get_result()
+            print(json.dumps(get_predefined_template_response, indent=2))
+            # end-get_predefined_template_example
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
     def test_delete_smtp_user_example(self):
         try:
             print("\n test_delete_smtp_user_example() result:")

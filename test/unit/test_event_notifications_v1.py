@@ -2141,6 +2141,233 @@ class TestListTemplates:
         assert len(all_results) == 2
 
 
+class TestListPreDefinedTemplates:
+    """
+    Test Class for list_pre_defined_templates
+    """
+
+    @responses.activate
+    def test_list_pre_defined_templates_all_params(self):
+        """
+        list_pre_defined_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        source = 'testString'
+        type = 'testString'
+        limit = 1
+        offset = 0
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_pre_defined_templates(
+            instance_id,
+            source,
+            type,
+            limit=limit,
+            offset=offset,
+            search=search,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'source={}'.format(source) in query_string
+        assert 'type={}'.format(type) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_pre_defined_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_pre_defined_templates_all_params.
+        _service.enable_retries()
+        self.test_list_pre_defined_templates_all_params()
+
+        # Disable retries and run test_list_pre_defined_templates_all_params.
+        _service.disable_retries()
+        self.test_list_pre_defined_templates_all_params()
+
+    @responses.activate
+    def test_list_pre_defined_templates_required_params(self):
+        """
+        test_list_pre_defined_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        source = 'testString'
+        type = 'testString'
+
+        # Invoke method
+        response = _service.list_pre_defined_templates(
+            instance_id,
+            source,
+            type,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'source={}'.format(source) in query_string
+        assert 'type={}'.format(type) in query_string
+
+    def test_list_pre_defined_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_pre_defined_templates_required_params.
+        _service.enable_retries()
+        self.test_list_pre_defined_templates_required_params()
+
+        # Disable retries and run test_list_pre_defined_templates_required_params.
+        _service.disable_retries()
+        self.test_list_pre_defined_templates_required_params()
+
+    @responses.activate
+    def test_list_pre_defined_templates_value_error(self):
+        """
+        test_list_pre_defined_templates_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        source = 'testString'
+        type = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "source": source,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_pre_defined_templates(**req_copy)
+
+    def test_list_pre_defined_templates_value_error_with_retries(self):
+        # Enable retries and run test_list_pre_defined_templates_value_error.
+        _service.enable_retries()
+        self.test_list_pre_defined_templates_value_error()
+
+        # Disable retries and run test_list_pre_defined_templates_value_error.
+        _service.disable_retries()
+        self.test_list_pre_defined_templates_value_error()
+
+    @responses.activate
+    def test_list_pre_defined_templates_with_pager_get_next(self):
+        """
+        test_list_pre_defined_templates_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = PreDefinedTemplatesPager(
+            client=_service,
+            instance_id='testString',
+            source='testString',
+            type='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_pre_defined_templates_with_pager_get_all(self):
+        """
+        test_list_pre_defined_templates_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = PreDefinedTemplatesPager(
+            client=_service,
+            instance_id='testString',
+            source='testString',
+            type='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
+
+
 class TestGetTemplate:
     """
     Test Class for get_template
@@ -2416,6 +2643,91 @@ class TestDeleteTemplate:
         # Disable retries and run test_delete_template_value_error.
         _service.disable_retries()
         self.test_delete_template_value_error()
+
+
+class TestGetPreDefinedTemplate:
+    """
+    Test Class for get_pre_defined_template
+    """
+
+    @responses.activate
+    def test_get_pre_defined_template_all_params(self):
+        """
+        get_pre_defined_template()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "source": "source", "updated_at": "2019-01-01T12:00:00.000Z", "params": {"body": "body"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_pre_defined_template(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_pre_defined_template_all_params_with_retries(self):
+        # Enable retries and run test_get_pre_defined_template_all_params.
+        _service.enable_retries()
+        self.test_get_pre_defined_template_all_params()
+
+        # Disable retries and run test_get_pre_defined_template_all_params.
+        _service.disable_retries()
+        self.test_get_pre_defined_template_all_params()
+
+    @responses.activate
+    def test_get_pre_defined_template_value_error(self):
+        """
+        test_get_pre_defined_template_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates/testString')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "type", "source": "source", "updated_at": "2019-01-01T12:00:00.000Z", "params": {"body": "body"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_pre_defined_template(**req_copy)
+
+    def test_get_pre_defined_template_value_error_with_retries(self):
+        # Enable retries and run test_get_pre_defined_template_value_error.
+        _service.enable_retries()
+        self.test_get_pre_defined_template_value_error()
+
+        # Disable retries and run test_get_pre_defined_template_value_error.
+        _service.disable_retries()
+        self.test_get_pre_defined_template_value_error()
 
 
 # endregion
@@ -7095,6 +7407,51 @@ class TestModel_EventScheduleFilterAttributes:
         assert event_schedule_filter_attributes_model_json2 == event_schedule_filter_attributes_model_json
 
 
+class TestModel_GetPredefinedTemplate:
+    """
+    Test Class for GetPredefinedTemplate
+    """
+
+    def test_get_predefined_template_serialization(self):
+        """
+        Test serialization/deserialization for GetPredefinedTemplate
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        predefined_template_config_model = {}  # PredefinedTemplateConfig
+        predefined_template_config_model['body'] = (
+            'OndoaXRlX2NoZWNrX21hcms6ICpkZXRlY3Qtc2VjcmV0cyogc3VjY2Vzc2Z1bCBpbiB0YXNrIF9jb2RlLWRldGVjdC1zZWNyZXRzXw=='
+        )
+
+        # Construct a json representation of a GetPredefinedTemplate model
+        get_predefined_template_model_json = {}
+        get_predefined_template_model_json['id'] = 'testString'
+        get_predefined_template_model_json['name'] = 'testString'
+        get_predefined_template_model_json['description'] = 'testString'
+        get_predefined_template_model_json['type'] = 'testString'
+        get_predefined_template_model_json['source'] = 'testString'
+        get_predefined_template_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+        get_predefined_template_model_json['params'] = predefined_template_config_model
+
+        # Construct a model instance of GetPredefinedTemplate by calling from_dict on the json representation
+        get_predefined_template_model = GetPredefinedTemplate.from_dict(get_predefined_template_model_json)
+        assert get_predefined_template_model != False
+
+        # Construct a model instance of GetPredefinedTemplate by calling from_dict on the json representation
+        get_predefined_template_model_dict = GetPredefinedTemplate.from_dict(
+            get_predefined_template_model_json
+        ).__dict__
+        get_predefined_template_model2 = GetPredefinedTemplate(**get_predefined_template_model_dict)
+
+        # Verify the model instances are equivalent
+        assert get_predefined_template_model == get_predefined_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        get_predefined_template_model_json2 = get_predefined_template_model.to_dict()
+        assert get_predefined_template_model_json2 == get_predefined_template_model_json
+
+
 class TestModel_Histrogram:
     """
     Test Class for Histrogram
@@ -7600,6 +7957,124 @@ class TestModel_PageHrefResponse:
         # Convert model instance back to dict and verify no loss of data
         page_href_response_model_json2 = page_href_response_model.to_dict()
         assert page_href_response_model_json2 == page_href_response_model_json
+
+
+class TestModel_PredefinedTemplate:
+    """
+    Test Class for PredefinedTemplate
+    """
+
+    def test_predefined_template_serialization(self):
+        """
+        Test serialization/deserialization for PredefinedTemplate
+        """
+
+        # Construct a json representation of a PredefinedTemplate model
+        predefined_template_model_json = {}
+        predefined_template_model_json['id'] = 'testString'
+        predefined_template_model_json['name'] = 'testString'
+        predefined_template_model_json['description'] = 'testString'
+        predefined_template_model_json['source'] = 'testString'
+        predefined_template_model_json['type'] = 'testString'
+        predefined_template_model_json['updated_at'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of PredefinedTemplate by calling from_dict on the json representation
+        predefined_template_model = PredefinedTemplate.from_dict(predefined_template_model_json)
+        assert predefined_template_model != False
+
+        # Construct a model instance of PredefinedTemplate by calling from_dict on the json representation
+        predefined_template_model_dict = PredefinedTemplate.from_dict(predefined_template_model_json).__dict__
+        predefined_template_model2 = PredefinedTemplate(**predefined_template_model_dict)
+
+        # Verify the model instances are equivalent
+        assert predefined_template_model == predefined_template_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        predefined_template_model_json2 = predefined_template_model.to_dict()
+        assert predefined_template_model_json2 == predefined_template_model_json
+
+
+class TestModel_PredefinedTemplateConfig:
+    """
+    Test Class for PredefinedTemplateConfig
+    """
+
+    def test_predefined_template_config_serialization(self):
+        """
+        Test serialization/deserialization for PredefinedTemplateConfig
+        """
+
+        # Construct a json representation of a PredefinedTemplateConfig model
+        predefined_template_config_model_json = {}
+        predefined_template_config_model_json['body'] = 'testString'
+
+        # Construct a model instance of PredefinedTemplateConfig by calling from_dict on the json representation
+        predefined_template_config_model = PredefinedTemplateConfig.from_dict(predefined_template_config_model_json)
+        assert predefined_template_config_model != False
+
+        # Construct a model instance of PredefinedTemplateConfig by calling from_dict on the json representation
+        predefined_template_config_model_dict = PredefinedTemplateConfig.from_dict(
+            predefined_template_config_model_json
+        ).__dict__
+        predefined_template_config_model2 = PredefinedTemplateConfig(**predefined_template_config_model_dict)
+
+        # Verify the model instances are equivalent
+        assert predefined_template_config_model == predefined_template_config_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        predefined_template_config_model_json2 = predefined_template_config_model.to_dict()
+        assert predefined_template_config_model_json2 == predefined_template_config_model_json
+
+
+class TestModel_PredefinedTemplatesList:
+    """
+    Test Class for PredefinedTemplatesList
+    """
+
+    def test_predefined_templates_list_serialization(self):
+        """
+        Test serialization/deserialization for PredefinedTemplatesList
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        predefined_template_model = {}  # PredefinedTemplate
+        predefined_template_model['id'] = '35b9614f-2bc0-440c-a94f-15857aeb23e8'
+        predefined_template_model['name'] = 'predefined template1'
+        predefined_template_model['description'] = 'pre-defined template for slack from toolchain'
+        predefined_template_model['source'] = 'toolchain'
+        predefined_template_model['type'] = 'slack'
+        predefined_template_model['updated_at'] = '2025-12-12T16:48:40.664000Z'
+
+        page_href_response_model = {}  # PageHrefResponse
+        page_href_response_model['href'] = 'testString'
+
+        # Construct a json representation of a PredefinedTemplatesList model
+        predefined_templates_list_model_json = {}
+        predefined_templates_list_model_json['total_count'] = 38
+        predefined_templates_list_model_json['offset'] = 38
+        predefined_templates_list_model_json['limit'] = 38
+        predefined_templates_list_model_json['templates'] = [predefined_template_model]
+        predefined_templates_list_model_json['first'] = page_href_response_model
+        predefined_templates_list_model_json['previous'] = page_href_response_model
+        predefined_templates_list_model_json['next'] = page_href_response_model
+
+        # Construct a model instance of PredefinedTemplatesList by calling from_dict on the json representation
+        predefined_templates_list_model = PredefinedTemplatesList.from_dict(predefined_templates_list_model_json)
+        assert predefined_templates_list_model != False
+
+        # Construct a model instance of PredefinedTemplatesList by calling from_dict on the json representation
+        predefined_templates_list_model_dict = PredefinedTemplatesList.from_dict(
+            predefined_templates_list_model_json
+        ).__dict__
+        predefined_templates_list_model2 = PredefinedTemplatesList(**predefined_templates_list_model_dict)
+
+        # Verify the model instances are equivalent
+        assert predefined_templates_list_model == predefined_templates_list_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        predefined_templates_list_model_json2 = predefined_templates_list_model.to_dict()
+        assert predefined_templates_list_model_json2 == predefined_templates_list_model_json
 
 
 class TestModel_Rules:

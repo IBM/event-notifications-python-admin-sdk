@@ -3697,6 +3697,35 @@ class TestEventNotificationsV1:
         assert smtp_user.description == description
 
     @needscredentials
+    def test_list_predefined_templates(self):
+
+        source = 'logs'
+        type = 'slack.notification'
+        list_predefined_templates_response = self.event_notifications_service.list_pre_defined_templates(
+            instance_id,
+            source,
+            type,
+        )
+
+        assert list_predefined_templates_response.get_status_code() == 200
+        list_predefined_templates_response = list_predefined_templates_response.get_result()
+        assert list_predefined_templates_response is not None
+
+    @needscredentials
+    def test_get_predefined_template(self):
+
+        template_id = '0cacb9a0-d43a-4042-920d-d4a3f7d4cbd5'
+
+        get_predefined_template_response = self.event_notifications_service.get_pre_defined_template(
+            instance_id,
+            id=template_id,
+        )
+
+        assert get_predefined_template_response.get_status_code() == 200
+        get_predefined_template_response = get_predefined_template_response.get_result()
+        assert get_predefined_template_response is not None
+
+    @needscredentials
     def test_delete_smtp_user(self):
         for id in [
             smtp_user_id,
