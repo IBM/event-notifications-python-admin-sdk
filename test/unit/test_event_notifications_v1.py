@@ -10597,6 +10597,67 @@ class TestModel_DestinationConfigOneOfWebhookDestinationConfig:
         )
 
 
+class TestModel_SubscriptionAttributesCodeEngineAttributesResponse:
+    """
+    Test Class for SubscriptionAttributesCodeEngineAttributesResponse
+    """
+
+    def test_subscription_attributes_code_engine_attributes_response_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionAttributesCodeEngineAttributesResponse
+        """
+
+        # Construct a json representation of a SubscriptionAttributesCodeEngineAttributesResponse model
+        subscription_attributes_code_engine_attributes_response_model_json = {}
+        subscription_attributes_code_engine_attributes_response_model_json['template_id_notification'] = 'testString'
+        subscription_attributes_code_engine_attributes_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of SubscriptionAttributesCodeEngineAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_code_engine_attributes_response_model = (
+            SubscriptionAttributesCodeEngineAttributesResponse.from_dict(
+                subscription_attributes_code_engine_attributes_response_model_json
+            )
+        )
+        assert subscription_attributes_code_engine_attributes_response_model != False
+
+        # Construct a model instance of SubscriptionAttributesCodeEngineAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_code_engine_attributes_response_model_dict = (
+            SubscriptionAttributesCodeEngineAttributesResponse.from_dict(
+                subscription_attributes_code_engine_attributes_response_model_json
+            ).__dict__
+        )
+        subscription_attributes_code_engine_attributes_response_model2 = (
+            SubscriptionAttributesCodeEngineAttributesResponse(
+                **subscription_attributes_code_engine_attributes_response_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_attributes_code_engine_attributes_response_model
+            == subscription_attributes_code_engine_attributes_response_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_attributes_code_engine_attributes_response_model_json2 = (
+            subscription_attributes_code_engine_attributes_response_model.to_dict()
+        )
+        assert (
+            subscription_attributes_code_engine_attributes_response_model_json2
+            == subscription_attributes_code_engine_attributes_response_model_json
+        )
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_code_engine_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_code_engine_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_code_engine_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_code_engine_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
+
 class TestModel_SubscriptionAttributesCustomEmailAttributesResponse:
     """
     Test Class for SubscriptionAttributesCustomEmailAttributesResponse
@@ -11291,6 +11352,54 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse:
         assert actual_dict == expected_dict
 
 
+class TestModel_SubscriptionCreateAttributesCodeEngineAttributes:
+    """
+    Test Class for SubscriptionCreateAttributesCodeEngineAttributes
+    """
+
+    def test_subscription_create_attributes_code_engine_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesCodeEngineAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesCodeEngineAttributes model
+        subscription_create_attributes_code_engine_attributes_model_json = {}
+        subscription_create_attributes_code_engine_attributes_model_json['template_id_notification'] = 'testString'
+
+        # Construct a model instance of SubscriptionCreateAttributesCodeEngineAttributes by calling from_dict on the json representation
+        subscription_create_attributes_code_engine_attributes_model = (
+            SubscriptionCreateAttributesCodeEngineAttributes.from_dict(
+                subscription_create_attributes_code_engine_attributes_model_json
+            )
+        )
+        assert subscription_create_attributes_code_engine_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesCodeEngineAttributes by calling from_dict on the json representation
+        subscription_create_attributes_code_engine_attributes_model_dict = (
+            SubscriptionCreateAttributesCodeEngineAttributes.from_dict(
+                subscription_create_attributes_code_engine_attributes_model_json
+            ).__dict__
+        )
+        subscription_create_attributes_code_engine_attributes_model2 = SubscriptionCreateAttributesCodeEngineAttributes(
+            **subscription_create_attributes_code_engine_attributes_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_create_attributes_code_engine_attributes_model
+            == subscription_create_attributes_code_engine_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_code_engine_attributes_model_json2 = (
+            subscription_create_attributes_code_engine_attributes_model.to_dict()
+        )
+        assert (
+            subscription_create_attributes_code_engine_attributes_model_json2
+            == subscription_create_attributes_code_engine_attributes_model_json
+        )
+
+
 class TestModel_SubscriptionCreateAttributesCustomEmailAttributes:
     """
     Test Class for SubscriptionCreateAttributesCustomEmailAttributes
@@ -11831,6 +11940,54 @@ class TestModel_SubscriptionCreateAttributesWebhookAttributes:
         assert (
             subscription_create_attributes_webhook_attributes_model_json2
             == subscription_create_attributes_webhook_attributes_model_json
+        )
+
+
+class TestModel_SubscriptionUpdateAttributesCodeEngineAttributes:
+    """
+    Test Class for SubscriptionUpdateAttributesCodeEngineAttributes
+    """
+
+    def test_subscription_update_attributes_code_engine_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesCodeEngineAttributes
+        """
+
+        # Construct a json representation of a SubscriptionUpdateAttributesCodeEngineAttributes model
+        subscription_update_attributes_code_engine_attributes_model_json = {}
+        subscription_update_attributes_code_engine_attributes_model_json['template_id_notification'] = 'testString'
+
+        # Construct a model instance of SubscriptionUpdateAttributesCodeEngineAttributes by calling from_dict on the json representation
+        subscription_update_attributes_code_engine_attributes_model = (
+            SubscriptionUpdateAttributesCodeEngineAttributes.from_dict(
+                subscription_update_attributes_code_engine_attributes_model_json
+            )
+        )
+        assert subscription_update_attributes_code_engine_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesCodeEngineAttributes by calling from_dict on the json representation
+        subscription_update_attributes_code_engine_attributes_model_dict = (
+            SubscriptionUpdateAttributesCodeEngineAttributes.from_dict(
+                subscription_update_attributes_code_engine_attributes_model_json
+            ).__dict__
+        )
+        subscription_update_attributes_code_engine_attributes_model2 = SubscriptionUpdateAttributesCodeEngineAttributes(
+            **subscription_update_attributes_code_engine_attributes_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_update_attributes_code_engine_attributes_model
+            == subscription_update_attributes_code_engine_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_code_engine_attributes_model_json2 = (
+            subscription_update_attributes_code_engine_attributes_model.to_dict()
+        )
+        assert (
+            subscription_update_attributes_code_engine_attributes_model_json2
+            == subscription_update_attributes_code_engine_attributes_model_json
         )
 
 
@@ -12424,6 +12581,104 @@ class TestModel_SubscriptionUpdateAttributesWebhookAttributes:
         assert (
             subscription_update_attributes_webhook_attributes_model_json2
             == subscription_update_attributes_webhook_attributes_model_json
+        )
+
+
+class TestModel_TemplateConfigOneOfCodeEngineApplicationTemplateConfig:
+    """
+    Test Class for TemplateConfigOneOfCodeEngineApplicationTemplateConfig
+    """
+
+    def test_template_config_one_of_code_engine_application_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfigOneOfCodeEngineApplicationTemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfigOneOfCodeEngineApplicationTemplateConfig model
+        template_config_one_of_code_engine_application_template_config_model_json = {}
+        template_config_one_of_code_engine_application_template_config_model_json['body'] = 'testString'
+
+        # Construct a model instance of TemplateConfigOneOfCodeEngineApplicationTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_code_engine_application_template_config_model = (
+            TemplateConfigOneOfCodeEngineApplicationTemplateConfig.from_dict(
+                template_config_one_of_code_engine_application_template_config_model_json
+            )
+        )
+        assert template_config_one_of_code_engine_application_template_config_model != False
+
+        # Construct a model instance of TemplateConfigOneOfCodeEngineApplicationTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_code_engine_application_template_config_model_dict = (
+            TemplateConfigOneOfCodeEngineApplicationTemplateConfig.from_dict(
+                template_config_one_of_code_engine_application_template_config_model_json
+            ).__dict__
+        )
+        template_config_one_of_code_engine_application_template_config_model2 = (
+            TemplateConfigOneOfCodeEngineApplicationTemplateConfig(
+                **template_config_one_of_code_engine_application_template_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            template_config_one_of_code_engine_application_template_config_model
+            == template_config_one_of_code_engine_application_template_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_one_of_code_engine_application_template_config_model_json2 = (
+            template_config_one_of_code_engine_application_template_config_model.to_dict()
+        )
+        assert (
+            template_config_one_of_code_engine_application_template_config_model_json2
+            == template_config_one_of_code_engine_application_template_config_model_json
+        )
+
+
+class TestModel_TemplateConfigOneOfCodeEngineJobTemplateConfig:
+    """
+    Test Class for TemplateConfigOneOfCodeEngineJobTemplateConfig
+    """
+
+    def test_template_config_one_of_code_engine_job_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfigOneOfCodeEngineJobTemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfigOneOfCodeEngineJobTemplateConfig model
+        template_config_one_of_code_engine_job_template_config_model_json = {}
+        template_config_one_of_code_engine_job_template_config_model_json['body'] = 'testString'
+
+        # Construct a model instance of TemplateConfigOneOfCodeEngineJobTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_code_engine_job_template_config_model = (
+            TemplateConfigOneOfCodeEngineJobTemplateConfig.from_dict(
+                template_config_one_of_code_engine_job_template_config_model_json
+            )
+        )
+        assert template_config_one_of_code_engine_job_template_config_model != False
+
+        # Construct a model instance of TemplateConfigOneOfCodeEngineJobTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_code_engine_job_template_config_model_dict = (
+            TemplateConfigOneOfCodeEngineJobTemplateConfig.from_dict(
+                template_config_one_of_code_engine_job_template_config_model_json
+            ).__dict__
+        )
+        template_config_one_of_code_engine_job_template_config_model2 = TemplateConfigOneOfCodeEngineJobTemplateConfig(
+            **template_config_one_of_code_engine_job_template_config_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            template_config_one_of_code_engine_job_template_config_model
+            == template_config_one_of_code_engine_job_template_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_one_of_code_engine_job_template_config_model_json2 = (
+            template_config_one_of_code_engine_job_template_config_model.to_dict()
+        )
+        assert (
+            template_config_one_of_code_engine_job_template_config_model_json2
+            == template_config_one_of_code_engine_job_template_config_model_json
         )
 
 

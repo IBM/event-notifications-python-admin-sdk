@@ -8907,6 +8907,7 @@ class SubscriptionAttributes:
                     'SubscriptionAttributesSlackDirectMessageAttributesResponse',
                     'SubscriptionAttributesServiceNowAttributesResponse',
                     'SubscriptionAttributesEventStreamsAttributesResponse',
+                    'SubscriptionAttributesCodeEngineAttributesResponse',
                 ]
             )
         )
@@ -8940,6 +8941,7 @@ class SubscriptionCreateAttributes:
                     'SubscriptionCreateAttributesSlackDirectMessageAttributes',
                     'SubscriptionCreateAttributesServiceNowAttributes',
                     'SubscriptionCreateAttributesEventstreamsAttributes',
+                    'SubscriptionCreateAttributesCodeEngineAttributes',
                 ]
             )
         )
@@ -9262,6 +9264,7 @@ class SubscriptionUpdateAttributes:
                     'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes',
                     'SubscriptionUpdateAttributesServiceNowAttributes',
                     'SubscriptionUpdateAttributesEventstreamsAttributes',
+                    'SubscriptionUpdateAttributesCodeEngineAttributes',
                 ]
             )
         )
@@ -9637,6 +9640,8 @@ class TemplateConfigOneOf:
                     'TemplateConfigOneOfWebhookTemplateConfig',
                     'TemplateConfigOneOfPagerdutyTemplateConfig',
                     'TemplateConfigOneOfEventStreamsTemplateConfig',
+                    'TemplateConfigOneOfCodeEngineApplicationTemplateConfig',
+                    'TemplateConfigOneOfCodeEngineJobTemplateConfig',
                 ]
             )
         )
@@ -12176,6 +12181,98 @@ class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
         PATCH = 'patch'
 
 
+class SubscriptionAttributesCodeEngineAttributesResponse(SubscriptionAttributes):
+    """
+    The attributes for a Code Engine response.
+
+    :attr str template_id_notification: (optional) Code Engine template id.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['template_id_notification'])
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+        **kwargs,
+    ) -> None:
+        """
+        Initialize a SubscriptionAttributesCodeEngineAttributesResponse object.
+
+        :param str template_id_notification: (optional) Code Engine template id.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesCodeEngineAttributesResponse':
+        """Initialize a SubscriptionAttributesCodeEngineAttributesResponse object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionAttributesCodeEngineAttributesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesCodeEngineAttributesResponse"""
+        _dict = {}
+
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesCodeEngineAttributesResponse"""
+        for _key in [
+            k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties
+        ]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in SubscriptionAttributesCodeEngineAttributesResponse._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionAttributesCodeEngineAttributesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionAttributesCodeEngineAttributesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionAttributesCodeEngineAttributesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes):
     """
     The attributes reponse for an email destination.
@@ -13465,6 +13562,65 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
         return not self == other
 
 
+class SubscriptionCreateAttributesCodeEngineAttributes(SubscriptionCreateAttributes):
+    """
+    The attributes for a Code Engine subscription.
+
+    :attr str template_id_notification: (optional) code engine template id.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionCreateAttributesCodeEngineAttributes object.
+
+        :param str template_id_notification: (optional) code engine template id.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesCodeEngineAttributes':
+        """Initialize a SubscriptionCreateAttributesCodeEngineAttributes object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionCreateAttributesCodeEngineAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionCreateAttributesCodeEngineAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionCreateAttributesCodeEngineAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionCreateAttributesCodeEngineAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttributes):
     """
     The attributes for an email notification.
@@ -14293,6 +14449,65 @@ class SubscriptionCreateAttributesWebhookAttributes(SubscriptionCreateAttributes
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionCreateAttributesWebhookAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SubscriptionUpdateAttributesCodeEngineAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for a Code Engine subscription.
+
+    :attr str template_id_notification: (optional) code engine template id.
+    """
+
+    def __init__(
+        self,
+        *,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesCodeEngineAttributes object.
+
+        :param str template_id_notification: (optional) code engine template id.
+        """
+        # pylint: disable=super-init-not-called
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesCodeEngineAttributes':
+        """Initialize a SubscriptionUpdateAttributesCodeEngineAttributes object from a json dictionary."""
+        args = {}
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesCodeEngineAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesCodeEngineAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesCodeEngineAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesCodeEngineAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -15188,6 +15403,130 @@ class SubscriptionUpdateAttributesWebhookAttributes(SubscriptionUpdateAttributes
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionUpdateAttributesWebhookAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateConfigOneOfCodeEngineApplicationTemplateConfig(TemplateConfigOneOf):
+    """
+    Payload describing a code engine application template configuration.
+
+    :attr str body: Template body(Base64 encoded).
+    """
+
+    def __init__(
+        self,
+        body: str,
+    ) -> None:
+        """
+        Initialize a TemplateConfigOneOfCodeEngineApplicationTemplateConfig object.
+
+        :param str body: Template body(Base64 encoded).
+        """
+        # pylint: disable=super-init-not-called
+        self.body = body
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateConfigOneOfCodeEngineApplicationTemplateConfig':
+        """Initialize a TemplateConfigOneOfCodeEngineApplicationTemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError(
+                'Required property \'body\' not present in TemplateConfigOneOfCodeEngineApplicationTemplateConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateConfigOneOfCodeEngineApplicationTemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateConfigOneOfCodeEngineApplicationTemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateConfigOneOfCodeEngineApplicationTemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateConfigOneOfCodeEngineApplicationTemplateConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateConfigOneOfCodeEngineJobTemplateConfig(TemplateConfigOneOf):
+    """
+    Payload describing a code engine Job template configuration.
+
+    :attr str body: Template body(Base64 encoded).
+    """
+
+    def __init__(
+        self,
+        body: str,
+    ) -> None:
+        """
+        Initialize a TemplateConfigOneOfCodeEngineJobTemplateConfig object.
+
+        :param str body: Template body(Base64 encoded).
+        """
+        # pylint: disable=super-init-not-called
+        self.body = body
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateConfigOneOfCodeEngineJobTemplateConfig':
+        """Initialize a TemplateConfigOneOfCodeEngineJobTemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError(
+                'Required property \'body\' not present in TemplateConfigOneOfCodeEngineJobTemplateConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateConfigOneOfCodeEngineJobTemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateConfigOneOfCodeEngineJobTemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateConfigOneOfCodeEngineJobTemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateConfigOneOfCodeEngineJobTemplateConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
