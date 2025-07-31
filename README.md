@@ -562,6 +562,24 @@ create_template_response = event_notifications_service.create_template(
 
 For Event Streams template supported template type value: event_streams.notification
 
+#### CodeEngine Template
+
+```py
+template_config_model = {
+    'body': 'base 64 encoded json body',
+}
+
+create_template_response = event_notifications_service.create_template(
+    instance_id=<instance-id>,
+    name=<template-name>,
+    type=<template-type>,
+    params=template_config_model,
+    description=<template-description>
+).get_result()
+```
+
+For Code Engine template supported template type values: ibmceapp.notification and ibmcejob.notification
+
 ### List Templates
 
 ```py
@@ -662,6 +680,24 @@ replace_template_response = event_notifications_service.replace_template(
 ).get_result()
 ```
 For Event Streams template supported template type value: event_streams.notification
+
+#### Update CodeEngine Template
+
+```py
+template_config_model = {
+    'body': 'base 64 encode json content',
+}
+
+replace_template_response = event_notifications_service.replace_template(
+    instance_id=<instance-id>,
+    id=<template_id>
+    name=<template_name>,
+    type=<template-type>,
+    description=<template-description>,
+    params=template_config_model
+).get_result()
+```
+For Code Engine template supported template type values: ibmceapp.notification and ibmcejob.notification
 
 ### Delete Template
 
@@ -1256,6 +1292,8 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_CRN` - Event Streams instance CRN
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_TOPIC` - Event Streams instance Topic name
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_ENDPOINT` - Event streams end point
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_APP_TEMPLATE_BODY` - base 64 encoded json body for Code Engine Application
+- `EVENT_NOTIFICATIONS_CODE_ENGINE_JOB_TEMPLATE_BODY` - base 64 encoded json body for Code Engine Job
 
 ## Questions
 

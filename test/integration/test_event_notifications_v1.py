@@ -117,6 +117,10 @@ event_streams_template_id = ""
 event_streams_crn = ""
 event_streams_topic = ""
 event_streams_endpoint = ""
+code_engine_app_template_id = ""
+code_engine_job_template_id = ""
+code_engine_app_template_body = ""
+code_engine_job_template_body = ""
 
 
 class TestEventNotificationsV1:
@@ -126,7 +130,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id, pagerduty_template_body, event_streams_template_body, event_streams_crn, event_streams_topic, event_streams_endpoint
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id, pagerduty_template_body, event_streams_template_body, event_streams_crn, event_streams_topic, event_streams_endpoint, code_engine_job_template_body, code_engine_app_template_body
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -173,6 +177,8 @@ class TestEventNotificationsV1:
             event_streams_crn = cls.config["EVENT_STREAMS_CRN"]
             event_streams_endpoint = cls.config["EVENT_STREAMS_ENDPOINT"]
             event_streams_topic = cls.config["EVENT_STREAMS_TOPIC"]
+            code_engine_job_template_body = cls.config["CODE_ENGINE_JOB_TEMPLATE_BODY"]
+            code_engine_app_template_body = cls.config["CODE_ENGINE_APP_TEMPLATE_BODY"]
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -202,6 +208,8 @@ class TestEventNotificationsV1:
             assert event_streams_crn is not None
             assert event_streams_endpoint is not None
             assert event_streams_topic is not None
+            assert code_engine_job_template_body is not None
+            assert code_engine_app_template_body is not None
 
         print("Setup complete.")
 
@@ -1178,7 +1186,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_create_template(self):
-        global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id
+        global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id, code_engine_app_template_id, code_engine_job_template_id
 
         template_config_model_json = {'body': template_body, 'subject': 'Hi this is invitation for invitation message'}
 
@@ -1355,6 +1363,67 @@ class TestEventNotificationsV1:
         assert template.type == typeval
 
         event_streams_template_id = template.id
+
+        code_engine_app_template_config_model_json = {'body': code_engine_app_template_body}
+
+        code_engine_app_template_config_model = TemplateConfigOneOfCodeEngineApplicationTemplateConfig.from_dict(
+            code_engine_app_template_config_model_json
+        )
+
+        name = "template_code_engine_app"
+        typeval = "ibmceapp.notification"
+        description = "code engine app template create"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=code_engine_app_template_config_model,
+            description=description,
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+        code_engine_app_template_id = template.id
+
+        code_engine_job_template_config_model_json = {'body': code_engine_job_template_body}
+
+        code_engine_job_template_config_model = TemplateConfigOneOfCodeEngineJobTemplateConfig.from_dict(
+            code_engine_job_template_config_model_json
+        )
+
+        name = "template_code_engine_job"
+        typeval = "ibmcejob.notification"
+        description = "code engine job template create"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=code_engine_job_template_config_model,
+            description=description,
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+
+        code_engine_job_template_id = template.id
 
     @needscredentials
     def test_list_destinations(self):
@@ -2161,6 +2230,60 @@ class TestEventNotificationsV1:
         assert template_response.get("type") == typeval
         assert template_response.get("id") == event_streams_template_id
 
+        code_engine_app_template_config_model_json = {'body': code_engine_app_template_body}
+
+        code_engine_app_template_config_model = TemplateConfigOneOfCodeEngineApplicationTemplateConfig.from_dict(
+            code_engine_app_template_config_model_json
+        )
+
+        name = "template_code_engine_app_update"
+        typeval = "ibmceapp.notification"
+        description = "code engine application template"
+
+        update_template_response = self.event_notifications_service.replace_template(
+            instance_id,
+            id=code_engine_app_template_id,
+            name=name,
+            description=description,
+            type=typeval,
+            params=code_engine_app_template_config_model,
+        )
+        template_response = update_template_response.get_result()
+        assert update_template_response.get_status_code() == 200
+
+        assert template_response is not None
+        assert template_response.get("name") == name
+        assert template_response.get("description") == description
+        assert template_response.get("type") == typeval
+        assert template_response.get("id") == code_engine_app_template_id
+
+        code_engine_job_template_config_model_json = {'body': code_engine_job_template_body}
+
+        code_engine_job_template_config_model = TemplateConfigOneOfCodeEngineJobTemplateConfig.from_dict(
+            code_engine_job_template_config_model_json
+        )
+
+        name = "template_code_engine_job_update_template"
+        typeval = "ibmceapp.notification"
+        description = "code engine job template template"
+
+        update_template_response = self.event_notifications_service.replace_template(
+            instance_id,
+            id=code_engine_job_template_id,
+            name=name,
+            description=description,
+            type=typeval,
+            params=code_engine_job_template_config_model,
+        )
+        template_response = update_template_response.get_result()
+        assert update_template_response.get_status_code() == 200
+
+        assert template_response is not None
+        assert template_response.get("name") == name
+        assert template_response.get("description") == description
+        assert template_response.get("type") == typeval
+        assert template_response.get("id") == code_engine_job_template_id
+
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
@@ -2448,9 +2571,7 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        subscription_create_attributes_model = {
-            "signing_enabled": False,
-        }
+        subscription_create_attributes_model = {'template_id_notification': code_engine_app_template_id}
 
         name = "subscription_code_engine"
         description = "Subscription for code engine"
@@ -2576,9 +2697,7 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        subscription_create_attributes_model = {
-            "signing_enabled": False,
-        }
+        subscription_create_attributes_model = {'template_id_notification': code_engine_job_template_id}
 
         name = "subscription_code_engine_job"
         description = "Subscription for code engine job"
@@ -3031,9 +3150,7 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        subscription_update_attributes_model = {
-            "signing_enabled": True,
-        }
+        subscription_update_attributes_model = {'template_id_notification': code_engine_app_template_id}
 
         name = "code_engine_sub_updated"
         description = "Update code engine subscription"
@@ -3161,9 +3278,7 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
-        subscription_update_attributes_model = {
-            "signing_enabled": True,
-        }
+        subscription_update_attributes_model = {'template_id_notification': code_engine_job_template_id}
 
         name = "code_engine_job_sub_updated"
         description = "Update code engine job subscription"
@@ -3843,6 +3958,8 @@ class TestEventNotificationsV1:
             webhook_template_id,
             pagerduty_template_id,
             event_streams_template_id,
+            code_engine_app_template_id,
+            code_engine_job_template_id,
         ]:
             delete_template_response = self.event_notifications_service.delete_template(instance_id, id)
         print(

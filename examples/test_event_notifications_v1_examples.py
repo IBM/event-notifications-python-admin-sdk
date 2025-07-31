@@ -119,6 +119,10 @@ event_streams_template_id = ""
 event_streams_crn = ""
 event_streams_topic = ""
 event_streams_endpoint = ""
+code_engine_app_template_id = ""
+code_engine_job_template_id = ""
+code_engine_app_template_body = ""
+code_engine_job_template_body = ""
 
 
 ##############################################################################
@@ -132,7 +136,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, event_streams_template_body
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, event_streams_template_body, code_engine_app_template_body, code_engine_job_template_body
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -178,6 +182,8 @@ class TestEventNotificationsV1Examples:
             event_streams_crn = cls.config["EVENT_STREAMS_CRN"]
             event_streams_endpoint = cls.config["EVENT_STREAMS_ENDPOINT"]
             event_streams_topic = cls.config["EVENT_STREAMS_TOPIC"]
+            code_engine_job_template_body = cls.config["CODE_ENGINE_JOB_TEMPLATE_BODY"]
+            code_engine_app_template_body = cls.config["CODE_ENGINE_APP_TEMPLATE_BODY"]
             assert event_streams_crn is not None
             assert event_streams_endpoint is not None
             assert event_streams_topic is not None
@@ -199,6 +205,8 @@ class TestEventNotificationsV1Examples:
             assert slack_channel_id is not None
             assert webhook_template_body is not None
             assert pagerduty_template_body is not None
+            assert code_engine_job_template_body is not None
+            assert code_engine_app_template_body is not None
 
         print("Setup complete.")
 
@@ -885,7 +893,7 @@ class TestEventNotificationsV1Examples:
         """
         create_template request example
         """
-        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id
+        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id, code_engine_app_template_id, code_engine_job_template_id
         try:
             print("\ncreate_template() result:")
             # begin-create_template
@@ -1015,6 +1023,50 @@ class TestEventNotificationsV1Examples:
             print(json.dumps(create_template_response, indent=2))
             template = TemplateResponse.from_dict(create_template_response)
             event_streams_template_id = template.id
+
+            code_engine_app_template_config_model_json = {'body': code_engine_app_template_body}
+
+            code_engine_app_template_config_model = TemplateConfigOneOfCodeEngineApplicationTemplateConfig.from_dict(
+                code_engine_app_template_config_model_json
+            )
+
+            name = "template_code_engine_app"
+            typeval = "ibmceapp.notification"
+            description = "code engine app template create"
+
+            create_template_response = self.event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=code_engine_app_template_config_model,
+                description=description,
+            )
+
+            template_response = create_template_response.get_result()
+            template = TemplateResponse.from_dict(template_response)
+            code_engine_app_template_id = template.id
+
+            code_engine_job_template_config_model_json = {'body': code_engine_job_template_body}
+
+            code_engine_job_template_config_model = TemplateConfigOneOfCodeEngineJobTemplateConfig.from_dict(
+                code_engine_job_template_config_model_json
+            )
+
+            name = "template_code_engine_job"
+            typeval = "ibmcejob.notification"
+            description = "code engine job template create"
+
+            create_template_response = self.event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=code_engine_job_template_config_model,
+                description=description,
+            )
+
+            template_response = create_template_response.get_result()
+            template = TemplateResponse.from_dict(template_response)
+            code_engine_job_template_id = template.id
 
             # end-create_template
 
@@ -1630,6 +1682,49 @@ class TestEventNotificationsV1Examples:
                 params=pagerduty_template_config_model,
             ).get_result()
 
+            print(json.dumps(replace_template_response, indent=2))
+
+            code_engine_app_template_config_model_json = {'body': code_engine_app_template_body}
+
+            code_engine_app_template_config_model = TemplateConfigOneOfCodeEngineApplicationTemplateConfig.from_dict(
+                code_engine_app_template_config_model_json
+            )
+
+            name = "template_code_engine_app_update"
+            typeval = "ibmceapp.notification"
+            description = "code engine application template"
+
+            update_template_response = self.event_notifications_service.replace_template(
+                instance_id,
+                id=code_engine_app_template_id,
+                name=name,
+                description=description,
+                type=typeval,
+                params=code_engine_app_template_config_model,
+            )
+            replace_template_response = update_template_response.get_result()
+            print(json.dumps(replace_template_response, indent=2))
+
+            code_engine_job_template_config_model_json = {'body': code_engine_job_template_body}
+
+            code_engine_job_template_config_model = TemplateConfigOneOfCodeEngineJobTemplateConfig.from_dict(
+                code_engine_job_template_config_model_json
+            )
+
+            name = "template_code_engine_app_update"
+            typeval = "ibmceapp.notification"
+            description = "code engine application template"
+
+            update_template_response = self.event_notifications_service.replace_template(
+                instance_id,
+                id=code_engine_job_template_id,
+                name=name,
+                description=description,
+                type=typeval,
+                params=code_engine_job_template_config_model,
+            )
+
+            replace_template_response = update_template_response.get_result()
             print(json.dumps(replace_template_response, indent=2))
 
             # end-replace_template
@@ -2705,6 +2800,8 @@ class TestEventNotificationsV1Examples:
             webhook_template_id,
             pagerduty_template_id,
             event_streams_template_id,
+            code_engine_app_template_id,
+            code_engine_job_template_id,
         ]:
             # begin-delete_template
             delete_template_response = event_notifications_service.delete_template(instance_id, id).get_result()
