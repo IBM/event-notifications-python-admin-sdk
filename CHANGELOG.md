@@ -1,3 +1,10 @@
+# [0.18.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.17.0...v0.18.0) (2025-07-31)
+
+
+### Features
+
+* support for code engine templates ([#74](https://github.com/IBM/event-notifications-python-admin-sdk/issues/74)) ([8d1faca](https://github.com/IBM/event-notifications-python-admin-sdk/commit/8d1facaa2bd0b17f6436d27d83d29f4577f8ac1d))
+
 # [0.17.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.16.0...v0.17.0) (2025-07-25)
 
 
