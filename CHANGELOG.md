@@ -1,3 +1,10 @@
+# [0.19.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.18.0...v0.19.0) (2025-09-04)
+
+
+### Features
+
+* adds test webhook destination suport ([#75](https://github.com/IBM/event-notifications-python-admin-sdk/issues/75)) ([96ade52](https://github.com/IBM/event-notifications-python-admin-sdk/commit/96ade5247027fc5f02595fbf2bd7edbc789ef2ab))
+
 # [0.18.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.17.0...v0.18.0) (2025-07-31)
 
 
