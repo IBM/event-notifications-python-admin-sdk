@@ -947,75 +947,6 @@ class EventNotificationsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
-    def list_pre_defined_templates(
-        self,
-        instance_id: str,
-        source: str,
-        type: str,
-        *,
-        limit: int = None,
-        offset: int = None,
-        search: str = None,
-        **kwargs,
-    ) -> DetailedResponse:
-        """
-        List all predefined templates.
-
-        List all predefined templates.
-
-        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
-               instance.
-        :param str source: Source type.
-        :param str type: Destination type.
-        :param int limit: (optional) Page limit for paginated results.
-        :param int offset: (optional) offset for paginated results.
-        :param str search: (optional) Search string for filtering results.
-        :param dict headers: A `dict` containing the request headers
-        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
-        :rtype: DetailedResponse with `dict` result representing a `PredefinedTemplatesList` object
-        """
-
-        if not instance_id:
-            raise ValueError('instance_id must be provided')
-        if not source:
-            raise ValueError('source must be provided')
-        if not type:
-            raise ValueError('type must be provided')
-        headers = {}
-        sdk_headers = get_sdk_headers(
-            service_name=self.DEFAULT_SERVICE_NAME,
-            service_version='V1',
-            operation_id='list_pre_defined_templates',
-        )
-        headers.update(sdk_headers)
-
-        params = {
-            'source': source,
-            'type': type,
-            'limit': limit,
-            'offset': offset,
-            'search': search,
-        }
-
-        if 'headers' in kwargs:
-            headers.update(kwargs.get('headers'))
-            del kwargs['headers']
-        headers['Accept'] = 'application/json'
-
-        path_param_keys = ['instance_id']
-        path_param_values = self.encode_path_vars(instance_id)
-        path_param_dict = dict(zip(path_param_keys, path_param_values))
-        url = '/v1/instances/{instance_id}/pre_defined_templates'.format(**path_param_dict)
-        request = self.prepare_request(
-            method='GET',
-            url=url,
-            headers=headers,
-            params=params,
-        )
-
-        response = self.send(request, **kwargs)
-        return response
-
     def get_template(
         self,
         instance_id: str,
@@ -1179,6 +1110,75 @@ class EventNotificationsV1(BaseService):
             method='DELETE',
             url=url,
             headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def list_pre_defined_templates(
+        self,
+        instance_id: str,
+        source: str,
+        type: str,
+        *,
+        limit: int = None,
+        offset: int = None,
+        search: str = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        List all predefined templates.
+
+        List all predefined templates.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str source: Source type.
+        :param str type: Destination type.
+        :param int limit: (optional) Page limit for paginated results.
+        :param int offset: (optional) offset for paginated results.
+        :param str search: (optional) Search string for filtering results.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `PredefinedTemplatesList` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not source:
+            raise ValueError('source must be provided')
+        if not type:
+            raise ValueError('type must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='list_pre_defined_templates',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'source': source,
+            'type': type,
+            'limit': limit,
+            'offset': offset,
+            'search': search,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/pre_defined_templates'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
         )
 
         response = self.send(request, **kwargs)
@@ -3249,6 +3249,59 @@ class EventNotificationsV1(BaseService):
         response = self.send(request, **kwargs)
         return response
 
+    #########################
+    # Get Notifications Status
+    #########################
+
+    def get_notifications_status(
+        self,
+        instance_id: str,
+        id: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get notification status.
+
+        Get notification status.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Get Notification Id.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `GetNotificationStatusResponse` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_notifications_status',
+        )
+        headers.update(sdk_headers)
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/notifications/{id}'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
 
 class GetMetricsEnums:
     """
@@ -4710,6 +4763,162 @@ class EventScheduleFilterAttributes:
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'EventScheduleFilterAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class GetNotificationStatusResponse:
+    """
+    Payload describing a notifications response.
+
+    :attr str status: status of the notification.
+    :attr GetNotificationStatusResponseDetails details: Payload describing a Status
+          Details.
+    """
+
+    def __init__(
+        self,
+        status: str,
+        details: 'GetNotificationStatusResponseDetails',
+    ) -> None:
+        """
+        Initialize a GetNotificationStatusResponse object.
+
+        :param str status: status of the notification.
+        :param GetNotificationStatusResponseDetails details: Payload describing a
+               Status Details.
+        """
+        self.status = status
+        self.details = details
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'GetNotificationStatusResponse':
+        """Initialize a GetNotificationStatusResponse object from a json dictionary."""
+        args = {}
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError('Required property \'status\' not present in GetNotificationStatusResponse JSON')
+        if 'details' in _dict:
+            args['details'] = GetNotificationStatusResponseDetails.from_dict(_dict.get('details'))
+        else:
+            raise ValueError('Required property \'details\' not present in GetNotificationStatusResponse JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a GetNotificationStatusResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        if hasattr(self, 'details') and self.details is not None:
+            if isinstance(self.details, dict):
+                _dict['details'] = self.details
+            else:
+                _dict['details'] = self.details.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this GetNotificationStatusResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'GetNotificationStatusResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'GetNotificationStatusResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class StatusEnum(str, Enum):
+        """
+        status of the notification.
+        """
+
+        SUCCESS = 'success'
+        FAILURE = 'failure'
+        INPROGRESS = 'inprogress'
+
+
+class GetNotificationStatusResponseDetails:
+    """
+    Payload describing a Status Details.
+
+    :attr int status_code: HTTP status code.
+    :attr str status_message: status message of the notification.
+    """
+
+    def __init__(
+        self,
+        status_code: int,
+        status_message: str,
+    ) -> None:
+        """
+        Initialize a GetNotificationStatusResponseDetails object.
+
+        :param int status_code: HTTP status code.
+        :param str status_message: status message of the notification.
+        """
+        self.status_code = status_code
+        self.status_message = status_message
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'GetNotificationStatusResponseDetails':
+        """Initialize a GetNotificationStatusResponseDetails object from a json dictionary."""
+        args = {}
+        if 'status_code' in _dict:
+            args['status_code'] = _dict.get('status_code')
+        else:
+            raise ValueError(
+                'Required property \'status_code\' not present in GetNotificationStatusResponseDetails JSON'
+            )
+        if 'status_message' in _dict:
+            args['status_message'] = _dict.get('status_message')
+        else:
+            raise ValueError(
+                'Required property \'status_message\' not present in GetNotificationStatusResponseDetails JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a GetNotificationStatusResponseDetails object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'status_code') and self.status_code is not None:
+            _dict['status_code'] = self.status_code
+        if hasattr(self, 'status_message') and self.status_message is not None:
+            _dict['status_message'] = self.status_message
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this GetNotificationStatusResponseDetails object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'GetNotificationStatusResponseDetails') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'GetNotificationStatusResponseDetails') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -9891,61 +10100,26 @@ class TemplateResponse:
 
 class TestDestinationResponse:
     """
-    Destination test object.
+    TestDestinationResponse.
 
-    :attr str status: test destiantion status.
     """
 
     def __init__(
         self,
-        status: str,
     ) -> None:
         """
         Initialize a TestDestinationResponse object.
 
-        :param str status: test destiantion status.
         """
-        self.status = status
-
-    @classmethod
-    def from_dict(cls, _dict: Dict) -> 'TestDestinationResponse':
-        """Initialize a TestDestinationResponse object from a json dictionary."""
-        args = {}
-        if 'status' in _dict:
-            args['status'] = _dict.get('status')
-        else:
-            raise ValueError('Required property \'status\' not present in TestDestinationResponse JSON')
-        return cls(**args)
-
-    @classmethod
-    def _from_dict(cls, _dict):
-        """Initialize a TestDestinationResponse object from a json dictionary."""
-        return cls.from_dict(_dict)
-
-    def to_dict(self) -> Dict:
-        """Return a json dictionary representing this model."""
-        _dict = {}
-        if hasattr(self, 'status') and self.status is not None:
-            _dict['status'] = self.status
-        return _dict
-
-    def _to_dict(self):
-        """Return a json dictionary representing this model."""
-        return self.to_dict()
-
-    def __str__(self) -> str:
-        """Return a `str` version of this TestDestinationResponse object."""
-        return json.dumps(self.to_dict(), indent=2)
-
-    def __eq__(self, other: 'TestDestinationResponse') -> bool:
-        """Return `true` when self and other are equal, false otherwise."""
-        if not isinstance(other, self.__class__):
-            return False
-        return self.__dict__ == other.__dict__
-
-    def __ne__(self, other: 'TestDestinationResponse') -> bool:
-        """Return `true` when self and other are not equal, false otherwise."""
-        return not self == other
+        msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
+            ", ".join(
+                [
+                    'TestDestinationResponseWebhookDestinationTestResponseConfig',
+                    'TestDestinationResponseDestinationTestResponseConfig',
+                ]
+            )
+        )
+        raise Exception(msg)
 
 
 class Topic:
@@ -15842,6 +16016,168 @@ class TemplateConfigOneOfWebhookTemplateConfig(TemplateConfigOneOf):
     def __ne__(self, other: 'TemplateConfigOneOfWebhookTemplateConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class TestDestinationResponseDestinationTestResponseConfig(TestDestinationResponse):
+    """
+    Test Destination response object for other http destination.
+
+    :attr str status: Test destination status.
+    """
+
+    def __init__(
+        self,
+        status: str,
+    ) -> None:
+        """
+        Initialize a TestDestinationResponseDestinationTestResponseConfig object.
+
+        :param str status: Test destination status.
+        """
+        # pylint: disable=super-init-not-called
+        self.status = status
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TestDestinationResponseDestinationTestResponseConfig':
+        """Initialize a TestDestinationResponseDestinationTestResponseConfig object from a json dictionary."""
+        args = {}
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError(
+                'Required property \'status\' not present in TestDestinationResponseDestinationTestResponseConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TestDestinationResponseDestinationTestResponseConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TestDestinationResponseDestinationTestResponseConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TestDestinationResponseDestinationTestResponseConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TestDestinationResponseDestinationTestResponseConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TestDestinationResponseWebhookDestinationTestResponseConfig(TestDestinationResponse):
+    """
+    Response from /test endpoint.
+
+    :attr str status: Test destination status.
+    :attr str notification_id: Test notification ID.
+    :attr str destination_type: Type of destination.
+    """
+
+    def __init__(
+        self,
+        status: str,
+        notification_id: str,
+        destination_type: str,
+    ) -> None:
+        """
+        Initialize a TestDestinationResponseWebhookDestinationTestResponseConfig object.
+
+        :param str status: Test destination status.
+        :param str notification_id: Test notification ID.
+        :param str destination_type: Type of destination.
+        """
+        # pylint: disable=super-init-not-called
+        self.status = status
+        self.notification_id = notification_id
+        self.destination_type = destination_type
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TestDestinationResponseWebhookDestinationTestResponseConfig':
+        """Initialize a TestDestinationResponseWebhookDestinationTestResponseConfig object from a json dictionary."""
+        args = {}
+        if 'status' in _dict:
+            args['status'] = _dict.get('status')
+        else:
+            raise ValueError(
+                'Required property \'status\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON'
+            )
+        if 'notification_id' in _dict:
+            args['notification_id'] = _dict.get('notification_id')
+        else:
+            raise ValueError(
+                'Required property \'notification_id\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON'
+            )
+        if 'destination_type' in _dict:
+            args['destination_type'] = _dict.get('destination_type')
+        else:
+            raise ValueError(
+                'Required property \'destination_type\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TestDestinationResponseWebhookDestinationTestResponseConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'status') and self.status is not None:
+            _dict['status'] = self.status
+        if hasattr(self, 'notification_id') and self.notification_id is not None:
+            _dict['notification_id'] = self.notification_id
+        if hasattr(self, 'destination_type') and self.destination_type is not None:
+            _dict['destination_type'] = self.destination_type
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TestDestinationResponseWebhookDestinationTestResponseConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TestDestinationResponseWebhookDestinationTestResponseConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TestDestinationResponseWebhookDestinationTestResponseConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class StatusEnum(str, Enum):
+        """
+        Test destination status.
+        """
+
+        ACCEPTED = 'accepted'
+
+    class DestinationTypeEnum(str, Enum):
+        """
+        Type of destination.
+        """
+
+        WEBHOOK = 'webhook'
 
 
 ##############################################################################
