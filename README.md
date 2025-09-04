@@ -430,6 +430,7 @@ Currently, this functionality supports following destinations:
 4. Microsoft&reg; Teams
 5. IBM Cloud Code Engine
 6. IBM Cloud Object Storage
+7. Webhook
 
 ```py
 test_destination_response = event_notifications_service.test_destination(
@@ -443,6 +444,18 @@ Once the test is completed, you will be presented with the results. These result
 - **Status**: Whether the test is successful or failed
 - **Response Code**: If test fails, then the response code sent from the end destination client is returned
 - **Response Message**: If test fails, then the response message sent from the end destination client is returned
+
+In case of `webhook` destination test response also returns notification_id, the status of notification_id will represent the webhook test result. Follow below additional steps to get status result of webhook destination test
+
+```python    
+webhook_notification_status = event_notifications_service.get_notifications_status(
+    instance_id, 
+    id=<notification-id>
+)
+
+webhook_status = webhook_notification_status.get_result()
+```
+The response of `get_notifications_status` will have success, failed or inprogress status. The Notification ID will be valid only for 1 minute to fetch the status of test. The status response as **success** will conclude successful test of webhook destination
 
 ### Custom Domain Name Verification
 

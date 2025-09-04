@@ -2141,233 +2141,6 @@ class TestListTemplates:
         assert len(all_results) == 2
 
 
-class TestListPreDefinedTemplates:
-    """
-    Test Class for list_pre_defined_templates
-    """
-
-    @responses.activate
-    def test_list_pre_defined_templates_all_params(self):
-        """
-        list_pre_defined_templates()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        instance_id = 'testString'
-        source = 'testString'
-        type = 'testString'
-        limit = 1
-        offset = 0
-        search = 'testString'
-
-        # Invoke method
-        response = _service.list_pre_defined_templates(
-            instance_id,
-            source,
-            type,
-            limit=limit,
-            offset=offset,
-            search=search,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'source={}'.format(source) in query_string
-        assert 'type={}'.format(type) in query_string
-        assert 'limit={}'.format(limit) in query_string
-        assert 'offset={}'.format(offset) in query_string
-        assert 'search={}'.format(search) in query_string
-
-    def test_list_pre_defined_templates_all_params_with_retries(self):
-        # Enable retries and run test_list_pre_defined_templates_all_params.
-        _service.enable_retries()
-        self.test_list_pre_defined_templates_all_params()
-
-        # Disable retries and run test_list_pre_defined_templates_all_params.
-        _service.disable_retries()
-        self.test_list_pre_defined_templates_all_params()
-
-    @responses.activate
-    def test_list_pre_defined_templates_required_params(self):
-        """
-        test_list_pre_defined_templates_required_params()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        instance_id = 'testString'
-        source = 'testString'
-        type = 'testString'
-
-        # Invoke method
-        response = _service.list_pre_defined_templates(
-            instance_id,
-            source,
-            type,
-            headers={},
-        )
-
-        # Check for correct operation
-        assert len(responses.calls) == 1
-        assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'source={}'.format(source) in query_string
-        assert 'type={}'.format(type) in query_string
-
-    def test_list_pre_defined_templates_required_params_with_retries(self):
-        # Enable retries and run test_list_pre_defined_templates_required_params.
-        _service.enable_retries()
-        self.test_list_pre_defined_templates_required_params()
-
-        # Disable retries and run test_list_pre_defined_templates_required_params.
-        _service.disable_retries()
-        self.test_list_pre_defined_templates_required_params()
-
-    @responses.activate
-    def test_list_pre_defined_templates_value_error(self):
-        """
-        test_list_pre_defined_templates_value_error()
-        """
-        # Set up mock
-        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
-        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Set up parameter values
-        instance_id = 'testString'
-        source = 'testString'
-        type = 'testString'
-
-        # Pass in all but one required param and check for a ValueError
-        req_param_dict = {
-            "instance_id": instance_id,
-            "source": source,
-            "type": type,
-        }
-        for param in req_param_dict.keys():
-            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
-            with pytest.raises(ValueError):
-                _service.list_pre_defined_templates(**req_copy)
-
-    def test_list_pre_defined_templates_value_error_with_retries(self):
-        # Enable retries and run test_list_pre_defined_templates_value_error.
-        _service.enable_retries()
-        self.test_list_pre_defined_templates_value_error()
-
-        # Disable retries and run test_list_pre_defined_templates_value_error.
-        _service.disable_retries()
-        self.test_list_pre_defined_templates_value_error()
-
-    @responses.activate
-    def test_list_pre_defined_templates_with_pager_get_next(self):
-        """
-        test_list_pre_defined_templates_with_pager_get_next()
-        """
-        # Set up a two-page mock response
-        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response1,
-            content_type='application/json',
-            status=200,
-        )
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response2,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Exercise the pager class for this operation
-        all_results = []
-        pager = PreDefinedTemplatesPager(
-            client=_service,
-            instance_id='testString',
-            source='testString',
-            type='testString',
-            limit=10,
-            search='testString',
-        )
-        while pager.has_next():
-            next_page = pager.get_next()
-            assert next_page is not None
-            all_results.extend(next_page)
-        assert len(all_results) == 2
-
-    @responses.activate
-    def test_list_pre_defined_templates_with_pager_get_all(self):
-        """
-        test_list_pre_defined_templates_with_pager_get_all()
-        """
-        # Set up a two-page mock response
-        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response1,
-            content_type='application/json',
-            status=200,
-        )
-        responses.add(
-            responses.GET,
-            url,
-            body=mock_response2,
-            content_type='application/json',
-            status=200,
-        )
-
-        # Exercise the pager class for this operation
-        pager = PreDefinedTemplatesPager(
-            client=_service,
-            instance_id='testString',
-            source='testString',
-            type='testString',
-            limit=10,
-            search='testString',
-        )
-        all_results = pager.get_all()
-        assert all_results is not None
-        assert len(all_results) == 2
-
-
 class TestGetTemplate:
     """
     Test Class for get_template
@@ -2643,6 +2416,233 @@ class TestDeleteTemplate:
         # Disable retries and run test_delete_template_value_error.
         _service.disable_retries()
         self.test_delete_template_value_error()
+
+
+class TestListPreDefinedTemplates:
+    """
+    Test Class for list_pre_defined_templates
+    """
+
+    @responses.activate
+    def test_list_pre_defined_templates_all_params(self):
+        """
+        list_pre_defined_templates()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        source = 'testString'
+        type = 'testString'
+        limit = 1
+        offset = 0
+        search = 'testString'
+
+        # Invoke method
+        response = _service.list_pre_defined_templates(
+            instance_id,
+            source,
+            type,
+            limit=limit,
+            offset=offset,
+            search=search,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'source={}'.format(source) in query_string
+        assert 'type={}'.format(type) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+        assert 'search={}'.format(search) in query_string
+
+    def test_list_pre_defined_templates_all_params_with_retries(self):
+        # Enable retries and run test_list_pre_defined_templates_all_params.
+        _service.enable_retries()
+        self.test_list_pre_defined_templates_all_params()
+
+        # Disable retries and run test_list_pre_defined_templates_all_params.
+        _service.disable_retries()
+        self.test_list_pre_defined_templates_all_params()
+
+    @responses.activate
+    def test_list_pre_defined_templates_required_params(self):
+        """
+        test_list_pre_defined_templates_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        source = 'testString'
+        type = 'testString'
+
+        # Invoke method
+        response = _service.list_pre_defined_templates(
+            instance_id,
+            source,
+            type,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'source={}'.format(source) in query_string
+        assert 'type={}'.format(type) in query_string
+
+    def test_list_pre_defined_templates_required_params_with_retries(self):
+        # Enable retries and run test_list_pre_defined_templates_required_params.
+        _service.enable_retries()
+        self.test_list_pre_defined_templates_required_params()
+
+        # Disable retries and run test_list_pre_defined_templates_required_params.
+        _service.disable_retries()
+        self.test_list_pre_defined_templates_required_params()
+
+    @responses.activate
+    def test_list_pre_defined_templates_value_error(self):
+        """
+        test_list_pre_defined_templates_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response = '{"total_count": 11, "offset": 6, "limit": 5, "templates": [{"id": "id", "name": "name", "description": "description", "source": "source", "type": "type", "updated_at": "2019-01-01T12:00:00.000Z"}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        source = 'testString'
+        type = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "source": source,
+            "type": type,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.list_pre_defined_templates(**req_copy)
+
+    def test_list_pre_defined_templates_value_error_with_retries(self):
+        # Enable retries and run test_list_pre_defined_templates_value_error.
+        _service.enable_retries()
+        self.test_list_pre_defined_templates_value_error()
+
+        # Disable retries and run test_list_pre_defined_templates_value_error.
+        _service.disable_retries()
+        self.test_list_pre_defined_templates_value_error()
+
+    @responses.activate
+    def test_list_pre_defined_templates_with_pager_get_next(self):
+        """
+        test_list_pre_defined_templates_with_pager_get_next()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        all_results = []
+        pager = PreDefinedTemplatesPager(
+            client=_service,
+            instance_id='testString',
+            source='testString',
+            type='testString',
+            limit=10,
+            search='testString',
+        )
+        while pager.has_next():
+            next_page = pager.get_next()
+            assert next_page is not None
+            all_results.extend(next_page)
+        assert len(all_results) == 2
+
+    @responses.activate
+    def test_list_pre_defined_templates_with_pager_get_all(self):
+        """
+        test_list_pre_defined_templates_with_pager_get_all()
+        """
+        # Set up a two-page mock response
+        url = preprocess_url('/v1/instances/testString/pre_defined_templates')
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        mock_response2 = '{"total_count":2,"templates":[{"id":"id","name":"name","description":"description","source":"source","type":"type","updated_at":"2019-01-01T12:00:00.000Z"}],"limit":1}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response1,
+            content_type='application/json',
+            status=200,
+        )
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response2,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Exercise the pager class for this operation
+        pager = PreDefinedTemplatesPager(
+            client=_service,
+            instance_id='testString',
+            source='testString',
+            type='testString',
+            limit=10,
+            search='testString',
+        )
+        all_results = pager.get_all()
+        assert all_results is not None
+        assert len(all_results) == 2
 
 
 class TestGetPreDefinedTemplate:
@@ -3604,7 +3604,7 @@ class TestTestDestination:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/test')
-        mock_response = '{"status": "status"}'
+        mock_response = '{"status": "accepted", "notification_id": "notification_id", "destination_type": "webhook"}'
         responses.add(
             responses.POST,
             url,
@@ -3644,7 +3644,7 @@ class TestTestDestination:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/destinations/testString/test')
-        mock_response = '{"status": "status"}'
+        mock_response = '{"status": "accepted", "notification_id": "notification_id", "destination_type": "webhook"}'
         responses.add(
             responses.POST,
             url,
@@ -6812,6 +6812,130 @@ class TestUpdateVerifySmtp:
 # End of Service: SMTPConfigurations
 ##############################################################################
 
+##############################################################################
+# Start of Service: GetNotificationsStatus
+##############################################################################
+# region
+
+
+class TestNewInstance:
+    """
+    Test Class for new_instance
+    """
+
+    def test_new_instance(self):
+        """
+        new_instance()
+        """
+        os.environ['TEST_SERVICE_AUTH_TYPE'] = 'noAuth'
+
+        service = EventNotificationsV1.new_instance(
+            service_name='TEST_SERVICE',
+        )
+
+        assert service is not None
+        assert isinstance(service, EventNotificationsV1)
+
+    def test_new_instance_without_authenticator(self):
+        """
+        new_instance_without_authenticator()
+        """
+        with pytest.raises(ValueError, match='authenticator must be provided'):
+            service = EventNotificationsV1.new_instance(
+                service_name='TEST_SERVICE_NOT_FOUND',
+            )
+
+
+class TestGetNotificationsStatus:
+    """
+    Test Class for get_notifications_status
+    """
+
+    @responses.activate
+    def test_get_notifications_status_all_params(self):
+        """
+        get_notifications_status()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications/testString')
+        mock_response = '{"status": "success", "details": {"status_code": 11, "status_message": "status_message"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.get_notifications_status(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+
+    def test_get_notifications_status_all_params_with_retries(self):
+        # Enable retries and run test_get_notifications_status_all_params.
+        _service.enable_retries()
+        self.test_get_notifications_status_all_params()
+
+        # Disable retries and run test_get_notifications_status_all_params.
+        _service.disable_retries()
+        self.test_get_notifications_status_all_params()
+
+    @responses.activate
+    def test_get_notifications_status_value_error(self):
+        """
+        test_get_notifications_status_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/notifications/testString')
+        mock_response = '{"status": "success", "details": {"status_code": 11, "status_message": "status_message"}}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_notifications_status(**req_copy)
+
+    def test_get_notifications_status_value_error_with_retries(self):
+        # Enable retries and run test_get_notifications_status_value_error.
+        _service.enable_retries()
+        self.test_get_notifications_status_value_error()
+
+        # Disable retries and run test_get_notifications_status_value_error.
+        _service.disable_retries()
+        self.test_get_notifications_status_value_error()
+
+
+# endregion
+##############################################################################
+# End of Service: GetNotificationsStatus
+##############################################################################
+
 
 ##############################################################################
 # Start of Model Tests
@@ -7405,6 +7529,88 @@ class TestModel_EventScheduleFilterAttributes:
         # Convert model instance back to dict and verify no loss of data
         event_schedule_filter_attributes_model_json2 = event_schedule_filter_attributes_model.to_dict()
         assert event_schedule_filter_attributes_model_json2 == event_schedule_filter_attributes_model_json
+
+
+class TestModel_GetNotificationStatusResponse:
+    """
+    Test Class for GetNotificationStatusResponse
+    """
+
+    def test_get_notification_status_response_serialization(self):
+        """
+        Test serialization/deserialization for GetNotificationStatusResponse
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        get_notification_status_response_details_model = {}  # GetNotificationStatusResponseDetails
+        get_notification_status_response_details_model['status_code'] = 200
+        get_notification_status_response_details_model['status_message'] = 'OK'
+
+        # Construct a json representation of a GetNotificationStatusResponse model
+        get_notification_status_response_model_json = {}
+        get_notification_status_response_model_json['status'] = 'success'
+        get_notification_status_response_model_json['details'] = get_notification_status_response_details_model
+
+        # Construct a model instance of GetNotificationStatusResponse by calling from_dict on the json representation
+        get_notification_status_response_model = GetNotificationStatusResponse.from_dict(
+            get_notification_status_response_model_json
+        )
+        assert get_notification_status_response_model != False
+
+        # Construct a model instance of GetNotificationStatusResponse by calling from_dict on the json representation
+        get_notification_status_response_model_dict = GetNotificationStatusResponse.from_dict(
+            get_notification_status_response_model_json
+        ).__dict__
+        get_notification_status_response_model2 = GetNotificationStatusResponse(
+            **get_notification_status_response_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert get_notification_status_response_model == get_notification_status_response_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        get_notification_status_response_model_json2 = get_notification_status_response_model.to_dict()
+        assert get_notification_status_response_model_json2 == get_notification_status_response_model_json
+
+
+class TestModel_GetNotificationStatusResponseDetails:
+    """
+    Test Class for GetNotificationStatusResponseDetails
+    """
+
+    def test_get_notification_status_response_details_serialization(self):
+        """
+        Test serialization/deserialization for GetNotificationStatusResponseDetails
+        """
+
+        # Construct a json representation of a GetNotificationStatusResponseDetails model
+        get_notification_status_response_details_model_json = {}
+        get_notification_status_response_details_model_json['status_code'] = 38
+        get_notification_status_response_details_model_json['status_message'] = 'testString'
+
+        # Construct a model instance of GetNotificationStatusResponseDetails by calling from_dict on the json representation
+        get_notification_status_response_details_model = GetNotificationStatusResponseDetails.from_dict(
+            get_notification_status_response_details_model_json
+        )
+        assert get_notification_status_response_details_model != False
+
+        # Construct a model instance of GetNotificationStatusResponseDetails by calling from_dict on the json representation
+        get_notification_status_response_details_model_dict = GetNotificationStatusResponseDetails.from_dict(
+            get_notification_status_response_details_model_json
+        ).__dict__
+        get_notification_status_response_details_model2 = GetNotificationStatusResponseDetails(
+            **get_notification_status_response_details_model_dict
+        )
+
+        # Verify the model instances are equivalent
+        assert get_notification_status_response_details_model == get_notification_status_response_details_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        get_notification_status_response_details_model_json2 = get_notification_status_response_details_model.to_dict()
+        assert (
+            get_notification_status_response_details_model_json2 == get_notification_status_response_details_model_json
+        )
 
 
 class TestModel_GetPredefinedTemplate:
@@ -9404,38 +9610,6 @@ class TestModel_TemplateResponse:
         # Convert model instance back to dict and verify no loss of data
         template_response_model_json2 = template_response_model.to_dict()
         assert template_response_model_json2 == template_response_model_json
-
-
-class TestModel_TestDestinationResponse:
-    """
-    Test Class for TestDestinationResponse
-    """
-
-    def test_test_destination_response_serialization(self):
-        """
-        Test serialization/deserialization for TestDestinationResponse
-        """
-
-        # Construct a json representation of a TestDestinationResponse model
-        test_destination_response_model_json = {}
-        test_destination_response_model_json['status'] = 'testString'
-
-        # Construct a model instance of TestDestinationResponse by calling from_dict on the json representation
-        test_destination_response_model = TestDestinationResponse.from_dict(test_destination_response_model_json)
-        assert test_destination_response_model != False
-
-        # Construct a model instance of TestDestinationResponse by calling from_dict on the json representation
-        test_destination_response_model_dict = TestDestinationResponse.from_dict(
-            test_destination_response_model_json
-        ).__dict__
-        test_destination_response_model2 = TestDestinationResponse(**test_destination_response_model_dict)
-
-        # Verify the model instances are equivalent
-        assert test_destination_response_model == test_destination_response_model2
-
-        # Convert model instance back to dict and verify no loss of data
-        test_destination_response_model_json2 = test_destination_response_model.to_dict()
-        assert test_destination_response_model_json2 == test_destination_response_model_json
 
 
 class TestModel_Topic:
@@ -12900,6 +13074,108 @@ class TestModel_TemplateConfigOneOfWebhookTemplateConfig:
         assert (
             template_config_one_of_webhook_template_config_model_json2
             == template_config_one_of_webhook_template_config_model_json
+        )
+
+
+class TestModel_TestDestinationResponseDestinationTestResponseConfig:
+    """
+    Test Class for TestDestinationResponseDestinationTestResponseConfig
+    """
+
+    def test_test_destination_response_destination_test_response_config_serialization(self):
+        """
+        Test serialization/deserialization for TestDestinationResponseDestinationTestResponseConfig
+        """
+
+        # Construct a json representation of a TestDestinationResponseDestinationTestResponseConfig model
+        test_destination_response_destination_test_response_config_model_json = {}
+        test_destination_response_destination_test_response_config_model_json['status'] = 'testString'
+
+        # Construct a model instance of TestDestinationResponseDestinationTestResponseConfig by calling from_dict on the json representation
+        test_destination_response_destination_test_response_config_model = (
+            TestDestinationResponseDestinationTestResponseConfig.from_dict(
+                test_destination_response_destination_test_response_config_model_json
+            )
+        )
+        assert test_destination_response_destination_test_response_config_model != False
+
+        # Construct a model instance of TestDestinationResponseDestinationTestResponseConfig by calling from_dict on the json representation
+        test_destination_response_destination_test_response_config_model_dict = (
+            TestDestinationResponseDestinationTestResponseConfig.from_dict(
+                test_destination_response_destination_test_response_config_model_json
+            ).__dict__
+        )
+        test_destination_response_destination_test_response_config_model2 = (
+            TestDestinationResponseDestinationTestResponseConfig(
+                **test_destination_response_destination_test_response_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            test_destination_response_destination_test_response_config_model
+            == test_destination_response_destination_test_response_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        test_destination_response_destination_test_response_config_model_json2 = (
+            test_destination_response_destination_test_response_config_model.to_dict()
+        )
+        assert (
+            test_destination_response_destination_test_response_config_model_json2
+            == test_destination_response_destination_test_response_config_model_json
+        )
+
+
+class TestModel_TestDestinationResponseWebhookDestinationTestResponseConfig:
+    """
+    Test Class for TestDestinationResponseWebhookDestinationTestResponseConfig
+    """
+
+    def test_test_destination_response_webhook_destination_test_response_config_serialization(self):
+        """
+        Test serialization/deserialization for TestDestinationResponseWebhookDestinationTestResponseConfig
+        """
+
+        # Construct a json representation of a TestDestinationResponseWebhookDestinationTestResponseConfig model
+        test_destination_response_webhook_destination_test_response_config_model_json = {}
+        test_destination_response_webhook_destination_test_response_config_model_json['status'] = 'accepted'
+        test_destination_response_webhook_destination_test_response_config_model_json['notification_id'] = 'testString'
+        test_destination_response_webhook_destination_test_response_config_model_json['destination_type'] = 'webhook'
+
+        # Construct a model instance of TestDestinationResponseWebhookDestinationTestResponseConfig by calling from_dict on the json representation
+        test_destination_response_webhook_destination_test_response_config_model = (
+            TestDestinationResponseWebhookDestinationTestResponseConfig.from_dict(
+                test_destination_response_webhook_destination_test_response_config_model_json
+            )
+        )
+        assert test_destination_response_webhook_destination_test_response_config_model != False
+
+        # Construct a model instance of TestDestinationResponseWebhookDestinationTestResponseConfig by calling from_dict on the json representation
+        test_destination_response_webhook_destination_test_response_config_model_dict = (
+            TestDestinationResponseWebhookDestinationTestResponseConfig.from_dict(
+                test_destination_response_webhook_destination_test_response_config_model_json
+            ).__dict__
+        )
+        test_destination_response_webhook_destination_test_response_config_model2 = (
+            TestDestinationResponseWebhookDestinationTestResponseConfig(
+                **test_destination_response_webhook_destination_test_response_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            test_destination_response_webhook_destination_test_response_config_model
+            == test_destination_response_webhook_destination_test_response_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        test_destination_response_webhook_destination_test_response_config_model_json2 = (
+            test_destination_response_webhook_destination_test_response_config_model.to_dict()
+        )
+        assert (
+            test_destination_response_webhook_destination_test_response_config_model_json2
+            == test_destination_response_webhook_destination_test_response_config_model_json
         )
 
 

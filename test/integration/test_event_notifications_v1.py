@@ -1185,6 +1185,17 @@ class TestEventNotificationsV1:
         assert test_destination_response.get_status_code() == 200
 
     @needscredentials
+    def test_webhook_destination(self):
+        test_destination_response = self.event_notifications_service.test_destination(instance_id, id=destination_id)
+        test_webhook_notification_id = test_destination_response.get_result().get("notification_id")
+        assert test_destination_response.get_status_code() == 202
+
+        webhook_notification_status = self.event_notifications_service.get_notifications_status(
+            instance_id, id=test_webhook_notification_id
+        )
+        assert webhook_notification_status.get_status_code() == 200
+
+    @needscredentials
     def test_create_template(self):
         global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id, code_engine_app_template_id, code_engine_job_template_id
 
