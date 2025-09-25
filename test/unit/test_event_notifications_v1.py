@@ -9935,6 +9935,59 @@ class TestModel_VerificationResponse:
         assert verification_response_model_json2 == verification_response_model_json
 
 
+class TestModel_DestinationConfigOneOfAppConfigurationDestinationConfig:
+    """
+    Test Class for DestinationConfigOneOfAppConfigurationDestinationConfig
+    """
+
+    def test_destination_config_one_of_app_configuration_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfAppConfigurationDestinationConfig
+        """
+
+        # Construct a json representation of a DestinationConfigOneOfAppConfigurationDestinationConfig model
+        destination_config_one_of_app_configuration_destination_config_model_json = {}
+        destination_config_one_of_app_configuration_destination_config_model_json['type'] = 'features'
+        destination_config_one_of_app_configuration_destination_config_model_json['crn'] = 'testString'
+        destination_config_one_of_app_configuration_destination_config_model_json['environment_id'] = 'testString'
+        destination_config_one_of_app_configuration_destination_config_model_json['feature_id'] = 'testString'
+
+        # Construct a model instance of DestinationConfigOneOfAppConfigurationDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_app_configuration_destination_config_model = (
+            DestinationConfigOneOfAppConfigurationDestinationConfig.from_dict(
+                destination_config_one_of_app_configuration_destination_config_model_json
+            )
+        )
+        assert destination_config_one_of_app_configuration_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfAppConfigurationDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_app_configuration_destination_config_model_dict = (
+            DestinationConfigOneOfAppConfigurationDestinationConfig.from_dict(
+                destination_config_one_of_app_configuration_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_app_configuration_destination_config_model2 = (
+            DestinationConfigOneOfAppConfigurationDestinationConfig(
+                **destination_config_one_of_app_configuration_destination_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            destination_config_one_of_app_configuration_destination_config_model
+            == destination_config_one_of_app_configuration_destination_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_app_configuration_destination_config_model_json2 = (
+            destination_config_one_of_app_configuration_destination_config_model.to_dict()
+        )
+        assert (
+            destination_config_one_of_app_configuration_destination_config_model_json2
+            == destination_config_one_of_app_configuration_destination_config_model_json
+        )
+
+
 class TestModel_DestinationConfigOneOfChromeDestinationConfig:
     """
     Test Class for DestinationConfigOneOfChromeDestinationConfig
@@ -10771,6 +10824,70 @@ class TestModel_DestinationConfigOneOfWebhookDestinationConfig:
         )
 
 
+class TestModel_SubscriptionAttributesAppConfigurationAttributesResponse:
+    """
+    Test Class for SubscriptionAttributesAppConfigurationAttributesResponse
+    """
+
+    def test_subscription_attributes_app_configuration_attributes_response_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionAttributesAppConfigurationAttributesResponse
+        """
+
+        # Construct a json representation of a SubscriptionAttributesAppConfigurationAttributesResponse model
+        subscription_attributes_app_configuration_attributes_response_model_json = {}
+        subscription_attributes_app_configuration_attributes_response_model_json['feature_flag_enabled'] = True
+        subscription_attributes_app_configuration_attributes_response_model_json['template_id_notification'] = (
+            'testString'
+        )
+        subscription_attributes_app_configuration_attributes_response_model_json['foo'] = 'testString'
+
+        # Construct a model instance of SubscriptionAttributesAppConfigurationAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_app_configuration_attributes_response_model = (
+            SubscriptionAttributesAppConfigurationAttributesResponse.from_dict(
+                subscription_attributes_app_configuration_attributes_response_model_json
+            )
+        )
+        assert subscription_attributes_app_configuration_attributes_response_model != False
+
+        # Construct a model instance of SubscriptionAttributesAppConfigurationAttributesResponse by calling from_dict on the json representation
+        subscription_attributes_app_configuration_attributes_response_model_dict = (
+            SubscriptionAttributesAppConfigurationAttributesResponse.from_dict(
+                subscription_attributes_app_configuration_attributes_response_model_json
+            ).__dict__
+        )
+        subscription_attributes_app_configuration_attributes_response_model2 = (
+            SubscriptionAttributesAppConfigurationAttributesResponse(
+                **subscription_attributes_app_configuration_attributes_response_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_attributes_app_configuration_attributes_response_model
+            == subscription_attributes_app_configuration_attributes_response_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_attributes_app_configuration_attributes_response_model_json2 = (
+            subscription_attributes_app_configuration_attributes_response_model.to_dict()
+        )
+        assert (
+            subscription_attributes_app_configuration_attributes_response_model_json2
+            == subscription_attributes_app_configuration_attributes_response_model_json
+        )
+
+        # Test get_properties and set_properties methods.
+        subscription_attributes_app_configuration_attributes_response_model.set_properties({})
+        actual_dict = subscription_attributes_app_configuration_attributes_response_model.get_properties()
+        assert actual_dict == {}
+
+        expected_dict = {'foo': 'testString'}
+        subscription_attributes_app_configuration_attributes_response_model.set_properties(expected_dict)
+        actual_dict = subscription_attributes_app_configuration_attributes_response_model.get_properties()
+        assert actual_dict == expected_dict
+
+
 class TestModel_SubscriptionAttributesCodeEngineAttributesResponse:
     """
     Test Class for SubscriptionAttributesCodeEngineAttributesResponse
@@ -11526,6 +11643,59 @@ class TestModel_SubscriptionAttributesWebhookAttributesResponse:
         assert actual_dict == expected_dict
 
 
+class TestModel_SubscriptionCreateAttributesAppConfigurationAttributes:
+    """
+    Test Class for SubscriptionCreateAttributesAppConfigurationAttributes
+    """
+
+    def test_subscription_create_attributes_app_configuration_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesAppConfigurationAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesAppConfigurationAttributes model
+        subscription_create_attributes_app_configuration_attributes_model_json = {}
+        subscription_create_attributes_app_configuration_attributes_model_json['feature_flag_enabled'] = True
+        subscription_create_attributes_app_configuration_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+
+        # Construct a model instance of SubscriptionCreateAttributesAppConfigurationAttributes by calling from_dict on the json representation
+        subscription_create_attributes_app_configuration_attributes_model = (
+            SubscriptionCreateAttributesAppConfigurationAttributes.from_dict(
+                subscription_create_attributes_app_configuration_attributes_model_json
+            )
+        )
+        assert subscription_create_attributes_app_configuration_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesAppConfigurationAttributes by calling from_dict on the json representation
+        subscription_create_attributes_app_configuration_attributes_model_dict = (
+            SubscriptionCreateAttributesAppConfigurationAttributes.from_dict(
+                subscription_create_attributes_app_configuration_attributes_model_json
+            ).__dict__
+        )
+        subscription_create_attributes_app_configuration_attributes_model2 = (
+            SubscriptionCreateAttributesAppConfigurationAttributes(
+                **subscription_create_attributes_app_configuration_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_create_attributes_app_configuration_attributes_model
+            == subscription_create_attributes_app_configuration_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_app_configuration_attributes_model_json2 = (
+            subscription_create_attributes_app_configuration_attributes_model.to_dict()
+        )
+        assert (
+            subscription_create_attributes_app_configuration_attributes_model_json2
+            == subscription_create_attributes_app_configuration_attributes_model_json
+        )
+
+
 class TestModel_SubscriptionCreateAttributesCodeEngineAttributes:
     """
     Test Class for SubscriptionCreateAttributesCodeEngineAttributes
@@ -12114,6 +12284,59 @@ class TestModel_SubscriptionCreateAttributesWebhookAttributes:
         assert (
             subscription_create_attributes_webhook_attributes_model_json2
             == subscription_create_attributes_webhook_attributes_model_json
+        )
+
+
+class TestModel_SubscriptionUpdateAttributesAppConfigurationAttributes:
+    """
+    Test Class for SubscriptionUpdateAttributesAppConfigurationAttributes
+    """
+
+    def test_subscription_update_attributes_app_configuration_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesAppConfigurationAttributes
+        """
+
+        # Construct a json representation of a SubscriptionUpdateAttributesAppConfigurationAttributes model
+        subscription_update_attributes_app_configuration_attributes_model_json = {}
+        subscription_update_attributes_app_configuration_attributes_model_json['feature_flag_enabled'] = True
+        subscription_update_attributes_app_configuration_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+
+        # Construct a model instance of SubscriptionUpdateAttributesAppConfigurationAttributes by calling from_dict on the json representation
+        subscription_update_attributes_app_configuration_attributes_model = (
+            SubscriptionUpdateAttributesAppConfigurationAttributes.from_dict(
+                subscription_update_attributes_app_configuration_attributes_model_json
+            )
+        )
+        assert subscription_update_attributes_app_configuration_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesAppConfigurationAttributes by calling from_dict on the json representation
+        subscription_update_attributes_app_configuration_attributes_model_dict = (
+            SubscriptionUpdateAttributesAppConfigurationAttributes.from_dict(
+                subscription_update_attributes_app_configuration_attributes_model_json
+            ).__dict__
+        )
+        subscription_update_attributes_app_configuration_attributes_model2 = (
+            SubscriptionUpdateAttributesAppConfigurationAttributes(
+                **subscription_update_attributes_app_configuration_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_update_attributes_app_configuration_attributes_model
+            == subscription_update_attributes_app_configuration_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_app_configuration_attributes_model_json2 = (
+            subscription_update_attributes_app_configuration_attributes_model.to_dict()
+        )
+        assert (
+            subscription_update_attributes_app_configuration_attributes_model_json2
+            == subscription_update_attributes_app_configuration_attributes_model_json
         )
 
 
@@ -12755,6 +12978,56 @@ class TestModel_SubscriptionUpdateAttributesWebhookAttributes:
         assert (
             subscription_update_attributes_webhook_attributes_model_json2
             == subscription_update_attributes_webhook_attributes_model_json
+        )
+
+
+class TestModel_TemplateConfigOneOfAppConfigurationTemplateConfig:
+    """
+    Test Class for TemplateConfigOneOfAppConfigurationTemplateConfig
+    """
+
+    def test_template_config_one_of_app_configuration_template_config_serialization(self):
+        """
+        Test serialization/deserialization for TemplateConfigOneOfAppConfigurationTemplateConfig
+        """
+
+        # Construct a json representation of a TemplateConfigOneOfAppConfigurationTemplateConfig model
+        template_config_one_of_app_configuration_template_config_model_json = {}
+        template_config_one_of_app_configuration_template_config_model_json['body'] = 'testString'
+
+        # Construct a model instance of TemplateConfigOneOfAppConfigurationTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_app_configuration_template_config_model = (
+            TemplateConfigOneOfAppConfigurationTemplateConfig.from_dict(
+                template_config_one_of_app_configuration_template_config_model_json
+            )
+        )
+        assert template_config_one_of_app_configuration_template_config_model != False
+
+        # Construct a model instance of TemplateConfigOneOfAppConfigurationTemplateConfig by calling from_dict on the json representation
+        template_config_one_of_app_configuration_template_config_model_dict = (
+            TemplateConfigOneOfAppConfigurationTemplateConfig.from_dict(
+                template_config_one_of_app_configuration_template_config_model_json
+            ).__dict__
+        )
+        template_config_one_of_app_configuration_template_config_model2 = (
+            TemplateConfigOneOfAppConfigurationTemplateConfig(
+                **template_config_one_of_app_configuration_template_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            template_config_one_of_app_configuration_template_config_model
+            == template_config_one_of_app_configuration_template_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        template_config_one_of_app_configuration_template_config_model_json2 = (
+            template_config_one_of_app_configuration_template_config_model.to_dict()
+        )
+        assert (
+            template_config_one_of_app_configuration_template_config_model_json2
+            == template_config_one_of_app_configuration_template_config_model_json
         )
 
 

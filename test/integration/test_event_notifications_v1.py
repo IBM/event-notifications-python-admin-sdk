@@ -53,6 +53,7 @@ destination_id17 = ""
 destination_id18 = ""
 destination_id19 = ""
 destination_id20 = ""
+destination_id22 = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -74,6 +75,7 @@ subscription_id18 = ""
 subscription_id19 = ""
 subscription_id20 = ""
 subscription_id21 = ""
+subscription_id22 = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -121,6 +123,9 @@ code_engine_app_template_id = ""
 code_engine_job_template_id = ""
 code_engine_app_template_body = ""
 code_engine_job_template_body = ""
+app_config_crn = ""
+app_config_template_body = ""
+app_config_template_id = ""
 
 
 class TestEventNotificationsV1:
@@ -130,7 +135,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id, pagerduty_template_body, event_streams_template_body, event_streams_crn, event_streams_topic, event_streams_endpoint, code_engine_job_template_body, code_engine_app_template_body
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id, pagerduty_template_body, event_streams_template_body, event_streams_crn, event_streams_topic, event_streams_endpoint, code_engine_job_template_body, code_engine_app_template_body, app_config_template_body, app_config_crn
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -179,6 +184,9 @@ class TestEventNotificationsV1:
             event_streams_topic = cls.config["EVENT_STREAMS_TOPIC"]
             code_engine_job_template_body = cls.config["CODE_ENGINE_JOB_TEMPLATE_BODY"]
             code_engine_app_template_body = cls.config["CODE_ENGINE_APP_TEMPLATE_BODY"]
+            app_config_crn = cls.config["APP_CONFIG_CRN"]
+            app_config_template_body = cls.config["APP_CONFIG_TEMPLATE_BODY"]
+
             assert instance_id is not None
             assert fcmServerKey is not None
             assert fcmSenderId is not None
@@ -210,6 +218,8 @@ class TestEventNotificationsV1:
             assert event_streams_topic is not None
             assert code_engine_job_template_body is not None
             assert code_engine_app_template_body is not None
+            assert app_config_crn is not None
+            assert app_config_template_body is not None
 
         print("Setup complete.")
 
@@ -606,7 +616,7 @@ class TestEventNotificationsV1:
     @needscredentials
     def test_create_destination(self):
         # Construct a dict representation of a DestinationConfigParamsWebhookDestinationConfig model
-        global destination_id, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19, destination_id20
+        global destination_id, destination_id4, destination_id5, destination_id6, destination_id7, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19, destination_id20, destination_id22
         destination_config_params_model = {
             "url": code_engine_URL,
             "verb": "post",
@@ -1167,6 +1177,40 @@ class TestEventNotificationsV1:
         assert destination.type == typeval
 
         destination_id20 = destination.id
+
+        destination_config_model = {
+            "params": {
+                "crn": app_config_crn,
+                "type": "features",
+                "environment_id": "dev",
+                "feature_id": "flag_test",
+            }
+        }
+
+        name = "App_config_destination"
+        typeval = "app_configuration"
+        description = "App Configuration Destination"
+
+        create_destination_response = self.event_notifications_service.create_destination(
+            instance_id,
+            name,
+            type=typeval,
+            description=description,
+            config=destination_config_model,
+        )
+
+        assert create_destination_response.get_status_code() == 201
+        destination_response = create_destination_response.get_result()
+        assert destination_response is not None
+
+        destination = DestinationResponse.from_dict(destination_response)
+
+        assert destination is not None
+        assert destination.name == name
+        assert destination.description == description
+        assert destination.type == typeval
+
+        destination_id22 = destination.id
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -1197,7 +1241,7 @@ class TestEventNotificationsV1:
 
     @needscredentials
     def test_create_template(self):
-        global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id, code_engine_app_template_id, code_engine_job_template_id
+        global template_invitation_id, template_notification_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id, code_engine_app_template_id, code_engine_job_template_id, app_config_template_id
 
         template_config_model_json = {'body': template_body, 'subject': 'Hi this is invitation for invitation message'}
 
@@ -1435,6 +1479,37 @@ class TestEventNotificationsV1:
         assert template.type == typeval
 
         code_engine_job_template_id = template.id
+
+        app_config_template_config_model_json = {'body': app_config_template_body}
+
+        app_config_template_config_model = TemplateConfigOneOfAppConfigurationTemplateConfig.from_dict(
+            app_config_template_config_model_json
+        )
+
+        name = "template_app_config"
+        typeval = "app_configuration.notification"
+        description = "app config template create"
+
+        create_template_response = self.event_notifications_service.create_template(
+            instance_id,
+            name,
+            type=typeval,
+            params=app_config_template_config_model,
+            description=description,
+        )
+
+        assert create_template_response.get_status_code() == 201
+        template_response = create_template_response.get_result()
+        assert template_response is not None
+
+        template = TemplateResponse.from_dict(template_response)
+
+        assert template is not None
+        assert template.name == name
+        assert template.description == description
+        assert template.type == typeval
+
+        app_config_template_id = template.id
 
     @needscredentials
     def test_list_destinations(self):
@@ -2070,6 +2145,36 @@ class TestEventNotificationsV1:
         assert res_name == name
         assert res_description == description
 
+        destination_config_model = {
+            "params": {
+                "crn": app_config_crn,
+                "environment_id": "dev",
+                "feature_id": "flag_test",
+            }
+        }
+
+        name = "app_config_destination_update"
+        description = "App Config Destination update"
+
+        update_destination_response = self.event_notifications_service.update_destination(
+            instance_id,
+            id=destination_id22,
+            name=name,
+            description=description,
+            config=destination_config_model,
+        )
+
+        assert update_destination_response.get_status_code() == 200
+        destination_response = update_destination_response.get_result()
+        assert destination_response is not None
+
+        res_id = destination_response.get("id")
+        res_name = destination_response.get("name")
+        res_description = destination_response.get("description")
+
+        assert res_id == destination_id22
+        assert res_name == name
+        assert res_description == description
         #
         # The following status codes aren't covered by tests.
         # Please provide integration tests for these too.
@@ -2295,10 +2400,38 @@ class TestEventNotificationsV1:
         assert template_response.get("type") == typeval
         assert template_response.get("id") == code_engine_job_template_id
 
+        app_config_template_config_model_json = {'body': app_config_template_body}
+
+        app_config_template_config_model = TemplateConfigOneOfAppConfigurationTemplateConfig.from_dict(
+            app_config_template_config_model_json
+        )
+
+        name = "template_app_config"
+        typeval = "app_configuration.notification"
+        description = "app config template"
+
+        replace_template_response = self.event_notifications_service.replace_template(
+            instance_id,
+            id=app_config_template_id,
+            name=name,
+            description=description,
+            type=typeval,
+            params=app_config_template_config_model,
+        )
+
+        assert replace_template_response.get_status_code() == 200
+        template_response = replace_template_response.get_result()
+
+        assert template_response is not None
+        assert template_response.get("name") == name
+        assert template_response.get("description") == description
+        assert template_response.get("type") == typeval
+        assert template_response.get("id") == app_config_template_id
+
     @needscredentials
     def test_create_subscription(self):
         # Construct a dict representation of a SubscriptionCreateAttributesSMSAttributes model
-        global subscription_id, subscription_id1, subscription_id2, subscription_id4, subscription_id5, subscription_id6, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18, subscription_id19, subscription_id20, subscription_id21
+        global subscription_id, subscription_id1, subscription_id2, subscription_id4, subscription_id5, subscription_id6, subscription_id8, subscription_id9, subscription_id10, subscription_id11, subscription_id12, subscription_id13, subscription_id14, subscription_id15, subscription_id16, subscription_id17, subscription_id18, subscription_id19, subscription_id20, subscription_id21, subscription_id22
         subscription_create_attributes_model = {
             "signing_enabled": False,
             "template_id_notification": webhook_template_id,
@@ -2827,6 +2960,37 @@ class TestEventNotificationsV1:
         assert subscription_description == description
 
         subscription_id21 = subscription_response.get("id")
+
+        name = "App Config subscription"
+        description = "Subscription for App Config"
+
+        subscription_create_attributes_model_json = {
+            'feature_flag_enabled': True,
+        }
+
+        subscription_create_attributes_model = SubscriptionCreateAttributesAppConfigurationAttributes.from_dict(
+            subscription_create_attributes_model_json
+        )
+
+        create_subscription_response = self.event_notifications_service.create_subscription(
+            instance_id,
+            name,
+            destination_id=destination_id22,
+            topic_id=topic_id,
+            description=description,
+            attributes=subscription_create_attributes_model,
+        )
+
+        assert create_subscription_response.get_status_code() == 201
+        subscription_response = create_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get("name")
+        subscription_description = subscription_response.get("description")
+        assert subscription_name == name
+        assert subscription_description == description
+
+        subscription_id22 = subscription_response.get("id")
 
         #
         # The following status codes aren't covered by tests.
@@ -3373,6 +3537,35 @@ class TestEventNotificationsV1:
         assert subscription_name == name
         assert subscription_description == description
 
+        name = "App Config subscription update"
+        description = "Subscription for App Config updated"
+
+        subscription_update_attributes_model_json = {
+            'template_id_notification': app_config_template_id,
+        }
+
+        subscription_update_attributes_model = SubscriptionUpdateAttributesAppConfigurationAttributes.from_dict(
+            subscription_update_attributes_model_json
+        )
+
+        update_subscription_response = self.event_notifications_service.update_subscription(
+            instance_id,
+            id=subscription_id22,
+            name=name,
+            description=description,
+            attributes=subscription_update_attributes_model,
+        )
+
+        assert update_subscription_response.get_status_code() == 200
+        subscription_response = update_subscription_response.get_result()
+        assert subscription_response is not None
+
+        subscription_name = subscription_response.get("name")
+        subscription_description = subscription_response.get("description")
+
+        assert subscription_name == name
+        assert subscription_description == description
+
     #
     # The following status codes aren't covered by tests.
     # Please provide integration tests for these too.
@@ -3894,6 +4087,7 @@ class TestEventNotificationsV1:
             subscription_id19,
             subscription_id20,
             subscription_id21,
+            subscription_id22,
         ]:
             delete_subscription_response = self.event_notifications_service.delete_subscription(instance_id, id)
 
@@ -3944,6 +4138,7 @@ class TestEventNotificationsV1:
             destination_id18,
             destination_id19,
             destination_id20,
+            destination_id22,
         ]:
             delete_destination_response = self.event_notifications_service.delete_destination(instance_id, id)
         print(
@@ -3971,6 +4166,7 @@ class TestEventNotificationsV1:
             event_streams_template_id,
             code_engine_app_template_id,
             code_engine_job_template_id,
+            app_config_template_id,
         ]:
             delete_template_response = self.event_notifications_service.delete_template(instance_id, id)
         print(

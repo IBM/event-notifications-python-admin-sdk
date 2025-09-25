@@ -68,6 +68,7 @@ destination_id17 = ""
 destination_id18 = ""
 destination_id19 = ""
 destination_id20 = ""
+destination_id22 = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -80,6 +81,7 @@ subscription_id7 = ""
 subscription_id8 = ""
 subscription_id9 = ""
 subscription_id10 = ""
+subscription_id22 = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -123,6 +125,9 @@ code_engine_app_template_id = ""
 code_engine_job_template_id = ""
 code_engine_app_template_body = ""
 code_engine_job_template_body = ""
+app_config_crn = ""
+app_config_template_body = ""
+app_config_template_id = ""
 
 
 ##############################################################################
@@ -136,7 +141,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, event_streams_template_body, code_engine_app_template_body, code_engine_job_template_body
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, event_streams_template_body, code_engine_app_template_body, code_engine_job_template_body, app_config_template_body, app_config_crn
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -420,7 +425,7 @@ class TestEventNotificationsV1Examples:
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19, destination_id20
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19, destination_id20, destination_id22
         try:
             print("\ncreate_destination() result:")
             # begin-create_destination
@@ -870,6 +875,31 @@ class TestEventNotificationsV1Examples:
             destination = DestinationResponse.from_dict(destination_response)
             destination_id20 = destination.id
 
+            destination_config_model = {
+                "params": {
+                    "crn": app_config_crn,
+                    "type": "features",
+                    "environment_id": "dev",
+                    "feature_id": "flag_test",
+                }
+            }
+
+            name = "App_config_destination"
+            typeval = "app_configuration"
+            description = "App Configuration Destination"
+
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+                config=destination_config_model,
+            )
+
+            destination_response = create_destination_response.get_result()
+            destination = DestinationResponse.from_dict(destination_response)
+            destination_id22 = destination.id
+
             # end-create_destination
 
         except ApiException as e:
@@ -911,7 +941,7 @@ class TestEventNotificationsV1Examples:
         """
         create_template request example
         """
-        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id, code_engine_app_template_id, code_engine_job_template_id
+        global template_notification_id, template_invitation_id, slack_template_id, webhook_template_id, pagerduty_template_id, event_streams_template_id, code_engine_app_template_id, code_engine_job_template_id, app_config_template_id
         try:
             print("\ncreate_template() result:")
             # begin-create_template
@@ -1085,6 +1115,28 @@ class TestEventNotificationsV1Examples:
             template_response = create_template_response.get_result()
             template = TemplateResponse.from_dict(template_response)
             code_engine_job_template_id = template.id
+
+            app_config_template_config_model_json = {'body': app_config_template_body}
+
+            app_config_template_config_model = TemplateConfigOneOfAppConfigurationTemplateConfig.from_dict(
+                app_config_template_config_model_json
+            )
+
+            name = "template_app_config"
+            typeval = "app_configuration.notification"
+            description = "app config template create"
+
+            create_template_response = self.event_notifications_service.create_template(
+                instance_id,
+                name,
+                type=typeval,
+                params=app_config_template_config_model,
+                description=description,
+            )
+
+            template_response = create_template_response.get_result()
+            template = TemplateResponse.from_dict(template_response)
+            app_config_template_id = template.id
 
             # end-create_template
 
@@ -1590,6 +1642,27 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(update_destination_response, indent=2))
 
+            destination_config_model = {
+                "params": {
+                    "crn": app_config_crn,
+                    "environment_id": "dev",
+                    "feature_id": "flag_test",
+                }
+            }
+
+            name = "app_config_destination_update"
+            description = "App Config Destination update"
+
+            update_destination_response = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id22,
+                name=name,
+                description=description,
+                config=destination_config_model,
+            ).get_result()
+
+            print(json.dumps(update_destination_response, indent=2))
+
             # end-update_destination
 
         except ApiException as e:
@@ -1745,6 +1818,28 @@ class TestEventNotificationsV1Examples:
             replace_template_response = update_template_response.get_result()
             print(json.dumps(replace_template_response, indent=2))
 
+            app_config_template_config_model_json = {'body': app_config_template_body}
+
+            app_config_template_config_model = TemplateConfigOneOfAppConfigurationTemplateConfig.from_dict(
+                app_config_template_config_model_json
+            )
+
+            name = "template_app_config"
+            typeval = "app_configuration.notification"
+            description = "app config template"
+
+            replace_template_response = self.event_notifications_service.replace_template(
+                instance_id,
+                id=app_config_template_id,
+                name=name,
+                description=description,
+                type=typeval,
+                params=app_config_template_config_model,
+            )
+
+            replace_template_response = update_template_response.get_result()
+            print(json.dumps(replace_template_response, indent=2))
+
             # end-replace_template
         except ApiException as e:
             pytest.fail(str(e))
@@ -1754,7 +1849,7 @@ class TestEventNotificationsV1Examples:
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id22
         try:
             print("\ncreate_subscription() result:")
             # begin-create_subscription
@@ -1991,6 +2086,29 @@ class TestEventNotificationsV1Examples:
 
             subscription_response = create_subscription_response.get_result()
             subscription_idq10 = subscription_response.get("id")
+
+            name = "App Config subscription"
+            description = "Subscription for App Config"
+
+            subscription_create_attributes_model_json = {
+                'feature_flag_enabled': True,
+            }
+
+            subscription_create_attributes_model = SubscriptionCreateAttributesAppConfigurationAttributes.from_dict(
+                subscription_create_attributes_model_json
+            )
+
+            create_subscription_response = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id22,
+                topic_id=topic_id,
+                description=description,
+                attributes=subscription_create_attributes_model,
+            )
+
+            subscription_response = create_subscription_response.get_result()
+            subscription_id22 = subscription_response.get("id")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -2275,6 +2393,28 @@ class TestEventNotificationsV1Examples:
             update_subscription_response = self.event_notifications_service.update_subscription(
                 instance_id,
                 id=subscription_id10,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+
+            name = "App Config subscription update"
+            description = "Subscription for App Config updated"
+
+            subscription_update_attributes_model_json = {
+                'template_id_notification': app_config_template_id,
+            }
+
+            subscription_update_attributes_model = SubscriptionUpdateAttributesAppConfigurationAttributes.from_dict(
+                subscription_update_attributes_model_json
+            )
+
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id22,
                 name=name,
                 description=description,
                 attributes=subscription_update_attributes_model,
@@ -2736,6 +2876,7 @@ class TestEventNotificationsV1Examples:
                 subscription_id8,
                 subscription_id9,
                 subscription_id10,
+                subscription_id22,
             ]:
                 delete_subscription_response = event_notifications_service.delete_subscription(instance_id, id)
             print(
@@ -2796,6 +2937,7 @@ class TestEventNotificationsV1Examples:
                 destination_id18,
                 destination_id19,
                 destination_id20,
+                destination_id22,
             ]:
                 delete_destination_response = event_notifications_service.delete_destination(instance_id, id)
             print(
@@ -2820,6 +2962,7 @@ class TestEventNotificationsV1Examples:
             event_streams_template_id,
             code_engine_app_template_id,
             code_engine_job_template_id,
+            app_config_template_id,
         ]:
             # begin-delete_template
             delete_template_response = event_notifications_service.delete_template(instance_id, id).get_result()
