@@ -593,6 +593,24 @@ create_template_response = event_notifications_service.create_template(
 
 For Code Engine template supported template type values: ibmceapp.notification and ibmcejob.notification
 
+#### App Configuration Template
+
+```py
+template_config_model = {
+    'body': 'base 64 encoded json body',
+}
+
+create_template_response = event_notifications_service.create_template(
+    instance_id=<instance-id>,
+    name=<template-name>,
+    type=<template-type>,
+    params=template_config_model,
+    description=<template-description>
+).get_result()
+```
+
+For App Configuration template supported template type values: app_configuration.notification
+
 ### List Templates
 
 ```py
@@ -712,6 +730,24 @@ replace_template_response = event_notifications_service.replace_template(
 ```
 For Code Engine template supported template type values: ibmceapp.notification and ibmcejob.notification
 
+#### Update App Configuration Template
+
+```py
+template_config_model = {
+    'body': 'base 64 encode json content',
+}
+
+replace_template_response = event_notifications_service.replace_template(
+    instance_id=<instance-id>,
+    id=<template_id>
+    name=<template_name>,
+    type=<template-type>,
+    description=<template-description>,
+    params=template_config_model
+).get_result()
+```
+For App Configuration template supported template type values: app_configuration.notification
+
 ### Delete Template
 
 ```py
@@ -783,6 +819,52 @@ subscription = event_notifications_service.create_subscription(
 ).get_result()
 
 print(json.dumps(subscription, indent=2))
+```
+
+### ⚠️ Special Consideration for App Configuration Destination
+
+When creating or updating a subscription for an **App Configuration** destination, the `attributes` object has a specific rule:
+
+- You must include **either** `feature_flag_enabled` **or** `template_id_notification`
+- You **cannot** include both properties together
+
+This ensures that a subscription is created for the correct use case — either **feature flag evaluation** or **notification templating**, but not both at once.
+
+#### ✅ Valid Example (Feature Flag Evaluation)
+
+```py
+subscription_create_attributes_model_json = {
+    'feature_flag_enabled': True,
+}
+
+subscription_create_attributes_model = SubscriptionCreateAttributesAppConfigurationAttributes.from_dict(
+    subscription_create_attributes_model_json
+)
+```
+
+#### ✅ Valid Example (template association)
+
+```py
+subscription_create_attributes_model_json = {
+    'template_id_notification': <template-id>,
+}
+
+subscription_create_attributes_model = SubscriptionCreateAttributesAppConfigurationAttributes.from_dict(
+    subscription_create_attributes_model_json
+)
+```
+
+#### ❌ Invalid Example (Not Allowed)
+
+```py
+subscription_create_attributes_model_json = {
+    'template_id_notification': <template-id>,
+    'feature_flag_enabled': True,
+}
+
+subscription_create_attributes_model = SubscriptionCreateAttributesAppConfigurationAttributes.from_dict(
+    subscription_create_attributes_model_json
+)
 ```
 
 ### List Subscriptions
@@ -1307,6 +1389,8 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_EVENT_STREAMS_ENDPOINT` - Event streams end point
 - `EVENT_NOTIFICATIONS_CODE_ENGINE_APP_TEMPLATE_BODY` - base 64 encoded json body for Code Engine Application
 - `EVENT_NOTIFICATIONS_CODE_ENGINE_JOB_TEMPLATE_BODY` - base 64 encoded json body for Code Engine Job
+- `EVENT_NOTIFICATIONS_APP_CONFIG_CRN` - CRN of App Configuration instance
+- `EVENT_NOTIFICATIONS_APP_CONFIG_TEMPLATE_BODY` -  base 64 encoded json body for App Configuration
 
 ## Questions
 

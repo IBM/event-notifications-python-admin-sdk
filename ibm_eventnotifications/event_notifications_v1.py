@@ -3342,6 +3342,7 @@ class CreateDestinationEnums:
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
+        APP_CONFIGURATION = 'app_configuration'
 
 
 ##############################################################################
@@ -3791,6 +3792,7 @@ class Destination:
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
+        APP_CONFIGURATION = 'app_configuration'
 
 
 class DestinationConfig:
@@ -3887,6 +3889,7 @@ class DestinationConfigOneOf:
                     'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig',
                     'DestinationConfigOneOfHuaweiDestinationConfig',
                     'DestinationConfigOneOfEventStreamsDestinationConfig',
+                    'DestinationConfigOneOfAppConfigurationDestinationConfig',
                 ]
             )
         )
@@ -4173,6 +4176,7 @@ class DestinationListItem:
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
+        APP_CONFIGURATION = 'app_configuration'
 
 
 class DestinationResponse:
@@ -4319,6 +4323,7 @@ class DestinationResponse:
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
+        APP_CONFIGURATION = 'app_configuration'
 
 
 class DestinationTagsSubscriptionResponse:
@@ -9086,6 +9091,7 @@ class Subscription:
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
+        APP_CONFIGURATION = 'app_configuration'
 
 
 class SubscriptionAttributes:
@@ -9117,6 +9123,7 @@ class SubscriptionAttributes:
                     'SubscriptionAttributesServiceNowAttributesResponse',
                     'SubscriptionAttributesEventStreamsAttributesResponse',
                     'SubscriptionAttributesCodeEngineAttributesResponse',
+                    'SubscriptionAttributesAppConfigurationAttributesResponse',
                 ]
             )
         )
@@ -9151,6 +9158,7 @@ class SubscriptionCreateAttributes:
                     'SubscriptionCreateAttributesServiceNowAttributes',
                     'SubscriptionCreateAttributesEventstreamsAttributes',
                     'SubscriptionCreateAttributesCodeEngineAttributes',
+                    'SubscriptionCreateAttributesAppConfigurationAttributes',
                 ]
             )
         )
@@ -9445,6 +9453,7 @@ class SubscriptionListItem:
         SMTP_CUSTOM = 'smtp_custom'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
+        APP_CONFIGURATION = 'app_configuration'
 
 
 class SubscriptionUpdateAttributes:
@@ -9474,6 +9483,7 @@ class SubscriptionUpdateAttributes:
                     'SubscriptionUpdateAttributesServiceNowAttributes',
                     'SubscriptionUpdateAttributesEventstreamsAttributes',
                     'SubscriptionUpdateAttributesCodeEngineAttributes',
+                    'SubscriptionUpdateAttributesAppConfigurationAttributes',
                 ]
             )
         )
@@ -9851,6 +9861,7 @@ class TemplateConfigOneOf:
                     'TemplateConfigOneOfEventStreamsTemplateConfig',
                     'TemplateConfigOneOfCodeEngineApplicationTemplateConfig',
                     'TemplateConfigOneOfCodeEngineJobTemplateConfig',
+                    'TemplateConfigOneOfAppConfigurationTemplateConfig',
                 ]
             )
         )
@@ -10846,6 +10857,111 @@ class VerificationResponse:
     def __ne__(self, other: 'VerificationResponse') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class DestinationConfigOneOfAppConfigurationDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a App Configuration destination configuration.
+
+    :attr str type: The App Configuration Destination type.
+    :attr str crn: CRN of the App Configuration instance.
+    :attr str environment_id: Environment ID of App Configuration.
+    :attr str feature_id: Feature ID of App Configuration.
+    """
+
+    def __init__(
+        self,
+        type: str,
+        crn: str,
+        environment_id: str,
+        feature_id: str,
+    ) -> None:
+        """
+        Initialize a DestinationConfigOneOfAppConfigurationDestinationConfig object.
+
+        :param str type: The App Configuration Destination type.
+        :param str crn: CRN of the App Configuration instance.
+        :param str environment_id: Environment ID of App Configuration.
+        :param str feature_id: Feature ID of App Configuration.
+        """
+        # pylint: disable=super-init-not-called
+        self.type = type
+        self.crn = crn
+        self.environment_id = environment_id
+        self.feature_id = feature_id
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfAppConfigurationDestinationConfig':
+        """Initialize a DestinationConfigOneOfAppConfigurationDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'type' in _dict:
+            args['type'] = _dict.get('type')
+        else:
+            raise ValueError(
+                'Required property \'type\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
+            )
+        if 'crn' in _dict:
+            args['crn'] = _dict.get('crn')
+        else:
+            raise ValueError(
+                'Required property \'crn\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
+            )
+        if 'environment_id' in _dict:
+            args['environment_id'] = _dict.get('environment_id')
+        else:
+            raise ValueError(
+                'Required property \'environment_id\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
+            )
+        if 'feature_id' in _dict:
+            args['feature_id'] = _dict.get('feature_id')
+        else:
+            raise ValueError(
+                'Required property \'feature_id\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfAppConfigurationDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'type') and self.type is not None:
+            _dict['type'] = self.type
+        if hasattr(self, 'crn') and self.crn is not None:
+            _dict['crn'] = self.crn
+        if hasattr(self, 'environment_id') and self.environment_id is not None:
+            _dict['environment_id'] = self.environment_id
+        if hasattr(self, 'feature_id') and self.feature_id is not None:
+            _dict['feature_id'] = self.feature_id
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfAppConfigurationDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfAppConfigurationDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfAppConfigurationDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class TypeEnum(str, Enum):
+        """
+        The App Configuration Destination type.
+        """
+
+        FEATURES = 'features'
 
 
 class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
@@ -12355,6 +12471,115 @@ class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
         PATCH = 'patch'
 
 
+class SubscriptionAttributesAppConfigurationAttributesResponse(SubscriptionAttributes):
+    """
+    The attributes for a App Configuration notification.
+
+    :attr bool feature_flag_enabled: (optional) App Configuration enable feature
+          flag attribute.
+    :attr str template_id_notification: (optional) App Configuration template id.
+    """
+
+    # The set of defined properties for the class
+    _properties = frozenset(['feature_flag_enabled', 'template_id_notification'])
+
+    def __init__(
+        self,
+        *,
+        feature_flag_enabled: bool = None,
+        template_id_notification: str = None,
+        **kwargs,
+    ) -> None:
+        """
+        Initialize a SubscriptionAttributesAppConfigurationAttributesResponse object.
+
+        :param bool feature_flag_enabled: (optional) App Configuration enable
+               feature flag attribute.
+        :param str template_id_notification: (optional) App Configuration template
+               id.
+        :param **kwargs: (optional) Any additional properties.
+        """
+        # pylint: disable=super-init-not-called
+        self.feature_flag_enabled = feature_flag_enabled
+        self.template_id_notification = template_id_notification
+        for _key, _value in kwargs.items():
+            setattr(self, _key, _value)
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionAttributesAppConfigurationAttributesResponse':
+        """Initialize a SubscriptionAttributesAppConfigurationAttributesResponse object from a json dictionary."""
+        args = {}
+        if 'feature_flag_enabled' in _dict:
+            args['feature_flag_enabled'] = _dict.get('feature_flag_enabled')
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionAttributesAppConfigurationAttributesResponse object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'feature_flag_enabled') and self.feature_flag_enabled is not None:
+            _dict['feature_flag_enabled'] = self.feature_flag_enabled
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        for _key in [
+            k
+            for k in vars(self).keys()
+            if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def get_properties(self) -> Dict:
+        """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesAppConfigurationAttributesResponse"""
+        _dict = {}
+
+        for _key in [
+            k
+            for k in vars(self).keys()
+            if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties
+        ]:
+            _dict[_key] = getattr(self, _key)
+        return _dict
+
+    def set_properties(self, _dict: dict):
+        """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesAppConfigurationAttributesResponse"""
+        for _key in [
+            k
+            for k in vars(self).keys()
+            if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties
+        ]:
+            delattr(self, _key)
+
+        for _key, _value in _dict.items():
+            if _key not in SubscriptionAttributesAppConfigurationAttributesResponse._properties:
+                setattr(self, _key, _value)
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionAttributesAppConfigurationAttributesResponse object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionAttributesAppConfigurationAttributesResponse') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionAttributesAppConfigurationAttributesResponse') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionAttributesCodeEngineAttributesResponse(SubscriptionAttributes):
     """
     The attributes for a Code Engine response.
@@ -13736,6 +13961,76 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
         return not self == other
 
 
+class SubscriptionCreateAttributesAppConfigurationAttributes(SubscriptionCreateAttributes):
+    """
+    The attributes for a App Configuration subscription.
+
+    :attr bool feature_flag_enabled: (optional) App Configuration enable feature
+          flag attribute.
+    :attr str template_id_notification: (optional) App Configuration template id.
+    """
+
+    def __init__(
+        self,
+        *,
+        feature_flag_enabled: bool = None,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionCreateAttributesAppConfigurationAttributes object.
+
+        :param bool feature_flag_enabled: (optional) App Configuration enable
+               feature flag attribute.
+        :param str template_id_notification: (optional) App Configuration template
+               id.
+        """
+        # pylint: disable=super-init-not-called
+        self.feature_flag_enabled = feature_flag_enabled
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesAppConfigurationAttributes':
+        """Initialize a SubscriptionCreateAttributesAppConfigurationAttributes object from a json dictionary."""
+        args = {}
+        if 'feature_flag_enabled' in _dict:
+            args['feature_flag_enabled'] = _dict.get('feature_flag_enabled')
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionCreateAttributesAppConfigurationAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'feature_flag_enabled') and self.feature_flag_enabled is not None:
+            _dict['feature_flag_enabled'] = self.feature_flag_enabled
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionCreateAttributesAppConfigurationAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionCreateAttributesAppConfigurationAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionCreateAttributesAppConfigurationAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionCreateAttributesCodeEngineAttributes(SubscriptionCreateAttributes):
     """
     The attributes for a Code Engine subscription.
@@ -14623,6 +14918,76 @@ class SubscriptionCreateAttributesWebhookAttributes(SubscriptionCreateAttributes
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionCreateAttributesWebhookAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SubscriptionUpdateAttributesAppConfigurationAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for a App Configuration subscription.
+
+    :attr bool feature_flag_enabled: (optional) App Configuration enable feature
+          flag attribute.
+    :attr str template_id_notification: (optional) App Configuration template id.
+    """
+
+    def __init__(
+        self,
+        *,
+        feature_flag_enabled: bool = None,
+        template_id_notification: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesAppConfigurationAttributes object.
+
+        :param bool feature_flag_enabled: (optional) App Configuration enable
+               feature flag attribute.
+        :param str template_id_notification: (optional) App Configuration template
+               id.
+        """
+        # pylint: disable=super-init-not-called
+        self.feature_flag_enabled = feature_flag_enabled
+        self.template_id_notification = template_id_notification
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesAppConfigurationAttributes':
+        """Initialize a SubscriptionUpdateAttributesAppConfigurationAttributes object from a json dictionary."""
+        args = {}
+        if 'feature_flag_enabled' in _dict:
+            args['feature_flag_enabled'] = _dict.get('feature_flag_enabled')
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesAppConfigurationAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'feature_flag_enabled') and self.feature_flag_enabled is not None:
+            _dict['feature_flag_enabled'] = self.feature_flag_enabled
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesAppConfigurationAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesAppConfigurationAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesAppConfigurationAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -15577,6 +15942,68 @@ class SubscriptionUpdateAttributesWebhookAttributes(SubscriptionUpdateAttributes
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionUpdateAttributesWebhookAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class TemplateConfigOneOfAppConfigurationTemplateConfig(TemplateConfigOneOf):
+    """
+    Payload describing a App Configuration template configuration.
+
+    :attr str body: Template body(Base64 encoded).
+    """
+
+    def __init__(
+        self,
+        body: str,
+    ) -> None:
+        """
+        Initialize a TemplateConfigOneOfAppConfigurationTemplateConfig object.
+
+        :param str body: Template body(Base64 encoded).
+        """
+        # pylint: disable=super-init-not-called
+        self.body = body
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'TemplateConfigOneOfAppConfigurationTemplateConfig':
+        """Initialize a TemplateConfigOneOfAppConfigurationTemplateConfig object from a json dictionary."""
+        args = {}
+        if 'body' in _dict:
+            args['body'] = _dict.get('body')
+        else:
+            raise ValueError(
+                'Required property \'body\' not present in TemplateConfigOneOfAppConfigurationTemplateConfig JSON'
+            )
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a TemplateConfigOneOfAppConfigurationTemplateConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'body') and self.body is not None:
+            _dict['body'] = self.body
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this TemplateConfigOneOfAppConfigurationTemplateConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'TemplateConfigOneOfAppConfigurationTemplateConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'TemplateConfigOneOfAppConfigurationTemplateConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
