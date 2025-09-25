@@ -1,3 +1,10 @@
+# [0.20.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.19.0...v0.20.0) (2025-09-25)
+
+
+### Features
+
+* adds support for app configuration as a destination ([#77](https://github.com/IBM/event-notifications-python-admin-sdk/issues/77)) ([ab52b95](https://github.com/IBM/event-notifications-python-admin-sdk/commit/ab52b95a17c9e55a9fbd6075f5fd9b82de0bf61a))
+
 # [0.19.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.18.0...v0.19.0) (2025-09-04)
 
 
