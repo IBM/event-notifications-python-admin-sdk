@@ -108,6 +108,7 @@ cos_instance_crn = ""
 cos_integration_id = ""
 code_engine_project_CRN = ""
 smtp_user_id = ""
+smtp_user_id2 = ""
 smtp_config_id = ""
 notificationID = ""
 slack_dm_token = ""
@@ -128,6 +129,7 @@ code_engine_job_template_body = ""
 app_config_crn = ""
 app_config_template_body = ""
 app_config_template_id = ""
+smtp_user_to_clone = ""
 
 
 ##############################################################################
@@ -141,7 +143,7 @@ class TestEventNotificationsV1Examples:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, event_streams_template_body, code_engine_app_template_body, code_engine_job_template_body, app_config_template_body, app_config_crn
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, code_engine_URL, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, cos_instance_crn, template_body, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, event_streams_template_body, code_engine_app_template_body, code_engine_job_template_body, app_config_template_body, app_config_crn, smtp_user_to_clone
         global event_notifications_service
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
@@ -189,6 +191,7 @@ class TestEventNotificationsV1Examples:
             event_streams_topic = cls.config["EVENT_STREAMS_TOPIC"]
             code_engine_job_template_body = cls.config["CODE_ENGINE_JOB_TEMPLATE_BODY"]
             code_engine_app_template_body = cls.config["CODE_ENGINE_APP_TEMPLATE_BODY"]
+            smtp_user_to_clone = cls.config["SMTP_USER_TO_CLONE"]
             assert event_streams_crn is not None
             assert event_streams_endpoint is not None
             assert event_streams_topic is not None
@@ -212,6 +215,7 @@ class TestEventNotificationsV1Examples:
             assert pagerduty_template_body is not None
             assert code_engine_job_template_body is not None
             assert code_engine_app_template_body is not None
+            assert smtp_user_to_clone is not None
 
         print("Setup complete.")
 
@@ -2632,7 +2636,7 @@ class TestEventNotificationsV1Examples:
         try:
             print("\n test_create_smtp_user_example() result:")
             # begin-create_smtp_user
-            global smtp_user_id
+            global smtp_user_id, smtp_user_id2
             description = 'SMTP user description'
             create_smtp_user_response = self.event_notifications_service.create_smtp_user(
                 instance_id, id=smtp_config_id, description=description
@@ -2643,6 +2647,15 @@ class TestEventNotificationsV1Examples:
             smtp_user = SMTPUserResponse.from_dict(create_user_response)
             smtp_user_id = smtp_user.id
             # end-create_smtp_user
+
+            clone_smtp_user_response = self.event_notifications_service.create_smtp_user(
+                instance_id, id=smtp_config_id, username_to_clone=smtp_user_to_clone
+            )
+
+            clone_user_response = clone_smtp_user_response.get_result()
+            print(json.dumps(clone_user_response, indent=2))
+            smtp_user = SMTPUserResponse.from_dict(clone_user_response)
+            smtp_user_id2 = smtp_user.id
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -2831,6 +2844,12 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(delete_smtp_user_response, indent=2))
             # end-delete_smtp_user
+
+            delete_clone_smtp_user_response = self.event_notifications_service.delete_smtp_user(
+                instance_id, id=smtp_config_id, user_id=smtp_user_id2
+            )
+
+            print(json.dumps(delete_clone_smtp_user_response, indent=2))
 
         except ApiException as e:
             pytest.fail(str(e))

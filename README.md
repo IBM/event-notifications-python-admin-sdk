@@ -143,6 +143,7 @@ SDK Methods to consume
 - [SMTP Configurations](#SMTPConfigurations)
   - [Create SMTP Configuration](#create-smtp-configuration)
   - [Create SMTP User](#create-smtp-user)
+  - [Clone SMTP User](#clone-smtp-user)
   - [Get SMTP Configuration](#get-smtp-configuration)
   - [Get SMTP User](#get-smtp-user)
   - [Get SMTP Allowed Ips](#get-smtp-allowed-ips)
@@ -1037,6 +1038,20 @@ create_user_response = create_smtp_user_response.get_result()
 
 ```
 
+### Clone SMTP User
+
+```py
+
+clone_smtp_user_response = self.event_notifications_service.create_smtp_user(
+    instance_id=<instance-id>,
+    id=<smtp-config-id>,
+    username_to_clone=<smtp_user_to_clone>,
+)
+
+clone_user_response = create_smtp_user_response.get_result()
+
+```
+
 ### Get SMTP Configuration
 
 ```py
@@ -1391,6 +1406,7 @@ Find `event_notifications_v1.env.hide` in the repo and rename it to `event_notif
 - `EVENT_NOTIFICATIONS_CODE_ENGINE_JOB_TEMPLATE_BODY` - base 64 encoded json body for Code Engine Job
 - `EVENT_NOTIFICATIONS_APP_CONFIG_CRN` - CRN of App Configuration instance
 - `EVENT_NOTIFICATIONS_APP_CONFIG_TEMPLATE_BODY` -  base 64 encoded json body for App Configuration
+- `EVENT_NOTIFICATIONS_SMTP_USER_TO_CLONE` - SMTP username to be cloned
 
 ## Questions
 
