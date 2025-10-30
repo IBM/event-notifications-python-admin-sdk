@@ -1,3 +1,10 @@
+# [0.21.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.20.0...v0.21.0) (2025-10-30)
+
+
+### Features
+
+* support for clone smtp user credentials ([#78](https://github.com/IBM/event-notifications-python-admin-sdk/issues/78)) ([653e299](https://github.com/IBM/event-notifications-python-admin-sdk/commit/653e2993f5204270778647182ea2c05109a7fec3))
+
 # [0.20.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.19.0...v0.20.0) (2025-09-25)
 
 
