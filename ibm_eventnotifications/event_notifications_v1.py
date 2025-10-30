@@ -2696,6 +2696,7 @@ class EventNotificationsV1(BaseService):
         id: str,
         *,
         description: str = None,
+        username_to_clone: str = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2707,6 +2708,7 @@ class EventNotificationsV1(BaseService):
                instance.
         :param str id: Unique identifier for SMTP.
         :param str description: (optional) The description of SMTP configuration.
+        :param str username_to_clone: (optional) provide name of the user to clone.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SMTPUserResponse` object
@@ -2723,6 +2725,10 @@ class EventNotificationsV1(BaseService):
             operation_id='create_smtp_user',
         )
         headers.update(sdk_headers)
+
+        params = {
+            'username_to_clone': username_to_clone,
+        }
 
         data = {
             'description': description,
@@ -2744,6 +2750,7 @@ class EventNotificationsV1(BaseService):
             method='POST',
             url=url,
             headers=headers,
+            params=params,
             data=data,
         )
 
@@ -7785,7 +7792,8 @@ class SMTPUserResponse:
     :attr str domain: (optional) Domain Name.
     :attr str smtp_config_id: SMTP confg Id.
     :attr str username: SMTP user name.
-    :attr str password: password.
+    :attr str password: (optional) Password for SMTP user; Cloned SMTP user response
+          do not include a password.
     :attr datetime created_at: Created time.
     """
 
@@ -7794,11 +7802,11 @@ class SMTPUserResponse:
         id: str,
         smtp_config_id: str,
         username: str,
-        password: str,
         created_at: datetime,
         *,
         description: str = None,
         domain: str = None,
+        password: str = None,
     ) -> None:
         """
         Initialize a SMTPUserResponse object.
@@ -7806,10 +7814,11 @@ class SMTPUserResponse:
         :param str id: SMTP Id.
         :param str smtp_config_id: SMTP confg Id.
         :param str username: SMTP user name.
-        :param str password: password.
         :param datetime created_at: Created time.
         :param str description: (optional) SMTP User description.
         :param str domain: (optional) Domain Name.
+        :param str password: (optional) Password for SMTP user; Cloned SMTP user
+               response do not include a password.
         """
         self.id = id
         self.description = description
@@ -7841,8 +7850,6 @@ class SMTPUserResponse:
             raise ValueError('Required property \'username\' not present in SMTPUserResponse JSON')
         if 'password' in _dict:
             args['password'] = _dict.get('password')
-        else:
-            raise ValueError('Required property \'password\' not present in SMTPUserResponse JSON')
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
         else:

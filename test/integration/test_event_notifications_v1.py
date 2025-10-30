@@ -106,7 +106,9 @@ slack_template_body = ""
 cos_instance_crn = ""
 cos_integration_id = ""
 smtp_config_id = ""
+smtp_user_to_clone = ""
 smtp_user_id = ""
+smtp_user_id2 = ""
 slack_dm_token = ""
 slack_channel_id = ""
 webhook_template_id = ""
@@ -135,7 +137,7 @@ class TestEventNotificationsV1:
 
     @classmethod
     def setup_class(cls):
-        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id, pagerduty_template_body, event_streams_template_body, event_streams_crn, event_streams_topic, event_streams_endpoint, code_engine_job_template_body, code_engine_app_template_body, app_config_template_body, app_config_crn
+        global instance_id, fcmServerKey, fcmSenderId, safariCertificatePath, fcm_project_id, fcm_private_key, fcm_client_email, huawei_client_id, huawei_client_secret, cos_instance_id, cos_end_point, cos_bucket_name, slack_url, teams_url, pager_duty_api_key, pager_duty_routing_key, template_body, cos_instance_crn, code_engine_project_CRN, slack_template_body, slack_dm_token, slack_channel_id, webhook_template_body, code_engine_URL, snow_client_id, snow_client_secret, snow_user_name, snow_password, snow_instance_name, scheduler_source_id, pagerduty_template_body, event_streams_template_body, event_streams_crn, event_streams_topic, event_streams_endpoint, code_engine_job_template_body, code_engine_app_template_body, app_config_template_body, app_config_crn, smtp_user_to_clone
         if os.path.exists(config_file):
             os.environ["IBM_CREDENTIALS_FILE"] = config_file
 
@@ -186,6 +188,7 @@ class TestEventNotificationsV1:
             code_engine_app_template_body = cls.config["CODE_ENGINE_APP_TEMPLATE_BODY"]
             app_config_crn = cls.config["APP_CONFIG_CRN"]
             app_config_template_body = cls.config["APP_CONFIG_TEMPLATE_BODY"]
+            smtp_user_to_clone = cls.config["SMTP_USER_TO_CLONE"]
 
             assert instance_id is not None
             assert fcmServerKey is not None
@@ -220,6 +223,7 @@ class TestEventNotificationsV1:
             assert code_engine_app_template_body is not None
             assert app_config_crn is not None
             assert app_config_template_body is not None
+            assert smtp_user_to_clone is not None
 
         print("Setup complete.")
 
@@ -3821,7 +3825,7 @@ class TestEventNotificationsV1:
 
         global smtp_config_id
         name = "SMTP configuration"
-        domain = "test.event-notifications.test.cloud.ibm.com"
+        domain = "mailx.event-notifications.test.cloud.ibm.com"
         description = "SMTP description"
 
         create_smtp_config_response = self.event_notifications_service.create_smtp_configuration(
@@ -3888,6 +3892,24 @@ class TestEventNotificationsV1:
         assert smtp_user.password is not None
         assert smtp_user.description == description
         smtp_user_id = smtp_user.id
+
+    @needscredentials
+    def test_clone_smtp_user(self):
+
+        global smtp_user_id, smtp_user_id2
+        description = 'SMTP user description'
+        create_smtp_user_response = self.event_notifications_service.create_smtp_user(
+            instance_id, id=smtp_config_id, username_to_clone=smtp_user_to_clone, description=description
+        )
+
+        assert create_smtp_user_response.get_status_code() == 201
+        create_user_response = create_smtp_user_response.get_result()
+        assert create_user_response is not None
+
+        smtp_user = SMTPUserResponse.from_dict(create_user_response)
+        assert smtp_user.username is not None
+        assert smtp_user.description == description
+        smtp_user_id2 = smtp_user.id
 
     @needscredentials
     def test_list_smtp_configurations(self):
@@ -4048,6 +4070,7 @@ class TestEventNotificationsV1:
     def test_delete_smtp_user(self):
         for id in [
             smtp_user_id,
+            smtp_user_id2,
         ]:
             delete_smtp_user_response = self.event_notifications_service.delete_smtp_user(
                 instance_id, id=smtp_config_id, user_id=id

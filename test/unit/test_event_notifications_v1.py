@@ -5825,18 +5825,24 @@ class TestCreateSmtpUser:
         instance_id = 'testString'
         id = 'testString'
         description = 'testString'
+        username_to_clone = 'testString'
 
         # Invoke method
         response = _service.create_smtp_user(
             instance_id,
             id,
             description=description,
+            username_to_clone=username_to_clone,
             headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 201
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'username_to_clone={}'.format(username_to_clone) in query_string
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['description'] == 'testString'
@@ -5849,6 +5855,46 @@ class TestCreateSmtpUser:
         # Disable retries and run test_create_smtp_user_all_params.
         _service.disable_retries()
         self.test_create_smtp_user_all_params()
+
+    @responses.activate
+    def test_create_smtp_user_required_params(self):
+        """
+        test_create_smtp_user_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/smtp/config/testString/users')
+        mock_response = '{"id": "id", "description": "description", "domain": "domain", "smtp_config_id": "smtp_config_id", "username": "username", "password": "password", "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.POST,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=201,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+
+        # Invoke method
+        response = _service.create_smtp_user(
+            instance_id,
+            id,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 201
+
+    def test_create_smtp_user_required_params_with_retries(self):
+        # Enable retries and run test_create_smtp_user_required_params.
+        _service.enable_retries()
+        self.test_create_smtp_user_required_params()
+
+        # Disable retries and run test_create_smtp_user_required_params.
+        _service.disable_retries()
+        self.test_create_smtp_user_required_params()
 
     @responses.activate
     def test_create_smtp_user_value_error(self):
@@ -5869,7 +5915,6 @@ class TestCreateSmtpUser:
         # Set up parameter values
         instance_id = 'testString'
         id = 'testString'
-        description = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
