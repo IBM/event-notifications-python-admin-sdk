@@ -156,6 +156,7 @@ SDK Methods to consume
   - [Verify SMTP](#verify-smtp)
 - [Metrics](#Metrics)
   - [Get Metrics](#get-metrics)
+  - [Get Bounce Metrics](#get-bounce-metrics)
 - [Send Notifications](#send-notifications)
 
 ## Source
@@ -1208,12 +1209,35 @@ get_metrics_response = self.event_notifications_service.get_metrics(
     gte=<gte-timestamp>,
     lte=<lte-timestamp>,
     destination_id=<destination-id>,
+    subscription_id=subscription_id6,
+    source_id=source_id,
     email_to=<email-to>,
     notification_id=<notification-id>,
     subject=<subject>
 )
 
 metric_response = get_metrics_response.get_result()
+
+```
+
+### Get Bounce Metrics
+
+```py
+
+get_bounce_metrics_response = self.event_notifications_service.get_bounce_metrics(
+    instance_id=<instance-id>,
+    destination_type="smtp_custom",
+    gte=<gte-timestamp>,
+    lte=<lte-timestamp>,
+    destination_id=<destination-id>,
+    subscription_id=subscription_id6,
+    source_id=source_id,
+    email_to=<email-to>,
+    notification_id=<notification-id>,
+    subject=<subject>
+)
+
+bounce_metrics_response = get_bounce_metrics_response.get_result()
 
 ```
 

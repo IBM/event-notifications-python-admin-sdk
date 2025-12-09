@@ -85,6 +85,7 @@ class EventNotificationsV1(BaseService):
         lte: str,
         *,
         destination_id: str = None,
+        subscription_id: str = None,
         source_id: str = None,
         email_to: str = None,
         notification_id: str = None,
@@ -103,6 +104,7 @@ class EventNotificationsV1(BaseService):
         :param str gte: GTE (greater than equal), start timestamp in UTC.
         :param str lte: LTE (less than equal), end timestamp in UTC.
         :param str destination_id: (optional) Unique identifier for Destination.
+        :param str subscription_id: (optional) Unique identifier for Subscription.
         :param str source_id: (optional) Unique identifier for Source.
         :param str email_to: (optional) Receiver email id.
         :param str notification_id: (optional) Notification Id.
@@ -133,6 +135,7 @@ class EventNotificationsV1(BaseService):
             'gte': gte,
             'lte': lte,
             'destination_id': destination_id,
+            'subscription_id': subscription_id,
             'source_id': source_id,
             'email_to': email_to,
             'notification_id': notification_id,
@@ -148,6 +151,96 @@ class EventNotificationsV1(BaseService):
         path_param_values = self.encode_path_vars(instance_id)
         path_param_dict = dict(zip(path_param_keys, path_param_values))
         url = '/v1/instances/{instance_id}/metrics'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='GET',
+            url=url,
+            headers=headers,
+            params=params,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def get_bounce_metrics(
+        self,
+        instance_id: str,
+        destination_type: str,
+        gte: str,
+        lte: str,
+        *,
+        destination_id: str = None,
+        subscription_id: str = None,
+        source_id: str = None,
+        email_to: str = None,
+        notification_id: str = None,
+        subject: str = None,
+        limit: int = None,
+        offset: int = None,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Get bounce metrics.
+
+        Get bounce metrics.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str destination_type: Destination type. Allowed values are
+               [smtp_custom].
+        :param str gte: GTE (greater than equal), start timestamp in UTC.
+        :param str lte: LTE (less than equal), end timestamp in UTC.
+        :param str destination_id: (optional) Unique identifier for Destination.
+        :param str subscription_id: (optional) Unique identifier for Subscription.
+        :param str source_id: (optional) Unique identifier for Source.
+        :param str email_to: (optional) Receiver email id.
+        :param str notification_id: (optional) Notification Id.
+        :param str subject: (optional) Email subject.
+        :param int limit: (optional) Page limit for paginated results.
+        :param int offset: (optional) offset for paginated results.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `BounceMetrics` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not destination_type:
+            raise ValueError('destination_type must be provided')
+        if not gte:
+            raise ValueError('gte must be provided')
+        if not lte:
+            raise ValueError('lte must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='get_bounce_metrics',
+        )
+        headers.update(sdk_headers)
+
+        params = {
+            'destination_type': destination_type,
+            'gte': gte,
+            'lte': lte,
+            'destination_id': destination_id,
+            'subscription_id': subscription_id,
+            'source_id': source_id,
+            'email_to': email_to,
+            'notification_id': notification_id,
+            'subject': subject,
+            'limit': limit,
+            'offset': offset,
+        }
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id']
+        path_param_values = self.encode_path_vars(instance_id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/metrics/bounce'.format(**path_param_dict)
         request = self.prepare_request(
             method='GET',
             url=url,
@@ -3323,6 +3416,19 @@ class GetMetricsEnums:
         SMTP_CUSTOM = 'smtp_custom'
 
 
+class GetBounceMetricsEnums:
+    """
+    Enums for get_bounce_metrics parameters.
+    """
+
+    class DestinationType(str, Enum):
+        """
+        Destination type. Allowed values are [smtp_custom].
+        """
+
+        SMTP_CUSTOM = 'smtp_custom'
+
+
 class CreateDestinationEnums:
     """
     Enums for create_destination parameters.
@@ -3355,6 +3461,187 @@ class CreateDestinationEnums:
 ##############################################################################
 # Models
 ##############################################################################
+
+
+class BounceMetricItem:
+    """
+    Bounce metric object.
+
+    :attr str email_address: Email address.
+    :attr str subject: Subject.
+    :attr str error_message: Error message.
+    :attr str ip_address: (optional) IP address.
+    :attr str subscription_id: (optional) Subscription ID.
+    :attr datetime timestamp: Bounced at.
+    """
+
+    def __init__(
+        self,
+        email_address: str,
+        subject: str,
+        error_message: str,
+        timestamp: datetime,
+        *,
+        ip_address: str = None,
+        subscription_id: str = None,
+    ) -> None:
+        """
+        Initialize a BounceMetricItem object.
+
+        :param str email_address: Email address.
+        :param str subject: Subject.
+        :param str error_message: Error message.
+        :param datetime timestamp: Bounced at.
+        :param str ip_address: (optional) IP address.
+        :param str subscription_id: (optional) Subscription ID.
+        """
+        self.email_address = email_address
+        self.subject = subject
+        self.error_message = error_message
+        self.ip_address = ip_address
+        self.subscription_id = subscription_id
+        self.timestamp = timestamp
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'BounceMetricItem':
+        """Initialize a BounceMetricItem object from a json dictionary."""
+        args = {}
+        if 'email_address' in _dict:
+            args['email_address'] = _dict.get('email_address')
+        else:
+            raise ValueError('Required property \'email_address\' not present in BounceMetricItem JSON')
+        if 'subject' in _dict:
+            args['subject'] = _dict.get('subject')
+        else:
+            raise ValueError('Required property \'subject\' not present in BounceMetricItem JSON')
+        if 'error_message' in _dict:
+            args['error_message'] = _dict.get('error_message')
+        else:
+            raise ValueError('Required property \'error_message\' not present in BounceMetricItem JSON')
+        if 'ip_address' in _dict:
+            args['ip_address'] = _dict.get('ip_address')
+        if 'subscription_id' in _dict:
+            args['subscription_id'] = _dict.get('subscription_id')
+        if 'timestamp' in _dict:
+            args['timestamp'] = string_to_datetime(_dict.get('timestamp'))
+        else:
+            raise ValueError('Required property \'timestamp\' not present in BounceMetricItem JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a BounceMetricItem object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'email_address') and self.email_address is not None:
+            _dict['email_address'] = self.email_address
+        if hasattr(self, 'subject') and self.subject is not None:
+            _dict['subject'] = self.subject
+        if hasattr(self, 'error_message') and self.error_message is not None:
+            _dict['error_message'] = self.error_message
+        if hasattr(self, 'ip_address') and self.ip_address is not None:
+            _dict['ip_address'] = self.ip_address
+        if hasattr(self, 'subscription_id') and self.subscription_id is not None:
+            _dict['subscription_id'] = self.subscription_id
+        if hasattr(self, 'timestamp') and self.timestamp is not None:
+            _dict['timestamp'] = datetime_to_string(self.timestamp)
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this BounceMetricItem object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'BounceMetricItem') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'BounceMetricItem') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class BounceMetrics:
+    """
+    Payload describing bounce metrics.
+
+    :attr List[BounceMetricItem] metrics: array of bounce metrics.
+    :attr int total_count: total number of bounce metrics.
+    """
+
+    def __init__(
+        self,
+        metrics: List['BounceMetricItem'],
+        total_count: int,
+    ) -> None:
+        """
+        Initialize a BounceMetrics object.
+
+        :param List[BounceMetricItem] metrics: array of bounce metrics.
+        :param int total_count: total number of bounce metrics.
+        """
+        self.metrics = metrics
+        self.total_count = total_count
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'BounceMetrics':
+        """Initialize a BounceMetrics object from a json dictionary."""
+        args = {}
+        if 'metrics' in _dict:
+            args['metrics'] = [BounceMetricItem.from_dict(v) for v in _dict.get('metrics')]
+        else:
+            raise ValueError('Required property \'metrics\' not present in BounceMetrics JSON')
+        if 'total_count' in _dict:
+            args['total_count'] = _dict.get('total_count')
+        else:
+            raise ValueError('Required property \'total_count\' not present in BounceMetrics JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a BounceMetrics object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'metrics') and self.metrics is not None:
+            metrics_list = []
+            for v in self.metrics:
+                if isinstance(v, dict):
+                    metrics_list.append(v)
+                else:
+                    metrics_list.append(v.to_dict())
+            _dict['metrics'] = metrics_list
+        if hasattr(self, 'total_count') and self.total_count is not None:
+            _dict['total_count'] = self.total_count
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this BounceMetrics object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'BounceMetrics') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'BounceMetrics') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
 
 
 class Buckets:

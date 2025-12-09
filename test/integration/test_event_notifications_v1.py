@@ -3800,8 +3800,8 @@ class TestEventNotificationsV1:
     def test_get_metrics(self):
 
         destination_type = "smtp_custom"
-        gte = "2024-08-01T17:18:43Z"
-        lte = "2024-08-02T11:55:22Z"
+        gte = "2025-12-08T17:18:43Z"
+        lte = "2025-12-09T17:18:43Z"
         email_to = "testuser@in.ibm.com"
         subject = "The Metric Test"
 
@@ -3811,6 +3811,8 @@ class TestEventNotificationsV1:
             gte,
             lte,
             destination_id=destination_id16,
+            subscription_id=subscription_id16,
+            source_id=source_id,
             email_to=email_to,
             notification_id=notificationID,
             subject=subject,
@@ -3819,6 +3821,31 @@ class TestEventNotificationsV1:
         assert get_metrics_response.get_status_code() == 200
         metric_response = get_metrics_response.get_result()
         assert metric_response is not None
+
+    @needscredentials
+    def test_get_bounce_metrics(self):
+        destination_type = "smtp_custom"
+        gte = "2025-12-08T17:18:43Z"
+        lte = "2025-12-09T17:18:43Z"
+        email_to = "testuser@in.ibm.com"
+        subject = "The Metric Test"
+
+        get_bounce_metrics_response = self.event_notifications_service.get_bounce_metrics(
+            instance_id,
+            destination_type,
+            gte,
+            lte,
+            destination_id=destination_id16,
+            subscription_id=subscription_id16,
+            source_id=source_id,
+            email_to=email_to,
+            notification_id=notificationID,
+            subject=subject,
+        )
+
+        assert get_bounce_metrics_response.get_status_code() == 200
+        bounce_metric_response = get_bounce_metrics_response.get_result()
+        assert bounce_metric_response is not None
 
     @needscredentials
     def test_create_smtp_configuration(self):
