@@ -1,3 +1,10 @@
+# [0.22.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.21.0...v0.22.0) (2025-12-16)
+
+
+### Features
+
+* add support for getBounceMetrics ([#79](https://github.com/IBM/event-notifications-python-admin-sdk/issues/79)) ([3000f32](https://github.com/IBM/event-notifications-python-admin-sdk/commit/3000f3241e9a32cdb303319fda3df44fd00807be))
+
 # [0.21.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.20.0...v0.21.0) (2025-10-30)
 
 
