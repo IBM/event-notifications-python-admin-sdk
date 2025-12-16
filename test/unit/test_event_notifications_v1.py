@@ -126,6 +126,7 @@ class TestGetMetrics:
         gte = 'testString'
         lte = 'testString'
         destination_id = 'testString'
+        subscription_id = 'testString'
         source_id = 'testString'
         email_to = 'testString'
         notification_id = 'testString'
@@ -138,6 +139,7 @@ class TestGetMetrics:
             gte,
             lte,
             destination_id=destination_id,
+            subscription_id=subscription_id,
             source_id=source_id,
             email_to=email_to,
             notification_id=notification_id,
@@ -155,6 +157,7 @@ class TestGetMetrics:
         assert 'gte={}'.format(gte) in query_string
         assert 'lte={}'.format(lte) in query_string
         assert 'destination_id={}'.format(destination_id) in query_string
+        assert 'subscription_id={}'.format(subscription_id) in query_string
         assert 'source_id={}'.format(source_id) in query_string
         assert 'email_to={}'.format(email_to) in query_string
         assert 'notification_id={}'.format(notification_id) in query_string
@@ -261,6 +264,179 @@ class TestGetMetrics:
         # Disable retries and run test_get_metrics_value_error.
         _service.disable_retries()
         self.test_get_metrics_value_error()
+
+
+class TestGetBounceMetrics:
+    """
+    Test Class for get_bounce_metrics
+    """
+
+    @responses.activate
+    def test_get_bounce_metrics_all_params(self):
+        """
+        get_bounce_metrics()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/metrics/bounce')
+        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        destination_type = 'smtp_custom'
+        gte = 'testString'
+        lte = 'testString'
+        destination_id = 'testString'
+        subscription_id = 'testString'
+        source_id = 'testString'
+        email_to = 'testString'
+        notification_id = 'testString'
+        subject = 'testString'
+        limit = 1
+        offset = 0
+
+        # Invoke method
+        response = _service.get_bounce_metrics(
+            instance_id,
+            destination_type,
+            gte,
+            lte,
+            destination_id=destination_id,
+            subscription_id=subscription_id,
+            source_id=source_id,
+            email_to=email_to,
+            notification_id=notification_id,
+            subject=subject,
+            limit=limit,
+            offset=offset,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'destination_type={}'.format(destination_type) in query_string
+        assert 'gte={}'.format(gte) in query_string
+        assert 'lte={}'.format(lte) in query_string
+        assert 'destination_id={}'.format(destination_id) in query_string
+        assert 'subscription_id={}'.format(subscription_id) in query_string
+        assert 'source_id={}'.format(source_id) in query_string
+        assert 'email_to={}'.format(email_to) in query_string
+        assert 'notification_id={}'.format(notification_id) in query_string
+        assert 'subject={}'.format(subject) in query_string
+        assert 'limit={}'.format(limit) in query_string
+        assert 'offset={}'.format(offset) in query_string
+
+    def test_get_bounce_metrics_all_params_with_retries(self):
+        # Enable retries and run test_get_bounce_metrics_all_params.
+        _service.enable_retries()
+        self.test_get_bounce_metrics_all_params()
+
+        # Disable retries and run test_get_bounce_metrics_all_params.
+        _service.disable_retries()
+        self.test_get_bounce_metrics_all_params()
+
+    @responses.activate
+    def test_get_bounce_metrics_required_params(self):
+        """
+        test_get_bounce_metrics_required_params()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/metrics/bounce')
+        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        destination_type = 'smtp_custom'
+        gte = 'testString'
+        lte = 'testString'
+
+        # Invoke method
+        response = _service.get_bounce_metrics(
+            instance_id,
+            destination_type,
+            gte,
+            lte,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate query params
+        query_string = responses.calls[0].request.url.split('?', 1)[1]
+        query_string = urllib.parse.unquote_plus(query_string)
+        assert 'destination_type={}'.format(destination_type) in query_string
+        assert 'gte={}'.format(gte) in query_string
+        assert 'lte={}'.format(lte) in query_string
+
+    def test_get_bounce_metrics_required_params_with_retries(self):
+        # Enable retries and run test_get_bounce_metrics_required_params.
+        _service.enable_retries()
+        self.test_get_bounce_metrics_required_params()
+
+        # Disable retries and run test_get_bounce_metrics_required_params.
+        _service.disable_retries()
+        self.test_get_bounce_metrics_required_params()
+
+    @responses.activate
+    def test_get_bounce_metrics_value_error(self):
+        """
+        test_get_bounce_metrics_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/metrics/bounce')
+        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}'
+        responses.add(
+            responses.GET,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        destination_type = 'smtp_custom'
+        gte = 'testString'
+        lte = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "destination_type": destination_type,
+            "gte": gte,
+            "lte": lte,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.get_bounce_metrics(**req_copy)
+
+    def test_get_bounce_metrics_value_error_with_retries(self):
+        # Enable retries and run test_get_bounce_metrics_value_error.
+        _service.enable_retries()
+        self.test_get_bounce_metrics_value_error()
+
+        # Disable retries and run test_get_bounce_metrics_value_error.
+        _service.disable_retries()
+        self.test_get_bounce_metrics_value_error()
 
 
 # endregion
@@ -6986,6 +7162,82 @@ class TestGetNotificationsStatus:
 # Start of Model Tests
 ##############################################################################
 # region
+
+
+class TestModel_BounceMetricItem:
+    """
+    Test Class for BounceMetricItem
+    """
+
+    def test_bounce_metric_item_serialization(self):
+        """
+        Test serialization/deserialization for BounceMetricItem
+        """
+
+        # Construct a json representation of a BounceMetricItem model
+        bounce_metric_item_model_json = {}
+        bounce_metric_item_model_json['email_address'] = 'testString'
+        bounce_metric_item_model_json['subject'] = 'testString'
+        bounce_metric_item_model_json['error_message'] = 'testString'
+        bounce_metric_item_model_json['ip_address'] = 'testString'
+        bounce_metric_item_model_json['subscription_id'] = 'testString'
+        bounce_metric_item_model_json['timestamp'] = '2019-01-01T12:00:00Z'
+
+        # Construct a model instance of BounceMetricItem by calling from_dict on the json representation
+        bounce_metric_item_model = BounceMetricItem.from_dict(bounce_metric_item_model_json)
+        assert bounce_metric_item_model != False
+
+        # Construct a model instance of BounceMetricItem by calling from_dict on the json representation
+        bounce_metric_item_model_dict = BounceMetricItem.from_dict(bounce_metric_item_model_json).__dict__
+        bounce_metric_item_model2 = BounceMetricItem(**bounce_metric_item_model_dict)
+
+        # Verify the model instances are equivalent
+        assert bounce_metric_item_model == bounce_metric_item_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        bounce_metric_item_model_json2 = bounce_metric_item_model.to_dict()
+        assert bounce_metric_item_model_json2 == bounce_metric_item_model_json
+
+
+class TestModel_BounceMetrics:
+    """
+    Test Class for BounceMetrics
+    """
+
+    def test_bounce_metrics_serialization(self):
+        """
+        Test serialization/deserialization for BounceMetrics
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        bounce_metric_item_model = {}  # BounceMetricItem
+        bounce_metric_item_model['email_address'] = 'email@domain.com'
+        bounce_metric_item_model['subject'] = 'This is a test subject'
+        bounce_metric_item_model['error_message'] = 'UNKNOWN_USER'
+        bounce_metric_item_model['ip_address'] = '199.46.34.10'
+        bounce_metric_item_model['subscription_id'] = '0bc82d4e-6e81-415d-9fe3-b530a73fabe9'
+        bounce_metric_item_model['timestamp'] = '2025-12-03T07:37:33Z'
+
+        # Construct a json representation of a BounceMetrics model
+        bounce_metrics_model_json = {}
+        bounce_metrics_model_json['metrics'] = [bounce_metric_item_model]
+        bounce_metrics_model_json['total_count'] = 0
+
+        # Construct a model instance of BounceMetrics by calling from_dict on the json representation
+        bounce_metrics_model = BounceMetrics.from_dict(bounce_metrics_model_json)
+        assert bounce_metrics_model != False
+
+        # Construct a model instance of BounceMetrics by calling from_dict on the json representation
+        bounce_metrics_model_dict = BounceMetrics.from_dict(bounce_metrics_model_json).__dict__
+        bounce_metrics_model2 = BounceMetrics(**bounce_metrics_model_dict)
+
+        # Verify the model instances are equivalent
+        assert bounce_metrics_model == bounce_metrics_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        bounce_metrics_model_json2 = bounce_metrics_model.to_dict()
+        assert bounce_metrics_model_json2 == bounce_metrics_model_json
 
 
 class TestModel_Buckets:

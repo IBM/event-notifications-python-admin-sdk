@@ -2578,6 +2578,8 @@ class TestEventNotificationsV1Examples:
                 gte,
                 lte,
                 destination_id=destination_id16,
+                subscription_id=subscription_id6,
+                source_id=source_id,
                 email_to=email_to,
                 notification_id=notificationID,
                 subject=subject,
@@ -2586,6 +2588,37 @@ class TestEventNotificationsV1Examples:
             metric_response = get_metrics_response.get_result()
             print(json.dumps(metric_response, indent=2))
             # end-metrics
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_get_bounce_metrics(self):
+        try:
+            print("\nget_bounce_metrics() result:")
+            # begin-bounce-metrics
+            destination_type = "smtp_custom"
+            gte = "2025-12-08T17:18:43Z"
+            lte = "2025-12-09T17:18:43Z"
+            email_to = "testuser@in.ibm.com"
+            subject = "The Metric Test"
+
+            get_bounce_metrics_response = self.event_notifications_service.get_bounce_metrics(
+                instance_id,
+                destination_type,
+                gte,
+                lte,
+                destination_id=destination_id16,
+                subscription_id=subscription_id6,
+                source_id=source_id,
+                email_to=email_to,
+                notification_id=notificationID,
+                subject=subject,
+            )
+
+            bounce_metric_response = get_bounce_metrics_response.get_result()
+            print(json.dumps(bounce_metric_response, indent=2))
+            # end-bounce-metrics
 
         except ApiException as e:
             pytest.fail(str(e))
