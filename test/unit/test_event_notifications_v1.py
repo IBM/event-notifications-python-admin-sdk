@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,7 +31,6 @@ import responses
 import tempfile
 import urllib
 from ibm_eventnotifications.event_notifications_v1 import *
-
 
 _service = EventNotificationsV1(authenticator=NoAuthAuthenticator())
 
@@ -278,7 +277,7 @@ class TestGetBounceMetrics:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/metrics/bounce')
-        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}'
+        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0, "offset": 6, "limit": 5}'
         responses.add(
             responses.GET,
             url,
@@ -352,7 +351,7 @@ class TestGetBounceMetrics:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/metrics/bounce')
-        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}'
+        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0, "offset": 6, "limit": 5}'
         responses.add(
             responses.GET,
             url,
@@ -402,7 +401,7 @@ class TestGetBounceMetrics:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/metrics/bounce')
-        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0}'
+        mock_response = '{"metrics": [{"email_address": "email_address", "subject": "subject", "error_message": "error_message", "ip_address": "ip_address", "subscription_id": "subscription_id", "timestamp": "2019-01-01T12:00:00.000Z"}], "total_count": 0, "offset": 6, "limit": 5}'
         responses.add(
             responses.GET,
             url,
@@ -7223,6 +7222,8 @@ class TestModel_BounceMetrics:
         bounce_metrics_model_json = {}
         bounce_metrics_model_json['metrics'] = [bounce_metric_item_model]
         bounce_metrics_model_json['total_count'] = 0
+        bounce_metrics_model_json['offset'] = 38
+        bounce_metrics_model_json['limit'] = 38
 
         # Construct a model instance of BounceMetrics by calling from_dict on the json representation
         bounce_metrics_model = BounceMetrics.from_dict(bounce_metrics_model_json)
