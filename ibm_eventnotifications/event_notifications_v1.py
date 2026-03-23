@@ -1,6 +1,6 @@
 # coding: utf-8
 
-# (C) Copyright IBM Corp. 2025.
+# (C) Copyright IBM Corp. 2026.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -2602,8 +2602,8 @@ class EventNotificationsV1(BaseService):
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str id: Unique identifier for integration.
-        :param str type: Integration type. Allowed values are kms, hs-crypto and
-               collect_failed_events.
+        :param str type: Integration type. Allowed values are kms, hs-crypto
+               (deprecated) and collect_failed_events.
         :param IntegrationMetadata metadata: Integration Metadata object.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
@@ -3360,9 +3360,9 @@ class EventNotificationsV1(BaseService):
         **kwargs,
     ) -> DetailedResponse:
         """
-        Get notification status.
+        Get status of webhook test notification.
 
-        Get notification status.
+        Status of webhook test notification.
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
@@ -3575,21 +3575,29 @@ class BounceMetrics:
 
     :attr List[BounceMetricItem] metrics: array of bounce metrics.
     :attr int total_count: total number of bounce metrics.
+    :attr int offset: Current offset.
+    :attr int limit: limit to show bounce metrics.
     """
 
     def __init__(
         self,
         metrics: List['BounceMetricItem'],
         total_count: int,
+        offset: int,
+        limit: int,
     ) -> None:
         """
         Initialize a BounceMetrics object.
 
         :param List[BounceMetricItem] metrics: array of bounce metrics.
         :param int total_count: total number of bounce metrics.
+        :param int offset: Current offset.
+        :param int limit: limit to show bounce metrics.
         """
         self.metrics = metrics
         self.total_count = total_count
+        self.offset = offset
+        self.limit = limit
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'BounceMetrics':
@@ -3603,6 +3611,14 @@ class BounceMetrics:
             args['total_count'] = _dict.get('total_count')
         else:
             raise ValueError('Required property \'total_count\' not present in BounceMetrics JSON')
+        if 'offset' in _dict:
+            args['offset'] = _dict.get('offset')
+        else:
+            raise ValueError('Required property \'offset\' not present in BounceMetrics JSON')
+        if 'limit' in _dict:
+            args['limit'] = _dict.get('limit')
+        else:
+            raise ValueError('Required property \'limit\' not present in BounceMetrics JSON')
         return cls(**args)
 
     @classmethod
@@ -3623,6 +3639,10 @@ class BounceMetrics:
             _dict['metrics'] = metrics_list
         if hasattr(self, 'total_count') and self.total_count is not None:
             _dict['total_count'] = self.total_count
+        if hasattr(self, 'offset') and self.offset is not None:
+            _dict['offset'] = self.offset
+        if hasattr(self, 'limit') and self.limit is not None:
+            _dict['limit'] = self.limit
         return _dict
 
     def _to_dict(self):
@@ -5585,7 +5605,8 @@ class IntegrationGetResponse:
     Integration response object.
 
     :attr str id: ID of the integration.
-    :attr str type: Integration type. Allowed values are kms and hs-crypto.
+    :attr str type: Integration type. Allowed values are kms and hs-crypto
+          (deprecated) and collect_failed_events.
     :attr IntegrationMetadata metadata: Integration Metadata object.
     :attr datetime created_at: Creation time of an integration.
     :attr datetime updated_at: Last update time of an integration.
@@ -5603,7 +5624,8 @@ class IntegrationGetResponse:
         Initialize a IntegrationGetResponse object.
 
         :param str id: ID of the integration.
-        :param str type: Integration type. Allowed values are kms and hs-crypto.
+        :param str type: Integration type. Allowed values are kms and hs-crypto
+               (deprecated) and collect_failed_events.
         :param IntegrationMetadata metadata: Integration Metadata object.
         :param datetime created_at: Creation time of an integration.
         :param datetime updated_at: Last update time of an integration.
@@ -5817,7 +5839,8 @@ class IntegrationListItem:
     all Integrations response object.
 
     :attr str id: ID of the integration.
-    :attr str type: Integration type. Allowed values are kms and hs-crypto.
+    :attr str type: Integration type. Allowed values are kms, hs-crypto (deprecated)
+          and collect_failed_events.
     :attr IntegrationMetadata metadata: Integration Metadata object.
     :attr datetime created_at: Creation time of an integration.
     :attr datetime updated_at: Update time of an integration.
@@ -5835,7 +5858,8 @@ class IntegrationListItem:
         Initialize a IntegrationListItem object.
 
         :param str id: ID of the integration.
-        :param str type: Integration type. Allowed values are kms and hs-crypto.
+        :param str type: Integration type. Allowed values are kms, hs-crypto
+               (deprecated) and collect_failed_events.
         :param IntegrationMetadata metadata: Integration Metadata object.
         :param datetime created_at: Creation time of an integration.
         :param datetime updated_at: Update time of an integration.

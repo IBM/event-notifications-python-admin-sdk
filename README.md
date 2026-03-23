@@ -968,6 +968,8 @@ integration_response = get_integration_response.get_result()
 
 ### Update Integration
 
+> **⚠️ DEPRECATION WARNING**: The `hs-crypto` integration type is deprecated and will be removed in a future release. Please migrate to alternative encryption solutions.
+
 For kms/hs-crypto
 
 ```py

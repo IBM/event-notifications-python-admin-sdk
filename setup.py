@@ -14,21 +14,18 @@
 # limitations under the License.
 
 from setuptools import setup
-from setuptools.command.test import test as TestCommand
 import os
 import sys
-import pkg_resources
 
 __version__ = '0.22.0'
 PACKAGE_NAME = 'ibm_eventnotifications'
 PACKAGE_DESC = 'Python server SDK for IBM Cloud Event Notifications service'
 
 with open('requirements.txt') as f:
-    install_requires = [
-        str(req) for req in pkg_resources.parse_requirements(f)
-    ]
+    install_requires = [line.strip() for line in f if line.strip() and not line.startswith('#')]
+
 with open('requirements-dev.txt') as f:
-    tests_require = [str(req) for req in pkg_resources.parse_requirements(f)]
+    tests_require = [line.strip() for line in f if line.strip() and not line.startswith('#')]
 
 if sys.argv[-1] == 'publish':
     # test server
@@ -61,10 +58,9 @@ setup(
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
+        'Programming Language :: Python :: 3.12',
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
