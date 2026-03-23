@@ -1,3 +1,10 @@
+# [0.23.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.22.0...v0.23.0) (2026-03-23)
+
+
+### Features
+
+* deprecate hs-crypto ([#80](https://github.com/IBM/event-notifications-python-admin-sdk/issues/80)) ([c17a942](https://github.com/IBM/event-notifications-python-admin-sdk/commit/c17a94210bade21013f76f47040b2c726e8ebe34))
+
 # [0.22.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.21.0...v0.22.0) (2025-12-16)
 
 
