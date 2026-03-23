@@ -17,7 +17,7 @@ from setuptools import setup
 import os
 import sys
 
-__version__ = '0.22.0'
+__version__ = '0.23.0'
 PACKAGE_NAME = 'ibm_eventnotifications'
 PACKAGE_DESC = 'Python server SDK for IBM Cloud Event Notifications service'
 
