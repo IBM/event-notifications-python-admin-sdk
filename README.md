@@ -168,11 +168,19 @@ source_response = event_notifications_service.create_sources(
             <instance-id>, # Event notifications service instance GUID
             name=<source-name>,
             description=<source-description>,
-            enabled=False
+            enabled=False,
+            store_notifications=True  # Optional: Enable to view payload of incoming events for troubleshooting
         ).get_result()
 
 print(json.dumps(source_response, indent=2))
 ```
+
+**Parameters:**
+- `instance_id` (required): Event Notifications service instance GUID
+- `name` (required): Name of the source
+- `description` (required): Description of the source
+- `enabled` (optional): Whether the source is enabled or not (default: False)
+- `store_notifications` (optional): Enable to view the payload of incoming events for troubleshooting (default: False)
 
 ### List Sources
 
@@ -364,6 +372,7 @@ Among the supported destinations, if you need to create Push Notification destin
 Set `pre_prod` boolean parameter to _true_ to configure destination as pre-production destination else set the value as _false_.
 Supported destinations are Android, iOS, Chrome, Firefox, and Safari.
 
+**Note:** The `smtp_custom_sandbox` destination type is available for testing purposes in sandbox environments. It works similarly to `smtp_custom` but is intended for development and testing scenarios. Refer to https://cloud.ibm.com/apidocs/event-notifications#create-destination for examples.
 ### List Destinations
 
 ```py
@@ -1300,6 +1309,23 @@ mms = '{"content": "akajdklahl", "content_type": "image/png"}'
 templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
 markdown_content = "**Event Summary** \n\n**Toolchain ID:** `4414af34-a5c7-47d3-8f05-add4af6d78a6`  \n**Content Type:** `application/json`\n\n---\n\n *Pipeline Run Details*\n\n- **Namespace:** `PR`\n- **Trigger Name:** `manual`\n- **Triggered By:** `nitish.kulkarni3@ibm.com`\n- **Build Number:** `343`\n- **Pipeline Link:** [View Pipeline Run](https://cloud.ibm.com/devops/pipelines/tekton/e9cd5aa3-a3f2-4776-8acc-26a35922386e/runs/f29ac6f5-bd2f-4a26-abb8-4249be8dbab7?env_id=ibm:yp:us-south)"
 
+# Email attachments (optional)
+email_attachment_1 = {
+    'content': 'VGhpcyBpcyBhIHRlc3QgYXR0YWNobWVudCBjb250ZW50',  # Base64 encoded content
+    'filename': 'report.txt',
+    'content_type': 'text/plain',
+    'disposition': 'attachment'
+}
+
+email_attachment_2 = {
+    'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+    'filename': 'image.png',
+    'content_type': 'image/png',
+    'disposition': 'attachment'
+}
+
+email_attachments = [email_attachment_1, email_attachment_2]
+
 notification_create_model = {
     'ibmenseverity': notification_severity,
     'ibmenfcmbody': json.dumps(notification_fcm_body_model),
@@ -1317,6 +1343,7 @@ notification_create_model = {
     'ibmenslackto': slackto,
     'ibmenmms': mms,
     "ibmentemplates": templates,
+    'attachments': email_attachments,  # Add email attachments
     'id': notification_id,
     'source': notifications_source,
     'type': type_value,
@@ -1376,6 +1403,11 @@ send_notifications_response = event_notifications_service.send_notifications(
   - **ibmenslackto** (_Array of string_) - Array of Slack channel/member ids to which the notification to be sent.
   - **ibmentemplates** (_Array of string_) - Array of template IDs that needs to be applied while sending notificatin for custom domain email and slack destination.
   - **ibmenmarkdown** (_string_) - The markdown content of pretty formatting.
+  - **attachments** (_Array of EmailAttachment objects_) - Array of email attachments to be sent with the notification. Each attachment object contains:
+    - **content** (_string_) - Base64 encoded file content.
+    - **filename** (_string_) - Name of the attachment file.
+    - **content_type** (_string_) - MIME type of the attachment (e.g., 'text/plain', 'application/pdf', 'image/png').
+    - **disposition** (_string_) - Content disposition, 'attachment'.
 
 Note: variable with \* represents the mandatory attribute.
 

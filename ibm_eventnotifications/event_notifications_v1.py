@@ -322,6 +322,7 @@ class EventNotificationsV1(BaseService):
         description: str,
         *,
         enabled: bool = None,
+        store_notifications: bool = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -334,6 +335,8 @@ class EventNotificationsV1(BaseService):
         :param str name: Name of the source.
         :param str description: Description of the source.
         :param bool enabled: (optional) Whether the source is enabled or not.
+        :param bool store_notifications: (optional) enable to view the payload of
+               incoming events for troubleshooting.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SourceResponse` object
@@ -357,6 +360,7 @@ class EventNotificationsV1(BaseService):
             'name': name,
             'description': description,
             'enabled': enabled,
+            'store_notifications': store_notifications,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -545,6 +549,7 @@ class EventNotificationsV1(BaseService):
         name: str = None,
         description: str = None,
         enabled: bool = None,
+        store_notifications: bool = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -558,6 +563,8 @@ class EventNotificationsV1(BaseService):
         :param str name: (optional) Name of the source.
         :param str description: (optional) Description of the source.
         :param bool enabled: (optional) Whether the source is enabled or not.
+        :param bool store_notifications: (optional) enable to view the payload of
+               incoming events for troubleshooting.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `Source` object
@@ -579,6 +586,7 @@ class EventNotificationsV1(BaseService):
             'name': name,
             'description': description,
             'enabled': enabled,
+            'store_notifications': store_notifications,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1841,6 +1849,67 @@ class EventNotificationsV1(BaseService):
             method='POST',
             url=url,
             headers=headers,
+        )
+
+        response = self.send(request, **kwargs)
+        return response
+
+    def update_email_sandbox_destination(
+        self,
+        instance_id: str,
+        id: str,
+        domain: str,
+        **kwargs,
+    ) -> DetailedResponse:
+        """
+        Upgrade sandbox destination to production.
+
+        Upgrade sandbox destination to production with custom domain.
+
+        :param str instance_id: Unique identifier for IBM Cloud Event Notifications
+               instance.
+        :param str id: Unique identifier for Destination.
+        :param str domain: Email Domain.
+        :param dict headers: A `dict` containing the request headers
+        :return: A `DetailedResponse` containing the result, headers and HTTP status code.
+        :rtype: DetailedResponse with `dict` result representing a `DestinationResponse` object
+        """
+
+        if not instance_id:
+            raise ValueError('instance_id must be provided')
+        if not id:
+            raise ValueError('id must be provided')
+        if domain is None:
+            raise ValueError('domain must be provided')
+        headers = {}
+        sdk_headers = get_sdk_headers(
+            service_name=self.DEFAULT_SERVICE_NAME,
+            service_version='V1',
+            operation_id='update_email_sandbox_destination',
+        )
+        headers.update(sdk_headers)
+
+        data = {
+            'domain': domain,
+        }
+        data = {k: v for (k, v) in data.items() if v is not None}
+        data = json.dumps(data)
+        headers['content-type'] = 'application/json'
+
+        if 'headers' in kwargs:
+            headers.update(kwargs.get('headers'))
+            del kwargs['headers']
+        headers['Accept'] = 'application/json'
+
+        path_param_keys = ['instance_id', 'id']
+        path_param_values = self.encode_path_vars(instance_id, id)
+        path_param_dict = dict(zip(path_param_keys, path_param_values))
+        url = '/v1/instances/{instance_id}/destinations/{id}/upgrade'.format(**path_param_dict)
+        request = self.prepare_request(
+            method='PATCH',
+            url=url,
+            headers=headers,
+            data=data,
         )
 
         response = self.send(request, **kwargs)
@@ -3453,6 +3522,7 @@ class CreateDestinationEnums:
         IBMCOS = 'ibmcos'
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
+        SMTP_CUSTOM_SANDBOX = 'smtp_custom_sandbox'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
         APP_CONFIGURATION = 'app_configuration'
@@ -4104,6 +4174,7 @@ class Destination:
         IBMCOS = 'ibmcos'
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
+        SMTP_CUSTOM_SANDBOX = 'smtp_custom_sandbox'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
         APP_CONFIGURATION = 'app_configuration'
@@ -4188,6 +4259,7 @@ class DestinationConfigOneOf:
             ", ".join(
                 [
                     'DestinationConfigOneOfCustomDomainEmailDestinationConfig',
+                    'DestinationConfigOneOfCustomEmailSandboxDestinationConfig',
                     'DestinationConfigOneOfWebhookDestinationConfig',
                     'DestinationConfigOneOfCodeEngineDestinationConfig',
                     'DestinationConfigOneOfFCMDestinationConfig',
@@ -4488,6 +4560,7 @@ class DestinationListItem:
         IBMCOS = 'ibmcos'
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
+        SMTP_CUSTOM_SANDBOX = 'smtp_custom_sandbox'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
         APP_CONFIGURATION = 'app_configuration'
@@ -4635,6 +4708,7 @@ class DestinationResponse:
         IBMCOS = 'ibmcos'
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
+        SMTP_CUSTOM_SANDBOX = 'smtp_custom_sandbox'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
         APP_CONFIGURATION = 'app_configuration'
@@ -4795,6 +4869,102 @@ class ENAuthAttributes:
     def __ne__(self, other: 'ENAuthAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
+
+
+class EmailAttachment:
+    """
+    Email attachment object.
+
+    :attr str content: Base64 encoded file content.
+    :attr str filename: Name of the attachment file.
+    :attr str content_type: MIME type of the attachment.
+    :attr str disposition: Content disposition.
+    """
+
+    def __init__(
+        self,
+        content: str,
+        filename: str,
+        content_type: str,
+        disposition: str,
+    ) -> None:
+        """
+        Initialize a EmailAttachment object.
+
+        :param str content: Base64 encoded file content.
+        :param str filename: Name of the attachment file.
+        :param str content_type: MIME type of the attachment.
+        :param str disposition: Content disposition.
+        """
+        self.content = content
+        self.filename = filename
+        self.content_type = content_type
+        self.disposition = disposition
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'EmailAttachment':
+        """Initialize a EmailAttachment object from a json dictionary."""
+        args = {}
+        if 'content' in _dict:
+            args['content'] = _dict.get('content')
+        else:
+            raise ValueError('Required property \'content\' not present in EmailAttachment JSON')
+        if 'filename' in _dict:
+            args['filename'] = _dict.get('filename')
+        else:
+            raise ValueError('Required property \'filename\' not present in EmailAttachment JSON')
+        if 'content_type' in _dict:
+            args['content_type'] = _dict.get('content_type')
+        else:
+            raise ValueError('Required property \'content_type\' not present in EmailAttachment JSON')
+        if 'disposition' in _dict:
+            args['disposition'] = _dict.get('disposition')
+        else:
+            raise ValueError('Required property \'disposition\' not present in EmailAttachment JSON')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a EmailAttachment object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'content') and self.content is not None:
+            _dict['content'] = self.content
+        if hasattr(self, 'filename') and self.filename is not None:
+            _dict['filename'] = self.filename
+        if hasattr(self, 'content_type') and self.content_type is not None:
+            _dict['content_type'] = self.content_type
+        if hasattr(self, 'disposition') and self.disposition is not None:
+            _dict['disposition'] = self.disposition
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this EmailAttachment object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'EmailAttachment') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'EmailAttachment') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+    class DispositionEnum(str, Enum):
+        """
+        Content disposition.
+        """
+
+        ATTACHMENT = 'attachment'
 
 
 class EmailAttributesResponseInvitedItems:
@@ -5605,8 +5775,8 @@ class IntegrationGetResponse:
     Integration response object.
 
     :attr str id: ID of the integration.
-    :attr str type: Integration type. Allowed values are kms and hs-crypto
-          (deprecated) and collect_failed_events.
+    :attr str type: Integration type. Allowed values are kms, hs-crypto (deprecated)
+          and collect_failed_events.
     :attr IntegrationMetadata metadata: Integration Metadata object.
     :attr datetime created_at: Creation time of an integration.
     :attr datetime updated_at: Last update time of an integration.
@@ -5624,7 +5794,7 @@ class IntegrationGetResponse:
         Initialize a IntegrationGetResponse object.
 
         :param str id: ID of the integration.
-        :param str type: Integration type. Allowed values are kms and hs-crypto
+        :param str type: Integration type. Allowed values are kms, hs-crypto
                (deprecated) and collect_failed_events.
         :param IntegrationMetadata metadata: Integration Metadata object.
         :param datetime created_at: Creation time of an integration.
@@ -6224,6 +6394,8 @@ class NotificationCreate:
           body. Value should be stringified.
     :attr str ibmensafaribody: (optional) Payload describing a notification Safari
           body. Value should be stringified.
+    :attr List[EmailAttachment] attachments: (optional) Email attachments to be sent
+          with the notification.
     """
 
     # The set of defined properties for the class
@@ -6260,6 +6432,7 @@ class NotificationCreate:
             'ibmenfirefoxheaders',
             'ibmenhuaweibody',
             'ibmensafaribody',
+            'attachments',
         ]
     )
 
@@ -6297,6 +6470,7 @@ class NotificationCreate:
         ibmenfirefoxheaders: str = None,
         ibmenhuaweibody: str = None,
         ibmensafaribody: str = None,
+        attachments: List['EmailAttachment'] = None,
         **kwargs,
     ) -> None:
         """
@@ -6345,6 +6519,8 @@ class NotificationCreate:
                Huawei body. Value should be stringified.
         :param str ibmensafaribody: (optional) Payload describing a notification
                Safari body. Value should be stringified.
+        :param List[EmailAttachment] attachments: (optional) Email attachments to
+               be sent with the notification.
         :param **kwargs: (optional) Any additional properties.
         """
         self.specversion = specversion
@@ -6378,6 +6554,7 @@ class NotificationCreate:
         self.ibmenfirefoxheaders = ibmenfirefoxheaders
         self.ibmenhuaweibody = ibmenhuaweibody
         self.ibmensafaribody = ibmensafaribody
+        self.attachments = attachments
         for _key, _value in kwargs.items():
             setattr(self, _key, _value)
 
@@ -6461,6 +6638,8 @@ class NotificationCreate:
             args['ibmenhuaweibody'] = _dict.get('ibmenhuaweibody')
         if 'ibmensafaribody' in _dict:
             args['ibmensafaribody'] = _dict.get('ibmensafaribody')
+        if 'attachments' in _dict:
+            args['attachments'] = [EmailAttachment.from_dict(v) for v in _dict.get('attachments')]
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -6534,6 +6713,14 @@ class NotificationCreate:
             _dict['ibmenhuaweibody'] = self.ibmenhuaweibody
         if hasattr(self, 'ibmensafaribody') and self.ibmensafaribody is not None:
             _dict['ibmensafaribody'] = self.ibmensafaribody
+        if hasattr(self, 'attachments') and self.attachments is not None:
+            attachments_list = []
+            for v in self.attachments:
+                if isinstance(v, dict):
+                    attachments_list.append(v)
+                else:
+                    attachments_list.append(v.to_dict())
+            _dict['attachments'] = attachments_list
         for _key in [k for k in vars(self).keys() if k not in NotificationCreate._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
@@ -6579,19 +6766,25 @@ class NotificationResponse:
     Payload describing a notifications response.
 
     :attr str notification_id: (optional) Notification ID.
+    :attr List[EmailAttachment] attachments: (optional) Email attachments that were
+          sent with the notification.
     """
 
     def __init__(
         self,
         *,
         notification_id: str = None,
+        attachments: List['EmailAttachment'] = None,
     ) -> None:
         """
         Initialize a NotificationResponse object.
 
         :param str notification_id: (optional) Notification ID.
+        :param List[EmailAttachment] attachments: (optional) Email attachments that
+               were sent with the notification.
         """
         self.notification_id = notification_id
+        self.attachments = attachments
 
     @classmethod
     def from_dict(cls, _dict: Dict) -> 'NotificationResponse':
@@ -6599,6 +6792,8 @@ class NotificationResponse:
         args = {}
         if 'notification_id' in _dict:
             args['notification_id'] = _dict.get('notification_id')
+        if 'attachments' in _dict:
+            args['attachments'] = [EmailAttachment.from_dict(v) for v in _dict.get('attachments')]
         return cls(**args)
 
     @classmethod
@@ -6611,6 +6806,14 @@ class NotificationResponse:
         _dict = {}
         if hasattr(self, 'notification_id') and self.notification_id is not None:
             _dict['notification_id'] = self.notification_id
+        if hasattr(self, 'attachments') and self.attachments is not None:
+            attachments_list = []
+            for v in self.attachments:
+                if isinstance(v, dict):
+                    attachments_list.append(v)
+                else:
+                    attachments_list.append(v.to_dict())
+            _dict['attachments'] = attachments_list
         return _dict
 
     def _to_dict(self):
@@ -8556,6 +8759,8 @@ class Source:
     :attr str name: The name of the source.
     :attr str description: The description of the source.
     :attr bool enabled: The status of the source.
+    :attr bool store_notifications: (optional) view the payload of incoming events
+          for troubleshooting.
     :attr str type: Type of the source.
     :attr datetime updated_at: The last updated time of the source.
     :attr int topic_count: The number of topics.
@@ -8572,6 +8777,8 @@ class Source:
         updated_at: datetime,
         topic_count: int,
         topic_names: List[str],
+        *,
+        store_notifications: bool = None,
     ) -> None:
         """
         Initialize a Source object.
@@ -8584,11 +8791,14 @@ class Source:
         :param datetime updated_at: The last updated time of the source.
         :param int topic_count: The number of topics.
         :param List[str] topic_names: The names of the topics.
+        :param bool store_notifications: (optional) view the payload of incoming
+               events for troubleshooting.
         """
         self.id = id
         self.name = name
         self.description = description
         self.enabled = enabled
+        self.store_notifications = store_notifications
         self.type = type
         self.updated_at = updated_at
         self.topic_count = topic_count
@@ -8614,6 +8824,8 @@ class Source:
             args['enabled'] = _dict.get('enabled')
         else:
             raise ValueError('Required property \'enabled\' not present in Source JSON')
+        if 'store_notifications' in _dict:
+            args['store_notifications'] = _dict.get('store_notifications')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
         else:
@@ -8648,6 +8860,8 @@ class Source:
             _dict['description'] = self.description
         if hasattr(self, 'enabled') and self.enabled is not None:
             _dict['enabled'] = self.enabled
+        if hasattr(self, 'store_notifications') and self.store_notifications is not None:
+            _dict['store_notifications'] = self.store_notifications
         if hasattr(self, 'type') and self.type is not None:
             _dict['type'] = self.type
         if hasattr(self, 'updated_at') and self.updated_at is not None:
@@ -8816,6 +9030,8 @@ class SourceListItem:
     :attr str description: Description of the source.
     :attr str type: Type of the source.
     :attr bool enabled: Whether the source is enabled or not.
+    :attr bool store_notifications: (optional) view the payload of incoming events
+          for troubleshooting.
     :attr datetime updated_at: Time of the last update.
     :attr int topic_count: Number of topics.
     """
@@ -8829,6 +9045,8 @@ class SourceListItem:
         enabled: bool,
         updated_at: datetime,
         topic_count: int,
+        *,
+        store_notifications: bool = None,
     ) -> None:
         """
         Initialize a SourceListItem object.
@@ -8840,12 +9058,15 @@ class SourceListItem:
         :param bool enabled: Whether the source is enabled or not.
         :param datetime updated_at: Time of the last update.
         :param int topic_count: Number of topics.
+        :param bool store_notifications: (optional) view the payload of incoming
+               events for troubleshooting.
         """
         self.id = id
         self.name = name
         self.description = description
         self.type = type
         self.enabled = enabled
+        self.store_notifications = store_notifications
         self.updated_at = updated_at
         self.topic_count = topic_count
 
@@ -8873,6 +9094,8 @@ class SourceListItem:
             args['enabled'] = _dict.get('enabled')
         else:
             raise ValueError('Required property \'enabled\' not present in SourceListItem JSON')
+        if 'store_notifications' in _dict:
+            args['store_notifications'] = _dict.get('store_notifications')
         if 'updated_at' in _dict:
             args['updated_at'] = string_to_datetime(_dict.get('updated_at'))
         else:
@@ -8901,6 +9124,8 @@ class SourceListItem:
             _dict['type'] = self.type
         if hasattr(self, 'enabled') and self.enabled is not None:
             _dict['enabled'] = self.enabled
+        if hasattr(self, 'store_notifications') and self.store_notifications is not None:
+            _dict['store_notifications'] = self.store_notifications
         if hasattr(self, 'updated_at') and self.updated_at is not None:
             _dict['updated_at'] = datetime_to_string(self.updated_at)
         if hasattr(self, 'topic_count') and self.topic_count is not None:
@@ -8934,6 +9159,8 @@ class SourceResponse:
     :attr str name: Name of the source.
     :attr str description: Description of the source.
     :attr bool enabled: Whether the source is enabled or not.
+    :attr bool store_notifications: (optional) view the payload of incoming events
+          for troubleshooting.
     :attr datetime created_at: Time of the created.
     """
 
@@ -8944,6 +9171,8 @@ class SourceResponse:
         description: str,
         enabled: bool,
         created_at: datetime,
+        *,
+        store_notifications: bool = None,
     ) -> None:
         """
         Initialize a SourceResponse object.
@@ -8953,11 +9182,14 @@ class SourceResponse:
         :param str description: Description of the source.
         :param bool enabled: Whether the source is enabled or not.
         :param datetime created_at: Time of the created.
+        :param bool store_notifications: (optional) view the payload of incoming
+               events for troubleshooting.
         """
         self.id = id
         self.name = name
         self.description = description
         self.enabled = enabled
+        self.store_notifications = store_notifications
         self.created_at = created_at
 
     @classmethod
@@ -8980,6 +9212,8 @@ class SourceResponse:
             args['enabled'] = _dict.get('enabled')
         else:
             raise ValueError('Required property \'enabled\' not present in SourceResponse JSON')
+        if 'store_notifications' in _dict:
+            args['store_notifications'] = _dict.get('store_notifications')
         if 'created_at' in _dict:
             args['created_at'] = string_to_datetime(_dict.get('created_at'))
         else:
@@ -9002,6 +9236,8 @@ class SourceResponse:
             _dict['description'] = self.description
         if hasattr(self, 'enabled') and self.enabled is not None:
             _dict['enabled'] = self.enabled
+        if hasattr(self, 'store_notifications') and self.store_notifications is not None:
+            _dict['store_notifications'] = self.store_notifications
         if hasattr(self, 'created_at') and self.created_at is not None:
             _dict['created_at'] = datetime_to_string(self.created_at)
         return _dict
@@ -9407,6 +9643,7 @@ class Subscription:
         IBMCOS = 'ibmcos'
         PUSH_HUAWEI = 'push_huawei'
         SMTP_CUSTOM = 'smtp_custom'
+        SMTP_CUSTOM_SANDBOX = 'smtp_custom_sandbox'
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
         APP_CONFIGURATION = 'app_configuration'
@@ -9468,6 +9705,7 @@ class SubscriptionCreateAttributes:
                     'SubscriptionCreateAttributesEmailAttributes',
                     'SubscriptionCreateAttributesCustomSMSAttributes',
                     'SubscriptionCreateAttributesCustomEmailAttributes',
+                    'SubscriptionCreateAttributesCustomEmailSandboxAttributes',
                     'SubscriptionCreateAttributesWebhookAttributes',
                     'SubscriptionCreateAttributesFCMAttributes',
                     'SubscriptionCreateAttributesSlackAttributes',
@@ -9794,6 +10032,7 @@ class SubscriptionUpdateAttributes:
                     'SubscriptionUpdateAttributesEmailUpdateAttributes',
                     'SubscriptionUpdateAttributesCustomSMSUpdateAttributes',
                     'SubscriptionUpdateAttributesCustomEmailUpdateAttributes',
+                    'SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes',
                     'SubscriptionUpdateAttributesWebhookAttributes',
                     'SubscriptionUpdateAttributesSlackAttributes',
                     'SubscriptionUpdateAttributesPagerDutyAttributes',
@@ -11585,6 +11824,87 @@ class DestinationConfigOneOfCustomDomainEmailDestinationConfig(DestinationConfig
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'DestinationConfigOneOfCustomDomainEmailDestinationConfig') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class DestinationConfigOneOfCustomEmailSandboxDestinationConfig(DestinationConfigOneOf):
+    """
+    Payload describing a custom Email Sandbox destination configuration.
+
+    :attr str domain: (optional) Email Domain.
+    :attr DKIMAttributes dkim: (optional) The DKIM attributes.
+    :attr SPFAttributes spf: (optional) The SPF attributes.
+    """
+
+    def __init__(
+        self,
+        *,
+        domain: str = None,
+        dkim: 'DKIMAttributes' = None,
+        spf: 'SPFAttributes' = None,
+    ) -> None:
+        """
+        Initialize a DestinationConfigOneOfCustomEmailSandboxDestinationConfig object.
+
+        :param str domain: (optional) Email Domain.
+        :param DKIMAttributes dkim: (optional) The DKIM attributes.
+        :param SPFAttributes spf: (optional) The SPF attributes.
+        """
+        # pylint: disable=super-init-not-called
+        self.domain = domain
+        self.dkim = dkim
+        self.spf = spf
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'DestinationConfigOneOfCustomEmailSandboxDestinationConfig':
+        """Initialize a DestinationConfigOneOfCustomEmailSandboxDestinationConfig object from a json dictionary."""
+        args = {}
+        if 'domain' in _dict:
+            args['domain'] = _dict.get('domain')
+        if 'dkim' in _dict:
+            args['dkim'] = DKIMAttributes.from_dict(_dict.get('dkim'))
+        if 'spf' in _dict:
+            args['spf'] = SPFAttributes.from_dict(_dict.get('spf'))
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a DestinationConfigOneOfCustomEmailSandboxDestinationConfig object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'domain') and self.domain is not None:
+            _dict['domain'] = self.domain
+        if hasattr(self, 'dkim') and self.dkim is not None:
+            if isinstance(self.dkim, dict):
+                _dict['dkim'] = self.dkim
+            else:
+                _dict['dkim'] = self.dkim.to_dict()
+        if hasattr(self, 'spf') and self.spf is not None:
+            if isinstance(self.spf, dict):
+                _dict['spf'] = self.spf
+            else:
+                _dict['spf'] = self.spf.to_dict()
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this DestinationConfigOneOfCustomEmailSandboxDestinationConfig object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'DestinationConfigOneOfCustomEmailSandboxDestinationConfig') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'DestinationConfigOneOfCustomEmailSandboxDestinationConfig') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
@@ -14551,6 +14871,125 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         return not self == other
 
 
+class SubscriptionCreateAttributesCustomEmailSandboxAttributes(SubscriptionCreateAttributes):
+    """
+    The attributes for an email notification.
+
+    :attr List[str] invited: The email id string.
+    :attr bool add_notification_payload: Whether to add the notification payload to
+          the email.
+    :attr str reply_to_mail: The email address to reply to.
+    :attr str reply_to_name: The email name to reply to.
+    :attr str template_id_notification: (optional) The templete id for notification.
+    :attr str template_id_invitation: (optional) The templete id for invitation.
+    """
+
+    def __init__(
+        self,
+        invited: List[str],
+        add_notification_payload: bool,
+        reply_to_mail: str,
+        reply_to_name: str,
+        *,
+        template_id_notification: str = None,
+        template_id_invitation: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionCreateAttributesCustomEmailSandboxAttributes object.
+
+        :param List[str] invited: The email id string.
+        :param bool add_notification_payload: Whether to add the notification
+               payload to the email.
+        :param str reply_to_mail: The email address to reply to.
+        :param str reply_to_name: The email name to reply to.
+        :param str template_id_notification: (optional) The templete id for
+               notification.
+        :param str template_id_invitation: (optional) The templete id for
+               invitation.
+        """
+        # pylint: disable=super-init-not-called
+        self.invited = invited
+        self.add_notification_payload = add_notification_payload
+        self.reply_to_mail = reply_to_mail
+        self.reply_to_name = reply_to_name
+        self.template_id_notification = template_id_notification
+        self.template_id_invitation = template_id_invitation
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionCreateAttributesCustomEmailSandboxAttributes':
+        """Initialize a SubscriptionCreateAttributesCustomEmailSandboxAttributes object from a json dictionary."""
+        args = {}
+        if 'invited' in _dict:
+            args['invited'] = _dict.get('invited')
+        else:
+            raise ValueError(
+                'Required property \'invited\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
+            )
+        if 'add_notification_payload' in _dict:
+            args['add_notification_payload'] = _dict.get('add_notification_payload')
+        else:
+            raise ValueError(
+                'Required property \'add_notification_payload\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
+            )
+        if 'reply_to_mail' in _dict:
+            args['reply_to_mail'] = _dict.get('reply_to_mail')
+        else:
+            raise ValueError(
+                'Required property \'reply_to_mail\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
+            )
+        if 'reply_to_name' in _dict:
+            args['reply_to_name'] = _dict.get('reply_to_name')
+        else:
+            raise ValueError(
+                'Required property \'reply_to_name\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
+            )
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'template_id_invitation' in _dict:
+            args['template_id_invitation'] = _dict.get('template_id_invitation')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionCreateAttributesCustomEmailSandboxAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'invited') and self.invited is not None:
+            _dict['invited'] = self.invited
+        if hasattr(self, 'add_notification_payload') and self.add_notification_payload is not None:
+            _dict['add_notification_payload'] = self.add_notification_payload
+        if hasattr(self, 'reply_to_mail') and self.reply_to_mail is not None:
+            _dict['reply_to_mail'] = self.reply_to_mail
+        if hasattr(self, 'reply_to_name') and self.reply_to_name is not None:
+            _dict['reply_to_name'] = self.reply_to_name
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'template_id_invitation') and self.template_id_invitation is not None:
+            _dict['template_id_invitation'] = self.template_id_invitation
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionCreateAttributesCustomEmailSandboxAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionCreateAttributesCustomEmailSandboxAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionCreateAttributesCustomEmailSandboxAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
 class SubscriptionCreateAttributesCustomSMSAttributes(SubscriptionCreateAttributes):
     """
     The attributes for an custom sms notification.
@@ -15365,6 +15804,152 @@ class SubscriptionUpdateAttributesCodeEngineAttributes(SubscriptionUpdateAttribu
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other: 'SubscriptionUpdateAttributesCodeEngineAttributes') -> bool:
+        """Return `true` when self and other are not equal, false otherwise."""
+        return not self == other
+
+
+class SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes(SubscriptionUpdateAttributes):
+    """
+    The attributes for an email notification.
+
+    :attr UpdateAttributesInvited invited: (optional) The email ids or phone
+          numbers.
+    :attr bool add_notification_payload: Whether to add the notification payload to
+          the email.
+    :attr str reply_to_mail: The email address to reply to.
+    :attr str reply_to_name: The email name to reply to.
+    :attr UpdateAttributesSubscribed subscribed: (optional) The email ids or phone
+          numbers.
+    :attr UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids or
+          phone numbers.
+    :attr str template_id_notification: (optional) The templete id for notification.
+    :attr str template_id_invitation: (optional) The templete id for invitation.
+    """
+
+    def __init__(
+        self,
+        add_notification_payload: bool,
+        reply_to_mail: str,
+        reply_to_name: str,
+        *,
+        invited: 'UpdateAttributesInvited' = None,
+        subscribed: 'UpdateAttributesSubscribed' = None,
+        unsubscribed: 'UpdateAttributesUnsubscribed' = None,
+        template_id_notification: str = None,
+        template_id_invitation: str = None,
+    ) -> None:
+        """
+        Initialize a SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes object.
+
+        :param bool add_notification_payload: Whether to add the notification
+               payload to the email.
+        :param str reply_to_mail: The email address to reply to.
+        :param str reply_to_name: The email name to reply to.
+        :param UpdateAttributesInvited invited: (optional) The email ids or phone
+               numbers.
+        :param UpdateAttributesSubscribed subscribed: (optional) The email ids or
+               phone numbers.
+        :param UpdateAttributesUnsubscribed unsubscribed: (optional) The email ids
+               or phone numbers.
+        :param str template_id_notification: (optional) The templete id for
+               notification.
+        :param str template_id_invitation: (optional) The templete id for
+               invitation.
+        """
+        # pylint: disable=super-init-not-called
+        self.invited = invited
+        self.add_notification_payload = add_notification_payload
+        self.reply_to_mail = reply_to_mail
+        self.reply_to_name = reply_to_name
+        self.subscribed = subscribed
+        self.unsubscribed = unsubscribed
+        self.template_id_notification = template_id_notification
+        self.template_id_invitation = template_id_invitation
+
+    @classmethod
+    def from_dict(cls, _dict: Dict) -> 'SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes':
+        """Initialize a SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes object from a json dictionary."""
+        args = {}
+        if 'invited' in _dict:
+            args['invited'] = UpdateAttributesInvited.from_dict(_dict.get('invited'))
+        if 'add_notification_payload' in _dict:
+            args['add_notification_payload'] = _dict.get('add_notification_payload')
+        else:
+            raise ValueError(
+                'Required property \'add_notification_payload\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON'
+            )
+        if 'reply_to_mail' in _dict:
+            args['reply_to_mail'] = _dict.get('reply_to_mail')
+        else:
+            raise ValueError(
+                'Required property \'reply_to_mail\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON'
+            )
+        if 'reply_to_name' in _dict:
+            args['reply_to_name'] = _dict.get('reply_to_name')
+        else:
+            raise ValueError(
+                'Required property \'reply_to_name\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON'
+            )
+        if 'subscribed' in _dict:
+            args['subscribed'] = UpdateAttributesSubscribed.from_dict(_dict.get('subscribed'))
+        if 'unsubscribed' in _dict:
+            args['unsubscribed'] = UpdateAttributesUnsubscribed.from_dict(_dict.get('unsubscribed'))
+        if 'template_id_notification' in _dict:
+            args['template_id_notification'] = _dict.get('template_id_notification')
+        if 'template_id_invitation' in _dict:
+            args['template_id_invitation'] = _dict.get('template_id_invitation')
+        return cls(**args)
+
+    @classmethod
+    def _from_dict(cls, _dict):
+        """Initialize a SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes object from a json dictionary."""
+        return cls.from_dict(_dict)
+
+    def to_dict(self) -> Dict:
+        """Return a json dictionary representing this model."""
+        _dict = {}
+        if hasattr(self, 'invited') and self.invited is not None:
+            if isinstance(self.invited, dict):
+                _dict['invited'] = self.invited
+            else:
+                _dict['invited'] = self.invited.to_dict()
+        if hasattr(self, 'add_notification_payload') and self.add_notification_payload is not None:
+            _dict['add_notification_payload'] = self.add_notification_payload
+        if hasattr(self, 'reply_to_mail') and self.reply_to_mail is not None:
+            _dict['reply_to_mail'] = self.reply_to_mail
+        if hasattr(self, 'reply_to_name') and self.reply_to_name is not None:
+            _dict['reply_to_name'] = self.reply_to_name
+        if hasattr(self, 'subscribed') and self.subscribed is not None:
+            if isinstance(self.subscribed, dict):
+                _dict['subscribed'] = self.subscribed
+            else:
+                _dict['subscribed'] = self.subscribed.to_dict()
+        if hasattr(self, 'unsubscribed') and self.unsubscribed is not None:
+            if isinstance(self.unsubscribed, dict):
+                _dict['unsubscribed'] = self.unsubscribed
+            else:
+                _dict['unsubscribed'] = self.unsubscribed.to_dict()
+        if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
+            _dict['template_id_notification'] = self.template_id_notification
+        if hasattr(self, 'template_id_invitation') and self.template_id_invitation is not None:
+            _dict['template_id_invitation'] = self.template_id_invitation
+        return _dict
+
+    def _to_dict(self):
+        """Return a json dictionary representing this model."""
+        return self.to_dict()
+
+    def __str__(self) -> str:
+        """Return a `str` version of this SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes object."""
+        return json.dumps(self.to_dict(), indent=2)
+
+    def __eq__(self, other: 'SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes') -> bool:
+        """Return `true` when self and other are equal, false otherwise."""
+        if not isinstance(other, self.__class__):
+            return False
+        return self.__dict__ == other.__dict__
+
+    def __ne__(self, other: 'SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes') -> bool:
         """Return `true` when self and other are not equal, false otherwise."""
         return not self == other
 
