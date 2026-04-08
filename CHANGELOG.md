@@ -1,3 +1,10 @@
+# [0.24.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.23.0...v0.24.0) (2026-04-08)
+
+
+### Features
+
+* support for sandbox view payload and attachment ([#81](https://github.com/IBM/event-notifications-python-admin-sdk/issues/81)) ([19b6eac](https://github.com/IBM/event-notifications-python-admin-sdk/commit/19b6eac974e80a4ec60b67a28bf28990ac9940fa))
+
 # [0.23.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.22.0...v0.23.0) (2026-03-23)
 
 
