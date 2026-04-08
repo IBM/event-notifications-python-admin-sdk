@@ -69,6 +69,7 @@ destination_id18 = ""
 destination_id19 = ""
 destination_id20 = ""
 destination_id22 = ""
+destination_id_sandbox = ""
 safariCertificatePath = ""
 subscription_id = ""
 subscription_id1 = ""
@@ -82,6 +83,7 @@ subscription_id8 = ""
 subscription_id9 = ""
 subscription_id10 = ""
 subscription_id22 = ""
+subscription_id_sandbox = ""
 fcmServerKey = ""
 fcmSenderId = ""
 integration_id = ""
@@ -239,6 +241,7 @@ class TestEventNotificationsV1Examples:
                 name="Event Notification Create Source Acme",
                 description="This source is used for Acme Bank",
                 enabled=False,
+                store_notifications=True,
             ).get_result()
 
             print(json.dumps(source_response, indent=2))
@@ -429,7 +432,7 @@ class TestEventNotificationsV1Examples:
         """
         create_destination request example
         """
-        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19, destination_id20, destination_id22
+        global destination_id, destination_id3, destination_id4, destination_id5, destination_id6, destination_id8, destination_id9, destination_id10, destination_id11, destination_id12, destination_id13, destination_id14, destination_id15, destination_id16, destination_id17, destination_id18, destination_id19, destination_id20, destination_id_sandbox, destination_id22
         try:
             print("\ncreate_destination() result:")
             # begin-create_destination
@@ -903,6 +906,21 @@ class TestEventNotificationsV1Examples:
             destination_response = create_destination_response.get_result()
             destination = DestinationResponse.from_dict(destination_response)
             destination_id22 = destination.id
+
+            name = "custom_email_sandbox_destination"
+            typeval = "smtp_custom_sandbox"
+            description = "Custom Email Sandbox Destination"
+
+            create_destination_response = self.event_notifications_service.create_destination(
+                instance_id,
+                name,
+                type=typeval,
+                description=description,
+            )
+
+            destination_response = create_destination_response.get_result()
+            destination: DestinationResponse = DestinationResponse.from_dict(destination_response)
+            destination_id_sandbox = destination.id
 
             # end-create_destination
 
@@ -1667,7 +1685,43 @@ class TestEventNotificationsV1Examples:
 
             print(json.dumps(update_destination_response, indent=2))
 
+            name = "custom_email_sandbox_destination_update"
+            description = "Custom Email Sandbox Destination update"
+
+            update_destination_response = self.event_notifications_service.update_destination(
+                instance_id,
+                id=destination_id_sandbox,
+                name=name,
+                description=description,
+            ).get_result()
+
+            print(json.dumps(update_destination_response, indent=2))
+
             # end-update_destination
+
+        except ApiException as e:
+            pytest.fail(str(e))
+
+    @needscredentials
+    def test_upgrade_sandbox_destination_example(self):
+        """
+        upgrade_sandbox_destination request example
+        """
+        try:
+            print("\nupgrade_sandbox_destination() result:")
+            # begin-upgrade_sandbox_destination
+
+            domain = "mailx.event-notifications.test.cloud.ibm.com"
+
+            upgrade_response = self.event_notifications_service.update_email_sandbox_destination(
+                instance_id,
+                id=destination_id_sandbox,
+                domain=domain,
+            ).get_result()
+
+            print(json.dumps(upgrade_response, indent=2))
+
+            # end-upgrade_sandbox_destination
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -1853,7 +1907,7 @@ class TestEventNotificationsV1Examples:
         """
         create_subscription request example
         """
-        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id22
+        global subscription_id, subscription_id1, subscription_id2, subscription_id3, subscription_id4, subscription_id5, subscription_id6, subscription_id7, subscription_id8, subscription_id9, subscription_id10, subscription_id_sandbox, subscription_id22
         try:
             print("\ncreate_subscription() result:")
             # begin-create_subscription
@@ -2113,6 +2167,27 @@ class TestEventNotificationsV1Examples:
 
             subscription_response = create_subscription_response.get_result()
             subscription_id22 = subscription_response.get("id")
+
+            subscription_create_attributes_model = {
+                "invited": ["testuser@in.ibm.com"],
+                "add_notification_payload": True,
+                "reply_to_mail": "reply_to_mail@us.com",
+                "reply_to_name": "US News",
+            }
+
+            name = "subscription_custom_email_sandbox"
+            description = "Subscription for custom email sandbox"
+            create_subscription_response = self.event_notifications_service.create_subscription(
+                instance_id,
+                name,
+                destination_id=destination_id_sandbox,
+                topic_id=topic_id,
+                attributes=subscription_create_attributes_model,
+                description=description,
+            )
+
+            subscription_response = create_subscription_response.get_result()
+            subscription_id_sandbox = subscription_response.get("id")
 
         except ApiException as e:
             pytest.fail(str(e))
@@ -2427,6 +2502,32 @@ class TestEventNotificationsV1Examples:
             subscription_response = update_subscription_response.get_result()
             print(json.dumps(subscription_response, indent=2))
 
+            custom_email_sandbox_update_attributes_invite_model = {"add": ["tester5@ibm.com"]}
+
+            custom_email_sandbox_update_attributes_to_remove_model = {"remove": ["testuser@in.ibm.com"]}
+
+            subscription_update_attributes_model = {
+                "invited": custom_email_sandbox_update_attributes_invite_model,
+                "add_notification_payload": True,
+                "reply_to_mail": "reply_to_mail@us.com",
+                "reply_to_name": "US News",
+                "subscribed": custom_email_sandbox_update_attributes_to_remove_model,
+                "unsubscribed": custom_email_sandbox_update_attributes_to_remove_model,
+            }
+
+            name = "subscription_custom_email_sandbox update"
+            description = "Subscription for custom email sandbox updated"
+            update_subscription_response = self.event_notifications_service.update_subscription(
+                instance_id,
+                id=subscription_id_sandbox,
+                name=name,
+                description=description,
+                attributes=subscription_update_attributes_model,
+            )
+
+            subscription_response = update_subscription_response.get_result()
+            print(json.dumps(subscription_response, indent=2))
+
             # end-update_subscription
         except ApiException as e:
             pytest.fail(str(e))
@@ -2524,6 +2625,22 @@ class TestEventNotificationsV1Examples:
             templates = '["149b0e11-8a7c-4fda-a847-5d79e01b71dc"]'
             markdown_content = "**Event Summary** \n\n**Toolchain ID:** `4414af34-a5c7-47d3-8f05-add4af6d78a6`  \n**Content Type:** `application/json`\n\n---\n\n *Pipeline Run Details*\n\n- **Namespace:** `PR`\n- **Trigger Name:** `manual`\n- **Triggered By:** `nitish.kulkarni3@ibm.com`\n- **Build Number:** `343`\n- **Pipeline Link:** [View Pipeline Run](https://cloud.ibm.com/devops/pipelines/tekton/e9cd5aa3-a3f2-4776-8acc-26a35922386e/runs/f29ac6f5-bd2f-4a26-abb8-4249be8dbab7?env_id=ibm:yp:us-south)"
 
+            email_attachment_model = {
+                'content': 'VGhpcyBpcyBhIHRlc3QgZmlsZSBjb250ZW50',  # Base64 encoded "This is a test file content"
+                'filename': 'test_document.txt',
+                'content_type': 'text/plain',
+                'disposition': 'attachment',
+            }
+
+            email_attachment_model_2 = {
+                'content': 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',  # Base64 encoded 1x1 pixel PNG
+                'filename': 'test_image.png',
+                'content_type': 'image/png',
+                'disposition': 'attachment',
+            }
+
+            email_attachments = [email_attachment_model, email_attachment_model_2]
+
             notification_create_model = {
                 "ibmenseverity": notification_severity,
                 "ibmenfcmbody": json.dumps(notification_fcm_body_model),
@@ -2542,6 +2659,7 @@ class TestEventNotificationsV1Examples:
                 "ibmenslackto": slackto,
                 "ibmenmms": mms,
                 "ibmentemplates": templates,
+                "attachments": email_attachments,
                 "id": notification_id,
                 "source": notifications_source,
                 "type": type_value,
@@ -2929,6 +3047,7 @@ class TestEventNotificationsV1Examples:
                 subscription_id9,
                 subscription_id10,
                 subscription_id22,
+                subscription_id_sandbox,
             ]:
                 delete_subscription_response = event_notifications_service.delete_subscription(instance_id, id)
             print(
@@ -2990,6 +3109,7 @@ class TestEventNotificationsV1Examples:
                 destination_id19,
                 destination_id20,
                 destination_id22,
+                destination_id_sandbox,
             ]:
                 delete_destination_response = event_notifications_service.delete_destination(instance_id, id)
             print(

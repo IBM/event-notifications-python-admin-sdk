@@ -489,7 +489,7 @@ class TestSendNotifications:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications')
-        mock_response = '{"notification_id": "notification_id"}'
+        mock_response = '{"notification_id": "notification_id", "attachments": [{"content": "content", "filename": "filename", "content_type": "content_type", "disposition": "attachment"}]}'
         responses.add(
             responses.POST,
             url,
@@ -497,6 +497,13 @@ class TestSendNotifications:
             content_type='application/json',
             status=202,
         )
+
+        # Construct a dict representation of a EmailAttachment model
+        email_attachment_model = {}
+        email_attachment_model['content'] = 'testString'
+        email_attachment_model['filename'] = 'testString'
+        email_attachment_model['content_type'] = 'testString'
+        email_attachment_model['disposition'] = 'attachment'
 
         # Construct a dict representation of a NotificationCreate model
         notification_create_model = {}
@@ -533,6 +540,7 @@ class TestSendNotifications:
         notification_create_model['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model['ibmenhuaweibody'] = 'testString'
         notification_create_model['ibmensafaribody'] = 'testString'
+        notification_create_model['attachments'] = [email_attachment_model]
         notification_create_model['foo'] = 'testString'
 
         # Set up parameter values
@@ -569,7 +577,7 @@ class TestSendNotifications:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications')
-        mock_response = '{"notification_id": "notification_id"}'
+        mock_response = '{"notification_id": "notification_id", "attachments": [{"content": "content", "filename": "filename", "content_type": "content_type", "disposition": "attachment"}]}'
         responses.add(
             responses.POST,
             url,
@@ -607,7 +615,7 @@ class TestSendNotifications:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/notifications')
-        mock_response = '{"notification_id": "notification_id"}'
+        mock_response = '{"notification_id": "notification_id", "attachments": [{"content": "content", "filename": "filename", "content_type": "content_type", "disposition": "attachment"}]}'
         responses.add(
             responses.POST,
             url,
@@ -689,7 +697,7 @@ class TestCreateSources:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "store_notifications": false, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
             url,
@@ -703,6 +711,7 @@ class TestCreateSources:
         name = 'testString'
         description = 'testString'
         enabled = True
+        store_notifications = False
 
         # Invoke method
         response = _service.create_sources(
@@ -710,6 +719,7 @@ class TestCreateSources:
             name,
             description,
             enabled=enabled,
+            store_notifications=store_notifications,
             headers={},
         )
 
@@ -721,6 +731,7 @@ class TestCreateSources:
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
         assert req_body['enabled'] == True
+        assert req_body['store_notifications'] == False
 
     def test_create_sources_all_params_with_retries(self):
         # Enable retries and run test_create_sources_all_params.
@@ -738,7 +749,7 @@ class TestCreateSources:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "created_at": "2019-01-01T12:00:00.000Z"}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "store_notifications": false, "created_at": "2019-01-01T12:00:00.000Z"}'
         responses.add(
             responses.POST,
             url,
@@ -752,6 +763,7 @@ class TestCreateSources:
         name = 'testString'
         description = 'testString'
         enabled = True
+        store_notifications = False
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -786,7 +798,7 @@ class TestListSources:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "store_notifications": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -836,7 +848,7 @@ class TestListSources:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "store_notifications": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -874,7 +886,7 @@ class TestListSources:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
+        mock_response = '{"total_count": 0, "offset": 6, "limit": 5, "sources": [{"id": "id", "name": "name", "description": "description", "type": "type", "enabled": false, "store_notifications": false, "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 0}], "first": {"href": "href"}, "previous": {"href": "href"}, "next": {"href": "href"}}'
         responses.add(
             responses.GET,
             url,
@@ -911,8 +923,8 @@ class TestListSources:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
-        mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"store_notifications":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"store_notifications":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -949,8 +961,8 @@ class TestListSources:
         """
         # Set up a two-page mock response
         url = preprocess_url('/v1/instances/testString/sources')
-        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
-        mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        mock_response1 = '{"next":{"href":"https://myhost.com/somePath?offset=1"},"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"store_notifications":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
+        mock_response2 = '{"sources":[{"id":"id","name":"name","description":"description","type":"type","enabled":false,"store_notifications":false,"updated_at":"2019-01-01T12:00:00.000Z","topic_count":0}],"total_count":2,"limit":1}'
         responses.add(
             responses.GET,
             url,
@@ -990,7 +1002,7 @@ class TestGetSource:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "store_notifications": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
         responses.add(
             responses.GET,
             url,
@@ -1030,7 +1042,7 @@ class TestGetSource:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "store_notifications": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
         responses.add(
             responses.GET,
             url,
@@ -1154,7 +1166,7 @@ class TestUpdateSource:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "store_notifications": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
         responses.add(
             responses.PATCH,
             url,
@@ -1169,6 +1181,7 @@ class TestUpdateSource:
         name = 'testString'
         description = 'testString'
         enabled = True
+        store_notifications = False
 
         # Invoke method
         response = _service.update_source(
@@ -1177,6 +1190,7 @@ class TestUpdateSource:
             name=name,
             description=description,
             enabled=enabled,
+            store_notifications=store_notifications,
             headers={},
         )
 
@@ -1188,6 +1202,7 @@ class TestUpdateSource:
         assert req_body['name'] == 'testString'
         assert req_body['description'] == 'testString'
         assert req_body['enabled'] == True
+        assert req_body['store_notifications'] == False
 
     def test_update_source_all_params_with_retries(self):
         # Enable retries and run test_update_source_all_params.
@@ -1205,7 +1220,7 @@ class TestUpdateSource:
         """
         # Set up mock
         url = preprocess_url('/v1/instances/testString/sources/testString')
-        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
+        mock_response = '{"id": "id", "name": "name", "description": "description", "enabled": false, "store_notifications": false, "type": "type", "updated_at": "2019-01-01T12:00:00.000Z", "topic_count": 11, "topic_names": ["topic_names"]}'
         responses.add(
             responses.PATCH,
             url,
@@ -1220,6 +1235,7 @@ class TestUpdateSource:
         name = 'testString'
         description = 'testString'
         enabled = True
+        store_notifications = False
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
@@ -3850,6 +3866,98 @@ class TestTestDestination:
         # Disable retries and run test_test_destination_value_error.
         _service.disable_retries()
         self.test_test_destination_value_error()
+
+
+class TestUpdateEmailSandboxDestination:
+    """
+    Test Class for update_email_sandbox_destination
+    """
+
+    @responses.activate
+    def test_update_email_sandbox_destination_all_params(self):
+        """
+        update_email_sandbox_destination()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/upgrade')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "collect_failed_events": false, "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        domain = 'testString'
+
+        # Invoke method
+        response = _service.update_email_sandbox_destination(
+            instance_id,
+            id,
+            domain,
+            headers={},
+        )
+
+        # Check for correct operation
+        assert len(responses.calls) == 1
+        assert response.status_code == 200
+        # Validate body params
+        req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
+        assert req_body['domain'] == 'testString'
+
+    def test_update_email_sandbox_destination_all_params_with_retries(self):
+        # Enable retries and run test_update_email_sandbox_destination_all_params.
+        _service.enable_retries()
+        self.test_update_email_sandbox_destination_all_params()
+
+        # Disable retries and run test_update_email_sandbox_destination_all_params.
+        _service.disable_retries()
+        self.test_update_email_sandbox_destination_all_params()
+
+    @responses.activate
+    def test_update_email_sandbox_destination_value_error(self):
+        """
+        test_update_email_sandbox_destination_value_error()
+        """
+        # Set up mock
+        url = preprocess_url('/v1/instances/testString/destinations/testString/upgrade')
+        mock_response = '{"id": "id", "name": "name", "description": "description", "type": "webhook", "collect_failed_events": false, "config": {"params": {"domain": "domain", "dkim": {"public_key": "public_key", "selector": "selector", "verification": "verification"}, "spf": {"txt_name": "txt_name", "txt_value": "txt_value", "verification": "verification"}}}, "created_at": "2019-01-01T12:00:00.000Z"}'
+        responses.add(
+            responses.PATCH,
+            url,
+            body=mock_response,
+            content_type='application/json',
+            status=200,
+        )
+
+        # Set up parameter values
+        instance_id = 'testString'
+        id = 'testString'
+        domain = 'testString'
+
+        # Pass in all but one required param and check for a ValueError
+        req_param_dict = {
+            "instance_id": instance_id,
+            "id": id,
+            "domain": domain,
+        }
+        for param in req_param_dict.keys():
+            req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
+            with pytest.raises(ValueError):
+                _service.update_email_sandbox_destination(**req_copy)
+
+    def test_update_email_sandbox_destination_value_error_with_retries(self):
+        # Enable retries and run test_update_email_sandbox_destination_value_error.
+        _service.enable_retries()
+        self.test_update_email_sandbox_destination_value_error()
+
+        # Disable retries and run test_update_email_sandbox_destination_value_error.
+        _service.disable_retries()
+        self.test_update_email_sandbox_destination_value_error()
 
 
 class TestUpdateVerifyDestination:
@@ -7663,6 +7771,39 @@ class TestModel_ENAuthAttributes:
         assert en_auth_attributes_model_json2 == en_auth_attributes_model_json
 
 
+class TestModel_EmailAttachment:
+    """
+    Test Class for EmailAttachment
+    """
+
+    def test_email_attachment_serialization(self):
+        """
+        Test serialization/deserialization for EmailAttachment
+        """
+
+        # Construct a json representation of a EmailAttachment model
+        email_attachment_model_json = {}
+        email_attachment_model_json['content'] = 'testString'
+        email_attachment_model_json['filename'] = 'testString'
+        email_attachment_model_json['content_type'] = 'testString'
+        email_attachment_model_json['disposition'] = 'attachment'
+
+        # Construct a model instance of EmailAttachment by calling from_dict on the json representation
+        email_attachment_model = EmailAttachment.from_dict(email_attachment_model_json)
+        assert email_attachment_model != False
+
+        # Construct a model instance of EmailAttachment by calling from_dict on the json representation
+        email_attachment_model_dict = EmailAttachment.from_dict(email_attachment_model_json).__dict__
+        email_attachment_model2 = EmailAttachment(**email_attachment_model_dict)
+
+        # Verify the model instances are equivalent
+        assert email_attachment_model == email_attachment_model2
+
+        # Convert model instance back to dict and verify no loss of data
+        email_attachment_model_json2 = email_attachment_model.to_dict()
+        assert email_attachment_model_json2 == email_attachment_model_json
+
+
 class TestModel_EmailAttributesResponseInvitedItems:
     """
     Test Class for EmailAttributesResponseInvitedItems
@@ -8340,6 +8481,14 @@ class TestModel_NotificationCreate:
         Test serialization/deserialization for NotificationCreate
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        email_attachment_model = {}  # EmailAttachment
+        email_attachment_model['content'] = 'VGhpcyBpcyBhIHRlc3QgZG9jdW1lbnQK'
+        email_attachment_model['filename'] = 'test.txt'
+        email_attachment_model['content_type'] = 'text/plain'
+        email_attachment_model['disposition'] = 'attachment'
+
         # Construct a json representation of a NotificationCreate model
         notification_create_model_json = {}
         notification_create_model_json['specversion'] = '1.0'
@@ -8375,6 +8524,7 @@ class TestModel_NotificationCreate:
         notification_create_model_json['ibmenfirefoxheaders'] = '{"TTL":3600,"Topic":"test","Urgency":"high"}'
         notification_create_model_json['ibmenhuaweibody'] = 'testString'
         notification_create_model_json['ibmensafaribody'] = 'testString'
+        notification_create_model_json['attachments'] = [email_attachment_model]
         notification_create_model_json['foo'] = 'testString'
 
         # Construct a model instance of NotificationCreate by calling from_dict on the json representation
@@ -8413,9 +8563,18 @@ class TestModel_NotificationResponse:
         Test serialization/deserialization for NotificationResponse
         """
 
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        email_attachment_model = {}  # EmailAttachment
+        email_attachment_model['content'] = 'VGhpcyBpcyBhIHRlc3QgZG9jdW1lbnQK'
+        email_attachment_model['filename'] = 'test.txt'
+        email_attachment_model['content_type'] = 'text/plain'
+        email_attachment_model['disposition'] = 'attachment'
+
         # Construct a json representation of a NotificationResponse model
         notification_response_model_json = {}
         notification_response_model_json['notification_id'] = 'testString'
+        notification_response_model_json['attachments'] = [email_attachment_model]
 
         # Construct a model instance of NotificationResponse by calling from_dict on the json representation
         notification_response_model = NotificationResponse.from_dict(notification_response_model_json)
@@ -9311,6 +9470,7 @@ class TestModel_Source:
         source_model_json['name'] = 'testString'
         source_model_json['description'] = 'testString'
         source_model_json['enabled'] = True
+        source_model_json['store_notifications'] = True
         source_model_json['type'] = 'testString'
         source_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         source_model_json['topic_count'] = 38
@@ -9350,6 +9510,7 @@ class TestModel_SourceList:
         source_list_item_model['description'] = 'This source is related cloud events'
         source_list_item_model['type'] = 'api'
         source_list_item_model['enabled'] = True
+        source_list_item_model['store_notifications'] = True
         source_list_item_model['updated_at'] = '2021-08-19T05:30:03.696000Z'
         source_list_item_model['topic_count'] = 0
 
@@ -9401,6 +9562,7 @@ class TestModel_SourceListItem:
         source_list_item_model_json['description'] = 'testString'
         source_list_item_model_json['type'] = 'testString'
         source_list_item_model_json['enabled'] = True
+        source_list_item_model_json['store_notifications'] = True
         source_list_item_model_json['updated_at'] = '2019-01-01T12:00:00Z'
         source_list_item_model_json['topic_count'] = 0
 
@@ -9436,6 +9598,7 @@ class TestModel_SourceResponse:
         source_response_model_json['name'] = 'testString'
         source_response_model_json['description'] = 'testString'
         source_response_model_json['enabled'] = True
+        source_response_model_json['store_notifications'] = True
         source_response_model_json['created_at'] = '2019-01-01T12:00:00Z'
 
         # Construct a model instance of SourceResponse by calling from_dict on the json representation
@@ -10454,6 +10617,70 @@ class TestModel_DestinationConfigOneOfCustomDomainEmailDestinationConfig:
         assert (
             destination_config_one_of_custom_domain_email_destination_config_model_json2
             == destination_config_one_of_custom_domain_email_destination_config_model_json
+        )
+
+
+class TestModel_DestinationConfigOneOfCustomEmailSandboxDestinationConfig:
+    """
+    Test Class for DestinationConfigOneOfCustomEmailSandboxDestinationConfig
+    """
+
+    def test_destination_config_one_of_custom_email_sandbox_destination_config_serialization(self):
+        """
+        Test serialization/deserialization for DestinationConfigOneOfCustomEmailSandboxDestinationConfig
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        dkim_attributes_model = {}  # DKIMAttributes
+        dkim_attributes_model['public_key'] = 'testString'
+        dkim_attributes_model['selector'] = 'testString'
+        dkim_attributes_model['verification'] = 'testString'
+
+        spf_attributes_model = {}  # SPFAttributes
+        spf_attributes_model['txt_name'] = 'testString'
+        spf_attributes_model['txt_value'] = 'testString'
+        spf_attributes_model['verification'] = 'testString'
+
+        # Construct a json representation of a DestinationConfigOneOfCustomEmailSandboxDestinationConfig model
+        destination_config_one_of_custom_email_sandbox_destination_config_model_json = {}
+        destination_config_one_of_custom_email_sandbox_destination_config_model_json['domain'] = 'testString'
+        destination_config_one_of_custom_email_sandbox_destination_config_model_json['dkim'] = dkim_attributes_model
+        destination_config_one_of_custom_email_sandbox_destination_config_model_json['spf'] = spf_attributes_model
+
+        # Construct a model instance of DestinationConfigOneOfCustomEmailSandboxDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_custom_email_sandbox_destination_config_model = (
+            DestinationConfigOneOfCustomEmailSandboxDestinationConfig.from_dict(
+                destination_config_one_of_custom_email_sandbox_destination_config_model_json
+            )
+        )
+        assert destination_config_one_of_custom_email_sandbox_destination_config_model != False
+
+        # Construct a model instance of DestinationConfigOneOfCustomEmailSandboxDestinationConfig by calling from_dict on the json representation
+        destination_config_one_of_custom_email_sandbox_destination_config_model_dict = (
+            DestinationConfigOneOfCustomEmailSandboxDestinationConfig.from_dict(
+                destination_config_one_of_custom_email_sandbox_destination_config_model_json
+            ).__dict__
+        )
+        destination_config_one_of_custom_email_sandbox_destination_config_model2 = (
+            DestinationConfigOneOfCustomEmailSandboxDestinationConfig(
+                **destination_config_one_of_custom_email_sandbox_destination_config_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            destination_config_one_of_custom_email_sandbox_destination_config_model
+            == destination_config_one_of_custom_email_sandbox_destination_config_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        destination_config_one_of_custom_email_sandbox_destination_config_model_json2 = (
+            destination_config_one_of_custom_email_sandbox_destination_config_model.to_dict()
+        )
+        assert (
+            destination_config_one_of_custom_email_sandbox_destination_config_model_json2
+            == destination_config_one_of_custom_email_sandbox_destination_config_model_json
         )
 
 
@@ -12099,6 +12326,65 @@ class TestModel_SubscriptionCreateAttributesCustomEmailAttributes:
         )
 
 
+class TestModel_SubscriptionCreateAttributesCustomEmailSandboxAttributes:
+    """
+    Test Class for SubscriptionCreateAttributesCustomEmailSandboxAttributes
+    """
+
+    def test_subscription_create_attributes_custom_email_sandbox_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionCreateAttributesCustomEmailSandboxAttributes
+        """
+
+        # Construct a json representation of a SubscriptionCreateAttributesCustomEmailSandboxAttributes model
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json = {}
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json['invited'] = ['testString']
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json['add_notification_payload'] = False
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json['reply_to_mail'] = 'testString'
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json['reply_to_name'] = 'testString'
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json['template_id_invitation'] = (
+            'testString'
+        )
+
+        # Construct a model instance of SubscriptionCreateAttributesCustomEmailSandboxAttributes by calling from_dict on the json representation
+        subscription_create_attributes_custom_email_sandbox_attributes_model = (
+            SubscriptionCreateAttributesCustomEmailSandboxAttributes.from_dict(
+                subscription_create_attributes_custom_email_sandbox_attributes_model_json
+            )
+        )
+        assert subscription_create_attributes_custom_email_sandbox_attributes_model != False
+
+        # Construct a model instance of SubscriptionCreateAttributesCustomEmailSandboxAttributes by calling from_dict on the json representation
+        subscription_create_attributes_custom_email_sandbox_attributes_model_dict = (
+            SubscriptionCreateAttributesCustomEmailSandboxAttributes.from_dict(
+                subscription_create_attributes_custom_email_sandbox_attributes_model_json
+            ).__dict__
+        )
+        subscription_create_attributes_custom_email_sandbox_attributes_model2 = (
+            SubscriptionCreateAttributesCustomEmailSandboxAttributes(
+                **subscription_create_attributes_custom_email_sandbox_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_create_attributes_custom_email_sandbox_attributes_model
+            == subscription_create_attributes_custom_email_sandbox_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_create_attributes_custom_email_sandbox_attributes_model_json2 = (
+            subscription_create_attributes_custom_email_sandbox_attributes_model.to_dict()
+        )
+        assert (
+            subscription_create_attributes_custom_email_sandbox_attributes_model_json2
+            == subscription_create_attributes_custom_email_sandbox_attributes_model_json
+        )
+
+
 class TestModel_SubscriptionCreateAttributesCustomSMSAttributes:
     """
     Test Class for SubscriptionCreateAttributesCustomSMSAttributes
@@ -12683,6 +12969,87 @@ class TestModel_SubscriptionUpdateAttributesCodeEngineAttributes:
         assert (
             subscription_update_attributes_code_engine_attributes_model_json2
             == subscription_update_attributes_code_engine_attributes_model_json
+        )
+
+
+class TestModel_SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes:
+    """
+    Test Class for SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes
+    """
+
+    def test_subscription_update_attributes_custom_email_sandbox_update_attributes_serialization(self):
+        """
+        Test serialization/deserialization for SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes
+        """
+
+        # Construct dict forms of any model objects needed in order to build this model.
+
+        update_attributes_invited_model = {}  # UpdateAttributesInvited
+        update_attributes_invited_model['add'] = ['testString']
+        update_attributes_invited_model['remove'] = ['testString']
+
+        update_attributes_subscribed_model = {}  # UpdateAttributesSubscribed
+        update_attributes_subscribed_model['remove'] = ['testString']
+
+        update_attributes_unsubscribed_model = {}  # UpdateAttributesUnsubscribed
+        update_attributes_unsubscribed_model['remove'] = ['testString']
+
+        # Construct a json representation of a SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes model
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json = {}
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['invited'] = (
+            update_attributes_invited_model
+        )
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['add_notification_payload'] = (
+            False
+        )
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['reply_to_mail'] = 'testString'
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['reply_to_name'] = 'testString'
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['subscribed'] = (
+            update_attributes_subscribed_model
+        )
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['unsubscribed'] = (
+            update_attributes_unsubscribed_model
+        )
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['template_id_notification'] = (
+            'testString'
+        )
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json['template_id_invitation'] = (
+            'testString'
+        )
+
+        # Construct a model instance of SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model = (
+            SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes.from_dict(
+                subscription_update_attributes_custom_email_sandbox_update_attributes_model_json
+            )
+        )
+        assert subscription_update_attributes_custom_email_sandbox_update_attributes_model != False
+
+        # Construct a model instance of SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes by calling from_dict on the json representation
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_dict = (
+            SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes.from_dict(
+                subscription_update_attributes_custom_email_sandbox_update_attributes_model_json
+            ).__dict__
+        )
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model2 = (
+            SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes(
+                **subscription_update_attributes_custom_email_sandbox_update_attributes_model_dict
+            )
+        )
+
+        # Verify the model instances are equivalent
+        assert (
+            subscription_update_attributes_custom_email_sandbox_update_attributes_model
+            == subscription_update_attributes_custom_email_sandbox_update_attributes_model2
+        )
+
+        # Convert model instance back to dict and verify no loss of data
+        subscription_update_attributes_custom_email_sandbox_update_attributes_model_json2 = (
+            subscription_update_attributes_custom_email_sandbox_update_attributes_model.to_dict()
+        )
+        assert (
+            subscription_update_attributes_custom_email_sandbox_update_attributes_model_json2
+            == subscription_update_attributes_custom_email_sandbox_update_attributes_model_json
         )
 
 
