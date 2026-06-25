@@ -121,9 +121,10 @@ class TestGetMetrics:
 
         # Set up parameter values
         instance_id = 'testString'
-        destination_type = 'smtp_custom'
         gte = 'testString'
         lte = 'testString'
+        smtp_config_id = 'testString'
+        destination_type = 'smtp_custom'
         destination_id = 'testString'
         subscription_id = 'testString'
         source_id = 'testString'
@@ -134,9 +135,10 @@ class TestGetMetrics:
         # Invoke method
         response = _service.get_metrics(
             instance_id,
-            destination_type,
             gte,
             lte,
+            smtp_config_id=smtp_config_id,
+            destination_type=destination_type,
             destination_id=destination_id,
             subscription_id=subscription_id,
             source_id=source_id,
@@ -152,9 +154,10 @@ class TestGetMetrics:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'destination_type={}'.format(destination_type) in query_string
         assert 'gte={}'.format(gte) in query_string
         assert 'lte={}'.format(lte) in query_string
+        assert 'smtp_config_id={}'.format(smtp_config_id) in query_string
+        assert 'destination_type={}'.format(destination_type) in query_string
         assert 'destination_id={}'.format(destination_id) in query_string
         assert 'subscription_id={}'.format(subscription_id) in query_string
         assert 'source_id={}'.format(source_id) in query_string
@@ -189,14 +192,12 @@ class TestGetMetrics:
 
         # Set up parameter values
         instance_id = 'testString'
-        destination_type = 'smtp_custom'
         gte = 'testString'
         lte = 'testString'
 
         # Invoke method
         response = _service.get_metrics(
             instance_id,
-            destination_type,
             gte,
             lte,
             headers={},
@@ -208,7 +209,6 @@ class TestGetMetrics:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'destination_type={}'.format(destination_type) in query_string
         assert 'gte={}'.format(gte) in query_string
         assert 'lte={}'.format(lte) in query_string
 
@@ -239,14 +239,12 @@ class TestGetMetrics:
 
         # Set up parameter values
         instance_id = 'testString'
-        destination_type = 'smtp_custom'
         gte = 'testString'
         lte = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
-            "destination_type": destination_type,
             "gte": gte,
             "lte": lte,
         }
@@ -288,9 +286,10 @@ class TestGetBounceMetrics:
 
         # Set up parameter values
         instance_id = 'testString'
-        destination_type = 'smtp_custom'
         gte = 'testString'
         lte = 'testString'
+        smtp_config_id = 'testString'
+        destination_type = 'smtp_custom'
         destination_id = 'testString'
         subscription_id = 'testString'
         source_id = 'testString'
@@ -303,9 +302,10 @@ class TestGetBounceMetrics:
         # Invoke method
         response = _service.get_bounce_metrics(
             instance_id,
-            destination_type,
             gte,
             lte,
+            smtp_config_id=smtp_config_id,
+            destination_type=destination_type,
             destination_id=destination_id,
             subscription_id=subscription_id,
             source_id=source_id,
@@ -323,9 +323,10 @@ class TestGetBounceMetrics:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'destination_type={}'.format(destination_type) in query_string
         assert 'gte={}'.format(gte) in query_string
         assert 'lte={}'.format(lte) in query_string
+        assert 'smtp_config_id={}'.format(smtp_config_id) in query_string
+        assert 'destination_type={}'.format(destination_type) in query_string
         assert 'destination_id={}'.format(destination_id) in query_string
         assert 'subscription_id={}'.format(subscription_id) in query_string
         assert 'source_id={}'.format(source_id) in query_string
@@ -362,14 +363,12 @@ class TestGetBounceMetrics:
 
         # Set up parameter values
         instance_id = 'testString'
-        destination_type = 'smtp_custom'
         gte = 'testString'
         lte = 'testString'
 
         # Invoke method
         response = _service.get_bounce_metrics(
             instance_id,
-            destination_type,
             gte,
             lte,
             headers={},
@@ -381,7 +380,6 @@ class TestGetBounceMetrics:
         # Validate query params
         query_string = responses.calls[0].request.url.split('?', 1)[1]
         query_string = urllib.parse.unquote_plus(query_string)
-        assert 'destination_type={}'.format(destination_type) in query_string
         assert 'gte={}'.format(gte) in query_string
         assert 'lte={}'.format(lte) in query_string
 
@@ -412,14 +410,12 @@ class TestGetBounceMetrics:
 
         # Set up parameter values
         instance_id = 'testString'
-        destination_type = 'smtp_custom'
         gte = 'testString'
         lte = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
-            "destination_type": destination_type,
             "gte": gte,
             "lte": lte,
         }

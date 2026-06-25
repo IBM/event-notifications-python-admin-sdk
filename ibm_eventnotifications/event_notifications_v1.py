@@ -80,10 +80,11 @@ class EventNotificationsV1(BaseService):
     def get_metrics(
         self,
         instance_id: str,
-        destination_type: str,
         gte: str,
         lte: str,
         *,
+        smtp_config_id: str = None,
+        destination_type: str = None,
         destination_id: str = None,
         subscription_id: str = None,
         source_id: str = None,
@@ -99,10 +100,13 @@ class EventNotificationsV1(BaseService):
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
-        :param str destination_type: Destination type. Allowed values are
-               [smtp_custom].
         :param str gte: GTE (greater than equal), start timestamp in UTC.
         :param str lte: LTE (less than equal), end timestamp in UTC.
+        :param str smtp_config_id: (optional) SMTP configuration ID. Required when
+               querying metrics for SMTP interface destinations.
+        :param str destination_type: (optional) Destination type for which metrics
+               are requested. Supported value: smtp_custom. Required when querying metrics
+               for custom email destinations.
         :param str destination_id: (optional) Unique identifier for Destination.
         :param str subscription_id: (optional) Unique identifier for Subscription.
         :param str source_id: (optional) Unique identifier for Source.
@@ -116,8 +120,6 @@ class EventNotificationsV1(BaseService):
 
         if not instance_id:
             raise ValueError('instance_id must be provided')
-        if not destination_type:
-            raise ValueError('destination_type must be provided')
         if not gte:
             raise ValueError('gte must be provided')
         if not lte:
@@ -131,9 +133,10 @@ class EventNotificationsV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'destination_type': destination_type,
             'gte': gte,
             'lte': lte,
+            'smtp_config_id': smtp_config_id,
+            'destination_type': destination_type,
             'destination_id': destination_id,
             'subscription_id': subscription_id,
             'source_id': source_id,
@@ -164,10 +167,11 @@ class EventNotificationsV1(BaseService):
     def get_bounce_metrics(
         self,
         instance_id: str,
-        destination_type: str,
         gte: str,
         lte: str,
         *,
+        smtp_config_id: str = None,
+        destination_type: str = None,
         destination_id: str = None,
         subscription_id: str = None,
         source_id: str = None,
@@ -185,10 +189,13 @@ class EventNotificationsV1(BaseService):
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
-        :param str destination_type: Destination type. Allowed values are
-               [smtp_custom].
         :param str gte: GTE (greater than equal), start timestamp in UTC.
         :param str lte: LTE (less than equal), end timestamp in UTC.
+        :param str smtp_config_id: (optional) SMTP configuration ID. Required when
+               querying metrics for SMTP interface destinations.
+        :param str destination_type: (optional) Destination type for which metrics
+               are requested. Supported value: smtp_custom. Required when querying metrics
+               for custom email destinations.
         :param str destination_id: (optional) Unique identifier for Destination.
         :param str subscription_id: (optional) Unique identifier for Subscription.
         :param str source_id: (optional) Unique identifier for Source.
@@ -204,8 +211,6 @@ class EventNotificationsV1(BaseService):
 
         if not instance_id:
             raise ValueError('instance_id must be provided')
-        if not destination_type:
-            raise ValueError('destination_type must be provided')
         if not gte:
             raise ValueError('gte must be provided')
         if not lte:
@@ -219,9 +224,10 @@ class EventNotificationsV1(BaseService):
         headers.update(sdk_headers)
 
         params = {
-            'destination_type': destination_type,
             'gte': gte,
             'lte': lte,
+            'smtp_config_id': smtp_config_id,
+            'destination_type': destination_type,
             'destination_id': destination_id,
             'subscription_id': subscription_id,
             'source_id': source_id,
@@ -3479,7 +3485,8 @@ class GetMetricsEnums:
 
     class DestinationType(str, Enum):
         """
-        Destination type. Allowed values are [smtp_custom].
+        Destination type for which metrics are requested. Supported value: smtp_custom.
+        Required when querying metrics for custom email destinations.
         """
 
         SMTP_CUSTOM = 'smtp_custom'
@@ -3492,7 +3499,8 @@ class GetBounceMetricsEnums:
 
     class DestinationType(str, Enum):
         """
-        Destination type. Allowed values are [smtp_custom].
+        Destination type for which metrics are requested. Supported value: smtp_custom.
+        Required when querying metrics for custom email destinations.
         """
 
         SMTP_CUSTOM = 'smtp_custom'
