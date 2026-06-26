@@ -1,3 +1,10 @@
+## [0.24.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.24.0...v0.24.1) (2026-06-26)
+
+
+### Bug Fixes
+
+* adding the smtp config id for metrics api ([#82](https://github.com/IBM/event-notifications-python-admin-sdk/issues/82)) ([3058fe8](https://github.com/IBM/event-notifications-python-admin-sdk/commit/3058fe818c32a828c5ac6d1d46e45962b73c3407))
+
 # [0.24.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.23.0...v0.24.0) (2026-04-08)
 
 
