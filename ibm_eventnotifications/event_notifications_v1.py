@@ -56,7 +56,9 @@ class EventNotificationsV1(BaseService):
                parameters and external configuration.
         """
         authenticator = get_authenticator_from_environment(service_name)
-        service = cls(authenticator)
+        service = cls(
+            authenticator
+            )
         service.configure_service(service_name)
         return service
 
@@ -329,6 +331,7 @@ class EventNotificationsV1(BaseService):
         *,
         enabled: bool = None,
         store_notifications: bool = None,
+        source: str = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -343,6 +346,8 @@ class EventNotificationsV1(BaseService):
         :param bool enabled: (optional) Whether the source is enabled or not.
         :param bool store_notifications: (optional) enable to view the payload of
                incoming events for troubleshooting.
+        :param str source: (optional) The source CRN. This field is applicable only
+               for VPC sources.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SourceResponse` object
@@ -367,6 +372,7 @@ class EventNotificationsV1(BaseService):
             'description': description,
             'enabled': enabled,
             'store_notifications': store_notifications,
+            'source': source,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -1433,29 +1439,19 @@ class EventNotificationsV1(BaseService):
         if config:
             form_data.append(('config', (None, json.dumps(config), 'application/json')))
         if certificate:
-            form_data.append(
-                ('certificate', (None, certificate, certificate_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('certificate', (None, certificate, certificate_content_type or 'application/octet-stream')))
         if icon_16x16:
             form_data.append(('icon_16x16', (None, icon_16x16, icon_16x16_content_type or 'application/octet-stream')))
         if icon_16x16_2x:
-            form_data.append(
-                ('icon_16x16_2x', (None, icon_16x16_2x, icon_16x16_2x_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_16x16_2x', (None, icon_16x16_2x, icon_16x16_2x_content_type or 'application/octet-stream')))
         if icon_32x32:
             form_data.append(('icon_32x32', (None, icon_32x32, icon_32x32_content_type or 'application/octet-stream')))
         if icon_32x32_2x:
-            form_data.append(
-                ('icon_32x32_2x', (None, icon_32x32_2x, icon_32x32_2x_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_32x32_2x', (None, icon_32x32_2x, icon_32x32_2x_content_type or 'application/octet-stream')))
         if icon_128x128:
-            form_data.append(
-                ('icon_128x128', (None, icon_128x128, icon_128x128_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_128x128', (None, icon_128x128, icon_128x128_content_type or 'application/octet-stream')))
         if icon_128x128_2x:
-            form_data.append(
-                ('icon_128x128_2x', (None, icon_128x128_2x, icon_128x128_2x_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_128x128_2x', (None, icon_128x128_2x, icon_128x128_2x_content_type or 'application/octet-stream')))
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -1671,29 +1667,19 @@ class EventNotificationsV1(BaseService):
         if config:
             form_data.append(('config', (None, json.dumps(config), 'application/json')))
         if certificate:
-            form_data.append(
-                ('certificate', (None, certificate, certificate_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('certificate', (None, certificate, certificate_content_type or 'application/octet-stream')))
         if icon_16x16:
             form_data.append(('icon_16x16', (None, icon_16x16, icon_16x16_content_type or 'application/octet-stream')))
         if icon_16x16_2x:
-            form_data.append(
-                ('icon_16x16_2x', (None, icon_16x16_2x, icon_16x16_2x_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_16x16_2x', (None, icon_16x16_2x, icon_16x16_2x_content_type or 'application/octet-stream')))
         if icon_32x32:
             form_data.append(('icon_32x32', (None, icon_32x32, icon_32x32_content_type or 'application/octet-stream')))
         if icon_32x32_2x:
-            form_data.append(
-                ('icon_32x32_2x', (None, icon_32x32_2x, icon_32x32_2x_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_32x32_2x', (None, icon_32x32_2x, icon_32x32_2x_content_type or 'application/octet-stream')))
         if icon_128x128:
-            form_data.append(
-                ('icon_128x128', (None, icon_128x128, icon_128x128_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_128x128', (None, icon_128x128, icon_128x128_content_type or 'application/octet-stream')))
         if icon_128x128_2x:
-            form_data.append(
-                ('icon_128x128_2x', (None, icon_128x128_2x, icon_128x128_2x_content_type or 'application/octet-stream'))
-            )
+            form_data.append(('icon_128x128_2x', (None, icon_128x128_2x, icon_128x128_2x_content_type or 'application/octet-stream')))
 
         if 'headers' in kwargs:
             headers.update(kwargs.get('headers'))
@@ -2740,6 +2726,7 @@ class EventNotificationsV1(BaseService):
         domain: str,
         *,
         description: str = None,
+        admin_emails: List[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -2752,6 +2739,7 @@ class EventNotificationsV1(BaseService):
         :param str name: The name of SMTP configuration.
         :param str domain: Domain Name.
         :param str description: (optional) The description of SMTP configuration.
+        :param List[str] admin_emails: (optional) Admin email addresses.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SMTPCreateResponse` object
@@ -2775,6 +2763,7 @@ class EventNotificationsV1(BaseService):
             'name': name,
             'domain': domain,
             'description': description,
+            'admin_emails': admin_emails,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -3044,6 +3033,7 @@ class EventNotificationsV1(BaseService):
         *,
         name: str = None,
         description: str = None,
+        admin_emails: List[str] = None,
         **kwargs,
     ) -> DetailedResponse:
         """
@@ -3056,6 +3046,7 @@ class EventNotificationsV1(BaseService):
         :param str id: Unique identifier for SMTP.
         :param str name: (optional) SMTP name.
         :param str description: (optional) SMTP description.
+        :param List[str] admin_emails: (optional) Admin email addresses.
         :param dict headers: A `dict` containing the request headers
         :return: A `DetailedResponse` containing the result, headers and HTTP status code.
         :rtype: DetailedResponse with `dict` result representing a `SMTPConfiguration` object
@@ -3076,6 +3067,7 @@ class EventNotificationsV1(BaseService):
         data = {
             'name': name,
             'description': description,
+            'admin_emails': admin_emails,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
         data = json.dumps(data)
@@ -3944,6 +3936,7 @@ class ChannelUpdateAttributes:
         REMOVE = 'remove'
 
 
+
 class DKIMAttributes:
     """
     The DKIM attributes.
@@ -4188,6 +4181,7 @@ class Destination:
         APP_CONFIGURATION = 'app_configuration'
 
 
+
 class DestinationConfig:
     """
     Payload describing a destination configuration.
@@ -4264,28 +4258,7 @@ class DestinationConfigOneOf:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                [
-                    'DestinationConfigOneOfCustomDomainEmailDestinationConfig',
-                    'DestinationConfigOneOfCustomEmailSandboxDestinationConfig',
-                    'DestinationConfigOneOfWebhookDestinationConfig',
-                    'DestinationConfigOneOfCodeEngineDestinationConfig',
-                    'DestinationConfigOneOfFCMDestinationConfig',
-                    'DestinationConfigOneOfIOSDestinationConfig',
-                    'DestinationConfigOneOfChromeDestinationConfig',
-                    'DestinationConfigOneOfFirefoxDestinationConfig',
-                    'DestinationConfigOneOfSlackDestinationConfig',
-                    'DestinationConfigOneOfSlackDirectMessageDestinationConfig',
-                    'DestinationConfigOneOfSafariDestinationConfig',
-                    'DestinationConfigOneOfMSTeamsDestinationConfig',
-                    'DestinationConfigOneOfPagerDutyDestinationConfig',
-                    'DestinationConfigOneOfServiceNowDestinationConfig',
-                    'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig',
-                    'DestinationConfigOneOfHuaweiDestinationConfig',
-                    'DestinationConfigOneOfEventStreamsDestinationConfig',
-                    'DestinationConfigOneOfAppConfigurationDestinationConfig',
-                ]
-            )
+            ", ".join(['DestinationConfigOneOfCustomDomainEmailDestinationConfig', 'DestinationConfigOneOfCustomEmailSandboxDestinationConfig', 'DestinationConfigOneOfWebhookDestinationConfig', 'DestinationConfigOneOfCodeEngineDestinationConfig', 'DestinationConfigOneOfFCMDestinationConfig', 'DestinationConfigOneOfIOSDestinationConfig', 'DestinationConfigOneOfChromeDestinationConfig', 'DestinationConfigOneOfFirefoxDestinationConfig', 'DestinationConfigOneOfSlackDestinationConfig', 'DestinationConfigOneOfSlackDirectMessageDestinationConfig', 'DestinationConfigOneOfSafariDestinationConfig', 'DestinationConfigOneOfMSTeamsDestinationConfig', 'DestinationConfigOneOfPagerDutyDestinationConfig', 'DestinationConfigOneOfServiceNowDestinationConfig', 'DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig', 'DestinationConfigOneOfHuaweiDestinationConfig', 'DestinationConfigOneOfEventStreamsDestinationConfig', 'DestinationConfigOneOfAppConfigurationDestinationConfig'])
         )
         raise Exception(msg)
 
@@ -4574,6 +4547,7 @@ class DestinationListItem:
         APP_CONFIGURATION = 'app_configuration'
 
 
+
 class DestinationResponse:
     """
     Payload describing a destination get request.
@@ -4720,6 +4694,7 @@ class DestinationResponse:
         SMS_CUSTOM = 'sms_custom'
         EVENT_STREAMS = 'event_streams'
         APP_CONFIGURATION = 'app_configuration'
+
 
 
 class DestinationTagsSubscriptionResponse:
@@ -4973,6 +4948,7 @@ class EmailAttachment:
         """
 
         ATTACHMENT = 'attachment'
+
 
 
 class EmailAttributesResponseInvitedItems:
@@ -5347,6 +5323,7 @@ class GetNotificationStatusResponse:
         INPROGRESS = 'inprogress'
 
 
+
 class GetNotificationStatusResponseDetails:
     """
     Payload describing a Status Details.
@@ -5376,15 +5353,11 @@ class GetNotificationStatusResponseDetails:
         if 'status_code' in _dict:
             args['status_code'] = _dict.get('status_code')
         else:
-            raise ValueError(
-                'Required property \'status_code\' not present in GetNotificationStatusResponseDetails JSON'
-            )
+            raise ValueError('Required property \'status_code\' not present in GetNotificationStatusResponseDetails JSON')
         if 'status_message' in _dict:
             args['status_message'] = _dict.get('status_message')
         else:
-            raise ValueError(
-                'Required property \'status_message\' not present in GetNotificationStatusResponseDetails JSON'
-            )
+            raise ValueError('Required property \'status_message\' not present in GetNotificationStatusResponseDetails JSON')
         return cls(**args)
 
     @classmethod
@@ -6290,6 +6263,7 @@ class Metric:
         SUBMITTED = 'submitted'
 
 
+
 class Metrics:
     """
     Payload describing a metrics.
@@ -6407,42 +6381,7 @@ class NotificationCreate:
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(
-        [
-            'specversion',
-            'time',
-            'id',
-            'source',
-            'type',
-            'ibmenseverity',
-            'ibmensourceid',
-            'ibmendefaultshort',
-            'ibmendefaultlong',
-            'ibmensubject',
-            'ibmentemplates',
-            'ibmenmailto',
-            'ibmenslackto',
-            'ibmensmstext',
-            'ibmensmsto',
-            'ibmenhtmlbody',
-            'subject',
-            'ibmenmms',
-            'ibmenmarkdown',
-            'data',
-            'datacontenttype',
-            'ibmenpushto',
-            'ibmenfcmbody',
-            'ibmenapnsbody',
-            'ibmenapnsheaders',
-            'ibmenchromebody',
-            'ibmenchromeheaders',
-            'ibmenfirefoxbody',
-            'ibmenfirefoxheaders',
-            'ibmenhuaweibody',
-            'ibmensafaribody',
-            'attachments',
-        ]
-    )
+    _properties = frozenset(['specversion', 'time', 'id', 'source', 'type', 'ibmenseverity', 'ibmensourceid', 'ibmendefaultshort', 'ibmendefaultlong', 'ibmensubject', 'ibmentemplates', 'ibmenmailto', 'ibmenslackto', 'ibmensmstext', 'ibmensmsto', 'ibmenhtmlbody', 'subject', 'ibmenmms', 'ibmenmarkdown', 'data', 'datacontenttype', 'ibmenpushto', 'ibmenfcmbody', 'ibmenapnsbody', 'ibmenapnsheaders', 'ibmenchromebody', 'ibmenchromeheaders', 'ibmenfirefoxbody', 'ibmenfirefoxheaders', 'ibmenhuaweibody', 'ibmensafaribody', 'attachments'])
 
     def __init__(
         self,
@@ -7767,6 +7706,7 @@ class SMTPConfiguration:
     :attr str name: SMTP name.
     :attr str description: (optional) SMTP description.
     :attr str domain: Domain Name.
+    :attr List[str] admin_emails: (optional) Admin email addresses.
     :attr SMTPConfig config: Payload describing a SMTP configuration.
     :attr datetime updated_at: Created time.
     """
@@ -7780,6 +7720,7 @@ class SMTPConfiguration:
         updated_at: datetime,
         *,
         description: str = None,
+        admin_emails: List[str] = None,
     ) -> None:
         """
         Initialize a SMTPConfiguration object.
@@ -7790,11 +7731,13 @@ class SMTPConfiguration:
         :param SMTPConfig config: Payload describing a SMTP configuration.
         :param datetime updated_at: Created time.
         :param str description: (optional) SMTP description.
+        :param List[str] admin_emails: (optional) Admin email addresses.
         """
         self.id = id
         self.name = name
         self.description = description
         self.domain = domain
+        self.admin_emails = admin_emails
         self.config = config
         self.updated_at = updated_at
 
@@ -7816,6 +7759,8 @@ class SMTPConfiguration:
             args['domain'] = _dict.get('domain')
         else:
             raise ValueError('Required property \'domain\' not present in SMTPConfiguration JSON')
+        if 'admin_emails' in _dict:
+            args['admin_emails'] = _dict.get('admin_emails')
         if 'config' in _dict:
             args['config'] = SMTPConfig.from_dict(_dict.get('config'))
         else:
@@ -7842,6 +7787,8 @@ class SMTPConfiguration:
             _dict['description'] = self.description
         if hasattr(self, 'domain') and self.domain is not None:
             _dict['domain'] = self.domain
+        if hasattr(self, 'admin_emails') and self.admin_emails is not None:
+            _dict['admin_emails'] = self.admin_emails
         if hasattr(self, 'config') and self.config is not None:
             if isinstance(self.config, dict):
                 _dict['config'] = self.config
@@ -8009,6 +7956,7 @@ class SMTPCreateResponse:
     :attr str name: SMTP name.
     :attr str description: (optional) SMTP description.
     :attr str domain: Domain Name.
+    :attr List[str] admin_emails: (optional) Admin email addresses.
     :attr SMTPConfig config: Payload describing a SMTP configuration.
     :attr datetime created_at: Created time.
     """
@@ -8022,6 +7970,7 @@ class SMTPCreateResponse:
         created_at: datetime,
         *,
         description: str = None,
+        admin_emails: List[str] = None,
     ) -> None:
         """
         Initialize a SMTPCreateResponse object.
@@ -8032,11 +7981,13 @@ class SMTPCreateResponse:
         :param SMTPConfig config: Payload describing a SMTP configuration.
         :param datetime created_at: Created time.
         :param str description: (optional) SMTP description.
+        :param List[str] admin_emails: (optional) Admin email addresses.
         """
         self.id = id
         self.name = name
         self.description = description
         self.domain = domain
+        self.admin_emails = admin_emails
         self.config = config
         self.created_at = created_at
 
@@ -8058,6 +8009,8 @@ class SMTPCreateResponse:
             args['domain'] = _dict.get('domain')
         else:
             raise ValueError('Required property \'domain\' not present in SMTPCreateResponse JSON')
+        if 'admin_emails' in _dict:
+            args['admin_emails'] = _dict.get('admin_emails')
         if 'config' in _dict:
             args['config'] = SMTPConfig.from_dict(_dict.get('config'))
         else:
@@ -8084,6 +8037,8 @@ class SMTPCreateResponse:
             _dict['description'] = self.description
         if hasattr(self, 'domain') and self.domain is not None:
             _dict['domain'] = self.domain
+        if hasattr(self, 'admin_emails') and self.admin_emails is not None:
+            _dict['admin_emails'] = self.admin_emails
         if hasattr(self, 'config') and self.config is not None:
             if isinstance(self.config, dict):
                 _dict['config'] = self.config
@@ -9447,22 +9402,7 @@ class Subscription:
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(
-        [
-            'id',
-            'name',
-            'description',
-            'updated_at',
-            'from_',
-            'from',
-            'destination_type',
-            'destination_id',
-            'destination_name',
-            'topic_id',
-            'topic_name',
-            'attributes',
-        ]
-    )
+    _properties = frozenset(['id', 'name', 'description', 'updated_at', 'from_', 'from', 'destination_type', 'destination_id', 'destination_name', 'topic_id', 'topic_name', 'attributes'])
 
     def __init__(
         self,
@@ -9657,6 +9597,7 @@ class Subscription:
         APP_CONFIGURATION = 'app_configuration'
 
 
+
 class SubscriptionAttributes:
     """
     SubscriptionAttributes.
@@ -9673,22 +9614,7 @@ class SubscriptionAttributes:
         :param **kwargs: (optional) Any additional properties.
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                [
-                    'SubscriptionAttributesSMSAttributesResponse',
-                    'SubscriptionAttributesCustomSMSAttributesResponse',
-                    'SubscriptionAttributesEmailAttributesResponse',
-                    'SubscriptionAttributesCustomEmailAttributesResponse',
-                    'SubscriptionAttributesWebhookAttributesResponse',
-                    'SubscriptionAttributesSlackAttributesResponse',
-                    'SubscriptionAttributesPagerDutyAttributesResponse',
-                    'SubscriptionAttributesSlackDirectMessageAttributesResponse',
-                    'SubscriptionAttributesServiceNowAttributesResponse',
-                    'SubscriptionAttributesEventStreamsAttributesResponse',
-                    'SubscriptionAttributesCodeEngineAttributesResponse',
-                    'SubscriptionAttributesAppConfigurationAttributesResponse',
-                ]
-            )
+            ", ".join(['SubscriptionAttributesSMSAttributesResponse', 'SubscriptionAttributesCustomSMSAttributesResponse', 'SubscriptionAttributesEmailAttributesResponse', 'SubscriptionAttributesCustomEmailAttributesResponse', 'SubscriptionAttributesWebhookAttributesResponse', 'SubscriptionAttributesSlackAttributesResponse', 'SubscriptionAttributesPagerDutyAttributesResponse', 'SubscriptionAttributesSlackDirectMessageAttributesResponse', 'SubscriptionAttributesServiceNowAttributesResponse', 'SubscriptionAttributesEventStreamsAttributesResponse', 'SubscriptionAttributesCodeEngineAttributesResponse', 'SubscriptionAttributesAppConfigurationAttributesResponse'])
         )
         raise Exception(msg)
 
@@ -9707,24 +9633,7 @@ class SubscriptionCreateAttributes:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                [
-                    'SubscriptionCreateAttributesSMSAttributes',
-                    'SubscriptionCreateAttributesEmailAttributes',
-                    'SubscriptionCreateAttributesCustomSMSAttributes',
-                    'SubscriptionCreateAttributesCustomEmailAttributes',
-                    'SubscriptionCreateAttributesCustomEmailSandboxAttributes',
-                    'SubscriptionCreateAttributesWebhookAttributes',
-                    'SubscriptionCreateAttributesFCMAttributes',
-                    'SubscriptionCreateAttributesSlackAttributes',
-                    'SubscriptionCreateAttributesPagerDutyAttributes',
-                    'SubscriptionCreateAttributesSlackDirectMessageAttributes',
-                    'SubscriptionCreateAttributesServiceNowAttributes',
-                    'SubscriptionCreateAttributesEventstreamsAttributes',
-                    'SubscriptionCreateAttributesCodeEngineAttributes',
-                    'SubscriptionCreateAttributesAppConfigurationAttributes',
-                ]
-            )
+            ", ".join(['SubscriptionCreateAttributesSMSAttributes', 'SubscriptionCreateAttributesEmailAttributes', 'SubscriptionCreateAttributesCustomSMSAttributes', 'SubscriptionCreateAttributesCustomEmailAttributes', 'SubscriptionCreateAttributesCustomEmailSandboxAttributes', 'SubscriptionCreateAttributesWebhookAttributes', 'SubscriptionCreateAttributesFCMAttributes', 'SubscriptionCreateAttributesSlackAttributes', 'SubscriptionCreateAttributesPagerDutyAttributes', 'SubscriptionCreateAttributesSlackDirectMessageAttributes', 'SubscriptionCreateAttributesServiceNowAttributes', 'SubscriptionCreateAttributesEventstreamsAttributes', 'SubscriptionCreateAttributesCodeEngineAttributes', 'SubscriptionCreateAttributesAppConfigurationAttributes'])
         )
         raise Exception(msg)
 
@@ -10020,6 +9929,7 @@ class SubscriptionListItem:
         APP_CONFIGURATION = 'app_configuration'
 
 
+
 class SubscriptionUpdateAttributes:
     """
     SubscriptionUpdateAttributes.
@@ -10034,23 +9944,7 @@ class SubscriptionUpdateAttributes:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                [
-                    'SubscriptionUpdateAttributesSMSUpdateAttributes',
-                    'SubscriptionUpdateAttributesEmailUpdateAttributes',
-                    'SubscriptionUpdateAttributesCustomSMSUpdateAttributes',
-                    'SubscriptionUpdateAttributesCustomEmailUpdateAttributes',
-                    'SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes',
-                    'SubscriptionUpdateAttributesWebhookAttributes',
-                    'SubscriptionUpdateAttributesSlackAttributes',
-                    'SubscriptionUpdateAttributesPagerDutyAttributes',
-                    'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes',
-                    'SubscriptionUpdateAttributesServiceNowAttributes',
-                    'SubscriptionUpdateAttributesEventstreamsAttributes',
-                    'SubscriptionUpdateAttributesCodeEngineAttributes',
-                    'SubscriptionUpdateAttributesAppConfigurationAttributes',
-                ]
-            )
+            ", ".join(['SubscriptionUpdateAttributesSMSUpdateAttributes', 'SubscriptionUpdateAttributesEmailUpdateAttributes', 'SubscriptionUpdateAttributesCustomSMSUpdateAttributes', 'SubscriptionUpdateAttributesCustomEmailUpdateAttributes', 'SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes', 'SubscriptionUpdateAttributesWebhookAttributes', 'SubscriptionUpdateAttributesSlackAttributes', 'SubscriptionUpdateAttributesPagerDutyAttributes', 'SubscriptionUpdateAttributesSlackDirectMessageUpdateAttributes', 'SubscriptionUpdateAttributesServiceNowAttributes', 'SubscriptionUpdateAttributesEventstreamsAttributes', 'SubscriptionUpdateAttributesCodeEngineAttributes', 'SubscriptionUpdateAttributesAppConfigurationAttributes'])
         )
         raise Exception(msg)
 
@@ -10417,18 +10311,7 @@ class TemplateConfigOneOf:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                [
-                    'TemplateConfigOneOfEmailTemplateConfig',
-                    'TemplateConfigOneOfSlackTemplateConfig',
-                    'TemplateConfigOneOfWebhookTemplateConfig',
-                    'TemplateConfigOneOfPagerdutyTemplateConfig',
-                    'TemplateConfigOneOfEventStreamsTemplateConfig',
-                    'TemplateConfigOneOfCodeEngineApplicationTemplateConfig',
-                    'TemplateConfigOneOfCodeEngineJobTemplateConfig',
-                    'TemplateConfigOneOfAppConfigurationTemplateConfig',
-                ]
-            )
+            ", ".join(['TemplateConfigOneOfEmailTemplateConfig', 'TemplateConfigOneOfSlackTemplateConfig', 'TemplateConfigOneOfWebhookTemplateConfig', 'TemplateConfigOneOfPagerdutyTemplateConfig', 'TemplateConfigOneOfEventStreamsTemplateConfig', 'TemplateConfigOneOfCodeEngineApplicationTemplateConfig', 'TemplateConfigOneOfCodeEngineJobTemplateConfig', 'TemplateConfigOneOfAppConfigurationTemplateConfig'])
         )
         raise Exception(msg)
 
@@ -10688,12 +10571,7 @@ class TestDestinationResponse:
 
         """
         msg = "Cannot instantiate base class. Instead, instantiate one of the defined subclasses: {0}".format(
-            ", ".join(
-                [
-                    'TestDestinationResponseWebhookDestinationTestResponseConfig',
-                    'TestDestinationResponseDestinationTestResponseConfig',
-                ]
-            )
+            ", ".join(['TestDestinationResponseWebhookDestinationTestResponseConfig', 'TestDestinationResponseDestinationTestResponseConfig'])
         )
         raise Exception(msg)
 
@@ -11462,27 +11340,19 @@ class DestinationConfigOneOfAppConfigurationDestinationConfig(DestinationConfigO
         if 'type' in _dict:
             args['type'] = _dict.get('type')
         else:
-            raise ValueError(
-                'Required property \'type\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'type\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON')
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
         else:
-            raise ValueError(
-                'Required property \'crn\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'crn\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON')
         if 'environment_id' in _dict:
             args['environment_id'] = _dict.get('environment_id')
         else:
-            raise ValueError(
-                'Required property \'environment_id\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'environment_id\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON')
         if 'feature_id' in _dict:
             args['feature_id'] = _dict.get('feature_id')
         else:
-            raise ValueError(
-                'Required property \'feature_id\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'feature_id\' not present in DestinationConfigOneOfAppConfigurationDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -11529,6 +11399,7 @@ class DestinationConfigOneOfAppConfigurationDestinationConfig(DestinationConfigO
         FEATURES = 'features'
 
 
+
 class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a Chrome destination configuration.
@@ -11568,15 +11439,11 @@ class DestinationConfigOneOfChromeDestinationConfig(DestinationConfigOneOf):
         if 'api_key' in _dict:
             args['api_key'] = _dict.get('api_key')
         else:
-            raise ValueError(
-                'Required property \'api_key\' not present in DestinationConfigOneOfChromeDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'api_key\' not present in DestinationConfigOneOfChromeDestinationConfig JSON')
         if 'website_url' in _dict:
             args['website_url'] = _dict.get('website_url')
         else:
-            raise ValueError(
-                'Required property \'website_url\' not present in DestinationConfigOneOfChromeDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigOneOfChromeDestinationConfig JSON')
         if 'public_key' in _dict:
             args['public_key'] = _dict.get('public_key')
         if 'pre_prod' in _dict:
@@ -11679,9 +11546,7 @@ class DestinationConfigOneOfCodeEngineDestinationConfig(DestinationConfigOneOf):
         if 'type' in _dict:
             args['type'] = _dict.get('type')
         else:
-            raise ValueError(
-                'Required property \'type\' not present in DestinationConfigOneOfCodeEngineDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'type\' not present in DestinationConfigOneOfCodeEngineDestinationConfig JSON')
         if 'project_crn' in _dict:
             args['project_crn'] = _dict.get('project_crn')
         if 'job_name' in _dict:
@@ -11742,6 +11607,7 @@ class DestinationConfigOneOfCodeEngineDestinationConfig(DestinationConfigOneOf):
         GET = 'get'
         POST = 'post'
 
+
     class TypeEnum(str, Enum):
         """
         The code engine destination type.
@@ -11749,6 +11615,7 @@ class DestinationConfigOneOfCodeEngineDestinationConfig(DestinationConfigOneOf):
 
         JOB = 'job'
         APPLICATION = 'application'
+
 
 
 class DestinationConfigOneOfCustomDomainEmailDestinationConfig(DestinationConfigOneOf):
@@ -11786,9 +11653,7 @@ class DestinationConfigOneOfCustomDomainEmailDestinationConfig(DestinationConfig
         if 'domain' in _dict:
             args['domain'] = _dict.get('domain')
         else:
-            raise ValueError(
-                'Required property \'domain\' not present in DestinationConfigOneOfCustomDomainEmailDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'domain\' not present in DestinationConfigOneOfCustomDomainEmailDestinationConfig JSON')
         if 'dkim' in _dict:
             args['dkim'] = DKIMAttributes.from_dict(_dict.get('dkim'))
         if 'spf' in _dict:
@@ -11951,21 +11816,15 @@ class DestinationConfigOneOfEventStreamsDestinationConfig(DestinationConfigOneOf
         if 'crn' in _dict:
             args['crn'] = _dict.get('crn')
         else:
-            raise ValueError(
-                'Required property \'crn\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'crn\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON')
         if 'endpoint' in _dict:
             args['endpoint'] = _dict.get('endpoint')
         else:
-            raise ValueError(
-                'Required property \'endpoint\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'endpoint\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON')
         if 'topic' in _dict:
             args['topic'] = _dict.get('topic')
         else:
-            raise ValueError(
-                'Required property \'topic\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'topic\' not present in DestinationConfigOneOfEventStreamsDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -12138,9 +11997,7 @@ class DestinationConfigOneOfFirefoxDestinationConfig(DestinationConfigOneOf):
         if 'website_url' in _dict:
             args['website_url'] = _dict.get('website_url')
         else:
-            raise ValueError(
-                'Required property \'website_url\' not present in DestinationConfigOneOfFirefoxDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigOneOfFirefoxDestinationConfig JSON')
         if 'public_key' in _dict:
             args['public_key'] = _dict.get('public_key')
         if 'pre_prod' in _dict:
@@ -12217,15 +12074,11 @@ class DestinationConfigOneOfHuaweiDestinationConfig(DestinationConfigOneOf):
         if 'client_id' in _dict:
             args['client_id'] = _dict.get('client_id')
         else:
-            raise ValueError(
-                'Required property \'client_id\' not present in DestinationConfigOneOfHuaweiDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'client_id\' not present in DestinationConfigOneOfHuaweiDestinationConfig JSON')
         if 'client_secret' in _dict:
             args['client_secret'] = _dict.get('client_secret')
         else:
-            raise ValueError(
-                'Required property \'client_secret\' not present in DestinationConfigOneOfHuaweiDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'client_secret\' not present in DestinationConfigOneOfHuaweiDestinationConfig JSON')
         if 'pre_prod' in _dict:
             args['pre_prod'] = _dict.get('pre_prod')
         return cls(**args)
@@ -12299,21 +12152,15 @@ class DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig(DestinationCo
         if 'bucket_name' in _dict:
             args['bucket_name'] = _dict.get('bucket_name')
         else:
-            raise ValueError(
-                'Required property \'bucket_name\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'bucket_name\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON')
         if 'instance_id' in _dict:
             args['instance_id'] = _dict.get('instance_id')
         else:
-            raise ValueError(
-                'Required property \'instance_id\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'instance_id\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON')
         if 'endpoint' in _dict:
             args['endpoint'] = _dict.get('endpoint')
         else:
-            raise ValueError(
-                'Required property \'endpoint\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'endpoint\' not present in DestinationConfigOneOfIBMCloudObjectStorageDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -12408,15 +12255,11 @@ class DestinationConfigOneOfIOSDestinationConfig(DestinationConfigOneOf):
         if 'cert_type' in _dict:
             args['cert_type'] = _dict.get('cert_type')
         else:
-            raise ValueError(
-                'Required property \'cert_type\' not present in DestinationConfigOneOfIOSDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'cert_type\' not present in DestinationConfigOneOfIOSDestinationConfig JSON')
         if 'is_sandbox' in _dict:
             args['is_sandbox'] = _dict.get('is_sandbox')
         else:
-            raise ValueError(
-                'Required property \'is_sandbox\' not present in DestinationConfigOneOfIOSDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'is_sandbox\' not present in DestinationConfigOneOfIOSDestinationConfig JSON')
         if 'password' in _dict:
             args['password'] = _dict.get('password')
         if 'key_id' in _dict:
@@ -12498,9 +12341,7 @@ class DestinationConfigOneOfMSTeamsDestinationConfig(DestinationConfigOneOf):
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         else:
-            raise ValueError(
-                'Required property \'url\' not present in DestinationConfigOneOfMSTeamsDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'url\' not present in DestinationConfigOneOfMSTeamsDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -12570,9 +12411,7 @@ class DestinationConfigOneOfPagerDutyDestinationConfig(DestinationConfigOneOf):
         if 'routing_key' in _dict:
             args['routing_key'] = _dict.get('routing_key')
         else:
-            raise ValueError(
-                'Required property \'routing_key\' not present in DestinationConfigOneOfPagerDutyDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'routing_key\' not present in DestinationConfigOneOfPagerDutyDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -12660,39 +12499,27 @@ class DestinationConfigOneOfSafariDestinationConfig(DestinationConfigOneOf):
         if 'cert_type' in _dict:
             args['cert_type'] = _dict.get('cert_type')
         else:
-            raise ValueError(
-                'Required property \'cert_type\' not present in DestinationConfigOneOfSafariDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'cert_type\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'password' in _dict:
             args['password'] = _dict.get('password')
         else:
-            raise ValueError(
-                'Required property \'password\' not present in DestinationConfigOneOfSafariDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'password\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'website_url' in _dict:
             args['website_url'] = _dict.get('website_url')
         else:
-            raise ValueError(
-                'Required property \'website_url\' not present in DestinationConfigOneOfSafariDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'website_url\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'website_name' in _dict:
             args['website_name'] = _dict.get('website_name')
         else:
-            raise ValueError(
-                'Required property \'website_name\' not present in DestinationConfigOneOfSafariDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'website_name\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'url_format_string' in _dict:
             args['url_format_string'] = _dict.get('url_format_string')
         else:
-            raise ValueError(
-                'Required property \'url_format_string\' not present in DestinationConfigOneOfSafariDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'url_format_string\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'website_push_id' in _dict:
             args['website_push_id'] = _dict.get('website_push_id')
         else:
-            raise ValueError(
-                'Required property \'website_push_id\' not present in DestinationConfigOneOfSafariDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'website_push_id\' not present in DestinationConfigOneOfSafariDestinationConfig JSON')
         if 'pre_prod' in _dict:
             args['pre_prod'] = _dict.get('pre_prod')
         return cls(**args)
@@ -12782,33 +12609,23 @@ class DestinationConfigOneOfServiceNowDestinationConfig(DestinationConfigOneOf):
         if 'client_id' in _dict:
             args['client_id'] = _dict.get('client_id')
         else:
-            raise ValueError(
-                'Required property \'client_id\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'client_id\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
         if 'client_secret' in _dict:
             args['client_secret'] = _dict.get('client_secret')
         else:
-            raise ValueError(
-                'Required property \'client_secret\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'client_secret\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
         if 'username' in _dict:
             args['username'] = _dict.get('username')
         else:
-            raise ValueError(
-                'Required property \'username\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'username\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
         if 'password' in _dict:
             args['password'] = _dict.get('password')
         else:
-            raise ValueError(
-                'Required property \'password\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'password\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
         if 'instance_name' in _dict:
             args['instance_name'] = _dict.get('instance_name')
         else:
-            raise ValueError(
-                'Required property \'instance_name\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'instance_name\' not present in DestinationConfigOneOfServiceNowDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -12880,15 +12697,11 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         else:
-            raise ValueError(
-                'Required property \'url\' not present in DestinationConfigOneOfSlackDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'url\' not present in DestinationConfigOneOfSlackDestinationConfig JSON')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
         else:
-            raise ValueError(
-                'Required property \'type\' not present in DestinationConfigOneOfSlackDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'type\' not present in DestinationConfigOneOfSlackDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -12931,6 +12744,7 @@ class DestinationConfigOneOfSlackDestinationConfig(DestinationConfigOneOf):
         INCOMING_WEBHOOK = 'incoming_webhook'
 
 
+
 class DestinationConfigOneOfSlackDirectMessageDestinationConfig(DestinationConfigOneOf):
     """
     Payload describing a Slack direct message destination configuration.
@@ -12961,15 +12775,11 @@ class DestinationConfigOneOfSlackDirectMessageDestinationConfig(DestinationConfi
         if 'token' in _dict:
             args['token'] = _dict.get('token')
         else:
-            raise ValueError(
-                'Required property \'token\' not present in DestinationConfigOneOfSlackDirectMessageDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'token\' not present in DestinationConfigOneOfSlackDirectMessageDestinationConfig JSON')
         if 'type' in _dict:
             args['type'] = _dict.get('type')
         else:
-            raise ValueError(
-                'Required property \'type\' not present in DestinationConfigOneOfSlackDirectMessageDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'type\' not present in DestinationConfigOneOfSlackDirectMessageDestinationConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -13010,6 +12820,7 @@ class DestinationConfigOneOfSlackDirectMessageDestinationConfig(DestinationConfi
         """
 
         DIRECT_MESSAGE = 'direct_message'
+
 
 
 class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
@@ -13055,15 +12866,11 @@ class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
         if 'url' in _dict:
             args['url'] = _dict.get('url')
         else:
-            raise ValueError(
-                'Required property \'url\' not present in DestinationConfigOneOfWebhookDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'url\' not present in DestinationConfigOneOfWebhookDestinationConfig JSON')
         if 'verb' in _dict:
             args['verb'] = _dict.get('verb')
         else:
-            raise ValueError(
-                'Required property \'verb\' not present in DestinationConfigOneOfWebhookDestinationConfig JSON'
-            )
+            raise ValueError('Required property \'verb\' not present in DestinationConfigOneOfWebhookDestinationConfig JSON')
         if 'custom_headers' in _dict:
             args['custom_headers'] = _dict.get('custom_headers')
         if 'sensitive_headers' in _dict:
@@ -13115,6 +12922,7 @@ class DestinationConfigOneOfWebhookDestinationConfig(DestinationConfigOneOf):
         POST = 'post'
         PUT = 'put'
         PATCH = 'patch'
+
 
 
 class SubscriptionAttributesAppConfigurationAttributesResponse(SubscriptionAttributes):
@@ -13174,11 +12982,7 @@ class SubscriptionAttributesAppConfigurationAttributesResponse(SubscriptionAttri
             _dict['feature_flag_enabled'] = self.feature_flag_enabled
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -13190,21 +12994,13 @@ class SubscriptionAttributesAppConfigurationAttributesResponse(SubscriptionAttri
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesAppConfigurationAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesAppConfigurationAttributesResponse"""
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesAppConfigurationAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -13272,9 +13068,7 @@ class SubscriptionAttributesCodeEngineAttributesResponse(SubscriptionAttributes)
         _dict = {}
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -13286,17 +13080,13 @@ class SubscriptionAttributesCodeEngineAttributesResponse(SubscriptionAttributes)
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesCodeEngineAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesCodeEngineAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCodeEngineAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -13339,20 +13129,7 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(
-        [
-            'invited',
-            'subscribed',
-            'unsubscribed',
-            'add_notification_payload',
-            'reply_to_mail',
-            'reply_to_name',
-            'from_name',
-            'from_email',
-            'template_id_notification',
-            'template_id_invitation',
-        ]
-    )
+    _properties = frozenset(['invited', 'subscribed', 'unsubscribed', 'add_notification_payload', 'reply_to_mail', 'reply_to_name', 'from_name', 'from_email', 'template_id_notification', 'template_id_invitation'])
 
     def __init__(
         self,
@@ -13411,43 +13188,29 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
         if 'invited' in _dict:
             args['invited'] = [EmailAttributesResponseInvitedItems.from_dict(v) for v in _dict.get('invited')]
         if 'subscribed' in _dict:
-            args['subscribed'] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('subscribed')
-            ]
+            args['subscribed'] = [EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('subscribed')]
         if 'unsubscribed' in _dict:
-            args['unsubscribed'] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('unsubscribed')
-            ]
+            args['unsubscribed'] = [EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('unsubscribed')]
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON')
         if 'from_name' in _dict:
             args['from_name'] = _dict.get('from_name')
         else:
-            raise ValueError(
-                'Required property \'from_name\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'from_name\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON')
         if 'from_email' in _dict:
             args['from_email'] = _dict.get('from_email')
         else:
-            raise ValueError(
-                'Required property \'from_email\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'from_email\' not present in SubscriptionAttributesCustomEmailAttributesResponse JSON')
         if 'template_id_notification' in _dict:
             args['template_id_notification'] = _dict.get('template_id_notification')
         if 'template_id_invitation' in _dict:
@@ -13501,9 +13264,7 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
             _dict['template_id_notification'] = self.template_id_notification
         if hasattr(self, 'template_id_invitation') and self.template_id_invitation is not None:
             _dict['template_id_invitation'] = self.template_id_invitation
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -13515,17 +13276,13 @@ class SubscriptionAttributesCustomEmailAttributesResponse(SubscriptionAttributes
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesCustomEmailAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesCustomEmailAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCustomEmailAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -13629,9 +13386,7 @@ class SubscriptionAttributesCustomSMSAttributesResponse(SubscriptionAttributes):
                 else:
                     invited_list.append(v.to_dict())
             _dict['invited'] = invited_list
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomSMSAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCustomSMSAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -13643,17 +13398,13 @@ class SubscriptionAttributesCustomSMSAttributesResponse(SubscriptionAttributes):
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesCustomSMSAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomSMSAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCustomSMSAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesCustomSMSAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesCustomSMSAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesCustomSMSAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -13693,17 +13444,7 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
     """
 
     # The set of defined properties for the class
-    _properties = frozenset(
-        [
-            'invited',
-            'subscribed',
-            'unsubscribed',
-            'add_notification_payload',
-            'reply_to_mail',
-            'reply_to_name',
-            'from_name',
-        ]
-    )
+    _properties = frozenset(['invited', 'subscribed', 'unsubscribed', 'add_notification_payload', 'reply_to_mail', 'reply_to_name', 'from_name'])
 
     def __init__(
         self,
@@ -13751,37 +13492,25 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
         if 'invited' in _dict:
             args['invited'] = [EmailAttributesResponseInvitedItems.from_dict(v) for v in _dict.get('invited')]
         if 'subscribed' in _dict:
-            args['subscribed'] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('subscribed')
-            ]
+            args['subscribed'] = [EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('subscribed')]
         if 'unsubscribed' in _dict:
-            args['unsubscribed'] = [
-                EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('unsubscribed')
-            ]
+            args['unsubscribed'] = [EmailAttributesResponseSubscribedUnsubscribedItems.from_dict(v) for v in _dict.get('unsubscribed')]
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionAttributesEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionAttributesEmailAttributesResponse JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionAttributesEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionAttributesEmailAttributesResponse JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionAttributesEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionAttributesEmailAttributesResponse JSON')
         if 'from_name' in _dict:
             args['from_name'] = _dict.get('from_name')
         else:
-            raise ValueError(
-                'Required property \'from_name\' not present in SubscriptionAttributesEmailAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'from_name\' not present in SubscriptionAttributesEmailAttributesResponse JSON')
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -13825,9 +13554,7 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
             _dict['reply_to_name'] = self.reply_to_name
         if hasattr(self, 'from_name') and self.from_name is not None:
             _dict['from_name'] = self.from_name
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -13839,17 +13566,13 @@ class SubscriptionAttributesEmailAttributesResponse(SubscriptionAttributes):
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesEmailAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesEmailAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesEmailAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -13917,9 +13640,7 @@ class SubscriptionAttributesEventStreamsAttributesResponse(SubscriptionAttribute
         _dict = {}
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -13931,17 +13652,13 @@ class SubscriptionAttributesEventStreamsAttributesResponse(SubscriptionAttribute
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesEventStreamsAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesEventStreamsAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesEventStreamsAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -14011,9 +13728,7 @@ class SubscriptionAttributesPagerDutyAttributesResponse(SubscriptionAttributes):
         _dict = {}
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -14025,17 +13740,13 @@ class SubscriptionAttributesPagerDutyAttributesResponse(SubscriptionAttributes):
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesPagerDutyAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesPagerDutyAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesPagerDutyAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -14235,9 +13946,7 @@ class SubscriptionAttributesServiceNowAttributesResponse(SubscriptionAttributes)
             _dict['assigned_to'] = self.assigned_to
         if hasattr(self, 'assignment_group') and self.assignment_group is not None:
             _dict['assignment_group'] = self.assignment_group
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -14249,17 +13958,13 @@ class SubscriptionAttributesServiceNowAttributesResponse(SubscriptionAttributes)
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesServiceNowAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesServiceNowAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesServiceNowAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -14338,9 +14043,7 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
             _dict['attachment_color'] = self.attachment_color
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -14352,17 +14055,13 @@ class SubscriptionAttributesSlackAttributesResponse(SubscriptionAttributes):
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesSlackAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesSlackAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSlackAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -14446,11 +14145,7 @@ class SubscriptionAttributesSlackDirectMessageAttributesResponse(SubscriptionAtt
             _dict['channels'] = channels_list
         if hasattr(self, 'template_id_notification') and self.template_id_notification is not None:
             _dict['template_id_notification'] = self.template_id_notification
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -14462,21 +14157,13 @@ class SubscriptionAttributesSlackDirectMessageAttributesResponse(SubscriptionAtt
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesSlackDirectMessageAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesSlackDirectMessageAttributesResponse"""
-        for _key in [
-            k
-            for k in vars(self).keys()
-            if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesSlackDirectMessageAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -14537,15 +14224,11 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
         if 'signing_enabled' in _dict:
             args['signing_enabled'] = _dict.get('signing_enabled')
         else:
-            raise ValueError(
-                'Required property \'signing_enabled\' not present in SubscriptionAttributesWebhookAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'signing_enabled\' not present in SubscriptionAttributesWebhookAttributesResponse JSON')
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionAttributesWebhookAttributesResponse JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionAttributesWebhookAttributesResponse JSON')
         args.update({k: v for (k, v) in _dict.items() if k not in cls._properties})
         return cls(**args)
 
@@ -14561,9 +14244,7 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
             _dict['signing_enabled'] = self.signing_enabled
         if hasattr(self, 'add_notification_payload') and self.add_notification_payload is not None:
             _dict['add_notification_payload'] = self.add_notification_payload
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
@@ -14575,17 +14256,13 @@ class SubscriptionAttributesWebhookAttributesResponse(SubscriptionAttributes):
         """Return a dictionary of arbitrary properties from this instance of SubscriptionAttributesWebhookAttributesResponse"""
         _dict = {}
 
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties]:
             _dict[_key] = getattr(self, _key)
         return _dict
 
     def set_properties(self, _dict: dict):
         """Set a dictionary of arbitrary properties to this instance of SubscriptionAttributesWebhookAttributesResponse"""
-        for _key in [
-            k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties
-        ]:
+        for _key in [k for k in vars(self).keys() if k not in SubscriptionAttributesWebhookAttributesResponse._properties]:
             delattr(self, _key)
 
         for _key, _value in _dict.items():
@@ -14795,39 +14472,27 @@ class SubscriptionCreateAttributesCustomEmailAttributes(SubscriptionCreateAttrib
         if 'invited' in _dict:
             args['invited'] = _dict.get('invited')
         else:
-            raise ValueError(
-                'Required property \'invited\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'invited\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON')
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON')
         if 'from_name' in _dict:
             args['from_name'] = _dict.get('from_name')
         else:
-            raise ValueError(
-                'Required property \'from_name\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'from_name\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON')
         if 'from_email' in _dict:
             args['from_email'] = _dict.get('from_email')
         else:
-            raise ValueError(
-                'Required property \'from_email\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'from_email\' not present in SubscriptionCreateAttributesCustomEmailAttributes JSON')
         if 'template_id_notification' in _dict:
             args['template_id_notification'] = _dict.get('template_id_notification')
         if 'template_id_invitation' in _dict:
@@ -14930,27 +14595,19 @@ class SubscriptionCreateAttributesCustomEmailSandboxAttributes(SubscriptionCreat
         if 'invited' in _dict:
             args['invited'] = _dict.get('invited')
         else:
-            raise ValueError(
-                'Required property \'invited\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
-            )
+            raise ValueError('Required property \'invited\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON')
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionCreateAttributesCustomEmailSandboxAttributes JSON')
         if 'template_id_notification' in _dict:
             args['template_id_notification'] = _dict.get('template_id_notification')
         if 'template_id_invitation' in _dict:
@@ -15024,9 +14681,7 @@ class SubscriptionCreateAttributesCustomSMSAttributes(SubscriptionCreateAttribut
         if 'invited' in _dict:
             args['invited'] = _dict.get('invited')
         else:
-            raise ValueError(
-                'Required property \'invited\' not present in SubscriptionCreateAttributesCustomSMSAttributes JSON'
-            )
+            raise ValueError('Required property \'invited\' not present in SubscriptionCreateAttributesCustomSMSAttributes JSON')
         return cls(**args)
 
     @classmethod
@@ -15104,33 +14759,23 @@ class SubscriptionCreateAttributesEmailAttributes(SubscriptionCreateAttributes):
         if 'invited' in _dict:
             args['invited'] = _dict.get('invited')
         else:
-            raise ValueError(
-                'Required property \'invited\' not present in SubscriptionCreateAttributesEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'invited\' not present in SubscriptionCreateAttributesEmailAttributes JSON')
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionCreateAttributesEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionCreateAttributesEmailAttributes JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionCreateAttributesEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionCreateAttributesEmailAttributes JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionCreateAttributesEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionCreateAttributesEmailAttributes JSON')
         if 'from_name' in _dict:
             args['from_name'] = _dict.get('from_name')
         else:
-            raise ValueError(
-                'Required property \'from_name\' not present in SubscriptionCreateAttributesEmailAttributes JSON'
-            )
+            raise ValueError('Required property \'from_name\' not present in SubscriptionCreateAttributesEmailAttributes JSON')
         return cls(**args)
 
     @classmethod
@@ -15366,9 +15011,7 @@ class SubscriptionCreateAttributesSMSAttributes(SubscriptionCreateAttributes):
         if 'invited' in _dict:
             args['invited'] = _dict.get('invited')
         else:
-            raise ValueError(
-                'Required property \'invited\' not present in SubscriptionCreateAttributesSMSAttributes JSON'
-            )
+            raise ValueError('Required property \'invited\' not present in SubscriptionCreateAttributesSMSAttributes JSON')
         return cls(**args)
 
     @classmethod
@@ -15883,21 +15526,15 @@ class SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes(Subscriptio
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionUpdateAttributesCustomEmailSandboxUpdateAttributes JSON')
         if 'subscribed' in _dict:
             args['subscribed'] = UpdateAttributesSubscribed.from_dict(_dict.get('subscribed'))
         if 'unsubscribed' in _dict:
@@ -16037,33 +15674,23 @@ class SubscriptionUpdateAttributesCustomEmailUpdateAttributes(SubscriptionUpdate
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON')
         if 'from_name' in _dict:
             args['from_name'] = _dict.get('from_name')
         else:
-            raise ValueError(
-                'Required property \'from_name\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'from_name\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON')
         if 'from_email' in _dict:
             args['from_email'] = _dict.get('from_email')
         else:
-            raise ValueError(
-                'Required property \'from_email\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'from_email\' not present in SubscriptionUpdateAttributesCustomEmailUpdateAttributes JSON')
         if 'subscribed' in _dict:
             args['subscribed'] = UpdateAttributesSubscribed.from_dict(_dict.get('subscribed'))
         if 'unsubscribed' in _dict:
@@ -16283,27 +15910,19 @@ class SubscriptionUpdateAttributesEmailUpdateAttributes(SubscriptionUpdateAttrib
         if 'add_notification_payload' in _dict:
             args['add_notification_payload'] = _dict.get('add_notification_payload')
         else:
-            raise ValueError(
-                'Required property \'add_notification_payload\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'add_notification_payload\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON')
         if 'reply_to_mail' in _dict:
             args['reply_to_mail'] = _dict.get('reply_to_mail')
         else:
-            raise ValueError(
-                'Required property \'reply_to_mail\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_mail\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON')
         if 'reply_to_name' in _dict:
             args['reply_to_name'] = _dict.get('reply_to_name')
         else:
-            raise ValueError(
-                'Required property \'reply_to_name\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'reply_to_name\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON')
         if 'from_name' in _dict:
             args['from_name'] = _dict.get('from_name')
         else:
-            raise ValueError(
-                'Required property \'from_name\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON'
-            )
+            raise ValueError('Required property \'from_name\' not present in SubscriptionUpdateAttributesEmailUpdateAttributes JSON')
         if 'subscribed' in _dict:
             args['subscribed'] = UpdateAttributesSubscribed.from_dict(_dict.get('subscribed'))
         if 'unsubscribed' in _dict:
@@ -16883,9 +16502,7 @@ class TemplateConfigOneOfAppConfigurationTemplateConfig(TemplateConfigOneOf):
         if 'body' in _dict:
             args['body'] = _dict.get('body')
         else:
-            raise ValueError(
-                'Required property \'body\' not present in TemplateConfigOneOfAppConfigurationTemplateConfig JSON'
-            )
+            raise ValueError('Required property \'body\' not present in TemplateConfigOneOfAppConfigurationTemplateConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -16945,9 +16562,7 @@ class TemplateConfigOneOfCodeEngineApplicationTemplateConfig(TemplateConfigOneOf
         if 'body' in _dict:
             args['body'] = _dict.get('body')
         else:
-            raise ValueError(
-                'Required property \'body\' not present in TemplateConfigOneOfCodeEngineApplicationTemplateConfig JSON'
-            )
+            raise ValueError('Required property \'body\' not present in TemplateConfigOneOfCodeEngineApplicationTemplateConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -17007,9 +16622,7 @@ class TemplateConfigOneOfCodeEngineJobTemplateConfig(TemplateConfigOneOf):
         if 'body' in _dict:
             args['body'] = _dict.get('body')
         else:
-            raise ValueError(
-                'Required property \'body\' not present in TemplateConfigOneOfCodeEngineJobTemplateConfig JSON'
-            )
+            raise ValueError('Required property \'body\' not present in TemplateConfigOneOfCodeEngineJobTemplateConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -17138,9 +16751,7 @@ class TemplateConfigOneOfEventStreamsTemplateConfig(TemplateConfigOneOf):
         if 'body' in _dict:
             args['body'] = _dict.get('body')
         else:
-            raise ValueError(
-                'Required property \'body\' not present in TemplateConfigOneOfEventStreamsTemplateConfig JSON'
-            )
+            raise ValueError('Required property \'body\' not present in TemplateConfigOneOfEventStreamsTemplateConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -17200,9 +16811,7 @@ class TemplateConfigOneOfPagerdutyTemplateConfig(TemplateConfigOneOf):
         if 'body' in _dict:
             args['body'] = _dict.get('body')
         else:
-            raise ValueError(
-                'Required property \'body\' not present in TemplateConfigOneOfPagerdutyTemplateConfig JSON'
-            )
+            raise ValueError('Required property \'body\' not present in TemplateConfigOneOfPagerdutyTemplateConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -17382,9 +16991,7 @@ class TestDestinationResponseDestinationTestResponseConfig(TestDestinationRespon
         if 'status' in _dict:
             args['status'] = _dict.get('status')
         else:
-            raise ValueError(
-                'Required property \'status\' not present in TestDestinationResponseDestinationTestResponseConfig JSON'
-            )
+            raise ValueError('Required property \'status\' not present in TestDestinationResponseDestinationTestResponseConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -17452,21 +17059,15 @@ class TestDestinationResponseWebhookDestinationTestResponseConfig(TestDestinatio
         if 'status' in _dict:
             args['status'] = _dict.get('status')
         else:
-            raise ValueError(
-                'Required property \'status\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON'
-            )
+            raise ValueError('Required property \'status\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON')
         if 'notification_id' in _dict:
             args['notification_id'] = _dict.get('notification_id')
         else:
-            raise ValueError(
-                'Required property \'notification_id\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON'
-            )
+            raise ValueError('Required property \'notification_id\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON')
         if 'destination_type' in _dict:
             args['destination_type'] = _dict.get('destination_type')
         else:
-            raise ValueError(
-                'Required property \'destination_type\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON'
-            )
+            raise ValueError('Required property \'destination_type\' not present in TestDestinationResponseWebhookDestinationTestResponseConfig JSON')
         return cls(**args)
 
     @classmethod
@@ -17509,6 +17110,7 @@ class TestDestinationResponseWebhookDestinationTestResponseConfig(TestDestinatio
         """
 
         ACCEPTED = 'accepted'
+
 
     class DestinationTypeEnum(str, Enum):
         """
