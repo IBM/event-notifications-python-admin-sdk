@@ -305,6 +305,7 @@ class TestEventNotificationsV1:
             description="This source is used for Acme Bank",
             enabled=True,
             store_notifications=True,
+            source="crn:v1:bluemix:public:is::a/a3335c51-9ee3-4a28-b1f7-69065709ba67:::"
         )
 
         assert create_sources_response.get_status_code() == 201
@@ -4059,9 +4060,10 @@ class TestEventNotificationsV1:
         name = "SMTP configuration"
         domain = "mailx.event-notifications.test.cloud.ibm.com"
         description = "SMTP description"
+        admin_emails= ["admin1@example.com","admin2@example.com"]
 
         create_smtp_config_response = self.event_notifications_service.create_smtp_configuration(
-            instance_id, name, domain, description=description
+            instance_id, name, domain, description=description, admin_emails=admin_emails
         )
 
         assert create_smtp_config_response.get_status_code() == 201
@@ -4074,6 +4076,7 @@ class TestEventNotificationsV1:
         assert smtp_config.name == name
         assert smtp_config.description == description
         assert smtp_config.domain == domain
+        assert smtp_config.admin_emails == admin_emails
 
         smtp_config_id = smtp_config.id
 
@@ -4234,11 +4237,13 @@ class TestEventNotificationsV1:
 
         name = 'SMTP configuration update'
         description = 'SMTP configuration description update'
+        admin_emails = ["admin1@example.com", "admin2@example.com"]
         update_smtp_config_response = self.event_notifications_service.update_smtp_configuration(
             instance_id,
             id=smtp_config_id,
             name=name,
             description=description,
+            admin_emails=admin_emails,
         )
 
         assert update_smtp_config_response.get_status_code() == 200
@@ -4249,6 +4254,7 @@ class TestEventNotificationsV1:
         assert smtp_config is not None
         assert smtp_config.name == name
         assert smtp_config.description == description
+        assert smtp_config.admin_emails == admin_emails
 
     @needscredentials
     def test_update_smtp_user(self):

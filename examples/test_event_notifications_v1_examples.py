@@ -242,6 +242,7 @@ class TestEventNotificationsV1Examples:
                 description="This source is used for Acme Bank",
                 enabled=False,
                 store_notifications=True,
+                source="crn:v1:bluemix:public:is::a/a3335c51-9ee3-4a28-b1f7-69065709ba67:::",
             ).get_result()
 
             print(json.dumps(source_response, indent=2))
@@ -2809,9 +2810,10 @@ class TestEventNotificationsV1Examples:
             name = "SMTP configuration"
             domain = "mailx.event-notifications.test.cloud.ibm.com"
             description = "SMTP description"
+            admin_emails= ["admin1@example.com","admin2@example.com"]
 
             create_smtp_config_response = self.event_notifications_service.create_smtp_configuration(
-                instance_id, name, domain, description=description
+                instance_id, name, domain, description=description,admin_emails=admin_emails
             )
 
             smtp_response = create_smtp_config_response.get_result()
@@ -2969,11 +2971,14 @@ class TestEventNotificationsV1Examples:
             # begin-update_smtp_configuration
             name = 'SMTP configuration update'
             description = 'SMTP configuration description update'
+            admin_emails= ["admin1@example.com","admin2@example.com"]
+
             update_smtp_config_response = self.event_notifications_service.update_smtp_configuration(
                 instance_id,
                 id=smtp_config_id,
                 name=name,
                 description=description,
+                admin_emails=admin_emails,
             )
 
             update_smtp_config_response = update_smtp_config_response.get_result()

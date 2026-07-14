@@ -171,7 +171,8 @@ source_response = event_notifications_service.create_sources(
             name=<source-name>,
             description=<source-description>,
             enabled=False,
-            store_notifications=True  # Optional: Enable to view payload of incoming events for troubleshooting
+            store_notifications=True  # Optional: Enable to view payload of incoming events for troubleshooting,
+            source=<source-id>
         ).get_result()
 
 print(json.dumps(source_response, indent=2))
@@ -183,6 +184,7 @@ print(json.dumps(source_response, indent=2))
 - `description` (required): Description of the source
 - `enabled` (optional): Whether the source is enabled or not (default: False)
 - `store_notifications` (optional): Enable to view the payload of incoming events for troubleshooting (default: False)
+- `source` (optional): The source CRN. This field is applicable only for VPC sources.
 
 ### List Sources
 
@@ -1031,7 +1033,8 @@ create_smtp_config_response = self.event_notifications_service.create_smtp_confi
     instance_id=<instance_id>,
     name=<smtp-config-name>,
     domain=<smtp-domain-name>,
-    description=<smtp-description>
+    description=<smtp-description>,
+    admin_emails=<list-of-admin-emails>,
 )
 
 smtp_response = create_smtp_config_response.get_result()
@@ -1146,6 +1149,7 @@ update_smtp_config_response = self.event_notifications_service.update_smtp_confi
     id=<smtp_config_id>,
     name=<smtp-name>,
     description=<smtp-description>,
+    admin_emails=<list-of-admin-emails>
 )
 
 update_smtp_config_response = update_smtp_config_response.get_result()
