@@ -302,8 +302,8 @@ class TestEventNotificationsV1:
         create_sources_response = self.event_notifications_service.create_sources(
             instance_id,
             name="Event Notification Create Source Acme",
-            description="This source is used for Acme Bank",
             enabled=True,
+            description="This source is used for Acme Bank",
             store_notifications=True,
         )
 
@@ -4276,8 +4276,6 @@ class TestEventNotificationsV1:
         type = 'slack.notification'
         list_predefined_templates_response = self.event_notifications_service.list_pre_defined_templates(
             instance_id,
-            source,
-            type,
         )
 
         assert list_predefined_templates_response.get_status_code() == 200
