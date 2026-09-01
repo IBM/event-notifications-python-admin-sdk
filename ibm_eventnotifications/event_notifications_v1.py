@@ -325,9 +325,9 @@ class EventNotificationsV1(BaseService):
         self,
         instance_id: str,
         name: str,
-        description: str,
+        enabled: bool,
         *,
-        enabled: bool = None,
+        description: str = None,
         store_notifications: bool = None,
         **kwargs,
     ) -> DetailedResponse:
@@ -339,8 +339,8 @@ class EventNotificationsV1(BaseService):
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
         :param str name: Name of the source.
-        :param str description: Description of the source.
-        :param bool enabled: (optional) Whether the source is enabled or not.
+        :param bool enabled: Whether the source is enabled or not.
+        :param str description: (optional) Description of the source.
         :param bool store_notifications: (optional) enable to view the payload of
                incoming events for troubleshooting.
         :param dict headers: A `dict` containing the request headers
@@ -352,8 +352,8 @@ class EventNotificationsV1(BaseService):
             raise ValueError('instance_id must be provided')
         if name is None:
             raise ValueError('name must be provided')
-        if description is None:
-            raise ValueError('description must be provided')
+        if enabled is None:
+            raise ValueError('enabled must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -364,8 +364,8 @@ class EventNotificationsV1(BaseService):
 
         data = {
             'name': name,
-            'description': description,
             'enabled': enabled,
+            'description': description,
             'store_notifications': store_notifications,
         }
         data = {k: v for (k, v) in data.items() if v is not None}
@@ -1225,9 +1225,9 @@ class EventNotificationsV1(BaseService):
     def list_pre_defined_templates(
         self,
         instance_id: str,
-        source: str,
-        type: str,
         *,
+        source: str = None,
+        type: str = None,
         limit: int = None,
         offset: int = None,
         search: str = None,
@@ -1240,8 +1240,8 @@ class EventNotificationsV1(BaseService):
 
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
-        :param str source: Source type.
-        :param str type: Destination type.
+        :param str source: (optional) Source type.
+        :param str type: (optional) Destination type.
         :param int limit: (optional) Page limit for paginated results.
         :param int offset: (optional) offset for paginated results.
         :param str search: (optional) Search string for filtering results.
@@ -1252,10 +1252,6 @@ class EventNotificationsV1(BaseService):
 
         if not instance_id:
             raise ValueError('instance_id must be provided')
-        if not source:
-            raise ValueError('source must be provided')
-        if not type:
-            raise ValueError('type must be provided')
         headers = {}
         sdk_headers = get_sdk_headers(
             service_name=self.DEFAULT_SERVICE_NAME,
@@ -6369,12 +6365,16 @@ class NotificationCreate:
     :attr str ibmendefaultshort: Default short text for the message.
     :attr str ibmendefaultlong: Default long text for the message.
     :attr str ibmensubject: (optional) The subject of the notification.
-    :attr str ibmentemplates: (optional) The template id Array of string.
-    :attr str ibmenmailto: (optional) The email id string.
-    :attr str ibmenslackto: (optional) The slack channel id/member id stringified
-          array.
+    :attr str ibmentemplates: (optional) A stringified JSON array containing one or
+          more valid template ids.
+    :attr str ibmenmailto: (optional) A stringified JSON array containing one or
+          more valid email addresses.A maximum of 50 email addresses can be specified in a
+          single API call.
+    :attr str ibmenslackto: (optional) A stringified JSON array containing one or
+          more valid slack channel id/member id.
     :attr str ibmensmstext: (optional) The SMS text.
-    :attr str ibmensmsto: (optional) The SMS number string.
+    :attr str ibmensmsto: (optional) A stringified JSON array containing one or more
+          valid SMS numbers.
     :attr str ibmenhtmlbody: (optional) The html body of notification.
     :attr str subject: (optional) The subject of the notification.
     :attr str ibmenmms: (optional) Stringified MMS Attachment JSON.
@@ -6494,12 +6494,16 @@ class NotificationCreate:
         :param datetime time: (optional) The time notification was created.
         :param str ibmenseverity: (optional) The severity of the notification.
         :param str ibmensubject: (optional) The subject of the notification.
-        :param str ibmentemplates: (optional) The template id Array of string.
-        :param str ibmenmailto: (optional) The email id string.
-        :param str ibmenslackto: (optional) The slack channel id/member id
-               stringified array.
+        :param str ibmentemplates: (optional) A stringified JSON array containing
+               one or more valid template ids.
+        :param str ibmenmailto: (optional) A stringified JSON array containing one
+               or more valid email addresses.A maximum of 50 email addresses can be
+               specified in a single API call.
+        :param str ibmenslackto: (optional) A stringified JSON array containing one
+               or more valid slack channel id/member id.
         :param str ibmensmstext: (optional) The SMS text.
-        :param str ibmensmsto: (optional) The SMS number string.
+        :param str ibmensmsto: (optional) A stringified JSON array containing one
+               or more valid SMS numbers.
         :param str ibmenhtmlbody: (optional) The html body of notification.
         :param str subject: (optional) The subject of the notification.
         :param str ibmenmms: (optional) Stringified MMS Attachment JSON.
@@ -17752,8 +17756,8 @@ class PreDefinedTemplatesPager:
         *,
         client: EventNotificationsV1,
         instance_id: str,
-        source: str,
-        type: str,
+        source: str = None,
+        type: str = None,
         limit: int = None,
         search: str = None,
     ) -> None:
@@ -17761,8 +17765,8 @@ class PreDefinedTemplatesPager:
         Initialize a PreDefinedTemplatesPager object.
         :param str instance_id: Unique identifier for IBM Cloud Event Notifications
                instance.
-        :param str source: Source type.
-        :param str type: Destination type.
+        :param str source: (optional) Source type.
+        :param str type: (optional) Destination type.
         :param int limit: (optional) Page limit for paginated results.
         :param str search: (optional) Search string for filtering results.
         """
