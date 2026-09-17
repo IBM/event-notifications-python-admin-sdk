@@ -169,8 +169,8 @@ SDK Methods to consume
 source_response = event_notifications_service.create_sources(
             <instance-id>, # Event notifications service instance GUID
             name=<source-name>,
-            description=<source-description>,
             enabled=False,
+            description=<source-description>,
             store_notifications=True  # Optional: Enable to view payload of incoming events for troubleshooting
         ).get_result()
 

@@ -705,16 +705,16 @@ class TestCreateSources:
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
-        description = 'testString'
         enabled = True
+        description = 'testString'
         store_notifications = False
 
         # Invoke method
         response = _service.create_sources(
             instance_id,
             name,
-            description,
-            enabled=enabled,
+            enabled,
+            description=description,
             store_notifications=store_notifications,
             headers={},
         )
@@ -725,8 +725,8 @@ class TestCreateSources:
         # Validate body params
         req_body = json.loads(str(responses.calls[0].request.body, 'utf-8'))
         assert req_body['name'] == 'testString'
-        assert req_body['description'] == 'testString'
         assert req_body['enabled'] == True
+        assert req_body['description'] == 'testString'
         assert req_body['store_notifications'] == False
 
     def test_create_sources_all_params_with_retries(self):
@@ -757,15 +757,15 @@ class TestCreateSources:
         # Set up parameter values
         instance_id = 'testString'
         name = 'testString'
-        description = 'testString'
         enabled = True
+        description = 'testString'
         store_notifications = False
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
             "name": name,
-            "description": description,
+            "enabled": enabled,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}
@@ -2637,8 +2637,8 @@ class TestListPreDefinedTemplates:
         # Invoke method
         response = _service.list_pre_defined_templates(
             instance_id,
-            source,
-            type,
+            source=source,
+            type=type,
             limit=limit,
             offset=offset,
             search=search,
@@ -2684,25 +2684,16 @@ class TestListPreDefinedTemplates:
 
         # Set up parameter values
         instance_id = 'testString'
-        source = 'testString'
-        type = 'testString'
 
         # Invoke method
         response = _service.list_pre_defined_templates(
             instance_id,
-            source,
-            type,
             headers={},
         )
 
         # Check for correct operation
         assert len(responses.calls) == 1
         assert response.status_code == 200
-        # Validate query params
-        query_string = responses.calls[0].request.url.split('?', 1)[1]
-        query_string = urllib.parse.unquote_plus(query_string)
-        assert 'source={}'.format(source) in query_string
-        assert 'type={}'.format(type) in query_string
 
     def test_list_pre_defined_templates_required_params_with_retries(self):
         # Enable retries and run test_list_pre_defined_templates_required_params.
@@ -2731,14 +2722,10 @@ class TestListPreDefinedTemplates:
 
         # Set up parameter values
         instance_id = 'testString'
-        source = 'testString'
-        type = 'testString'
 
         # Pass in all but one required param and check for a ValueError
         req_param_dict = {
             "instance_id": instance_id,
-            "source": source,
-            "type": type,
         }
         for param in req_param_dict.keys():
             req_copy = {key: val if key is not param else None for (key, val) in req_param_dict.items()}

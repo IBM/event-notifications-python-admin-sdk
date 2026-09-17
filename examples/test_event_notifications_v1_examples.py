@@ -239,8 +239,8 @@ class TestEventNotificationsV1Examples:
             source_response = event_notifications_service.create_sources(
                 instance_id,
                 name="Event Notification Create Source Acme",
-                description="This source is used for Acme Bank",
                 enabled=False,
+                description="This source is used for Acme Bank",
                 store_notifications=True,
             ).get_result()
 
@@ -3008,12 +3008,8 @@ class TestEventNotificationsV1Examples:
         try:
             print("\n test_list_predefined_templates_example() result:")
             # begin-list_predefined_templates_example
-            source = 'logs'
-            type = 'slack.notification'
             list_predefined_templates_response = self.event_notifications_service.list_pre_defined_templates(
                 instance_id,
-                source,
-                type,
             )
             list_predefined_templates_response = list_predefined_templates_response.get_result()
             print(json.dumps(list_predefined_templates_response, indent=2))
