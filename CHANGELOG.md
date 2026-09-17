@@ -1,3 +1,10 @@
+# [0.25.0](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.24.1...v0.25.0) (2026-09-17)
+
+
+### Features
+
+* updating pre defined template parameters ([#84](https://github.com/IBM/event-notifications-python-admin-sdk/issues/84)) ([ea075f6](https://github.com/IBM/event-notifications-python-admin-sdk/commit/ea075f6a08050ed43935c731baa88d94d2efa945))
+
 ## [0.24.1](https://github.com/IBM/event-notifications-python-admin-sdk/compare/v0.24.0...v0.24.1) (2026-06-26)
 
 
